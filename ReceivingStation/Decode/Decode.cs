@@ -13,6 +13,7 @@ namespace ReceivingStation.Decode
         public delegate void GuiUpdater(uint counter, DirectBitmap[] bmps);
         public static GuiUpdater ThreadGuiUpdater;
         public delegate void StopDecoding();
+        private int test;
         public static StopDecoding ThreadStopDecoding; 
          
         private ReedSolo _reedSolo;
