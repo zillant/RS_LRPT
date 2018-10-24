@@ -9,6 +9,7 @@ using ReceivingStation.Decode;
 using ReceivingStation.Other;
 using ReceivingStation.Properties;
 using System.Text;
+using System.Collections.Generic;
 
 namespace ReceivingStation
 {
@@ -22,6 +23,11 @@ namespace ReceivingStation
         private PictureBox[] _channels = new PictureBox[6];
         private PictureBox[] _allChannels = new PictureBox[6];
         private DateTime _startWorkingTime;
+
+        private List<DirectBitmap>[] listImages = new List<DirectBitmap>[6];
+        private DirectBitmap[] listItem = new DirectBitmap[6];
+        private DirectBitmap k;
+        Graphics g;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -57,10 +63,19 @@ namespace ReceivingStation
             _allChannels[4] = pACChannel5;
             _allChannels[5] = pACChannel6;
 
+            k = new DirectBitmap(pACChannel1.Width, pACChannel1.Height);
+            pACChannel1.BackgroundImage = k.Bitmap;
+
+            g = Graphics.FromImage(k.Bitmap);
 
             _startWorkingTime = DateTime.Now;
 
             timer1.Start();
+
+            for (int i = 0; i < listImages.Length; i++)
+            {
+                listImages[i] = new List<DirectBitmap>();
+            }
 
             var server = new Server.Server();
             Task.Run(() => server.StartServer());          
@@ -302,6 +317,9 @@ namespace ReceivingStation
                 _channels[i].Image = images[i].Bitmap;
                 _allChannels[i].Image = images[i].Bitmap;
             }
+            //g.DrawImage(images[0].Bitmap, 0, _decode.Yt);
+            //pACChannel1.Refresh();
+            //pACChannel1.Height = _decode.Yt;
         }
 
         #endregion

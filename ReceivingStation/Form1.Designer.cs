@@ -63,7 +63,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.pACChannel1 = new System.Windows.Forms.PictureBox();
             this.pACChannel2 = new System.Windows.Forms.PictureBox();
             this.pACChannel3 = new System.Windows.Forms.PictureBox();
             this.pACChannel4 = new System.Windows.Forms.PictureBox();
@@ -113,6 +112,7 @@
             this.lblFramesCounter = new System.Windows.Forms.Label();
             this.btnStartDecode = new System.Windows.Forms.Button();
             this.btnStopDecode = new System.Windows.Forms.Button();
+            this.pACChannel1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -129,7 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pChannel6)).BeginInit();
             this.tabPage7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pACChannel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pACChannel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pACChannel4)).BeginInit();
@@ -150,6 +149,7 @@
             this.gbNRZ.SuspendLayout();
             this.gbRS.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -429,12 +429,12 @@
             this.tableLayoutPanel2.Controls.Add(this.label4, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.label5, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.label6, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel1, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel2, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel3, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel4, 3, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel5, 4, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel6, 5, 1);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel1, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -503,15 +503,6 @@
             this.label6.Size = new System.Drawing.Size(53, 15);
             this.label6.TabIndex = 5;
             this.label6.Text = "Канал 6";
-            // 
-            // pACChannel1
-            // 
-            this.pACChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel1.Location = new System.Drawing.Point(3, 43);
-            this.pACChannel1.Name = "pACChannel1";
-            this.pACChannel1.Size = new System.Drawing.Size(145, 630);
-            this.pACChannel1.TabIndex = 12;
-            this.pACChannel1.TabStop = false;
             // 
             // pACChannel2
             // 
@@ -1102,6 +1093,15 @@
             this.btnStopDecode.UseVisualStyleBackColor = false;
             this.btnStopDecode.Click += new System.EventHandler(this.btnStopDecode_Click);
             // 
+            // pACChannel1
+            // 
+            this.pACChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pACChannel1.Location = new System.Drawing.Point(3, 43);
+            this.pACChannel1.Name = "pACChannel1";
+            this.pACChannel1.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel1.TabIndex = 18;
+            this.pACChannel1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1137,7 +1137,6 @@
             this.tabPage7.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pACChannel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pACChannel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pACChannel4)).EndInit();
@@ -1168,6 +1167,7 @@
             this.gbRS.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1242,7 +1242,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pACChannel1;
         private System.Windows.Forms.PictureBox pACChannel2;
         private System.Windows.Forms.PictureBox pACChannel3;
         private System.Windows.Forms.PictureBox pACChannel4;
@@ -1257,6 +1256,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiStopDecoding;
         private System.Windows.Forms.ToolStripStatusLabel slWorkingTime;
         private System.Windows.Forms.Button btnStartRecieve;
+        private System.Windows.Forms.PictureBox pACChannel1;
     }
 }
 

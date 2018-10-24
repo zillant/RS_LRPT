@@ -515,6 +515,7 @@ namespace ReceivingStation.Decode
 
             Kol_tk++;
             ThreadGuiUpdater(Kol_tk, _bmps); // Обновление GUI из потока.
+            //test();
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -748,6 +749,19 @@ namespace ReceivingStation.Decode
         }
 
         #endregion
+
+        private void test()
+        {
+            for (int i = 0; i < _bmps.Length; i++)
+            {
+                _bmps[i].Bitmap.Dispose();
+            }
+            for (int i = 0; i < _bmps.Length; i++)
+            {
+                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
+            }
+
+        }
 
         #region Сохранение изображений.
         private void SaveImages(int i)
