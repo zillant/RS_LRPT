@@ -13,7 +13,6 @@ namespace ReceivingStation.Decode
         public delegate void GuiUpdater(uint counter, DirectBitmap[] bmps);
         public static GuiUpdater ThreadGuiUpdater;
         public delegate void StopDecoding();
-        private int test;
         public static StopDecoding ThreadStopDecoding; 
          
         private ReedSolo _reedSolo;
@@ -68,7 +67,7 @@ namespace ReceivingStation.Decode
         private bool _isReedSolo; // Состояние checkBox "Рида-Соломона".
         private byte Q_Value; // Фактор качества.
         private int dl_jpeg_in; //Длина данных jpeg.
-        private int Xt, Yt;    //Индекс полосы при выводе.    
+        public int Xt, Yt;    //Индекс полосы при выводе.    
 
         // Для НРЗ.
         private bool _isNrz; // Состояние checkBox "НРЗ".
@@ -93,7 +92,7 @@ namespace ReceivingStation.Decode
 
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, 2500);
+                _bmps[i] = new DirectBitmap(Constants.WDT, 8);
             }
 
             Init();
@@ -741,7 +740,7 @@ namespace ReceivingStation.Decode
                     {
                         num = _jpeg.video_mass[k++];
                         int color = (num << 16) | (num << 8) | num;
-                        _bmps[nc].SetPixel(x + j, Yt + i, Color.FromArgb(255, Color.FromArgb(color)));
+                        _bmps[nc].SetPixel(x + j, i, Color.FromArgb(255, Color.FromArgb(color)));
                     }
                 }
                 x += 8;                
