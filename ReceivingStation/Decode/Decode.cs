@@ -92,7 +92,7 @@ namespace ReceivingStation.Decode
 
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, 10000);
+                _bmps[i] = new DirectBitmap(Constants.WDT, 2500);
             }
 
             Init();
