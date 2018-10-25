@@ -10,6 +10,7 @@ using ReceivingStation.Other;
 using ReceivingStation.Properties;
 using System.Text;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 
 namespace ReceivingStation
 {
@@ -24,10 +25,10 @@ namespace ReceivingStation
         private PictureBox[] _allChannels = new PictureBox[6];
         private DateTime _startWorkingTime;
 
-        private List<DirectBitmap>[] listImages = new List<DirectBitmap>[6];
+        private List<Bitmap>[] listImages = new List<Bitmap>[6];
         private DirectBitmap[] listItem = new DirectBitmap[6];
-        private DirectBitmap k;
-        Graphics g;
+        private Bitmap[] k = new Bitmap[6];
+        private MemoryStream[] ms = new MemoryStream[6];
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -43,7 +44,10 @@ namespace ReceivingStation
             _remoteModeFlag = false;
             slWorkingTime.Text = $"{(long)Settings.Default.WorkingTime.TotalHours}:{Settings.Default.WorkingTime.Minutes}:{Settings.Default.WorkingTime.Seconds}";
 
-            Decode.Decode.ThreadGuiUpdater = UpdateGui;
+            Decode.Decode.ThreadCounterUpdater = UpdateCounter;
+            Decode.Decode.ThreadImageUpdater = UpdateImage;
+            Decode.Decode.ThreadUIUPdater = UpdateCounter;
+
             Decode.Decode.ThreadStopDecoding = StopDecoding;
             Server.Server.ThreadChangeMode = ChangeMode;
             Server.Server.ThreadSetParameters = RemoteSetReceiveParameters;
@@ -63,18 +67,14 @@ namespace ReceivingStation
             _allChannels[4] = pACChannel5;
             _allChannels[5] = pACChannel6;
 
-            k = new DirectBitmap(pACChannel1.Width, pACChannel1.Height);
-            pACChannel1.BackgroundImage = k.Bitmap;
-
-            g = Graphics.FromImage(k.Bitmap);
-
             _startWorkingTime = DateTime.Now;
 
             timer1.Start();
 
             for (int i = 0; i < listImages.Length; i++)
             {
-                listImages[i] = new List<DirectBitmap>();
+                listImages[i] = new List<Bitmap>();
+                ms[i] = new MemoryStream();
             }
 
             var server = new Server.Server();
@@ -264,18 +264,48 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление GUI при декодировании.
-        private void UpdateGui(uint counter, DirectBitmap[] images)
+        private void UpdateCounter(uint counter, DirectBitmap[] images)
         {
             if (InvokeRequired == false)
             {
                 lblFramesCounter.Text = counter.ToString();
-                UpdateImages(images);
+                UI(images);
+
             }
             else
             {
-                Decode.Decode.GuiUpdater update = UpdateGui;
+                Decode.Decode.UIUPdater update = UpdateCounter;
                 Invoke(update, counter, images);
+            }
+        }
+
+        #region Обновление счетчика кадров при декодировании.
+        private void UpdateCounter(uint counter)
+        {
+            if (InvokeRequired == false)
+            {
+                lblFramesCounter.Text = counter.ToString();
+            }
+            else
+            {
+                Decode.Decode.UIUPdater update = UpdateCounter;
+                Invoke(update, counter);
+            }
+        }
+
+        #endregion
+
+        #region Обновление изображений при декодировании.
+        private void UpdateImage(DirectBitmap[] images)
+        {
+            if (InvokeRequired == false)
+            {
+                UI(images);
+            }
+            else
+            {
+                Decode.Decode.ImageUpdater update = UpdateImage;
+                Invoke(update, images);
             }
         }
 
@@ -310,16 +340,33 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление изображений.
-        private void UpdateImages(DirectBitmap[] images)
+        private void UI(DirectBitmap[] images)
         {
             for (int i = 0; i < images.Length; i++)
             {
-                _channels[i].Image = images[i].Bitmap;
-                _allChannels[i].Image = images[i].Bitmap;
+                images[i].Bitmap.Save(ms[i], System.Drawing.Imaging.ImageFormat.Bmp);
+                listImages[i].Add(new Bitmap(ms[i]));
             }
-            //g.DrawImage(images[0].Bitmap, 0, _decode.Yt);
-            //pACChannel1.Refresh();
-            //pACChannel1.Height = _decode.Yt;
+
+
+            for (int i = 0; i < images.Length; i++)
+            {
+                int offset = 0;
+                k[i] = new Bitmap(Constants.WDT, listImages[i].Count * 8);
+                using (Graphics g = Graphics.FromImage(k[i]))
+                {
+                    g.Clear(Color.Black);
+                    foreach (var row in listImages[i])
+                    {
+                        g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
+                        offset += row.Height;
+                    }
+
+                    g.Save();
+                }
+                _channels[i].Image = k[i];
+                _allChannels[i].Image = k[i];
+            }
         }
 
         #endregion
