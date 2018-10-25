@@ -12,13 +12,10 @@ namespace ReceivingStation.Decode
 {
     class Decode
     {
-        public delegate void UiUpdater(uint counter, List<Bitmap>[] list);
+        public delegate void UiUpdater(uint counter, Bitmap[] list);
         public static UiUpdater ThreadUiUpdater;
-
         public delegate void StopDecoding();
-        public static StopDecoding ThreadStopDecoding;
-
-        private List<Bitmap>[] listImages = new List<Bitmap>[6];
+        public static StopDecoding ThreadStopDecoding;       
 
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
@@ -77,7 +74,11 @@ namespace ReceivingStation.Decode
         // Для НРЗ.
         private bool _isNrz; // Состояние checkBox "НРЗ".
         private bool last_bit_in;
-              
+
+        private int ui;
+        private Bitmap[] images = new Bitmap[6];
+        private List<Bitmap>[] listImages = new List<Bitmap>[6];
+
         #region Конструктор.
         public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
         {
@@ -102,6 +103,7 @@ namespace ReceivingStation.Decode
             }
 
             Init();
+            ui = 0;
         }
 
         #endregion
@@ -520,7 +522,7 @@ namespace ReceivingStation.Decode
             }
 
             Kol_tk++;
-            ThreadUiUpdater(Kol_tk, listImages); // Обновление GUI из потока.
+            ThreadUiUpdater(Kol_tk, images); // Обновление GUI из потока.
 
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
@@ -673,7 +675,13 @@ namespace ReceivingStation.Decode
             {
                 AddToList(_bmps);
                 Yt += 8;
-                
+                ui+=1;
+
+                if (ui == 20)
+                {
+                    MergeImages();
+                    ui = 0;
+                }
                                 
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
                 _sw.WriteLine($"Миллисекунды: {tm}");
@@ -760,7 +768,8 @@ namespace ReceivingStation.Decode
         #region Сохранение изображений.
         private void SaveImages(int i)
         {
-            _bmps[i].Bitmap.Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+            //MergeImages();
+            images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
         }
 
         #endregion
@@ -770,6 +779,23 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < bmps.Length; i++)
             {
                 listImages[i].Add(new Bitmap(bmps[i].Bitmap));
+            }
+        }
+
+        private void MergeImages()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                int offset = 0;
+                images[i] = new Bitmap(Constants.WDT, listImages[i].Count * 8);
+                using (Graphics g = Graphics.FromImage(images[i]))
+                {
+                    foreach (var row in listImages[i])
+                    {
+                        g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
+                        offset += row.Height;
+                    }
+                }
             }
         }
     }

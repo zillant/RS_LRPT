@@ -23,11 +23,7 @@ namespace ReceivingStation
         private CancellationToken _cancellationToken;
         private DoubleBufferedPanel[] _channels = new DoubleBufferedPanel[6];
         private DoubleBufferedPanel[] _allChannels = new DoubleBufferedPanel[6];
-        private DateTime _startWorkingTime;
-
-        private int ui;
-        private Bitmap[] k = new Bitmap[6];
-        
+        private DateTime _startWorkingTime;    
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -66,7 +62,7 @@ namespace ReceivingStation
             _startWorkingTime = DateTime.Now;
 
             timer1.Start();
-            ui = 0;
+
             var server = new Server.Server();
             Task.Run(() => server.StartServer());          
         }
@@ -255,17 +251,12 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление пользовательского интерфейса при декодировании.
-        private void UpdateUi(uint counter, List<Bitmap>[] images)
+        private void UpdateUi(uint counter, Bitmap[] images)
         {
             if (InvokeRequired == false)
             {
                 lblFramesCounter.Text = counter.ToString();
-                ui += 1;
-                if (ui == 100)
-                {
-                    UpdateImages(images);
-                    ui = 0;
-                }               
+                UpdateImages(images);            
             }
             else
             {
@@ -304,22 +295,12 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление изображений.
-        private void UpdateImages(List<Bitmap>[] images)
-        {
+        private void UpdateImages(Bitmap[] images)
+        {         
             for (int i = 0; i < 6; i++)
             {
-                int offset = 0;
-                k[i] = new Bitmap(Constants.WDT, images[i].Count * 8);
-                using (Graphics g = Graphics.FromImage(k[i]))
-                {
-                    foreach (var row in images[i])
-                    {
-                        g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
-                        offset += row.Height;
-                    }
-                }
-                _channels[i].BackgroundImage = k[i];
-                _allChannels[i].BackgroundImage = k[i];
+                _channels[i].BackgroundImage = images[i];
+                _allChannels[i].BackgroundImage = images[i];
             }
         }
 
