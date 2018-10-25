@@ -15,15 +15,15 @@ namespace ReceivingStation.Decode
         public delegate void UiUpdater(uint counter, Bitmap[] list);
         public static UiUpdater ThreadUiUpdater;
         public delegate void StopDecoding();
-        public static StopDecoding ThreadStopDecoding;       
+        public static StopDecoding ThreadStopDecoding;
 
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
         private DirectBitmap[] _bmps = new DirectBitmap[6];
-       
+
         private string _fileName; // Имя открытого файла.
-        private FileInfo _fileInfo; 
+        private FileInfo _fileInfo;
         private FileStream _fs; // Содержимое открытого .dat файла.
         private StreamWriter _sw;
         private string _decodeLogFileName; // Файл для записи информации.
@@ -34,14 +34,14 @@ namespace ReceivingStation.Decode
 
         private int kol_pix;
         private int kol_all;
-       
-        private byte[]in_buf = new byte[Constants.DL_IN_BUF];  //Входной буфер.
+
+        private byte[] in_buf = new byte[Constants.DL_IN_BUF];  //Входной буфер.
         private byte[] vit_buf = new byte[Constants.DL_VIT_BUF]; //Буфер после Витерби.
         private bool[] bits_buf = new bool[Constants.DL_IN_VIT_BUF]; //Битовый массив на 2048 байт.
 
         private int ind_tk_in;
         private int ind_vit; //Счетчик после витерби.
-      
+
         // Для поиска маркера ТК.
         private byte mask_out_tk;
         private int Ind_mar_tk_bit;
@@ -147,6 +147,7 @@ namespace ReceivingStation.Decode
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
 
+            MergeImages();
             Parallel.For(0, 6, SaveImages);
             ThreadStopDecoding();
         }
@@ -482,7 +483,7 @@ namespace ReceivingStation.Decode
             for (i = 0; i < 10; i++)
             {
                 s = s + tk_in[i].ToString("X") + " ";
-            }                
+            }
             _sw.WriteLine($"{s}");
 
             //Тестирование ТК
@@ -506,7 +507,7 @@ namespace ReceivingStation.Decode
                 errs++;
             }
 
-            for (i= 5; i < 8; i++)    //проверка поля меток
+            for (i = 5; i < 8; i++)    //проверка поля меток
                 if (Convert.ToBoolean(tk_in[i]))
                     break;
 
@@ -521,9 +522,10 @@ namespace ReceivingStation.Decode
                 return;
             }
 
+            /////////////////////////////////////////////////////////////////
             Kol_tk++;
             ThreadUiUpdater(Kol_tk, images); // Обновление GUI из потока.
-
+            /////////////////////////////////////////////////////////////////
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -568,8 +570,8 @@ namespace ReceivingStation.Decode
                     {
                         dl_jpeg_in = -1;
                         ind_bt_in = 0;
-                    }                   
-                }                               
+                    }
+                }
             }
         }
 
@@ -591,7 +593,7 @@ namespace ReceivingStation.Decode
 
                 return;
             }
-          
+
             s = " ПП: ";
 
             for (i = 0; i < 20; i++)
@@ -618,7 +620,7 @@ namespace ReceivingStation.Decode
             else
                 i = last_count_pac + 1;
 
-            if (last_count_pac >=0 && data != i)
+            if (last_count_pac >= 0 && data != i)
             {
                 errs++;
                 _sw.WriteLine("    ----- ошибка счетчика пакетов");
@@ -673,16 +675,16 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt))            //новая полоса
             {
-                AddToList(_bmps);
+                AddToList();
                 Yt += 8;
-                ui+=1;
-
+                ui++;
                 if (ui == 20)
                 {
                     MergeImages();
                     ui = 0;
                 }
-                                
+                
+
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
                 _sw.WriteLine($"Миллисекунды: {tm}");
                 _sw.WriteLine($"Микросекунды: {mc}");
@@ -699,10 +701,10 @@ namespace ReceivingStation.Decode
                     }
                 }
 
-                _sw.WriteLine("-----------------------------------------------------------------------");                    
+                _sw.WriteLine("-----------------------------------------------------------------------");
                 tm_last = tm;
             }
-                   
+
 
             if (Convert.ToBoolean(_jpeg.jpeg_buf_in[15]) || Convert.ToBoolean(_jpeg.jpeg_buf_in[16]))
             {
@@ -716,7 +718,7 @@ namespace ReceivingStation.Decode
                 _sw.WriteLine("    ----- ошибка заголовка сегмента");
             }
 
-            Q_Value = _jpeg.jpeg_buf_in[19];    
+            Q_Value = _jpeg.jpeg_buf_in[19];
             if (Q_Value > Constants.MAX_Q)
             {
                 Q_Value = 75;
@@ -727,7 +729,7 @@ namespace ReceivingStation.Decode
 
             PreparePicture();
             ind_bt_in = 0;
-            dl_jpeg_in = -1;    
+            dl_jpeg_in = -1;
         }
 
         #endregion
@@ -759,7 +761,7 @@ namespace ReceivingStation.Decode
                         _bmps[nc].SetPixel(x + j, i, Color.FromArgb(255, Color.FromArgb(color)));
                     }
                 }
-                x += 8;                
+                x += 8;
             }
         }
 
@@ -768,34 +770,43 @@ namespace ReceivingStation.Decode
         #region Сохранение изображений.
         private void SaveImages(int i)
         {
-            //MergeImages();
             images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
         }
 
         #endregion
 
-        private void AddToList(DirectBitmap[] bmps)
+        private void AddToList()
         {
-            for (int i = 0; i < bmps.Length; i++)
+            for (int i = 0; i < _bmps.Length; i++)
             {
-                listImages[i].Add(new Bitmap(bmps[i].Bitmap));
+                listImages[i].Add(new Bitmap(_bmps[i].Bitmap));
             }
         }
-
         private void MergeImages()
         {
+            //Bitmap[] images = new Bitmap[6];
+
             for (int i = 0; i < 6; i++)
-            {
+            {              
                 int offset = 0;
                 images[i] = new Bitmap(Constants.WDT, listImages[i].Count * 8);
                 using (Graphics g = Graphics.FromImage(images[i]))
                 {
+                    g.Clear(Color.White);
                     foreach (var row in listImages[i])
                     {
                         g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
                         offset += row.Height;
                     }
                 }
+            }
+            //return images;
+        }
+        private void DisposeImages()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                images[i].Dispose();
             }
         }
     }
