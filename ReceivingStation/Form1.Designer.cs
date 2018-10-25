@@ -44,17 +44,11 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.pChannel1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.pChannel2 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.pChannel3 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.pChannel4 = new System.Windows.Forms.PictureBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.pChannel5 = new System.Windows.Forms.PictureBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.pChannel6 = new System.Windows.Forms.PictureBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -63,11 +57,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.pACChannel2 = new System.Windows.Forms.PictureBox();
-            this.pACChannel3 = new System.Windows.Forms.PictureBox();
-            this.pACChannel4 = new System.Windows.Forms.PictureBox();
-            this.pACChannel5 = new System.Windows.Forms.PictureBox();
-            this.pACChannel6 = new System.Windows.Forms.PictureBox();
+            this.pACChannel1 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pACChannel2 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pACChannel3 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pACChannel4 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pACChannel5 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pACChannel6 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.slWorkingTime = new System.Windows.Forms.ToolStripStatusLabel();
@@ -112,28 +107,22 @@
             this.lblFramesCounter = new System.Windows.Forms.Label();
             this.btnStartDecode = new System.Windows.Forms.Button();
             this.btnStopDecode = new System.Windows.Forms.Button();
-            this.pACChannel1 = new System.Windows.Forms.PictureBox();
+            this.pChannel1 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pChannel2 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pChannel3 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pChannel4 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pChannel5 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pChannel6 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel2)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel3)).BeginInit();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel4)).BeginInit();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel5)).BeginInit();
             this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel6)).BeginInit();
             this.tabPage7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel6)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.pnlScroll.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -149,7 +138,6 @@
             this.gbNRZ.SuspendLayout();
             this.gbRS.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -292,15 +280,6 @@
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // pChannel1
-            // 
-            this.pChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pChannel1.Location = new System.Drawing.Point(3, 3);
-            this.pChannel1.Name = "pChannel1";
-            this.pChannel1.Size = new System.Drawing.Size(909, 676);
-            this.pChannel1.TabIndex = 0;
-            this.pChannel1.TabStop = false;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.pChannel2);
@@ -311,15 +290,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Канал 2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // pChannel2
-            // 
-            this.pChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pChannel2.Location = new System.Drawing.Point(3, 3);
-            this.pChannel2.Name = "pChannel2";
-            this.pChannel2.Size = new System.Drawing.Size(909, 676);
-            this.pChannel2.TabIndex = 0;
-            this.pChannel2.TabStop = false;
             // 
             // tabPage3
             // 
@@ -332,15 +302,6 @@
             this.tabPage3.Text = "Канал 3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // pChannel3
-            // 
-            this.pChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pChannel3.Location = new System.Drawing.Point(3, 3);
-            this.pChannel3.Name = "pChannel3";
-            this.pChannel3.Size = new System.Drawing.Size(909, 676);
-            this.pChannel3.TabIndex = 0;
-            this.pChannel3.TabStop = false;
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.pChannel4);
@@ -351,15 +312,6 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Канал 4";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // pChannel4
-            // 
-            this.pChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pChannel4.Location = new System.Drawing.Point(3, 3);
-            this.pChannel4.Name = "pChannel4";
-            this.pChannel4.Size = new System.Drawing.Size(909, 676);
-            this.pChannel4.TabIndex = 0;
-            this.pChannel4.TabStop = false;
             // 
             // tabPage5
             // 
@@ -372,15 +324,6 @@
             this.tabPage5.Text = "Канал 5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // pChannel5
-            // 
-            this.pChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pChannel5.Location = new System.Drawing.Point(3, 3);
-            this.pChannel5.Name = "pChannel5";
-            this.pChannel5.Size = new System.Drawing.Size(909, 676);
-            this.pChannel5.TabIndex = 0;
-            this.pChannel5.TabStop = false;
-            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.pChannel6);
@@ -391,15 +334,6 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Канал 6";
             this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // pChannel6
-            // 
-            this.pChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pChannel6.Location = new System.Drawing.Point(3, 3);
-            this.pChannel6.Name = "pChannel6";
-            this.pChannel6.Size = new System.Drawing.Size(909, 676);
-            this.pChannel6.TabIndex = 0;
-            this.pChannel6.TabStop = false;
             // 
             // tabPage7
             // 
@@ -429,12 +363,12 @@
             this.tableLayoutPanel2.Controls.Add(this.label4, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.label5, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.label6, 5, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel1, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel2, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel3, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel4, 3, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel5, 4, 1);
             this.tableLayoutPanel2.Controls.Add(this.pACChannel6, 5, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel1, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -504,50 +438,59 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Канал 6";
             // 
+            // pACChannel1
+            // 
+            this.pACChannel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pACChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pACChannel1.Location = new System.Drawing.Point(3, 43);
+            this.pACChannel1.Name = "pACChannel1";
+            this.pACChannel1.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel1.TabIndex = 6;
+            // 
             // pACChannel2
             // 
+            this.pACChannel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pACChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel2.Location = new System.Drawing.Point(154, 43);
             this.pACChannel2.Name = "pACChannel2";
             this.pACChannel2.Size = new System.Drawing.Size(145, 630);
-            this.pACChannel2.TabIndex = 13;
-            this.pACChannel2.TabStop = false;
+            this.pACChannel2.TabIndex = 7;
             // 
             // pACChannel3
             // 
+            this.pACChannel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pACChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel3.Location = new System.Drawing.Point(305, 43);
             this.pACChannel3.Name = "pACChannel3";
             this.pACChannel3.Size = new System.Drawing.Size(145, 630);
-            this.pACChannel3.TabIndex = 14;
-            this.pACChannel3.TabStop = false;
+            this.pACChannel3.TabIndex = 8;
             // 
             // pACChannel4
             // 
+            this.pACChannel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pACChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel4.Location = new System.Drawing.Point(456, 43);
             this.pACChannel4.Name = "pACChannel4";
             this.pACChannel4.Size = new System.Drawing.Size(145, 630);
-            this.pACChannel4.TabIndex = 15;
-            this.pACChannel4.TabStop = false;
+            this.pACChannel4.TabIndex = 9;
             // 
             // pACChannel5
             // 
+            this.pACChannel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pACChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel5.Location = new System.Drawing.Point(607, 43);
             this.pACChannel5.Name = "pACChannel5";
             this.pACChannel5.Size = new System.Drawing.Size(145, 630);
-            this.pACChannel5.TabIndex = 16;
-            this.pACChannel5.TabStop = false;
+            this.pACChannel5.TabIndex = 10;
             // 
             // pACChannel6
             // 
+            this.pACChannel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pACChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel6.Location = new System.Drawing.Point(758, 43);
             this.pACChannel6.Name = "pACChannel6";
             this.pACChannel6.Size = new System.Drawing.Size(148, 630);
-            this.pACChannel6.TabIndex = 17;
-            this.pACChannel6.TabStop = false;
+            this.pACChannel6.TabIndex = 11;
             // 
             // statusStrip1
             // 
@@ -1093,14 +1036,59 @@
             this.btnStopDecode.UseVisualStyleBackColor = false;
             this.btnStopDecode.Click += new System.EventHandler(this.btnStopDecode_Click);
             // 
-            // pACChannel1
+            // pChannel1
             // 
-            this.pACChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel1.Location = new System.Drawing.Point(3, 43);
-            this.pACChannel1.Name = "pACChannel1";
-            this.pACChannel1.Size = new System.Drawing.Size(145, 630);
-            this.pACChannel1.TabIndex = 18;
-            this.pACChannel1.TabStop = false;
+            this.pChannel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChannel1.Location = new System.Drawing.Point(3, 3);
+            this.pChannel1.Name = "pChannel1";
+            this.pChannel1.Size = new System.Drawing.Size(909, 676);
+            this.pChannel1.TabIndex = 0;
+            // 
+            // pChannel2
+            // 
+            this.pChannel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChannel2.Location = new System.Drawing.Point(3, 3);
+            this.pChannel2.Name = "pChannel2";
+            this.pChannel2.Size = new System.Drawing.Size(909, 676);
+            this.pChannel2.TabIndex = 0;
+            // 
+            // pChannel3
+            // 
+            this.pChannel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChannel3.Location = new System.Drawing.Point(3, 3);
+            this.pChannel3.Name = "pChannel3";
+            this.pChannel3.Size = new System.Drawing.Size(909, 676);
+            this.pChannel3.TabIndex = 0;
+            // 
+            // pChannel4
+            // 
+            this.pChannel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChannel4.Location = new System.Drawing.Point(3, 3);
+            this.pChannel4.Name = "pChannel4";
+            this.pChannel4.Size = new System.Drawing.Size(909, 676);
+            this.pChannel4.TabIndex = 0;
+            // 
+            // pChannel5
+            // 
+            this.pChannel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChannel5.Location = new System.Drawing.Point(3, 3);
+            this.pChannel5.Name = "pChannel5";
+            this.pChannel5.Size = new System.Drawing.Size(909, 676);
+            this.pChannel5.TabIndex = 0;
+            // 
+            // pChannel6
+            // 
+            this.pChannel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChannel6.Location = new System.Drawing.Point(3, 3);
+            this.pChannel6.Name = "pChannel6";
+            this.pChannel6.Size = new System.Drawing.Size(909, 676);
+            this.pChannel6.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -1123,25 +1111,14 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel2)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel3)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel4)).EndInit();
             this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel5)).EndInit();
             this.tabPage6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel6)).EndInit();
             this.tabPage7.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel6)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlScroll.ResumeLayout(false);
@@ -1167,7 +1144,6 @@
             this.gbRS.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1242,21 +1218,21 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pACChannel2;
-        private System.Windows.Forms.PictureBox pACChannel3;
-        private System.Windows.Forms.PictureBox pACChannel4;
-        private System.Windows.Forms.PictureBox pACChannel5;
-        private System.Windows.Forms.PictureBox pACChannel6;
-        private System.Windows.Forms.PictureBox pChannel1;
-        private System.Windows.Forms.PictureBox pChannel2;
-        private System.Windows.Forms.PictureBox pChannel3;
-        private System.Windows.Forms.PictureBox pChannel4;
-        private System.Windows.Forms.PictureBox pChannel5;
-        private System.Windows.Forms.PictureBox pChannel6;
         private System.Windows.Forms.ToolStripMenuItem tsmiStopDecoding;
         private System.Windows.Forms.ToolStripStatusLabel slWorkingTime;
         private System.Windows.Forms.Button btnStartRecieve;
-        private System.Windows.Forms.PictureBox pACChannel1;
+        private Other.DoubleBufferedPanel pACChannel1;
+        private Other.DoubleBufferedPanel pACChannel2;
+        private Other.DoubleBufferedPanel pACChannel3;
+        private Other.DoubleBufferedPanel pACChannel4;
+        private Other.DoubleBufferedPanel pACChannel5;
+        private Other.DoubleBufferedPanel pACChannel6;
+        private Other.DoubleBufferedPanel pChannel1;
+        private Other.DoubleBufferedPanel pChannel2;
+        private Other.DoubleBufferedPanel pChannel3;
+        private Other.DoubleBufferedPanel pChannel4;
+        private Other.DoubleBufferedPanel pChannel5;
+        private Other.DoubleBufferedPanel pChannel6;
     }
 }
 

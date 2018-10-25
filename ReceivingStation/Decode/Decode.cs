@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -10,19 +12,14 @@ namespace ReceivingStation.Decode
 {
     class Decode
     {
-
-
-        public delegate void UIUPdater(uint counter, DirectBitmap[] bmps);
-        public static UIUPdater ThreadUIUPdater;
-
-        public delegate void CounterUpdater(uint counter);
-        public static CounterUpdater ThreadCounterUpdater;
-        public delegate void ImageUpdater(DirectBitmap[] bmps);
-        public static ImageUpdater ThreadImageUpdater;
+        public delegate void UiUpdater(uint counter, List<Bitmap>[] list);
+        public static UiUpdater ThreadUiUpdater;
 
         public delegate void StopDecoding();
-        public static StopDecoding ThreadStopDecoding; 
-         
+        public static StopDecoding ThreadStopDecoding;
+
+        private List<Bitmap>[] listImages = new List<Bitmap>[6];
+
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
@@ -101,6 +98,7 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < 6; i++)
             {
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
+                listImages[i] = new List<Bitmap>();
             }
 
             Init();
@@ -522,9 +520,8 @@ namespace ReceivingStation.Decode
             }
 
             Kol_tk++;
-            ThreadCounterUpdater(Kol_tk); // Обновление GUI из потока.
-            //ThreadImageUpdater(_bmps);
-            //ThreadUIUPdater(Kol_tk, _bmps);
+            ThreadUiUpdater(Kol_tk, listImages); // Обновление GUI из потока.
+
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -674,8 +671,7 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt))            //новая полоса
             {
-                //ThreadUIUPdater(Kol_tk, _bmps);
-                ThreadImageUpdater(_bmps);
+                AddToList(_bmps);
                 Yt += 8;
                 
                                 
@@ -768,5 +764,13 @@ namespace ReceivingStation.Decode
         }
 
         #endregion
+
+        private void AddToList(DirectBitmap[] bmps)
+        {
+            for (int i = 0; i < bmps.Length; i++)
+            {
+                listImages[i].Add(new Bitmap(bmps[i].Bitmap));
+            }
+        }
     }
 }

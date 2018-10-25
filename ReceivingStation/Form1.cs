@@ -21,14 +21,13 @@ namespace ReceivingStation
         private bool _remoteModeFlag;
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
-        private PictureBox[] _channels = new PictureBox[6];
-        private PictureBox[] _allChannels = new PictureBox[6];
+        private DoubleBufferedPanel[] _channels = new DoubleBufferedPanel[6];
+        private DoubleBufferedPanel[] _allChannels = new DoubleBufferedPanel[6];
         private DateTime _startWorkingTime;
 
-        private List<Bitmap>[] listImages = new List<Bitmap>[6];
-        private DirectBitmap[] listItem = new DirectBitmap[6];
+        private int ui;
         private Bitmap[] k = new Bitmap[6];
-        private MemoryStream[] ms = new MemoryStream[6];
+        
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -44,10 +43,7 @@ namespace ReceivingStation
             _remoteModeFlag = false;
             slWorkingTime.Text = $"{(long)Settings.Default.WorkingTime.TotalHours}:{Settings.Default.WorkingTime.Minutes}:{Settings.Default.WorkingTime.Seconds}";
 
-            Decode.Decode.ThreadCounterUpdater = UpdateCounter;
-            Decode.Decode.ThreadImageUpdater = UpdateImage;
-            Decode.Decode.ThreadUIUPdater = UpdateCounter;
-
+            Decode.Decode.ThreadUiUpdater = UpdateUi;
             Decode.Decode.ThreadStopDecoding = StopDecoding;
             Server.Server.ThreadChangeMode = ChangeMode;
             Server.Server.ThreadSetParameters = RemoteSetReceiveParameters;
@@ -70,13 +66,7 @@ namespace ReceivingStation
             _startWorkingTime = DateTime.Now;
 
             timer1.Start();
-
-            for (int i = 0; i < listImages.Length; i++)
-            {
-                listImages[i] = new List<Bitmap>();
-                ms[i] = new MemoryStream();
-            }
-
+            ui = 0;
             var server = new Server.Server();
             Task.Run(() => server.StartServer());          
         }
@@ -264,52 +254,26 @@ namespace ReceivingStation
 
         #endregion
 
-        private void UpdateCounter(uint counter, DirectBitmap[] images)
+        #region Обновление пользовательского интерфейса при декодировании.
+        private void UpdateUi(uint counter, List<Bitmap>[] images)
         {
             if (InvokeRequired == false)
             {
                 lblFramesCounter.Text = counter.ToString();
-                UI(images);
-
+                ui += 1;
+                if (ui == 100)
+                {
+                    UpdateImages(images);
+                    ui = 0;
+                }               
             }
             else
             {
-                Decode.Decode.UIUPdater update = UpdateCounter;
-                Invoke(update, counter, images);
+                Decode.Decode.UiUpdater updateUi = UpdateUi;
+                Invoke(updateUi, counter, images);
             }
         }
-
-        #region Обновление счетчика кадров при декодировании.
-        private void UpdateCounter(uint counter)
-        {
-            if (InvokeRequired == false)
-            {
-                lblFramesCounter.Text = counter.ToString();
-            }
-            else
-            {
-                Decode.Decode.UIUPdater update = UpdateCounter;
-                Invoke(update, counter);
-            }
-        }
-
-        #endregion
-
-        #region Обновление изображений при декодировании.
-        private void UpdateImage(DirectBitmap[] images)
-        {
-            if (InvokeRequired == false)
-            {
-                UI(images);
-            }
-            else
-            {
-                Decode.Decode.ImageUpdater update = UpdateImage;
-                Invoke(update, images);
-            }
-        }
-
-        #endregion
+        #endregion   
 
         #region Остановка декодирования.
         private void StopDecoding()
@@ -340,32 +304,22 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление изображений.
-        private void UI(DirectBitmap[] images)
+        private void UpdateImages(List<Bitmap>[] images)
         {
-            for (int i = 0; i < images.Length; i++)
-            {
-                images[i].Bitmap.Save(ms[i], System.Drawing.Imaging.ImageFormat.Bmp);
-                listImages[i].Add(new Bitmap(ms[i]));
-            }
-
-
-            for (int i = 0; i < images.Length; i++)
+            for (int i = 0; i < 6; i++)
             {
                 int offset = 0;
-                k[i] = new Bitmap(Constants.WDT, listImages[i].Count * 8);
+                k[i] = new Bitmap(Constants.WDT, images[i].Count * 8);
                 using (Graphics g = Graphics.FromImage(k[i]))
                 {
-                    g.Clear(Color.Black);
-                    foreach (var row in listImages[i])
+                    foreach (var row in images[i])
                     {
                         g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
                         offset += row.Height;
                     }
-
-                    g.Save();
                 }
-                _channels[i].Image = k[i];
-                _allChannels[i].Image = k[i];
+                _channels[i].BackgroundImage = k[i];
+                _allChannels[i].BackgroundImage = k[i];
             }
         }
 
