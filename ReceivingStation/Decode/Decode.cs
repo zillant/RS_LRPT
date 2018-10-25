@@ -76,6 +76,7 @@ namespace ReceivingStation.Decode
         private bool last_bit_in;
 
         private int ui;
+        private int rc;
         private Bitmap[] images = new Bitmap[6];
         private List<Bitmap>[] listImages = new List<Bitmap>[6];
 
@@ -676,11 +677,12 @@ namespace ReceivingStation.Decode
             if (tm != tm_last && !Convert.ToBoolean(Xt))            //новая полоса
             {
                 AddToList();
+                DisposeImages();
                 Yt += 8;
                 ui++;
                 if (ui == 20)
                 {
-                    MergeImages();
+                    images = MergeImages();
                     ui = 0;
                 }
                 
@@ -742,6 +744,7 @@ namespace ReceivingStation.Decode
             int num, nc;
 
             nc = apid - Constants.APID_1;		//номер канала
+            rc = nc;
             if (nc < 0 || nc > 5)
             {
                 return;
@@ -782,9 +785,9 @@ namespace ReceivingStation.Decode
                 listImages[i].Add(new Bitmap(_bmps[i].Bitmap));
             }
         }
-        private void MergeImages()
+        private Bitmap[] MergeImages()
         {
-            //Bitmap[] images = new Bitmap[6];
+            Bitmap[] images = new Bitmap[6];
 
             for (int i = 0; i < 6; i++)
             {              
@@ -800,13 +803,17 @@ namespace ReceivingStation.Decode
                     }
                 }
             }
-            //return images;
+            return images;
         }
         private void DisposeImages()
         {
             for (int i = 0; i < 6; i++)
             {
-                images[i].Dispose();
+                _bmps[i].Dispose();
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                _bmps[i] = new DirectBitmap(Constants.WDT, 8);
             }
         }
     }
