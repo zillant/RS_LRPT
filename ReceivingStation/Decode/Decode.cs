@@ -675,7 +675,7 @@ namespace ReceivingStation.Decode
                 AddImagesRowsToList();          
                 Yt += 8;
 
-                if (Yt % 80 == 0)
+                if (Yt % 800 == 0)
                 {
                     _images = MergeImages();
                 }
