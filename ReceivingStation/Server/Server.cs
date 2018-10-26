@@ -14,6 +14,8 @@ namespace ReceivingStation.Server
         public static SetParameters ThreadSetParameters;
         public delegate void StartReceiving();
         public static StartReceiving ThreadStartReceiving;
+        public delegate void StopReceiving();
+        public static StopReceiving ThreadStopReceiving;
 
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
@@ -232,7 +234,7 @@ namespace ReceivingStation.Server
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    // остановить запись
+                    ThreadStopReceiving();
                 }
                 else
                 {

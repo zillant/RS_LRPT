@@ -74,6 +74,7 @@ namespace ReceivingStation
             Server.Server.ThreadChangeMode = ChangeMode;
             Server.Server.ThreadSetParameters = RemoteSetReceiveParameters;
             Server.Server.ThreadStartReceiving = RemoteStartReceiving;
+            Server.Server.ThreadStopReceiving = RemoteStopReceiving;
 
             _channels[0] = pChannel1;
             _channels[1] = pChannel2;
@@ -287,6 +288,22 @@ namespace ReceivingStation
             if (InvokeRequired == false)
             {
                 StartReceiving();
+            }
+            else
+            {
+                Server.Server.StartReceiving remoteStartReceiving = RemoteStartReceiving;
+                Invoke(remoteStartReceiving);
+            }
+        }
+
+        #endregion
+
+        #region Остановить прием потока в дистанционном режиме управления.
+        public void RemoteStopReceiving()
+        {
+            if (InvokeRequired == false)
+            {
+                StopReceiving();
             }
             else
             {
