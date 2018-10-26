@@ -672,10 +672,10 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {
-                AddImagesToList();          
+                AddImagesRowsToList();          
                 Yt += 8;
 
-                if (Yt % 160 == 0)
+                if (Yt % 80 == 0)
                 {
                     _images = MergeImages();
                 }
@@ -764,7 +764,7 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Добавление полосы изображения в список.
-        private void AddImagesToList()
+        private void AddImagesRowsToList()
         {
             for (int i = 0; i < _bmps.Length; i++)
             {
