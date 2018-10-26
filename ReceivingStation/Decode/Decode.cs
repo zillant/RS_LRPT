@@ -144,6 +144,7 @@ namespace ReceivingStation.Decode
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
 
+
             _images = MergeImages();
             Parallel.For(0, 6, SaveImages);
             ThreadStopDecoding();
@@ -518,9 +519,9 @@ namespace ReceivingStation.Decode
             {
                 return;
             }
-
-            /////////////////////////////////////////////////////////////////
+           
             Kol_tk++;
+            /////////////////////////////////////////////////////////////////
             ThreadUiUpdater(Kol_tk, _images); // Обновление GUI из потока.
             /////////////////////////////////////////////////////////////////
 

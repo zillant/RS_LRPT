@@ -40,8 +40,6 @@
             this.остановитьПриемToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStartDecoding = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStopDecoding = new System.Windows.Forms.ToolStripMenuItem();
-            this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pChannel1 = new ReceivingStation.Other.DoubleBufferedPanel();
@@ -144,8 +142,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.управлениеToolStripMenuItem,
-            this.помощьToolStripMenuItem});
+            this.управлениеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1188, 24);
@@ -235,22 +232,6 @@
             this.tsmiStopDecoding.Size = new System.Drawing.Size(299, 22);
             this.tsmiStopDecoding.Text = "Остановить расшифровку данных";
             this.tsmiStopDecoding.Click += new System.EventHandler(this.tsmiStopDecoding_Click);
-            // 
-            // помощьToolStripMenuItem
-            // 
-            this.помощьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.справкаToolStripMenuItem});
-            this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
-            this.помощьToolStripMenuItem.Text = "Помощь";
-            // 
-            // справкаToolStripMenuItem
-            // 
-            this.справкаToolStripMenuItem.Image = global::ReceivingStation.Properties.Resources.help_icon;
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.справкаToolStripMenuItem.Text = "Справка";
             // 
             // tabControl1
             // 
@@ -1152,7 +1133,6 @@
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.ToolStripMenuItem tsmiFileOpen;
         private System.Windows.Forms.TabControl tabControl1;
@@ -1196,7 +1176,6 @@
         private System.Windows.Forms.ToolStripMenuItem начатьПриемToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem остановитьПриемToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiStartDecoding;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem tsmiSettings;
         private System.Windows.Forms.Panel pnlScroll;
