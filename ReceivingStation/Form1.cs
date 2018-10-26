@@ -16,6 +16,10 @@ namespace ReceivingStation
 {
     public partial class MainForm : Form
     {
+        private const int _timeForSaveWorkingTime = 1800; // Время для таймера, через которое нужно сохранять время наработки в файл (30 минут). 
+        private const string _workingTimeKPAFileName = "working_time_kpa.txt";
+        private const string _workingTimeSystemFileName = "working_time_system.txt";
+
         private Decode.Decode _decode;
         private string _fileName;
         private bool _remoteModeFlag;
@@ -23,8 +27,14 @@ namespace ReceivingStation
         private CancellationToken _cancellationToken;
         private DoubleBufferedPanel[] _channels = new DoubleBufferedPanel[6];
         private DoubleBufferedPanel[] _allChannels = new DoubleBufferedPanel[6];
-        private DateTime _startWorkingTime;    
 
+        private DateTime _startWorkingTimeKPA; // Время начала работы КПА.
+        private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
+        private TimeSpan _fullWorkingTimeKPA;
+        private TimeSpan _fullWorkingTimeSystem;
+
+        private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
+        private bool _isReceivingStarting;
         // Параметры приема битового потока.
         private byte _fcp;
         private byte _prd;
@@ -37,7 +47,27 @@ namespace ReceivingStation
 
             tabControl1.SelectedTab = tabPage7;
             _remoteModeFlag = false;
-            slWorkingTime.Text = $"{(long)Settings.Default.WorkingTime.TotalHours}:{Settings.Default.WorkingTime.Minutes}:{Settings.Default.WorkingTime.Seconds}";
+            _startWorkingTimeKPA = DateTime.Now;
+
+            try
+            {
+                ReadFromLogWorkingTime(_workingTimeKPAFileName, out _fullWorkingTimeKPA, slWorkingTimeKPA);
+            }
+            catch (Exception)
+            {
+                WriteToLogWorkingTime(_workingTimeKPAFileName, "0:0:0");
+                ReadFromLogWorkingTime(_workingTimeKPAFileName, out _fullWorkingTimeKPA, slWorkingTimeKPA);
+            }
+
+            try
+            {
+                ReadFromLogWorkingTime(_workingTimeSystemFileName, out _fullWorkingTimeSystem, slWorkingTimeSystem);
+            }
+            catch (Exception)
+            {
+                WriteToLogWorkingTime(_workingTimeSystemFileName, "0:0:0");
+                ReadFromLogWorkingTime(_workingTimeSystemFileName, out _fullWorkingTimeSystem, slWorkingTimeSystem);
+            }
 
             Decode.Decode.ThreadUiUpdater = UpdateUi;
             Decode.Decode.ThreadStopDecoding = StopDecoding;
@@ -59,17 +89,19 @@ namespace ReceivingStation
             _allChannels[4] = pACChannel5;
             _allChannels[5] = pACChannel6;
 
-            _startWorkingTime = DateTime.Now;
-
+            _startWorkingTimeKPA = DateTime.Now;
+            _counterForSaveWorkingTime = _timeForSaveWorkingTime;
             timer1.Start();
 
+            _isReceivingStarting = false;
             var server = new Server.Server();
             Task.Run(() => server.StartServer());          
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {           
-            CountWorkingTime();
+            CountWorkingTime(ref _fullWorkingTimeKPA);
+            WriteToLogWorkingTime(_workingTimeKPAFileName, _fullWorkingTimeKPA.ToString());
         }
 
         private void tsmiExit_Click(object sender, EventArgs e)
@@ -116,7 +148,18 @@ namespace ReceivingStation
 
         private void btnStartRecieve_Click(object sender, EventArgs e)
         {
+            _isReceivingStarting = true;
+            btnStartRecieve.Enabled = false;
+            btnStopRecieve.Enabled = true;
             StartReceiving();
+        }
+
+        private void btnStopRecieve_Click(object sender, EventArgs e)
+        {
+            _isReceivingStarting = false;
+            btnStartRecieve.Enabled = true;
+            btnStopRecieve.Enabled = false;
+            StopReceiving();
         }
 
         private void btnStartDecode_Click(object sender, EventArgs e)
@@ -131,7 +174,22 @@ namespace ReceivingStation
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);            
+            slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+            if (_counterForSaveWorkingTime > 0)
+            {
+                _counterForSaveWorkingTime = _counterForSaveWorkingTime - 1;
+            }
+            else
+            {
+                CountWorkingTime(ref _fullWorkingTimeKPA);
+                WriteToLogWorkingTime(_workingTimeKPAFileName, _fullWorkingTimeKPA.ToString());
+                if (_isReceivingStarting)
+                {
+                    CountWorkingTime(ref _fullWorkingTimeSystem);
+                    WriteToLogWorkingTime(_workingTimeSystemFileName, _fullWorkingTimeSystem.ToString());
+                }
+                _counterForSaveWorkingTime = _timeForSaveWorkingTime;
+            }
         }
 
         #region Смена режима управления.
@@ -144,7 +202,7 @@ namespace ReceivingStation
                     // Дистанционное управление
                     Enabled = false;
                     slMode.Text = "Дистанционное управление";
-                    WriteToLog("Дистанционное управление");
+                    WriteToLogUserActions("Дистанционное управление");
                     _remoteModeFlag = true;
                 }
                 else if (modeNumber == 1)
@@ -152,7 +210,7 @@ namespace ReceivingStation
                     // Местное управление
                     Enabled = true;
                     slMode.Text = "Местное управление";
-                    WriteToLog("Местное управление");
+                    WriteToLogUserActions("Местное управление");
                     _remoteModeFlag = false;
                 }
             }
@@ -174,7 +232,7 @@ namespace ReceivingStation
                 _prd = prd;
                 _freq = freq;
                 _interliving = interliving;
-                WriteToLog($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
+                WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
             }
             else
             {
@@ -192,7 +250,7 @@ namespace ReceivingStation
             _prd = Convert.ToByte((rbPRDMain.Checked) ? 0x1 : 0x2);
             _freq = Convert.ToByte((rbFreq1.Checked) ? 0x1 : 0x2);
             _interliving = Convert.ToByte((rbInterlivingReceiveOn.Checked) ? 0x1 : 0x2);
-            WriteToLog($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
+            WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
         }
 
         #endregion
@@ -204,11 +262,21 @@ namespace ReceivingStation
             {
                 LocalSetReceiveParameters();
             }
+            _startWorkingTimeOnboard = DateTime.Now;
 
-            WriteToLog("Запись потока начата");
+            WriteToLogUserActions("Запись потока начата");
             // Receiver receiver = new Receiver(_fcp, _prd, _freq, _interliving);
             // receiver.StartReceive();
 
+        }
+
+        #endregion
+
+        #region Остановить прием потока.
+        public void StopReceiving()
+        {
+            CountWorkingTime(ref _fullWorkingTimeSystem);
+            WriteToLogWorkingTime(_workingTimeSystemFileName, _fullWorkingTimeSystem.ToString());
         }
 
         #endregion
@@ -306,23 +374,45 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Расчет времени наработки.
-        private void CountWorkingTime()
-        {
-            DateTime finishWorkingTime = DateTime.Now;
-            TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTime;
-            Settings.Default.WorkingTime += deltaWorkingTime;
-            Settings.Default.Save();
-        }
-
-        #endregion
-
-        #region Запись в лог файл.
-        private void WriteToLog(string logMessage)
+        #region Запись в лог файл действий пользователя.
+        private void WriteToLogUserActions(string logMessage)
         {
             using (StreamWriter sw = new StreamWriter("log.txt", true, Encoding.UTF8, 65536))
             {
                 sw.WriteLine($"{DateTime.Now} - {logMessage}");
+            }
+        }
+
+        #endregion
+
+        #region Расчет времени наработки.
+        private void CountWorkingTime(ref TimeSpan fullWorkingTime)
+        {
+            DateTime finishWorkingTime = DateTime.Now;
+            TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTimeKPA;
+            fullWorkingTime += deltaWorkingTime;
+        }
+
+        #endregion
+
+        #region Запись в лог файл времени наработки.
+        private void WriteToLogWorkingTime(string fileName, string time)
+        {
+            using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8, 65536))
+            {
+                sw.WriteLine(time);
+            }
+        }
+
+        #endregion
+
+        #region Чтение из лог файла времени наработки.
+        private void ReadFromLogWorkingTime(string fileName, out TimeSpan fullWorkingTime, ToolStripStatusLabel WorkingTimeLabel)
+        {
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                fullWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                WorkingTimeLabel.Text = $"{(long)fullWorkingTime.TotalHours}:{fullWorkingTime.Minutes}:{fullWorkingTime.Seconds}";              
             }
         }
 

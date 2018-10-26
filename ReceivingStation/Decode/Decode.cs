@@ -97,7 +97,7 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < 6; i++)
             {
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
-                _listImages[i] = new List<Bitmap>();
+                _listImages[i] = new List<Bitmap>();              
             }
 
             Init();
@@ -144,8 +144,9 @@ namespace ReceivingStation.Decode
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
 
-
             _images = MergeImages();
+           
+            
             Parallel.For(0, 6, SaveImages);
             ThreadStopDecoding();
         }
@@ -782,20 +783,31 @@ namespace ReceivingStation.Decode
         {
             Bitmap[] localImages = new Bitmap[6];
 
-            for (int i = 0; i < localImages.Length; i++)
+            if (_listImages[0].Count > 0)
             {
-                int offset = 0;
-                localImages[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
-                using (Graphics g = Graphics.FromImage(localImages[i]))
+                for (int i = 0; i < localImages.Length; i++)
                 {
-                    g.Clear(Color.White);
-                    foreach (var row in _listImages[i])
+                    int offset = 0;
+                    localImages[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
+                    using (Graphics g = Graphics.FromImage(localImages[i]))
                     {
-                        g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
-                        offset += row.Height;
+                        g.Clear(Color.White);
+                        foreach (var row in _listImages[i])
+                        {
+                            g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
+                            offset += row.Height;
+                        }
                     }
                 }
             }
+            else // Костыль от зависания когда был выбран NRZ там, где он не должен быть.
+            {
+                for (int i = 0; i < localImages.Length; i++)
+                {
+                    localImages[i] = new Bitmap(Constants.WDT, 8);
+                }
+            }
+            
             return localImages;
         }
 
