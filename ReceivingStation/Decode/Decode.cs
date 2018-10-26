@@ -20,7 +20,9 @@ namespace ReceivingStation.Decode
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
-        private DirectBitmap[] _bmps = new DirectBitmap[6];
+        private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
+        private Bitmap[] _images = new Bitmap[6]; // Результирующие изображения после слияния строк из списка.
+        private List<Bitmap>[] _listImages = new List<Bitmap>[6]; // Список полос изображений для каждого канала.
 
         private string _fileName; // Имя открытого файла.
         private FileInfo _fileInfo;
@@ -75,11 +77,6 @@ namespace ReceivingStation.Decode
         private bool _isNrz; // Состояние checkBox "НРЗ".
         private bool last_bit_in;
 
-        private int ui;
-        private int rc;
-        private Bitmap[] images = new Bitmap[6];
-        private List<Bitmap>[] listImages = new List<Bitmap>[6];
-
         #region Конструктор.
         public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
         {
@@ -100,11 +97,10 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < 6; i++)
             {
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
-                listImages[i] = new List<Bitmap>();
+                _listImages[i] = new List<Bitmap>();
             }
 
             Init();
-            ui = 0;
         }
 
         #endregion
@@ -148,7 +144,7 @@ namespace ReceivingStation.Decode
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
 
-            MergeImages();
+            _images = MergeImages();
             Parallel.For(0, 6, SaveImages);
             ThreadStopDecoding();
         }
@@ -525,7 +521,7 @@ namespace ReceivingStation.Decode
 
             /////////////////////////////////////////////////////////////////
             Kol_tk++;
-            ThreadUiUpdater(Kol_tk, images); // Обновление GUI из потока.
+            ThreadUiUpdater(Kol_tk, _images); // Обновление GUI из потока.
             /////////////////////////////////////////////////////////////////
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
@@ -674,19 +670,16 @@ namespace ReceivingStation.Decode
                 errs++;
             }
 
-            if (tm != tm_last && !Convert.ToBoolean(Xt))            //новая полоса
+            if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {
-                AddToList();
-                DisposeImages();
+                AddImagesToList();          
                 Yt += 8;
-                ui++;
-                if (ui == 20)
+
+                if (Yt % 160 == 0)
                 {
-                    images = MergeImages();
-                    ui = 0;
+                    _images = MergeImages();
                 }
                 
-
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
                 _sw.WriteLine($"Миллисекунды: {tm}");
                 _sw.WriteLine($"Микросекунды: {mc}");
@@ -736,7 +729,7 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Формирование картинки.
+        #region Формирование изображения.
 
         private void PreparePicture()
         {
@@ -744,7 +737,7 @@ namespace ReceivingStation.Decode
             int num, nc;
 
             nc = apid - Constants.APID_1;		//номер канала
-            rc = nc;
+
             if (nc < 0 || nc > 5)
             {
                 return;
@@ -770,51 +763,49 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Сохранение изображений.
-        private void SaveImages(int i)
+        #region Добавление полосы изображения в список.
+        private void AddImagesToList()
         {
-            images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+            for (int i = 0; i < _bmps.Length; i++)
+            {
+                _listImages[i].Add(new Bitmap(_bmps[i].Bitmap));
+                _bmps[i].Dispose();
+                _bmps[i] = new DirectBitmap(Constants.WDT, 8);
+            }
         }
 
         #endregion
 
-        private void AddToList()
-        {
-            for (int i = 0; i < _bmps.Length; i++)
-            {
-                listImages[i].Add(new Bitmap(_bmps[i].Bitmap));
-            }
-        }
+        #region Получение изображения из списка.
         private Bitmap[] MergeImages()
         {
-            Bitmap[] images = new Bitmap[6];
+            Bitmap[] localImages = new Bitmap[6];
 
-            for (int i = 0; i < 6; i++)
-            {              
+            for (int i = 0; i < localImages.Length; i++)
+            {
                 int offset = 0;
-                images[i] = new Bitmap(Constants.WDT, listImages[i].Count * 8);
-                using (Graphics g = Graphics.FromImage(images[i]))
+                localImages[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
+                using (Graphics g = Graphics.FromImage(localImages[i]))
                 {
                     g.Clear(Color.White);
-                    foreach (var row in listImages[i])
+                    foreach (var row in _listImages[i])
                     {
                         g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
                         offset += row.Height;
                     }
                 }
             }
-            return images;
+            return localImages;
         }
-        private void DisposeImages()
+
+        #endregion
+
+        #region Сохранение изображений.
+        private void SaveImages(int i)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                _bmps[i].Dispose();
-            }
-            for (int i = 0; i < 6; i++)
-            {
-                _bmps[i] = new DirectBitmap(Constants.WDT, 8);
-            }
+            _images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
         }
+
+        #endregion
     }
 }
