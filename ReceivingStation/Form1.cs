@@ -1,16 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ReceivingStation.Decode;
 using ReceivingStation.Other;
-using ReceivingStation.Properties;
 using System.Text;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 
 namespace ReceivingStation
 {
@@ -75,7 +70,8 @@ namespace ReceivingStation
             _allChannels[3] = pACChannel4;
             _allChannels[4] = pACChannel5;
             _allChannels[5] = pACChannel6;
-           
+
+            slTime.Text = DateTime.Now.ToString();
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
 
             timer1.Start();
@@ -155,6 +151,8 @@ namespace ReceivingStation
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            slTime.Text = DateTime.Now.ToString();
+
             _counterForSaveWorkingTime -= 1;
 
             if (_counterForSaveWorkingTime == 0)
@@ -167,7 +165,6 @@ namespace ReceivingStation
                 }
                 _counterForSaveWorkingTime = _timeForSaveWorkingTime;
             }
-
         }
 
         private void DoubleBufferedPanel_BackgroundImageChanged(object sender, EventArgs e)

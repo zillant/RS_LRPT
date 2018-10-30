@@ -97,6 +97,7 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < 6; i++)
             {
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
+                _images[i] = new Bitmap(1, 1);
                 _listImages[i] = new List<Bitmap>();              
             }
 
@@ -782,6 +783,12 @@ namespace ReceivingStation.Decode
         private Bitmap[] MergeImages()
         {
             Bitmap[] localImages = new Bitmap[6];
+
+            for (int i = 0; i < _images.Length; i++)
+            {
+                _images[i].Dispose();
+            }
+            
 
             if (_listImages[0].Count > 0)
             {
