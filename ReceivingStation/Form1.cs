@@ -17,8 +17,7 @@ namespace ReceivingStation
     public partial class MainForm : Form
     {
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера, через которое нужно сохранять время наработки в файл (30 минут). 
-        private const string _workingTimeKPAFileName = "working_time_kpa.txt";
-        private const string _workingTimeSystemFileName = "working_time_system.txt";
+        private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
 
         private Decode.Decode _decode;
         private string _fileName;
@@ -28,10 +27,8 @@ namespace ReceivingStation
         private DoubleBufferedPanel[] _channels = new DoubleBufferedPanel[6];
         private DoubleBufferedPanel[] _allChannels = new DoubleBufferedPanel[6];
 
-        private DateTime _startWorkingTimeKPA; // Время начала работы КПА.
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
-        private TimeSpan _fullWorkingTimeKPA;
-        private TimeSpan _fullWorkingTimeSystem;
+        private TimeSpan _fullWorkingTimeOnboard;
 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
         private bool _isReceivingStarting;
@@ -47,26 +44,15 @@ namespace ReceivingStation
 
             tabControl1.SelectedTab = tabPage7;
             _remoteModeFlag = false;
-            _startWorkingTimeKPA = DateTime.Now;
 
             try
             {
-                ReadFromLogWorkingTime(_workingTimeKPAFileName, out _fullWorkingTimeKPA, slWorkingTimeKPA);
+                ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
             catch (Exception)
             {
-                WriteToLogWorkingTime(_workingTimeKPAFileName, "0:0:0");
-                ReadFromLogWorkingTime(_workingTimeKPAFileName, out _fullWorkingTimeKPA, slWorkingTimeKPA);
-            }
-
-            try
-            {
-                ReadFromLogWorkingTime(_workingTimeSystemFileName, out _fullWorkingTimeSystem, slWorkingTimeSystem);
-            }
-            catch (Exception)
-            {
-                WriteToLogWorkingTime(_workingTimeSystemFileName, "0:0:0");
-                ReadFromLogWorkingTime(_workingTimeSystemFileName, out _fullWorkingTimeSystem, slWorkingTimeSystem);
+                WriteToLogWorkingTime(_workingTimeOnboardFileName, "0:0:0");
+                ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
 
             Decode.Decode.ThreadUiUpdater = UpdateUi;
@@ -89,8 +75,7 @@ namespace ReceivingStation
             _allChannels[3] = pACChannel4;
             _allChannels[4] = pACChannel5;
             _allChannels[5] = pACChannel6;
-
-            _startWorkingTimeKPA = DateTime.Now;
+           
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
 
             timer1.Start();
@@ -98,12 +83,6 @@ namespace ReceivingStation
             _isReceivingStarting = false;
             var server = new Server.Server();
             Task.Run(() => server.StartServer());          
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {           
-            CountWorkingTime(ref _fullWorkingTimeKPA);
-            WriteToLogWorkingTime(_workingTimeKPAFileName, _fullWorkingTimeKPA.ToString());
         }
 
         private void tsmiExit_Click(object sender, EventArgs e)
@@ -176,22 +155,19 @@ namespace ReceivingStation
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            if (_counterForSaveWorkingTime > 0)
+            _counterForSaveWorkingTime -= 1;
+
+            if (_counterForSaveWorkingTime == 0)
             {
-                _counterForSaveWorkingTime -= 1;
-            }
-            else
-            {
-                CountWorkingTime(ref _fullWorkingTimeKPA);
-                WriteToLogWorkingTime(_workingTimeKPAFileName, _fullWorkingTimeKPA.ToString());
                 if (_isReceivingStarting)
                 {
-                    CountWorkingTime(ref _fullWorkingTimeSystem);
-                    WriteToLogWorkingTime(_workingTimeSystemFileName, _fullWorkingTimeSystem.ToString());
+                    CountWorkingTime(ref _fullWorkingTimeOnboard);
+                    _startWorkingTimeOnboard = DateTime.Now;
+                    WriteToLogWorkingTime(_workingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
                 }
                 _counterForSaveWorkingTime = _timeForSaveWorkingTime;
             }
+
         }
 
         private void DoubleBufferedPanel_BackgroundImageChanged(object sender, EventArgs e)
@@ -283,8 +259,8 @@ namespace ReceivingStation
         #region Остановить прием потока.
         public void StopReceiving()
         {
-            CountWorkingTime(ref _fullWorkingTimeSystem);
-            WriteToLogWorkingTime(_workingTimeSystemFileName, _fullWorkingTimeSystem.ToString());
+            CountWorkingTime(ref _fullWorkingTimeOnboard);
+            WriteToLogWorkingTime(_workingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
         }
 
         #endregion
@@ -413,7 +389,7 @@ namespace ReceivingStation
         private void CountWorkingTime(ref TimeSpan fullWorkingTime)
         {
             DateTime finishWorkingTime = DateTime.Now;
-            TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTimeKPA;
+            TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTimeOnboard;
             fullWorkingTime += deltaWorkingTime;
         }
 
@@ -436,7 +412,7 @@ namespace ReceivingStation
             using (StreamReader sr = new StreamReader(fileName))
             {
                 fullWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                WorkingTimeLabel.Text = $"{(long)fullWorkingTime.TotalHours}:{fullWorkingTime.Minutes}:{fullWorkingTime.Seconds}";              
+                WorkingTimeLabel.Text = $"{(long)fullWorkingTime.TotalHours}:{fullWorkingTime.Minutes.ToString("D2")}:{fullWorkingTime.Seconds}";              
             }
         }
 

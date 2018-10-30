@@ -70,8 +70,7 @@
             this.pACChannel6 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.slWorkingTimeKPA = new System.Windows.Forms.ToolStripStatusLabel();
-            this.slWorkingTimeSystem = new System.Windows.Forms.ToolStripStatusLabel();
+            this.slWorkingTimeOnboard = new System.Windows.Forms.ToolStripStatusLabel();
             this.slMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -559,8 +558,7 @@
             this.statusStrip1.AllowMerge = false;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slTime,
-            this.slWorkingTimeKPA,
-            this.slWorkingTimeSystem,
+            this.slWorkingTimeOnboard,
             this.slMode});
             this.statusStrip1.Location = new System.Drawing.Point(0, 732);
             this.statusStrip1.Name = "statusStrip1";
@@ -577,31 +575,21 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(362, 19);
+            this.slTime.Size = new System.Drawing.Size(378, 19);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.ToolTipText = "Дата/Время";
             // 
-            // slWorkingTimeKPA
-            // 
-            this.slWorkingTimeKPA.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.slWorkingTimeKPA.Image = global::ReceivingStation.Properties.Resources.time_icon;
-            this.slWorkingTimeKPA.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.slWorkingTimeKPA.Name = "slWorkingTimeKPA";
-            this.slWorkingTimeKPA.Size = new System.Drawing.Size(79, 19);
-            this.slWorkingTimeKPA.Text = "12:12:01";
-            this.slWorkingTimeKPA.ToolTipText = "Время наработки КПА (ЧЧ:ММ:СС)";
-            // 
             // slWorkingTimeSystem
             // 
-            this.slWorkingTimeSystem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.slWorkingTimeSystem.Image = global::ReceivingStation.Properties.Resources.time_icon;
-            this.slWorkingTimeSystem.Name = "slWorkingTimeSystem";
-            this.slWorkingTimeSystem.Size = new System.Drawing.Size(364, 19);
-            this.slWorkingTimeSystem.Spring = true;
-            this.slWorkingTimeSystem.Text = "12:12:01";
-            this.slWorkingTimeSystem.ToolTipText = "Время наработки системы (ЧЧ:ММ:СС)";
+            this.slWorkingTimeOnboard.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.slWorkingTimeOnboard.Image = global::ReceivingStation.Properties.Resources.time_icon;
+            this.slWorkingTimeOnboard.Name = "slWorkingTimeSystem";
+            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(380, 19);
+            this.slWorkingTimeOnboard.Spring = true;
+            this.slWorkingTimeOnboard.Text = "12:12:01";
+            this.slWorkingTimeOnboard.ToolTipText = "Время наработки системы (ЧЧ:ММ:СС)";
             // 
             // slMode
             // 
@@ -609,7 +597,7 @@
             this.slMode.Image = global::ReceivingStation.Properties.Resources.mode_icon;
             this.slMode.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slMode.Name = "slMode";
-            this.slMode.Size = new System.Drawing.Size(364, 19);
+            this.slMode.Size = new System.Drawing.Size(380, 19);
             this.slMode.Spring = true;
             this.slMode.Text = "Местное управление";
             this.slMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1128,7 +1116,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -1240,7 +1227,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem tsmiStopDecoding;
-        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeSystem;
+        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeOnboard;
         private System.Windows.Forms.Button btnStartRecieve;
         private Other.DoubleBufferedPanel pACChannel1;
         private Other.DoubleBufferedPanel pACChannel2;
@@ -1250,7 +1237,6 @@
         private Other.DoubleBufferedPanel pACChannel6;
         private Other.DoubleBufferedPanel pChannel1;
         private Other.DoubleBufferedPanel pChannel2;
-        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeKPA;
         private Other.DoubleBufferedPanel pChannel3;
         private Other.DoubleBufferedPanel pChannel4;
         private Other.DoubleBufferedPanel pChannel5;
