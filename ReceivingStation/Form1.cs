@@ -92,6 +92,7 @@ namespace ReceivingStation
 
             _startWorkingTimeKPA = DateTime.Now;
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
+
             timer1.Start();
 
             _isReceivingStarting = false;
@@ -178,7 +179,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             if (_counterForSaveWorkingTime > 0)
             {
-                _counterForSaveWorkingTime = _counterForSaveWorkingTime - 1;
+                _counterForSaveWorkingTime -= 1;
             }
             else
             {
@@ -191,6 +192,12 @@ namespace ReceivingStation
                 }
                 _counterForSaveWorkingTime = _timeForSaveWorkingTime;
             }
+        }
+
+        private void DoubleBufferedPanel_BackgroundImageChanged(object sender, EventArgs e)
+        {
+            DoubleBufferedPanel panel = sender as DoubleBufferedPanel;
+            panel.Size = panel.BackgroundImage.Size;
         }
 
         #region Смена режима управления.
@@ -381,11 +388,11 @@ namespace ReceivingStation
 
         #region Обновление изображений.
         private void UpdateImages(Bitmap[] images)
-        {         
+        {
             for (int i = 0; i < 6; i++)
             {
-                _channels[i].BackgroundImage = images[i];
                 _allChannels[i].BackgroundImage = images[i];
+                _channels[i].BackgroundImage = images[i];
             }
         }
 

@@ -54,13 +54,14 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.pChannel6 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pACChannel1 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pACChannel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pACChannel3 = new ReceivingStation.Other.DoubleBufferedPanel();
@@ -121,6 +122,7 @@
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlScroll.SuspendLayout();
@@ -253,6 +255,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.Controls.Add(this.pChannel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -265,14 +268,15 @@
             // pChannel1
             // 
             this.pChannel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pChannel1.Location = new System.Drawing.Point(3, 3);
             this.pChannel1.Name = "pChannel1";
-            this.pChannel1.Size = new System.Drawing.Size(909, 676);
+            this.pChannel1.Size = new System.Drawing.Size(909, 24);
             this.pChannel1.TabIndex = 0;
+            this.pChannel1.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // tabPage2
             // 
+            this.tabPage2.AutoScroll = true;
             this.tabPage2.Controls.Add(this.pChannel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -285,14 +289,15 @@
             // pChannel2
             // 
             this.pChannel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pChannel2.Location = new System.Drawing.Point(3, 3);
             this.pChannel2.Name = "pChannel2";
-            this.pChannel2.Size = new System.Drawing.Size(909, 676);
+            this.pChannel2.Size = new System.Drawing.Size(909, 24);
             this.pChannel2.TabIndex = 0;
+            this.pChannel2.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // tabPage3
             // 
+            this.tabPage3.AutoScroll = true;
             this.tabPage3.Controls.Add(this.pChannel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -305,14 +310,15 @@
             // pChannel3
             // 
             this.pChannel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pChannel3.Location = new System.Drawing.Point(3, 3);
             this.pChannel3.Name = "pChannel3";
-            this.pChannel3.Size = new System.Drawing.Size(909, 676);
-            this.pChannel3.TabIndex = 0;
+            this.pChannel3.Size = new System.Drawing.Size(909, 24);
+            this.pChannel3.TabIndex = 1;
+            this.pChannel3.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // tabPage4
             // 
+            this.tabPage4.AutoScroll = true;
             this.tabPage4.Controls.Add(this.pChannel4);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -325,14 +331,15 @@
             // pChannel4
             // 
             this.pChannel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pChannel4.Location = new System.Drawing.Point(3, 3);
             this.pChannel4.Name = "pChannel4";
-            this.pChannel4.Size = new System.Drawing.Size(909, 676);
-            this.pChannel4.TabIndex = 0;
+            this.pChannel4.Size = new System.Drawing.Size(909, 24);
+            this.pChannel4.TabIndex = 1;
+            this.pChannel4.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // tabPage5
             // 
+            this.tabPage5.AutoScroll = true;
             this.tabPage5.Controls.Add(this.pChannel5);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -345,14 +352,15 @@
             // pChannel5
             // 
             this.pChannel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pChannel5.Location = new System.Drawing.Point(3, 3);
             this.pChannel5.Name = "pChannel5";
-            this.pChannel5.Size = new System.Drawing.Size(909, 676);
-            this.pChannel5.TabIndex = 0;
+            this.pChannel5.Size = new System.Drawing.Size(909, 24);
+            this.pChannel5.TabIndex = 1;
+            this.pChannel5.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // tabPage6
             // 
+            this.tabPage6.AutoScroll = true;
             this.tabPage6.Controls.Add(this.pChannel6);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
@@ -365,15 +373,16 @@
             // pChannel6
             // 
             this.pChannel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pChannel6.Location = new System.Drawing.Point(3, 3);
             this.pChannel6.Name = "pChannel6";
-            this.pChannel6.Size = new System.Drawing.Size(909, 676);
-            this.pChannel6.TabIndex = 0;
+            this.pChannel6.Size = new System.Drawing.Size(909, 24);
+            this.pChannel6.TabIndex = 1;
+            this.pChannel6.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // tabPage7
             // 
             this.tabPage7.AutoScroll = true;
+            this.tabPage7.Controls.Add(this.tableLayoutPanel3);
             this.tabPage7.Controls.Add(this.tableLayoutPanel2);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
@@ -383,8 +392,92 @@
             this.tabPage7.Text = "Все каналы";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 6;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel3.Controls.Add(this.label6, 5, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label5, 4, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label4, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label3, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label2, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(909, 41);
+            this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(805, 13);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 15);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Канал 6";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(653, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 15);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Канал 5";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(502, 13);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 15);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Канал 4";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(351, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 15);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Канал 3";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(200, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 15);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Канал 2";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(49, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Канал 1";
+            // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.AutoScroll = true;
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel2.ColumnCount = 6;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -393,140 +486,73 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label4, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label5, 4, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label6, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel1, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel2, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel3, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel4, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel5, 4, 1);
-            this.tableLayoutPanel2.Controls.Add(this.pACChannel6, 5, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel2, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel3, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel4, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel5, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pACChannel6, 5, 0);
+            this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 47);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.004619F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.99538F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(909, 676);
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(909, 632);
             this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Канал 1";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(200, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Канал 2";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(351, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Канал 3";
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(502, 12);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 15);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Канал 4";
-            // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(653, 12);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 15);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Канал 5";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(805, 12);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 15);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Канал 6";
             // 
             // pACChannel1
             // 
             this.pACChannel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pACChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel1.Location = new System.Drawing.Point(3, 43);
+            this.pACChannel1.Location = new System.Drawing.Point(3, 3);
             this.pACChannel1.Name = "pACChannel1";
-            this.pACChannel1.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel1.Size = new System.Drawing.Size(145, 626);
             this.pACChannel1.TabIndex = 6;
+            this.pACChannel1.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // pACChannel2
             // 
             this.pACChannel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pACChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel2.Location = new System.Drawing.Point(154, 43);
+            this.pACChannel2.Location = new System.Drawing.Point(154, 3);
             this.pACChannel2.Name = "pACChannel2";
-            this.pACChannel2.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel2.Size = new System.Drawing.Size(145, 626);
             this.pACChannel2.TabIndex = 7;
+            this.pACChannel2.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // pACChannel3
             // 
             this.pACChannel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pACChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel3.Location = new System.Drawing.Point(305, 43);
+            this.pACChannel3.Location = new System.Drawing.Point(305, 3);
             this.pACChannel3.Name = "pACChannel3";
-            this.pACChannel3.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel3.Size = new System.Drawing.Size(145, 626);
             this.pACChannel3.TabIndex = 8;
+            this.pACChannel3.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // pACChannel4
             // 
             this.pACChannel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pACChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel4.Location = new System.Drawing.Point(456, 43);
+            this.pACChannel4.Location = new System.Drawing.Point(456, 3);
             this.pACChannel4.Name = "pACChannel4";
-            this.pACChannel4.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel4.Size = new System.Drawing.Size(145, 626);
             this.pACChannel4.TabIndex = 9;
+            this.pACChannel4.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // pACChannel5
             // 
             this.pACChannel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pACChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel5.Location = new System.Drawing.Point(607, 43);
+            this.pACChannel5.Location = new System.Drawing.Point(607, 3);
             this.pACChannel5.Name = "pACChannel5";
-            this.pACChannel5.Size = new System.Drawing.Size(145, 630);
+            this.pACChannel5.Size = new System.Drawing.Size(145, 626);
             this.pACChannel5.TabIndex = 10;
+            this.pACChannel5.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // pACChannel6
             // 
             this.pACChannel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pACChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pACChannel6.Location = new System.Drawing.Point(758, 43);
+            this.pACChannel6.Location = new System.Drawing.Point(758, 3);
             this.pACChannel6.Name = "pACChannel6";
-            this.pACChannel6.Size = new System.Drawing.Size(148, 630);
+            this.pACChannel6.Size = new System.Drawing.Size(148, 626);
             this.pACChannel6.TabIndex = 11;
+            this.pACChannel6.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
             // 
             // statusStrip1
             // 
@@ -605,6 +631,8 @@
             // 
             // timer1
             // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // pnlScroll
@@ -1111,8 +1139,9 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlScroll.ResumeLayout(false);
@@ -1221,11 +1250,12 @@
         private Other.DoubleBufferedPanel pACChannel6;
         private Other.DoubleBufferedPanel pChannel1;
         private Other.DoubleBufferedPanel pChannel2;
+        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeKPA;
         private Other.DoubleBufferedPanel pChannel3;
         private Other.DoubleBufferedPanel pChannel4;
         private Other.DoubleBufferedPanel pChannel5;
         private Other.DoubleBufferedPanel pChannel6;
-        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeKPA;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
     }
 }
 
