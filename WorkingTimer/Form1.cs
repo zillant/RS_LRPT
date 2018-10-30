@@ -21,9 +21,10 @@ namespace WorkingTimer
         private const int _savingTime = 10; // Время через которое сохраняется время наработки (10 сек).
         
         private DateTime _startWorkingTime; // Время начала работы КПА.
-        private TimeSpan _timerTimeSpan; // Дубликат timeSpan для вывода в таймере (Чтоб лишний раз не трогать timeSpan из параметров).
+        private TimeSpan _timerTimeSpan; // Дубликат timeSpan для вывода в таймере (Чтобы лишний раз не трогать timeSpan из параметров).
         private int _counterForSaveWorkingTime; // Счетчик для отсчета времени до сохранения времени наработки. 
-        public bool _allowClosing; // Для закрытия приложения только через иконку в трее.
+        public bool _allowClosing; // Для закрытия приложения только через иконку в трее. 
+                                   // На данный момент кнопка закрытия программы на форме (Х) убрана.
 
         public Form1()
         {
@@ -32,24 +33,36 @@ namespace WorkingTimer
             ShowInTaskbar = false;
             notifyIcon.ContextMenuStrip = contextMenuStrip1;
 
-            _startWorkingTime = DateTime.Now;
-            _counterForSaveWorkingTime = _savingTime;
-            _timerTimeSpan = Settings.Default.WorkingTime.Duration();
-
-            lblTime.Text = $"{(long)_timerTimeSpan.TotalHours}:{_timerTimeSpan.Minutes}";
-            lblSecond.Text = $"{_timerTimeSpan.Seconds}";
-
-            timer1.Start();
+            InitTimerData();                          
+            _timerTimeSpan = Settings.Default.WorkingTime.Duration();                              
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadFont();
-            AllocFont(_font, lblTime, 30);
-            AllocFont(_font, lblSecond, 30);
+            AllocFont(_font, lblTime, 70);
+            AllocFont(_font, lblSecond, 35);
+          
+            lblTime.Text = $"{(long)_timerTimeSpan.TotalHours}:{_timerTimeSpan.Minutes.ToString("D2")}";
+            lblSecond.Text = $"{_timerTimeSpan.Seconds}";
+
+            lblSecond.Location = new Point(lblTime.Location.X + lblTime.Width - 5, lblTime.Location.Y + lblTime.Height / 4);
+            saveTimer.Start();
         }
 
-        void notifyIcon_DoubleClick(object sender, EventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.J)
+            {          
+                e.SuppressKeyPress = true;
+                Settings.Default.Reset();
+                Settings.Default.Save();
+                _allowClosing = true;
+                Application.Restart();
+            }
+        }
+
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
             if (Visible)
                 Hide();
@@ -57,20 +70,19 @@ namespace WorkingTimer
                 Show();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void saveTimer_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = $"{(long)_timerTimeSpan.TotalHours}:{_timerTimeSpan.Minutes}";
+            lblTime.Text = $"{(long)_timerTimeSpan.TotalHours}:{_timerTimeSpan.Minutes.ToString("D2")}";
             lblSecond.Text = $"{_timerTimeSpan.Seconds}";
+            lblSecond.Location = new Point(lblTime.Location.X + lblTime.Width - 5, lblTime.Location.Y + lblTime.Height / 4);
 
+            _counterForSaveWorkingTime -= 1;
             _timerTimeSpan += TimeSpan.FromSeconds(1);
-            if (_counterForSaveWorkingTime > 0)
-            {
-                _counterForSaveWorkingTime -= 1;
-            }
-            else
+
+            if (_counterForSaveWorkingTime == 0)
             {
                 CountWorkingTime();
-                _counterForSaveWorkingTime = _savingTime;
+                InitTimerData();
             }
         }
 
@@ -89,6 +101,15 @@ namespace WorkingTimer
             Application.Exit();
         }
 
+        #region Инициализация данных для таймера.
+        private void InitTimerData()
+        {
+            _startWorkingTime = DateTime.Now;
+            _counterForSaveWorkingTime = _savingTime;
+        }
+
+        #endregion
+    
         #region Расчет времени наработки.
         private void CountWorkingTime()
         {
@@ -100,6 +121,7 @@ namespace WorkingTimer
 
         #endregion
 
+        #region Загрузка шрифта из ресурсов.
         private void LoadFont()
         {
             byte[] fontArray = Resources.digital_7_regular;
@@ -119,6 +141,9 @@ namespace WorkingTimer
             _font = new Font(_ff, 15f, FontStyle.Bold);
         }
 
+        #endregion
+
+        #region Передача настроек шрифта контролу.
         private void AllocFont(Font f, Control c, float size)
         {
             FontStyle fontStyle = FontStyle.Regular;
@@ -126,6 +151,6 @@ namespace WorkingTimer
 
         }
 
-
+        #endregion
     }
 }
