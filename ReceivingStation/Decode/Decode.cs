@@ -97,7 +97,7 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < 6; i++)
             {
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
-                _images[i] = new Bitmap(1, 1);
+                _images[i] = new Bitmap(1, 1); // Костыль для передачи массива Bitmap до первого мерджа.
                 _listImages[i] = new List<Bitmap>();              
             }
 
@@ -140,15 +140,14 @@ namespace ReceivingStation.Decode
 
             } while (!token.IsCancellationRequested);
 
+            _images = MergeImages();
+            ThreadUiUpdater(Kol_tk, _images);
+
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
-
-            _images = MergeImages();
            
-            
-            Parallel.For(0, 6, SaveImages);
             ThreadStopDecoding();
         }
 
@@ -677,8 +676,9 @@ namespace ReceivingStation.Decode
             {
                 AddImagesRowsToList();          
                 Yt += 8;
+                
 
-                if (Yt % 800 == 0)
+                if (Yt % 400 == 0)
                 {
                     _images = MergeImages();
                 }
@@ -779,24 +779,21 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Получение изображения из списка.
+        #region Получение изображений из списка.
         private Bitmap[] MergeImages()
         {
-            Bitmap[] localImages = new Bitmap[6];
+            Bitmap[] bmps = new Bitmap[6];
 
-            for (int i = 0; i < _images.Length; i++)
+            if (_listImages[0].Count > 0) //Костыль если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
             {
-                _images[i].Dispose();
-            }
-            
-
-            if (_listImages[0].Count > 0)
-            {
-                for (int i = 0; i < localImages.Length; i++)
+                Parallel.For(0, bmps.Length, i =>
                 {
+                    _images[i].Dispose(); // Костыль. С этим вроде не захлебывается программа. (Но это не точно)
+
                     int offset = 0;
-                    localImages[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
-                    using (Graphics g = Graphics.FromImage(localImages[i]))
+
+                    bmps[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
+                    using (Graphics g = Graphics.FromImage(bmps[i]))
                     {
                         g.Clear(Color.White);
                         foreach (var row in _listImages[i])
@@ -805,25 +802,13 @@ namespace ReceivingStation.Decode
                             offset += row.Height;
                         }
                     }
-                }
-            }
-            else // Костыль от зависания когда был выбран NRZ там, где он не должен быть.
-            {
-                for (int i = 0; i < localImages.Length; i++)
-                {
-                    localImages[i] = new Bitmap(Constants.WDT, 8);
-                }
-            }
-            
-            return localImages;
-        }
 
-        #endregion
-
-        #region Сохранение изображений.
-        private void SaveImages(int i)
-        {
-            _images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+                    // Сохранение изображений.
+                    bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+                });
+            }
+           
+            return bmps;
         }
 
         #endregion
