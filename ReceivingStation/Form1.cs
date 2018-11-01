@@ -19,8 +19,9 @@ namespace ReceivingStation
         private bool _remoteModeFlag;
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
-        private DoubleBufferedPanel[] _channels = new DoubleBufferedPanel[6];
+        private PictureBox[] _channels = new PictureBox[6];
         private DoubleBufferedPanel[] _allChannels = new DoubleBufferedPanel[6];
+        Bitmap[] b = new Bitmap[6];
 
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
         private TimeSpan _fullWorkingTimeOnboard;
@@ -37,7 +38,7 @@ namespace ReceivingStation
         {
             InitializeComponent();
 
-            pChannel5.SelectedTab = tabPage7;
+            tabControl1.SelectedTab = tabPage7;
             _remoteModeFlag = false;
 
             try
@@ -64,6 +65,7 @@ namespace ReceivingStation
             _channels[4] = pChannel5;
             _channels[5] = pChannel6;
 
+
             _allChannels[0] = pACChannel1;
             _allChannels[1] = pACChannel2;
             _allChannels[2] = pACChannel3;
@@ -75,6 +77,11 @@ namespace ReceivingStation
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
 
             timer1.Start();
+            for (int i = 0; i < 6; i++)
+            {
+                b[i] = new Bitmap(1, 1);
+            }
+
 
             _isReceivingStarting = false;
             var server = new Server.Server();
@@ -364,8 +371,8 @@ namespace ReceivingStation
         {
             for (int i = 0; i < 6; i++)
             {
-                _allChannels[i].BackgroundImage = images[i];
-                _channels[i].BackgroundImage = images[i];
+                _allChannels[i].BackgroundImage = b[i];
+                _channels[i].Image = b[i];
             }
         }
 
