@@ -37,7 +37,7 @@ namespace ReceivingStation
         {
             InitializeComponent();
 
-            tabControl1.SelectedTab = tabPage7;
+            pChannel5.SelectedTab = tabPage7;
             _remoteModeFlag = false;
 
             try
