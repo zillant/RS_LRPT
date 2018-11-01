@@ -20,6 +20,7 @@ namespace ReceivingStation.Decode
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
+
         private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
         private Bitmap[] _images = new Bitmap[6]; // Результирующие изображения после слияния строк из списка.
         private List<Bitmap>[] _listImages = new List<Bitmap>[6]; // Список полос изображений для каждого канала.
@@ -140,7 +141,7 @@ namespace ReceivingStation.Decode
 
             } while (!token.IsCancellationRequested);
 
-            _images = MergeImages();
+            MergeImagesFromList();
             ThreadUiUpdater(Kol_tk, _images);
 
             _sw.WriteLine("-------------------------------------------------");
@@ -680,7 +681,7 @@ namespace ReceivingStation.Decode
 
                 if (Yt % 400 == 0)
                 {
-                    _images = MergeImages();
+                    MergeImagesFromList();
                 }
                 
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
@@ -779,21 +780,19 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Получение изображений из списка.
-        private Bitmap[] MergeImages()
-        {
-            Bitmap[] bmps = new Bitmap[6];
-
-            if (_listImages[0].Count > 0) //Костыль если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
+        #region Получение изображений из списков.
+        private void MergeImagesFromList()
+        {        
+            if (_listImages[0].Count > 0) //Костыль. Если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
             {
-                Parallel.For(0, bmps.Length, i =>
+                Parallel.For(0, _images.Length, i =>
                 {
                     _images[i].Dispose(); // Костыль. С этим вроде не захлебывается программа. (Но это не точно)
 
                     int offset = 0;
 
-                    bmps[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
-                    using (Graphics g = Graphics.FromImage(bmps[i]))
+                    _images[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
+                    using (Graphics g = Graphics.FromImage(_images[i]))
                     {
                         g.Clear(Color.White);
                         foreach (var row in _listImages[i])
@@ -804,11 +803,9 @@ namespace ReceivingStation.Decode
                     }
 
                     // Сохранение изображений.
-                    bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+                    _images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
                 });
-            }
-           
-            return bmps;
+            }                   
         }
 
         #endregion
