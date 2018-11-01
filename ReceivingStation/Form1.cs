@@ -11,23 +11,26 @@ namespace ReceivingStation
 {
     public partial class MainForm : Form
     {
-        private const int _timeForSaveWorkingTime = 1800; // Время для таймера, через которое нужно сохранять время наработки в файл (30 минут). 
+        private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
 
         private Decode.Decode _decode;
         private string _fileName;
         private bool _remoteModeFlag;
+
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
+
         private PictureBox[] _channels = new PictureBox[6];
-        private DoubleBufferedPanel[] _allChannels = new DoubleBufferedPanel[6];
-        Bitmap[] b = new Bitmap[6];
+        private PictureBox[] _allChannels = new PictureBox[6];
+        private Bitmap[] _images = new Bitmap[6];
 
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
         private TimeSpan _fullWorkingTimeOnboard;
-
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
+
         private bool _isReceivingStarting;
+
         // Параметры приема битового потока.
         private byte _fcp;
         private byte _prd;
@@ -51,8 +54,10 @@ namespace ReceivingStation
                 ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
 
-            Decode.Decode.ThreadUiUpdater = UpdateUi;
+            Decode.Decode.ThreadCounterUpdater = UpdateCounter;
+            Decode.Decode.ThreadImageUpdater = UpdateImage;
             Decode.Decode.ThreadStopDecoding = StopDecoding;
+
             Server.Server.ThreadChangeMode = ChangeMode;
             Server.Server.ThreadSetParameters = RemoteSetReceiveParameters;
             Server.Server.ThreadStartReceiving = RemoteStartReceiving;
@@ -65,7 +70,6 @@ namespace ReceivingStation
             _channels[4] = pChannel5;
             _channels[5] = pChannel6;
 
-
             _allChannels[0] = pACChannel1;
             _allChannels[1] = pACChannel2;
             _allChannels[2] = pACChannel3;
@@ -77,11 +81,6 @@ namespace ReceivingStation
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
 
             timer1.Start();
-            for (int i = 0; i < 6; i++)
-            {
-                b[i] = new Bitmap(1, 1);
-            }
-
 
             _isReceivingStarting = false;
             var server = new Server.Server();
@@ -172,12 +171,6 @@ namespace ReceivingStation
                 }
                 _counterForSaveWorkingTime = _timeForSaveWorkingTime;
             }
-        }
-
-        private void DoubleBufferedPanel_BackgroundImageChanged(object sender, EventArgs e)
-        {
-            DoubleBufferedPanel panel = sender as DoubleBufferedPanel;
-            panel.Size = panel.BackgroundImage.Size;
         }
 
         #region Смена режима управления.
@@ -310,8 +303,16 @@ namespace ReceivingStation
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
 
-            _decode = new Decode.Decode(_fileName, reedSoloFlag, nrzFlag);
+            _decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag);
             Task.Run(() => _decode.StartDecode(_cancellationToken));
+
+
+            for (int i = 0; i < 6; i++)
+            {
+                _images[i] = new Bitmap(1, 1);
+                _allChannels[i].Image = _images[i];
+                _channels[i].Image = _images[i];
+            }
 
             btnStartDecode.Enabled = false;
             tsmiStartDecoding.Enabled = false;
@@ -322,21 +323,27 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление пользовательского интерфейса при декодировании.
-        private void UpdateUi(uint counter, Bitmap[] images)
+        #region Обновление счетчика кадров при декодировании.
+        private void UpdateCounter(uint counter)
         {
-            if (InvokeRequired == false)
-            {
-                lblFramesCounter.Text = counter.ToString();
-                UpdateImages(images);            
-            }
-            else
-            {
-                Decode.Decode.UiUpdater updateUi = UpdateUi;
-                Invoke(updateUi, counter, images);
-            }
+            lblFramesCounter.Text = counter.ToString();            
         }
-        #endregion   
+
+        #endregion
+
+        #region Обновление изображений при декодировании.
+        private void UpdateImage(Bitmap[] images)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                _images[i].Dispose();
+                _images[i] = new Bitmap(images[i]);
+                _allChannels[i].Image = _images[i];
+                _channels[i].Image = _images[i];               
+            };
+        }
+
+        #endregion
 
         #region Остановка декодирования.
         private void StopDecoding()
@@ -365,19 +372,7 @@ namespace ReceivingStation
         }
 
         #endregion
-
-        #region Обновление изображений.
-        private void UpdateImages(Bitmap[] images)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                _allChannels[i].BackgroundImage = b[i];
-                _channels[i].Image = b[i];
-            }
-        }
-
-        #endregion
-
+     
         #region Запись в лог файл действий пользователя.
         private void WriteToLogUserActions(string logMessage)
         {

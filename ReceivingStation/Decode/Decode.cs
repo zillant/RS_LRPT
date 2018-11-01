@@ -11,15 +11,20 @@ using Color = System.Drawing.Color;
 namespace ReceivingStation.Decode
 {
     class Decode
-    {
-        public delegate void UiUpdater(uint counter, Bitmap[] list);
-        public static UiUpdater ThreadUiUpdater;
+    {       
+        public delegate void CounterUpdater(uint counter);
+        public static CounterUpdater ThreadCounterUpdater;
+
+        public delegate void ImageUpdater(Bitmap[] list);
+        public static ImageUpdater ThreadImageUpdater;
+
         public delegate void StopDecoding();
-        public static StopDecoding ThreadStopDecoding;
+        public static StopDecoding ThreadStopDecoding;      
 
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
+        private MainForm _form;
 
         private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
         private Bitmap[] _images = new Bitmap[6]; // Результирующие изображения после слияния строк из списка.
@@ -79,7 +84,7 @@ namespace ReceivingStation.Decode
         private bool last_bit_in;
 
         #region Конструктор.
-        public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
+        public Decode(MainForm form, string fileName, bool reedSoloFlag, bool nrzFlag)
         {
             _fileName = fileName;
             _isNrz = nrzFlag;
@@ -88,6 +93,7 @@ namespace ReceivingStation.Decode
             _reedSolo = new ReedSolo();
             _viterbi = new Viterbi();
             _jpeg = new Jpeg();
+            _form = form;
 
             _fileInfo = new FileInfo(_fileName);
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
@@ -142,7 +148,9 @@ namespace ReceivingStation.Decode
             } while (!token.IsCancellationRequested);
 
             MergeImagesFromList();
-            ThreadUiUpdater(Kol_tk, _images);
+            _form.Invoke(new Action(() => { ThreadCounterUpdater(Kol_tk); }));
+            _form.Invoke(new Action(() => { ThreadImageUpdater(_images); }));            
+
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
@@ -521,10 +529,10 @@ namespace ReceivingStation.Decode
             {
                 return;
             }
-           
+
             Kol_tk++;
-            /////////////////////////////////////////////////////////////////
-            ThreadUiUpdater(Kol_tk, _images); // Обновление GUI из потока.
+            /////////////////////////////////////////////////////////////////       
+            _form.Invoke(new Action(() => { ThreadCounterUpdater(Kol_tk); }));
             /////////////////////////////////////////////////////////////////
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
@@ -681,7 +689,8 @@ namespace ReceivingStation.Decode
 
                 if (Yt % 400 == 0)
                 {
-                    MergeImagesFromList();
+                    MergeImagesFromList();                   
+                    _form.Invoke(new Action(() => { ThreadImageUpdater(_images); }));
                 }
                 
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");

@@ -42,6 +42,8 @@
             this.tsmiStopDecoding = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pChannel1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pChannel2 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -105,17 +107,22 @@
             this.lblFramesCounter = new System.Windows.Forms.Label();
             this.btnStartDecode = new System.Windows.Forms.Button();
             this.btnStopDecode = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel1 = new System.Windows.Forms.PictureBox();
-            this.pACChannel1 = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.pACChannel2 = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.pACChannel3 = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.pACChannel4 = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.pACChannel5 = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.pACChannel6 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pACChannel1 = new System.Windows.Forms.PictureBox();
+            this.pACChannel2 = new System.Windows.Forms.PictureBox();
+            this.pACChannel3 = new System.Windows.Forms.PictureBox();
+            this.pACChannel4 = new System.Windows.Forms.PictureBox();
+            this.pACChannel5 = new System.Windows.Forms.PictureBox();
+            this.pACChannel6 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pChannel2)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -144,8 +151,17 @@
             this.gbNRZ.SuspendLayout();
             this.gbRS.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).BeginInit();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel5.SuspendLayout();
+            this.flowLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel6)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -272,10 +288,29 @@
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.Controls.Add(this.pChannel1);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel1.TabIndex = 2;
+            // 
+            // pChannel1
+            // 
+            this.pChannel1.Location = new System.Drawing.Point(3, 3);
+            this.pChannel1.Name = "pChannel1";
+            this.pChannel1.Size = new System.Drawing.Size(50, 50);
+            this.pChannel1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pChannel1.TabIndex = 1;
+            this.pChannel1.TabStop = false;
+            // 
             // tabPage2
             // 
             this.tabPage2.AutoScroll = true;
-            this.tabPage2.Controls.Add(this.pChannel2);
+            this.tabPage2.Controls.Add(this.flowLayoutPanel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -288,14 +323,15 @@
             // 
             this.pChannel2.Location = new System.Drawing.Point(3, 3);
             this.pChannel2.Name = "pChannel2";
-            this.pChannel2.Size = new System.Drawing.Size(909, 24);
+            this.pChannel2.Size = new System.Drawing.Size(50, 50);
+            this.pChannel2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pChannel2.TabIndex = 2;
             this.pChannel2.TabStop = false;
             // 
             // tabPage3
             // 
             this.tabPage3.AutoScroll = true;
-            this.tabPage3.Controls.Add(this.pChannel3);
+            this.tabPage3.Controls.Add(this.flowLayoutPanel6);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -308,14 +344,15 @@
             // 
             this.pChannel3.Location = new System.Drawing.Point(3, 3);
             this.pChannel3.Name = "pChannel3";
-            this.pChannel3.Size = new System.Drawing.Size(909, 24);
+            this.pChannel3.Size = new System.Drawing.Size(50, 50);
+            this.pChannel3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pChannel3.TabIndex = 2;
             this.pChannel3.TabStop = false;
             // 
             // tabPage4
             // 
             this.tabPage4.AutoScroll = true;
-            this.tabPage4.Controls.Add(this.pChannel4);
+            this.tabPage4.Controls.Add(this.flowLayoutPanel5);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -328,14 +365,15 @@
             // 
             this.pChannel4.Location = new System.Drawing.Point(3, 3);
             this.pChannel4.Name = "pChannel4";
-            this.pChannel4.Size = new System.Drawing.Size(909, 24);
+            this.pChannel4.Size = new System.Drawing.Size(50, 50);
+            this.pChannel4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pChannel4.TabIndex = 2;
             this.pChannel4.TabStop = false;
             // 
             // tabPage5
             // 
             this.tabPage5.AutoScroll = true;
-            this.tabPage5.Controls.Add(this.pChannel5);
+            this.tabPage5.Controls.Add(this.flowLayoutPanel4);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -348,14 +386,15 @@
             // 
             this.pChannel5.Location = new System.Drawing.Point(3, 3);
             this.pChannel5.Name = "pChannel5";
-            this.pChannel5.Size = new System.Drawing.Size(909, 24);
+            this.pChannel5.Size = new System.Drawing.Size(50, 50);
+            this.pChannel5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pChannel5.TabIndex = 2;
             this.pChannel5.TabStop = false;
             // 
             // tabPage6
             // 
             this.tabPage6.AutoScroll = true;
-            this.tabPage6.Controls.Add(this.pChannel6);
+            this.tabPage6.Controls.Add(this.flowLayoutPanel3);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
@@ -368,7 +407,8 @@
             // 
             this.pChannel6.Location = new System.Drawing.Point(3, 3);
             this.pChannel6.Name = "pChannel6";
-            this.pChannel6.Size = new System.Drawing.Size(909, 24);
+            this.pChannel6.Size = new System.Drawing.Size(50, 50);
+            this.pChannel6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pChannel6.TabIndex = 2;
             this.pChannel6.TabStop = false;
             // 
@@ -1040,78 +1080,109 @@
             this.btnStopDecode.UseVisualStyleBackColor = false;
             this.btnStopDecode.Click += new System.EventHandler(this.btnStopDecode_Click);
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanel2
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Controls.Add(this.pChannel1);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(909, 676);
-            this.flowLayoutPanel1.TabIndex = 2;
+            this.flowLayoutPanel2.AutoScroll = true;
+            this.flowLayoutPanel2.Controls.Add(this.pChannel2);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel2.TabIndex = 3;
             // 
-            // pChannel1
+            // flowLayoutPanel3
             // 
-            this.pChannel1.Location = new System.Drawing.Point(3, 3);
-            this.pChannel1.Name = "pChannel1";
-            this.pChannel1.Size = new System.Drawing.Size(50, 50);
-            this.pChannel1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel1.TabIndex = 1;
-            this.pChannel1.TabStop = false;
+            this.flowLayoutPanel3.AutoScroll = true;
+            this.flowLayoutPanel3.Controls.Add(this.pChannel6);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel3.TabIndex = 3;
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.AutoScroll = true;
+            this.flowLayoutPanel4.Controls.Add(this.pChannel5);
+            this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel4.TabIndex = 3;
+            // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.AutoScroll = true;
+            this.flowLayoutPanel5.Controls.Add(this.pChannel4);
+            this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel5.TabIndex = 3;
+            // 
+            // flowLayoutPanel6
+            // 
+            this.flowLayoutPanel6.AutoScroll = true;
+            this.flowLayoutPanel6.Controls.Add(this.pChannel3);
+            this.flowLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel6.Name = "flowLayoutPanel6";
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel6.TabIndex = 3;
             // 
             // pACChannel1
             // 
-            this.pACChannel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pACChannel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel1.Location = new System.Drawing.Point(3, 3);
             this.pACChannel1.Name = "pACChannel1";
             this.pACChannel1.Size = new System.Drawing.Size(145, 626);
-            this.pACChannel1.TabIndex = 6;
-            this.pACChannel1.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
+            this.pACChannel1.TabIndex = 12;
+            this.pACChannel1.TabStop = false;
             // 
             // pACChannel2
             // 
-            this.pACChannel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pACChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel2.Location = new System.Drawing.Point(154, 3);
             this.pACChannel2.Name = "pACChannel2";
             this.pACChannel2.Size = new System.Drawing.Size(145, 626);
-            this.pACChannel2.TabIndex = 7;
-            this.pACChannel2.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
+            this.pACChannel2.TabIndex = 13;
+            this.pACChannel2.TabStop = false;
             // 
             // pACChannel3
             // 
-            this.pACChannel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pACChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel3.Location = new System.Drawing.Point(305, 3);
             this.pACChannel3.Name = "pACChannel3";
             this.pACChannel3.Size = new System.Drawing.Size(145, 626);
-            this.pACChannel3.TabIndex = 8;
-            this.pACChannel3.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
+            this.pACChannel3.TabIndex = 14;
+            this.pACChannel3.TabStop = false;
             // 
             // pACChannel4
             // 
-            this.pACChannel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pACChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel4.Location = new System.Drawing.Point(456, 3);
             this.pACChannel4.Name = "pACChannel4";
             this.pACChannel4.Size = new System.Drawing.Size(145, 626);
-            this.pACChannel4.TabIndex = 9;
-            this.pACChannel4.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
+            this.pACChannel4.TabIndex = 15;
+            this.pACChannel4.TabStop = false;
             // 
             // pACChannel5
             // 
-            this.pACChannel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pACChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel5.Location = new System.Drawing.Point(607, 3);
             this.pACChannel5.Name = "pACChannel5";
             this.pACChannel5.Size = new System.Drawing.Size(145, 626);
-            this.pACChannel5.TabIndex = 10;
-            this.pACChannel5.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
+            this.pACChannel5.TabIndex = 16;
+            this.pACChannel5.TabStop = false;
             // 
             // pACChannel6
             // 
-            this.pACChannel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pACChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pACChannel6.Location = new System.Drawing.Point(758, 3);
             this.pACChannel6.Name = "pACChannel6";
             this.pACChannel6.Size = new System.Drawing.Size(148, 626);
-            this.pACChannel6.TabIndex = 11;
-            this.pACChannel6.BackgroundImageChanged += new System.EventHandler(this.DoubleBufferedPanel_BackgroundImageChanged);
+            this.pACChannel6.TabIndex = 17;
+            this.pACChannel6.TabStop = false;
             // 
             // MainForm
             // 
@@ -1133,6 +1204,9 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pChannel2)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -1172,9 +1246,22 @@
             this.gbRS.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).EndInit();
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
+            this.flowLayoutPanel5.ResumeLayout(false);
+            this.flowLayoutPanel5.PerformLayout();
+            this.flowLayoutPanel6.ResumeLayout(false);
+            this.flowLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pACChannel6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1250,12 +1337,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiStopDecoding;
         private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeOnboard;
         private System.Windows.Forms.Button btnStartRecieve;
-        private Other.DoubleBufferedPanel pACChannel1;
-        private Other.DoubleBufferedPanel pACChannel2;
-        private Other.DoubleBufferedPanel pACChannel3;
-        private Other.DoubleBufferedPanel pACChannel4;
-        private Other.DoubleBufferedPanel pACChannel5;
-        private Other.DoubleBufferedPanel pACChannel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.PictureBox pChannel2;
         private System.Windows.Forms.PictureBox pChannel3;
@@ -1264,6 +1345,17 @@
         private System.Windows.Forms.PictureBox pChannel6;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.PictureBox pChannel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.PictureBox pACChannel1;
+        private System.Windows.Forms.PictureBox pACChannel2;
+        private System.Windows.Forms.PictureBox pACChannel3;
+        private System.Windows.Forms.PictureBox pACChannel4;
+        private System.Windows.Forms.PictureBox pACChannel5;
+        private System.Windows.Forms.PictureBox pACChannel6;
     }
 }
 
