@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -102,7 +103,7 @@ namespace ReceivingStation.Decode
             for (int i = 0; i < 6; i++)
             {
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
-                _images[i] = new Bitmap(1, 1); // Костыль для передачи массива Bitmap до первого мерджа.
+                _images[i] = new Bitmap(Constants.WDT, 1); // Костыль для передачи массива Bitmap до первого мерджа.
                 _listImages[i] = new List<Bitmap>();              
             }
 
@@ -145,7 +146,8 @@ namespace ReceivingStation.Decode
 
             } while (!token.IsCancellationRequested);
 
-            MergeImagesFromList();
+            //_images = MergeImagesFromList();
+            Task.Run(() => MergeImagesFromList());
             _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
             _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));            
 
@@ -686,7 +688,8 @@ namespace ReceivingStation.Decode
 
                 if (Yt % 400 == 0)
                 {
-                    MergeImagesFromList();                   
+                    //_images = MergeImagesFromList();                   
+                    Task.Run(() => MergeImagesFromList());                   
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));
                 }
                 
@@ -788,7 +791,7 @@ namespace ReceivingStation.Decode
 
         #region Получение изображений из списков.
         private void MergeImagesFromList()
-        {        
+        {
             if (_listImages[0].Count > 0) //Костыль. Если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
             {
                 Parallel.For(0, _images.Length, i =>
@@ -811,8 +814,43 @@ namespace ReceivingStation.Decode
                     // Сохранение изображений.
                     _images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
                 });
-            }                   
+            }
         }
+
+        //private Bitmap[] MergeImagesFromList()
+        //{
+        //    Bitmap[] bmps = new Bitmap[6];
+
+        //    if (_listImages[0].Count > 0) //Костыль. Если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
+        //    {
+        //        Parallel.For(0, bmps.Length, i =>
+        //        {
+        //            int offset = _images[i].Height - 1;
+
+        //            bmps[i] = new Bitmap(Constants.WDT, offset + _listImages[i].Count * 8);
+        //            using (Graphics g = Graphics.FromImage(bmps[i]))
+        //            {                      
+        //                g.Clear(Color.White);
+
+        //                g.DrawImage(_images[i], Point.Empty);
+        //                _images[i].Dispose(); // Костыль. С этим вроде не захлебывается программа. (Но это не точно)
+
+        //                foreach (var row in _listImages[i])
+        //                {
+        //                    g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
+        //                    offset += row.Height;
+        //                }
+        //            }
+
+        //            _listImages[i].Clear();              
+
+        //            // Сохранение изображений.
+        //            bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+        //        });
+        //    }
+
+        //    return bmps;
+        //}
 
         #endregion
     }
