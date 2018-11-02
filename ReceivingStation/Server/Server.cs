@@ -8,14 +8,16 @@ namespace ReceivingStation.Server
 {
     class Server
     {
-        public delegate void ChangeMode(byte modeNumber);
-        public static ChangeMode ThreadChangeMode;
-        public delegate void SetParameters(byte fcp, byte prd, byte freq, byte interliving);
-        public static SetParameters ThreadSetParameters;
-        public delegate void StartReceiving();
-        public static StartReceiving ThreadStartReceiving;
-        public delegate void StopReceiving();
-        public static StopReceiving ThreadStopReceiving;
+        public delegate void ChangeModeDelegate(byte modeNumber);
+        public ChangeModeDelegate ThreadSafeChangeMode;
+        public delegate void SetParametersDelegate(byte fcp, byte prd, byte freq, byte interliving);
+        public SetParametersDelegate ThreadSafeSetReceiveParameters;
+        public delegate void StartReceivingDelegate();
+        public StartReceivingDelegate ThreadSafeStartReceiving;
+        public delegate void StopReceivingDelegate();
+        public StopReceivingDelegate ThreadSafeStopReceiving;
+
+        private MainForm _form;
 
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
@@ -29,6 +31,11 @@ namespace ReceivingStation.Server
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
        
+        public Server(MainForm form)
+        {
+            _form = form;
+        }
+
         #region Запустить работу сервера.
 
         public void StartServer()
@@ -50,7 +57,7 @@ namespace ReceivingStation.Server
                 while (true)
                 {
                     // Перевод в местный режим управления.
-                    ThreadChangeMode(1);
+                    _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
                     _remoteControlFlag = false;
 
                     server.Start();
@@ -153,7 +160,7 @@ namespace ReceivingStation.Server
                 if (_remoteControlFlag)
                 {
                     _remoteControlFlag = false;
-                    ThreadChangeMode(1);
+                    _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
                 }
                 else
                 {
@@ -167,7 +174,7 @@ namespace ReceivingStation.Server
                 if (!_remoteControlFlag)
                 {
                     _remoteControlFlag = true;
-                    ThreadChangeMode(0);
+                    _form.Invoke(new Action(() => { ThreadSafeChangeMode(0); }));
                 }
                 else
                 {
@@ -197,7 +204,7 @@ namespace ReceivingStation.Server
                 }
 
                 _setParametersFlag = true;
-                ThreadSetParameters(command[1], command[2], command[3], command[4]);
+                _form.Invoke(new Action(() => { ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]); }));
 
                 return OkMessage;
             }
@@ -216,7 +223,7 @@ namespace ReceivingStation.Server
                 if (_setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
-                    ThreadStartReceiving();
+                    _form.Invoke(new Action(() => { ThreadSafeStartReceiving(); }));
                 }
                 else if (_receivingStartedFlag)
                 {
@@ -234,7 +241,7 @@ namespace ReceivingStation.Server
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    ThreadStopReceiving();
+                    _form.Invoke(new Action(() => { ThreadSafeStopReceiving(); }));
                 }
                 else
                 {

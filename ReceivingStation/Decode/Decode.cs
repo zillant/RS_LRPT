@@ -12,20 +12,18 @@ namespace ReceivingStation.Decode
 {
     class Decode
     {       
-        public delegate void CounterUpdater(uint counter);
-        public static CounterUpdater ThreadCounterUpdater;
+        public delegate void UpdateFrameCounterDelegate(uint counter);
+        public UpdateFrameCounterDelegate ThreadSafeUpdateFrameCounterValue;
+        public delegate void UpdateImagesContentDelegate(Bitmap[] list);
+        public UpdateImagesContentDelegate ThreadSafeUpdateImagesContent;
+        public delegate void StopDecodingDelegate();
+        public StopDecodingDelegate ThreadSafeStopDecoding;
 
-        public delegate void ImageUpdater(Bitmap[] list);
-        public static ImageUpdater ThreadImageUpdater;
-
-        public delegate void StopDecoding();
-        public static StopDecoding ThreadStopDecoding;      
-
+        private MainForm _form;
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
-        private MainForm _form;
-
+       
         private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
         private Bitmap[] _images = new Bitmap[6]; // Результирующие изображения после слияния строк из списка.
         private List<Bitmap>[] _listImages = new List<Bitmap>[6]; // Список полос изображений для каждого канала.
@@ -148,16 +146,15 @@ namespace ReceivingStation.Decode
             } while (!token.IsCancellationRequested);
 
             MergeImagesFromList();
-            _form.Invoke(new Action(() => { ThreadCounterUpdater(Kol_tk); }));
-            _form.Invoke(new Action(() => { ThreadImageUpdater(_images); }));            
-
+            _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
+            _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));            
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
-           
-            ThreadStopDecoding();
+
+            _form.Invoke(new Action(() => { ThreadSafeStopDecoding(); }));
         }
 
         #endregion
@@ -532,7 +529,7 @@ namespace ReceivingStation.Decode
 
             Kol_tk++;
             /////////////////////////////////////////////////////////////////       
-            _form.Invoke(new Action(() => { ThreadCounterUpdater(Kol_tk); }));
+            _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
             /////////////////////////////////////////////////////////////////
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
@@ -690,7 +687,7 @@ namespace ReceivingStation.Decode
                 if (Yt % 400 == 0)
                 {
                     MergeImagesFromList();                   
-                    _form.Invoke(new Action(() => { ThreadImageUpdater(_images); }));
+                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));
                 }
                 
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");

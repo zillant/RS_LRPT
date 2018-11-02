@@ -14,7 +14,6 @@ namespace ReceivingStation
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
 
-        private Decode.Decode _decode;
         private string _fileName;
         private bool _remoteModeFlag;
 
@@ -54,15 +53,6 @@ namespace ReceivingStation
                 ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
 
-            Decode.Decode.ThreadCounterUpdater = UpdateCounter;
-            Decode.Decode.ThreadImageUpdater = UpdateImage;
-            Decode.Decode.ThreadStopDecoding = StopDecoding;
-
-            Server.Server.ThreadChangeMode = ChangeMode;
-            Server.Server.ThreadSetParameters = RemoteSetReceiveParameters;
-            Server.Server.ThreadStartReceiving = RemoteStartReceiving;
-            Server.Server.ThreadStopReceiving = RemoteStopReceiving;
-
             _channels[0] = pChannel1;
             _channels[1] = pChannel2;
             _channels[2] = pChannel3;
@@ -83,7 +73,15 @@ namespace ReceivingStation
             timer1.Start();
 
             _isReceivingStarting = false;
-            var server = new Server.Server();
+
+            var server = new Server.Server(this)
+            {
+                ThreadSafeChangeMode = ChangeMode,
+                ThreadSafeSetReceiveParameters = RemoteSetReceiveParameters,
+                ThreadSafeStartReceiving = StartReceiving,
+                ThreadSafeStopReceiving = StopReceiving
+            };
+
             Task.Run(() => server.StartServer());          
         }
 
@@ -176,30 +174,22 @@ namespace ReceivingStation
         #region Смена режима управления.
         private void ChangeMode(byte modeNumber)
         {
-            if (InvokeRequired == false)
+            if (modeNumber == 0)
             {
-                if (modeNumber == 0)
-                {
-                    // Дистанционное управление
-                    Enabled = false;
-                    slMode.Text = "Дистанционное управление";
-                    WriteToLogUserActions("Дистанционное управление");
-                    _remoteModeFlag = true;
-                }
-                else if (modeNumber == 1)
-                {
-                    // Местное управление
-                    Enabled = true;
-                    slMode.Text = "Местное управление";
-                    WriteToLogUserActions("Местное управление");
-                    _remoteModeFlag = false;
-                }
+                // Дистанционное управление
+                Enabled = false;
+                slMode.Text = "Дистанционное управление";
+                WriteToLogUserActions("Дистанционное управление");
+                _remoteModeFlag = true;
             }
-            else
+            else if (modeNumber == 1)
             {
-                Server.Server.ChangeMode changeMode = ChangeMode;
-                Invoke(changeMode, modeNumber);
-            }
+                // Местное управление
+                Enabled = true;
+                slMode.Text = "Местное управление";
+                WriteToLogUserActions("Местное управление");
+                _remoteModeFlag = false;
+            }           
         }
 
         #endregion
@@ -207,19 +197,11 @@ namespace ReceivingStation
         #region Установка параметров записи потока в дистанционном режиме управления.
         private void RemoteSetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
         {
-            if (InvokeRequired == false)
-            {
-                _fcp = fcp;
-                _prd = prd;
-                _freq = freq;
-                _interliving = interliving;
-                WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
-            }
-            else
-            {
-                Server.Server.SetParameters setParameters = RemoteSetReceiveParameters;
-                Invoke(setParameters, fcp, prd, freq, interliving);
-            }
+            _fcp = fcp;
+            _prd = prd;
+            _freq = freq;
+            _interliving = interliving;
+            WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
         }
 
         #endregion
@@ -227,10 +209,10 @@ namespace ReceivingStation
         #region Установка параметров записи потока в местном режиме управления.
         private void LocalSetReceiveParameters()
         {
-            _fcp = Convert.ToByte((rbFCPMain.Checked) ? 0x1 : 0x2);
-            _prd = Convert.ToByte((rbPRDMain.Checked) ? 0x1 : 0x2);
-            _freq = Convert.ToByte((rbFreq1.Checked) ? 0x1 : 0x2);
-            _interliving = Convert.ToByte((rbInterlivingReceiveOn.Checked) ? 0x1 : 0x2);
+            _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
+            _prd = Convert.ToByte(rbPRDMain.Checked ? 0x1 : 0x2);
+            _freq = Convert.ToByte(rbFreq1.Checked ? 0x1 : 0x2);
+            _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
             WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
         }
 
@@ -262,38 +244,6 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Начать прием потока в дистанционном режиме управления.
-        public void RemoteStartReceiving()
-        {
-            if (InvokeRequired == false)
-            {
-                StartReceiving();
-            }
-            else
-            {
-                Server.Server.StartReceiving remoteStartReceiving = RemoteStartReceiving;
-                Invoke(remoteStartReceiving);
-            }
-        }
-
-        #endregion
-
-        #region Остановить прием потока в дистанционном режиме управления.
-        public void RemoteStopReceiving()
-        {
-            if (InvokeRequired == false)
-            {
-                StopReceiving();
-            }
-            else
-            {
-                Server.Server.StartReceiving remoteStartReceiving = RemoteStartReceiving;
-                Invoke(remoteStartReceiving);
-            }
-        }
-
-        #endregion
-
         #region Начать декодирование.
         private void StartDecoding()
         {
@@ -303,9 +253,14 @@ namespace ReceivingStation
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
 
-            _decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag);
-            Task.Run(() => _decode.StartDecode(_cancellationToken));
+            var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
+            {
+                ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
+                ThreadSafeUpdateImagesContent = UpdateImagesContent,
+                ThreadSafeStopDecoding = StopDecoding
+            };
 
+            Task.Run(() => decode.StartDecode(_cancellationToken));
 
             for (int i = 0; i < 6; i++)
             {
@@ -324,7 +279,7 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление счетчика кадров при декодировании.
-        private void UpdateCounter(uint counter)
+        private void UpdateFrameCounterValue(uint counter)
         {
             lblFramesCounter.Text = counter.ToString();            
         }
@@ -332,7 +287,7 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление изображений при декодировании.
-        private void UpdateImage(Bitmap[] images)
+        private void UpdateImagesContent(Bitmap[] images)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -358,7 +313,7 @@ namespace ReceivingStation
             }
             else
             {
-                Decode.Decode.StopDecoding stopDecoding = StopDecoding;
+                Decode.Decode.StopDecodingDelegate stopDecoding = StopDecoding;
                 Invoke(stopDecoding);
             }
         }
