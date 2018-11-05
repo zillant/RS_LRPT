@@ -100,7 +100,7 @@ namespace ReceivingStation.Decode
 
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, 400);       
+                _bmps[i] = new DirectBitmap(Constants.WDT, 80);       
             }
 
             Init();
@@ -675,19 +675,17 @@ namespace ReceivingStation.Decode
             }
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
-            {
-               //AddImagesRowsToList();          
-                Yt += 8;
-                
+            {         
+                Yt += 8;              
 
-                if (Yt % 400 == 0)
-                {
-                    //_images = MergeImagesFromList();                                     
+                if (Yt % 80 == 0) // Если набралось 10 строчек.
+                {                                    
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+
                     for (int j = 0; j < _bmps.Length; j++)
                     {
                         _bmps[j].Dispose();
-                        _bmps[j] = new DirectBitmap(Constants.WDT, 400);
+                        _bmps[j] = new DirectBitmap(Constants.WDT, 80);
                     }
 
                     Yt = 0;

@@ -22,8 +22,7 @@ namespace ReceivingStation
         private CancellationToken _cancellationToken;
 
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
-        private PictureBox[] _allChannels = new PictureBox[6];
-        private Bitmap[] _images = new Bitmap[6];
+        private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private FileInfo _fileInfo;
 
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
@@ -57,19 +56,19 @@ namespace ReceivingStation
                 ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
 
-            _channels[0] = flowLayoutPanel1;
-            _channels[1] = flowLayoutPanel2;
-            _channels[2] = flowLayoutPanel3;
-            _channels[3] = flowLayoutPanel4;
-            _channels[4] = flowLayoutPanel5;
-            _channels[5] = flowLayoutPanel6;
+            _channels[0] = flpChannel1;
+            _channels[1] = flpChannel2;
+            _channels[2] = flpChannel3;
+            _channels[3] = flpChannel4;
+            _channels[4] = flpChannel5;
+            _channels[5] = flpChannel6;
 
-            _allChannels[0] = pACChannel1;
-            _allChannels[1] = pACChannel2;
-            _allChannels[2] = pACChannel3;
-            _allChannels[3] = pACChannel4;
-            _allChannels[4] = pACChannel5;
-            _allChannels[5] = pACChannel6;
+            _allChannels[0] = flpAllChannels1;
+            _allChannels[1] = flpAllChannels2;
+            _allChannels[2] = flpAllChannels3;
+            _allChannels[3] = flpAllChannels4;
+            _allChannels[4] = flpAllChannels5;
+            _allChannels[5] = flpAllChannels6;
 
             slTime.Text = DateTime.Now.ToString();
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
@@ -260,7 +259,7 @@ namespace ReceivingStation
             var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
             {
                 ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
-                ThreadSafeUpdateImagesContent = UpdateImagesContent,
+                ThreadSafeUpdateImagesContent = AddImages,
                 ThreadSafeStopDecoding = StopDecoding
             };
 
@@ -271,8 +270,7 @@ namespace ReceivingStation
 
             for (int i = 0; i < 6; i++)
             {
-                _images[i] = new Bitmap(1, 1);
-                _allChannels[i].Image = _images[i];
+                _allChannels[i].Controls.Clear();
                 _channels[i].Controls.Clear();
             }
 
@@ -293,12 +291,13 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление изображений при декодировании.
-        private void UpdateImagesContent(DirectBitmap[] images)
+        #region Добавление полученных изображений при декодировании.
+        private void AddImages(DirectBitmap[] images)
         {
             for (int i = 0; i < images.Length; i++)
             {
-                _channels[i].Controls.Add(new PictureBox { Size = new Size(Constants.WDT, 400), Image = new Bitmap(images[i].Bitmap), Margin = new Padding(0) });
+                _channels[i].Controls.Add(new PictureBox { Size = new Size(Constants.WDT, images[i].Bitmap.Height), Image = new Bitmap(images[i].Bitmap), Margin = new Padding(0) });
+                _allChannels[i].Controls.Add(new PictureBox { Size = new Size(Constants.WDT, images[i].Bitmap.Height), Image = new Bitmap(images[i].Bitmap), Margin = new Padding(0)});
             }                      
         }
 
