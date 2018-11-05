@@ -30,6 +30,8 @@ namespace ReceivingStation
 
         private bool _isReceivingStarting;
 
+        private DateTime _worktimestart;
+
         // Параметры приема битового потока.
         private byte _fcp;
         private byte _prd;
@@ -261,6 +263,7 @@ namespace ReceivingStation
             };
 
             Task.Run(() => decode.StartDecode(_cancellationToken));
+            _worktimestart = DateTime.Now;
 
             for (int i = 0; i < 6; i++)
             {
@@ -310,6 +313,10 @@ namespace ReceivingStation
                 btnStopDecode.Enabled = false;
                 tsmiStopDecoding.Enabled = false;
                 gbDecodeParameters.Enabled = true;
+
+                DateTime worktimefinish = DateTime.Now;
+                TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
+                slWorkingTimeOnboard.Text = deltaWorkingTime.ToString();
             }
             else
             {

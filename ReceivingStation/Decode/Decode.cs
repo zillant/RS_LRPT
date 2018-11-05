@@ -146,8 +146,7 @@ namespace ReceivingStation.Decode
 
             } while (!token.IsCancellationRequested);
 
-            //_images = MergeImagesFromList();
-            Task.Run(() => MergeImagesFromList());
+            _images = MergeImagesFromList();
             _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
             _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));            
 
@@ -688,8 +687,7 @@ namespace ReceivingStation.Decode
 
                 if (Yt % 400 == 0)
                 {
-                    //_images = MergeImagesFromList();                   
-                    Task.Run(() => MergeImagesFromList());                   
+                    _images = MergeImagesFromList();                                     
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));
                 }
                 
@@ -743,7 +741,6 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Формирование изображения.
-
         private void PreparePicture()
         {
             int i, j, k, x;
@@ -779,29 +776,31 @@ namespace ReceivingStation.Decode
         #region Добавление полосы изображения в список.
         private void AddImagesRowsToList()
         {
-            for (int i = 0; i < _bmps.Length; i++)
+            Parallel.For(0, _bmps.Length, i =>
             {
                 _listImages[i].Add(new Bitmap(_bmps[i].Bitmap));
                 _bmps[i].Dispose();
                 _bmps[i] = new DirectBitmap(Constants.WDT, 8);
-            }
+            });
         }
 
-        #endregion
+        #endregion      
 
-        #region Получение изображений из списков.
-        private void MergeImagesFromList()
+        #region Получение изображений из списков (Более быстрый вариант с перерисовкой всего списка).
+        private Bitmap[] MergeImagesFromList()
         {
-            if (_listImages[0].Count > 0) //Костыль. Если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
+            Bitmap[] bmps = new Bitmap[6];
+
+            if (_listImages[0].Count > 0) // Если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
             {
-                Parallel.For(0, _images.Length, i =>
+                Parallel.For(0, bmps.Length, i =>
                 {
-                    _images[i].Dispose(); // Костыль. С этим вроде не захлебывается программа. (Но это не точно)
+                    _images[i].Dispose();
 
                     int offset = 0;
 
-                    _images[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
-                    using (Graphics g = Graphics.FromImage(_images[i]))
+                    bmps[i] = new Bitmap(Constants.WDT, _listImages[i].Count * 8);
+                    using (Graphics g = Graphics.FromImage(bmps[i]))
                     {
                         g.Clear(Color.White);
                         foreach (var row in _listImages[i])
@@ -812,40 +811,43 @@ namespace ReceivingStation.Decode
                     }
 
                     // Сохранение изображений.
-                    _images[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+                    bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
                 });
             }
+
+            return bmps;
         }
 
+        #endregion
+
+        #region Получение изображений из списков (Очищаю список и переиспользую старое изображение).
         //private Bitmap[] MergeImagesFromList()
         //{
         //    Bitmap[] bmps = new Bitmap[6];
 
         //    if (_listImages[0].Count > 0) //Костыль. Если расшифровка не началась (Например стоит NRZ, а не нужно) и нужно нажать кнопку стоп.
         //    {
-        //        Parallel.For(0, bmps.Length, i =>
+        //        Parallel.For(0, _images.Length, i =>
         //        {
         //            int offset = _images[i].Height - 1;
 
         //            bmps[i] = new Bitmap(Constants.WDT, offset + _listImages[i].Count * 8);
         //            using (Graphics g = Graphics.FromImage(bmps[i]))
-        //            {                      
+        //            {
         //                g.Clear(Color.White);
 
-        //                g.DrawImage(_images[i], Point.Empty);
+        //                g.DrawImage(_images[i], Point.Empty); // Закидываем старое изображение.
         //                _images[i].Dispose(); // Костыль. С этим вроде не захлебывается программа. (Но это не точно)
 
-        //                foreach (var row in _listImages[i])
+        //                foreach (var row in _listImages[i]) // Добавляем новые строчки.
         //                {
         //                    g.DrawImage(row, new Rectangle(0, offset, row.Width, row.Height));
         //                    offset += row.Height;
         //                }
         //            }
-
-        //            _listImages[i].Clear();              
-
-        //            // Сохранение изображений.
+        //            _listImages[i].Clear();
         //            bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+
         //        });
         //    }
 
