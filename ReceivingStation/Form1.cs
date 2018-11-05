@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.Other;
 using System.Text;
+using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
@@ -20,9 +21,10 @@ namespace ReceivingStation
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
-        private PictureBox[] _channels = new PictureBox[6];
+        private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private PictureBox[] _allChannels = new PictureBox[6];
         private Bitmap[] _images = new Bitmap[6];
+        private FileInfo _fileInfo;
 
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
         private TimeSpan _fullWorkingTimeOnboard;
@@ -55,12 +57,12 @@ namespace ReceivingStation
                 ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
 
-            _channels[0] = pChannel1;
-            _channels[1] = pChannel2;
-            _channels[2] = pChannel3;
-            _channels[3] = pChannel4;
-            _channels[4] = pChannel5;
-            _channels[5] = pChannel6;
+            _channels[0] = flowLayoutPanel1;
+            _channels[1] = flowLayoutPanel2;
+            _channels[2] = flowLayoutPanel3;
+            _channels[3] = flowLayoutPanel4;
+            _channels[4] = flowLayoutPanel5;
+            _channels[5] = flowLayoutPanel6;
 
             _allChannels[0] = pACChannel1;
             _allChannels[1] = pACChannel2;
@@ -262,6 +264,8 @@ namespace ReceivingStation
                 ThreadSafeStopDecoding = StopDecoding
             };
 
+            _fileInfo = new FileInfo(_fileName);
+
             Task.Run(() => decode.StartDecode(_cancellationToken));
             _worktimestart = DateTime.Now;
 
@@ -269,7 +273,7 @@ namespace ReceivingStation
             {
                 _images[i] = new Bitmap(1, 1);
                 _allChannels[i].Image = _images[i];
-                _channels[i].Image = _images[i];
+                _channels[i].Controls.Clear();
             }
 
             btnStartDecode.Enabled = false;
@@ -290,15 +294,12 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление изображений при декодировании.
-        private void UpdateImagesContent(Bitmap[] images)
+        private void UpdateImagesContent(DirectBitmap[] images)
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < images.Length; i++)
             {
-                _images[i].Dispose();
-                _images[i] = new Bitmap(images[i]);
-                _allChannels[i].Image = _images[i];
-                _channels[i].Image = _images[i];               
-            };
+                _channels[i].Controls.Add(new PictureBox { Size = new Size(Constants.WDT, 400), Image = new Bitmap(images[i].Bitmap), Margin = new Padding(0) });
+            }                      
         }
 
         #endregion

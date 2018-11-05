@@ -15,7 +15,7 @@ namespace ReceivingStation.Decode
     {       
         public delegate void UpdateFrameCounterDelegate(uint counter);
         public UpdateFrameCounterDelegate ThreadSafeUpdateFrameCounterValue;
-        public delegate void UpdateImagesContentDelegate(Bitmap[] list);
+        public delegate void UpdateImagesContentDelegate(DirectBitmap[] list);
         public UpdateImagesContentDelegate ThreadSafeUpdateImagesContent;
         public delegate void StopDecodingDelegate();
         public StopDecodingDelegate ThreadSafeStopDecoding;
@@ -102,7 +102,7 @@ namespace ReceivingStation.Decode
 
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, 8);
+                _bmps[i] = new DirectBitmap(Constants.WDT, 400);
                 _images[i] = new Bitmap(Constants.WDT, 1); // Костыль для передачи массива Bitmap до первого мерджа.
                 _listImages[i] = new List<Bitmap>();              
             }
@@ -146,9 +146,9 @@ namespace ReceivingStation.Decode
 
             } while (!token.IsCancellationRequested);
 
-            _images = MergeImagesFromList();
+            //_images = MergeImagesFromList();
             _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
-            _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));            
+            _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));            
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
@@ -681,14 +681,21 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {
-                AddImagesRowsToList();          
+               //AddImagesRowsToList();          
                 Yt += 8;
                 
 
                 if (Yt % 400 == 0)
                 {
-                    _images = MergeImagesFromList();                                     
-                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_images); }));
+                    //_images = MergeImagesFromList();                                     
+                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+                    for (int j = 0; j < _bmps.Length; j++)
+                    {
+                        _bmps[j].Dispose();
+                        _bmps[j] = new DirectBitmap(Constants.WDT, 400);
+                    }
+
+                    Yt = 0;
                 }
                 
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
@@ -764,7 +771,7 @@ namespace ReceivingStation.Decode
                     {
                         num = _jpeg.video_mass[k++];
                         int color = (num << 16) | (num << 8) | num;
-                        _bmps[nc].SetPixel(x + j, i, Color.FromArgb(255, Color.FromArgb(color)));
+                        _bmps[nc].SetPixel(x + j, Yt + i, Color.FromArgb(255, Color.FromArgb(color)));
                     }
                 }
                 x += 8;
@@ -809,9 +816,9 @@ namespace ReceivingStation.Decode
                             offset += row.Height;
                         }
                     }
-
+                    _listImages[i].Clear();
                     // Сохранение изображений.
-                    bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+                    //bmps[i].Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
                 });
             }
 

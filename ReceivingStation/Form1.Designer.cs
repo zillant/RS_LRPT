@@ -43,22 +43,16 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel2 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel3 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel4 = new System.Windows.Forms.PictureBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel5 = new System.Windows.Forms.PictureBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pChannel6 = new System.Windows.Forms.PictureBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -121,23 +115,11 @@
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel2)).BeginInit();
             this.tabPage3.SuspendLayout();
-            this.flowLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel3)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.flowLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel4)).BeginInit();
             this.tabPage5.SuspendLayout();
-            this.flowLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel5)).BeginInit();
             this.tabPage6.SuspendLayout();
-            this.flowLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel6)).BeginInit();
             this.tabPage7.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -271,9 +253,10 @@
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControl1.Location = new System.Drawing.Point(265, 24);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(923, 708);
+            this.tabControl1.Size = new System.Drawing.Size(923, 712);
             this.tabControl1.TabIndex = 19;
             // 
             // tabPage1
@@ -283,7 +266,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(915, 682);
+            this.tabPage1.Size = new System.Drawing.Size(915, 686);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -291,21 +274,15 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Controls.Add(this.pChannel1);
+            this.flowLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(909, 680);
             this.flowLayoutPanel1.TabIndex = 2;
-            // 
-            // pChannel1
-            // 
-            this.pChannel1.Location = new System.Drawing.Point(3, 3);
-            this.pChannel1.Name = "pChannel1";
-            this.pChannel1.Size = new System.Drawing.Size(50, 50);
-            this.pChannel1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel1.TabIndex = 1;
-            this.pChannel1.TabStop = false;
+            this.flowLayoutPanel1.WrapContents = false;
             // 
             // tabPage2
             // 
@@ -314,7 +291,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(915, 682);
+            this.tabPage2.Size = new System.Drawing.Size(915, 686);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Канал 2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -322,21 +299,12 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.AutoScroll = true;
-            this.flowLayoutPanel2.Controls.Add(this.pChannel2);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(909, 680);
             this.flowLayoutPanel2.TabIndex = 3;
-            // 
-            // pChannel2
-            // 
-            this.pChannel2.Location = new System.Drawing.Point(3, 3);
-            this.pChannel2.Name = "pChannel2";
-            this.pChannel2.Size = new System.Drawing.Size(50, 50);
-            this.pChannel2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel2.TabIndex = 2;
-            this.pChannel2.TabStop = false;
             // 
             // tabPage3
             // 
@@ -345,7 +313,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(915, 682);
+            this.tabPage3.Size = new System.Drawing.Size(915, 686);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Канал 3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -353,21 +321,12 @@
             // flowLayoutPanel6
             // 
             this.flowLayoutPanel6.AutoScroll = true;
-            this.flowLayoutPanel6.Controls.Add(this.pChannel3);
             this.flowLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
-            this.flowLayoutPanel6.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(909, 680);
             this.flowLayoutPanel6.TabIndex = 3;
-            // 
-            // pChannel3
-            // 
-            this.pChannel3.Location = new System.Drawing.Point(3, 3);
-            this.pChannel3.Name = "pChannel3";
-            this.pChannel3.Size = new System.Drawing.Size(50, 50);
-            this.pChannel3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel3.TabIndex = 2;
-            this.pChannel3.TabStop = false;
             // 
             // tabPage4
             // 
@@ -376,7 +335,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(915, 682);
+            this.tabPage4.Size = new System.Drawing.Size(915, 686);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Канал 4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -384,21 +343,12 @@
             // flowLayoutPanel5
             // 
             this.flowLayoutPanel5.AutoScroll = true;
-            this.flowLayoutPanel5.Controls.Add(this.pChannel4);
             this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(909, 680);
             this.flowLayoutPanel5.TabIndex = 3;
-            // 
-            // pChannel4
-            // 
-            this.pChannel4.Location = new System.Drawing.Point(3, 3);
-            this.pChannel4.Name = "pChannel4";
-            this.pChannel4.Size = new System.Drawing.Size(50, 50);
-            this.pChannel4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel4.TabIndex = 2;
-            this.pChannel4.TabStop = false;
             // 
             // tabPage5
             // 
@@ -407,7 +357,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(915, 682);
+            this.tabPage5.Size = new System.Drawing.Size(915, 686);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Канал 5";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -415,21 +365,12 @@
             // flowLayoutPanel4
             // 
             this.flowLayoutPanel4.AutoScroll = true;
-            this.flowLayoutPanel4.Controls.Add(this.pChannel5);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(909, 680);
             this.flowLayoutPanel4.TabIndex = 3;
-            // 
-            // pChannel5
-            // 
-            this.pChannel5.Location = new System.Drawing.Point(3, 3);
-            this.pChannel5.Name = "pChannel5";
-            this.pChannel5.Size = new System.Drawing.Size(50, 50);
-            this.pChannel5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel5.TabIndex = 2;
-            this.pChannel5.TabStop = false;
             // 
             // tabPage6
             // 
@@ -438,7 +379,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(915, 682);
+            this.tabPage6.Size = new System.Drawing.Size(915, 686);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Канал 6";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -446,21 +387,12 @@
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.AutoScroll = true;
-            this.flowLayoutPanel3.Controls.Add(this.pChannel6);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(909, 676);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(909, 680);
             this.flowLayoutPanel3.TabIndex = 3;
-            // 
-            // pChannel6
-            // 
-            this.pChannel6.Location = new System.Drawing.Point(3, 3);
-            this.pChannel6.Name = "pChannel6";
-            this.pChannel6.Size = new System.Drawing.Size(50, 50);
-            this.pChannel6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pChannel6.TabIndex = 2;
-            this.pChannel6.TabStop = false;
             // 
             // tabPage7
             // 
@@ -470,7 +402,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(915, 682);
+            this.tabPage7.Size = new System.Drawing.Size(915, 686);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Все каналы";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -644,7 +576,7 @@
             this.slTime,
             this.slWorkingTimeOnboard,
             this.slMode});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 732);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 736);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
             this.statusStrip1.Size = new System.Drawing.Size(1188, 24);
@@ -716,7 +648,7 @@
             this.pnlScroll.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pnlScroll.Location = new System.Drawing.Point(0, 24);
             this.pnlScroll.Name = "pnlScroll";
-            this.pnlScroll.Size = new System.Drawing.Size(265, 708);
+            this.pnlScroll.Size = new System.Drawing.Size(265, 712);
             this.pnlScroll.TabIndex = 23;
             // 
             // panel1
@@ -1188,7 +1120,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1188, 756);
+            this.ClientSize = new System.Drawing.Size(1188, 760);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.pnlScroll);
@@ -1204,29 +1136,11 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel1)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.flowLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel2)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            this.flowLayoutPanel6.ResumeLayout(false);
-            this.flowLayoutPanel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel3)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.flowLayoutPanel5.ResumeLayout(false);
-            this.flowLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel4)).EndInit();
             this.tabPage5.ResumeLayout(false);
-            this.flowLayoutPanel4.ResumeLayout(false);
-            this.flowLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel5)).EndInit();
             this.tabPage6.ResumeLayout(false);
-            this.flowLayoutPanel3.ResumeLayout(false);
-            this.flowLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pChannel6)).EndInit();
             this.tabPage7.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
@@ -1338,13 +1252,7 @@
         private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeOnboard;
         private System.Windows.Forms.Button btnStartRecieve;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.PictureBox pChannel2;
-        private System.Windows.Forms.PictureBox pChannel3;
-        private System.Windows.Forms.PictureBox pChannel4;
-        private System.Windows.Forms.PictureBox pChannel5;
-        private System.Windows.Forms.PictureBox pChannel6;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.PictureBox pChannel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
