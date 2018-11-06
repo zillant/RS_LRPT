@@ -296,8 +296,8 @@ namespace ReceivingStation
         {
             for (int i = 0; i < images.Length; i++)
             {
-                _channels[i].Controls.Add(new PictureBox { Size = new Size(Constants.WDT, images[i].Bitmap.Height), Image = new Bitmap(images[i].Bitmap), Margin = new Padding(0) });
-                _allChannels[i].Controls.Add(new PictureBox { Size = new Size(Constants.WDT, images[i].Bitmap.Height), Image = new Bitmap(images[i].Bitmap), Margin = new Padding(0)});
+                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = new Bitmap(images[i].Bitmap), Margin = new Padding(0) });
+                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = new Bitmap(images[i].Bitmap), Margin = new Padding(0)});
             }                      
         }
 
