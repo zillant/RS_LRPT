@@ -100,7 +100,7 @@ namespace ReceivingStation.Decode
 
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, 80);       
+                _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);       
             }
 
             Init();
@@ -678,14 +678,14 @@ namespace ReceivingStation.Decode
             {         
                 Yt += 8;              
 
-                if (Yt % 80 == 0) // Если набралось 10 строчек.
+                if (Yt % Constants.HGT == 0) // Если набралось 10 строчек.
                 {                                    
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
 
                     for (int j = 0; j < _bmps.Length; j++)
                     {
                         _bmps[j].Dispose();
-                        _bmps[j] = new DirectBitmap(Constants.WDT, 80);
+                        _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
                     }
 
                     Yt = 0;

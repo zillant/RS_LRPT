@@ -255,7 +255,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.AutoScroll = true;
             this.tabPage1.Controls.Add(this.flpChannel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -279,7 +278,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.AutoScroll = true;
             this.tabPage2.Controls.Add(this.flpChannel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -292,7 +290,7 @@
             // flpChannel2
             // 
             this.flpChannel2.AutoScroll = true;
-            this.flpChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpChannel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.flpChannel2.Location = new System.Drawing.Point(3, 3);
             this.flpChannel2.Name = "flpChannel2";
             this.flpChannel2.Size = new System.Drawing.Size(909, 680);
@@ -300,7 +298,6 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.AutoScroll = true;
             this.tabPage3.Controls.Add(this.flpChannel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -321,7 +318,6 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.AutoScroll = true;
             this.tabPage4.Controls.Add(this.flpChannel4);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -342,7 +338,6 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.AutoScroll = true;
             this.tabPage5.Controls.Add(this.flpChannel5);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
@@ -363,7 +358,6 @@
             // 
             // tabPage6
             // 
-            this.tabPage6.AutoScroll = true;
             this.tabPage6.Controls.Add(this.flpChannel6);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
@@ -384,7 +378,6 @@
             // 
             // tabPage7
             // 
-            this.tabPage7.AutoScroll = true;
             this.tabPage7.Controls.Add(this.tableLayoutPanel2);
             this.tabPage7.Controls.Add(this.tableLayoutPanel3);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
@@ -397,7 +390,6 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.AutoScroll = true;
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel2.ColumnCount = 6;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -712,6 +704,7 @@
             this.rbFCPReserve.TabIndex = 7;
             this.rbFCPReserve.Text = "Резервный";
             this.rbFCPReserve.UseVisualStyleBackColor = true;
+            this.rbFCPReserve.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // rbFCPMain
             // 
@@ -726,6 +719,7 @@
             this.rbFCPMain.TabStop = true;
             this.rbFCPMain.Text = "Основной";
             this.rbFCPMain.UseVisualStyleBackColor = true;
+            this.rbFCPMain.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // gbInterlivingReceive
             // 
@@ -754,6 +748,7 @@
             this.rbInterlivingReceiveOn.TabStop = true;
             this.rbInterlivingReceiveOn.Text = "Включить";
             this.rbInterlivingReceiveOn.UseVisualStyleBackColor = true;
+            this.rbInterlivingReceiveOn.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // rbInterlivingReceiveOff
             // 
@@ -766,6 +761,7 @@
             this.rbInterlivingReceiveOff.TabIndex = 9;
             this.rbInterlivingReceiveOff.Text = "Выключить";
             this.rbInterlivingReceiveOff.UseVisualStyleBackColor = true;
+            this.rbInterlivingReceiveOff.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // gbPRD
             // 
@@ -792,6 +788,7 @@
             this.rbPRDReserve.TabIndex = 7;
             this.rbPRDReserve.Text = "Резервный";
             this.rbPRDReserve.UseVisualStyleBackColor = true;
+            this.rbPRDReserve.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // rbPRDMain
             // 
@@ -806,6 +803,7 @@
             this.rbPRDMain.TabStop = true;
             this.rbPRDMain.Text = "Основной";
             this.rbPRDMain.UseVisualStyleBackColor = true;
+            this.rbPRDMain.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // gbFreq
             // 
@@ -832,6 +830,7 @@
             this.rbFreq2.TabIndex = 7;
             this.rbFreq2.Text = "137.9";
             this.rbFreq2.UseVisualStyleBackColor = true;
+            this.rbFreq2.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // rbFreq1
             // 
@@ -846,6 +845,7 @@
             this.rbFreq1.TabStop = true;
             this.rbFreq1.Text = "137.1";
             this.rbFreq1.UseVisualStyleBackColor = true;
+            this.rbFreq1.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // groupBox2
             // 
@@ -981,6 +981,7 @@
             this.rbNRZNo.TabIndex = 7;
             this.rbNRZNo.Text = "Нет";
             this.rbNRZNo.UseVisualStyleBackColor = true;
+            this.rbNRZNo.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // rbNRZYes
             // 
@@ -994,6 +995,7 @@
             this.rbNRZYes.TabStop = true;
             this.rbNRZYes.Text = "Да";
             this.rbNRZYes.UseVisualStyleBackColor = true;
+            this.rbNRZYes.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // gbRS
             // 
@@ -1017,6 +1019,7 @@
             this.rbRSNo.TabIndex = 7;
             this.rbRSNo.Text = "Нет";
             this.rbRSNo.UseVisualStyleBackColor = true;
+            this.rbRSNo.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // rbRSYes
             // 
@@ -1030,6 +1033,7 @@
             this.rbRSYes.TabStop = true;
             this.rbRSYes.Text = "Да";
             this.rbRSYes.UseVisualStyleBackColor = true;
+            this.rbRSYes.CheckedChanged += new System.EventHandler(this.AntiCollapsiblePanelBug);
             // 
             // groupBox4
             // 
