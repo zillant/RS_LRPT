@@ -31,6 +31,7 @@ namespace ReceivingStation.Decode
         private FileInfo _fileInfo;
         private FileStream _fs; // Содержимое открытого .dat файла.
         private StreamWriter _sw;
+        private StringBuilder _sb;
         private string _decodeLogFileName; // Файл для записи информации.
 
         private uint Kol_tk; //Считает число транспортных кадров.       
@@ -97,6 +98,7 @@ namespace ReceivingStation.Decode
 
             _decodeLogFileName = $"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+            _sb = new StringBuilder();
 
             for (int i = 0; i < 6; i++)
             {
@@ -489,20 +491,12 @@ namespace ReceivingStation.Decode
             int i, beg, pr;
             ushort data;
             byte bt;
-            string s;
-
+            
             _reedSolo.Decode_RS(tk_in, _isReedSolo);   //декодирование Рида-Соломона
 
             kol_all++;
             _sw.WriteLine($"Пакет № {kol_all}");
-
-            s = "ТК: ";
-
-            for (i = 0; i < 10; i++)
-            {
-                s = s + tk_in[i].ToString("X") + " ";
-            }
-            _sw.WriteLine($"{s}");
+            WriteServiceDataToLogFile(tk_in, "ТК: ", 0, 10, 1);
 
             //Тестирование ТК
             if (tk_in[0] >> 6 != Constants.NOM_VER)	//проверка номера версии
@@ -605,8 +599,7 @@ namespace ReceivingStation.Decode
         {
             int mc, i;
             int data;
-            long tm;
-            string s;
+            long tm;            
             float dt;
 
             if (dl_jpeg_in < 0 || ind_bt_in <= 20)
@@ -617,15 +610,7 @@ namespace ReceivingStation.Decode
                 return;
             }
 
-            s = " ПП: ";
-
-            for (i = 0; i < 20; i++)
-            {
-                s += _jpeg.jpeg_buf_in[i].ToString("X") + " ";
-            }
-
-            _sw.WriteLine($"{s}"); //вывод в лог-файл 
-
+            WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, " ПП: ", 0, 20, 1);
 
             apid = ((_jpeg.jpeg_buf_in[0] & 0x07) << 8) | _jpeg.jpeg_buf_in[1];
             if (apid < Constants.APID_1 || apid > Constants.APID_c)
@@ -654,40 +639,11 @@ namespace ReceivingStation.Decode
             //если служебный пакет
             if (apid == Constants.APID_c)
             {
-                s = "Служебная сканера: ";
-                for (i = 14; i < 25; i++)
-                {
-                    s += _jpeg.jpeg_buf_in[i].ToString("X") + " ";
-                }
-                _sw.WriteLine($"{s}");
-
-                s = "#ТД: ";
-                for (i = 64; i < 72; i += 2)
-                {
-                    s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
-                }
-                _sw.WriteLine($"{s}");
-
-                s = "#ОШВ: ";
-                for (i = 72; i < 76; i += 2)
-                {
-                    s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
-                }
-                _sw.WriteLine($"{s}");
-
-                s = "#БШВ: ";
-                for (i = 76; i < 96; i += 2)
-                {
-                    s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
-                }
-                _sw.WriteLine($"{s}");
-
-                s = "#ПДЦМ: ";
-                for (i = 96; i < 124; i += 2)
-                {
-                    s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
-                }
-                _sw.WriteLine($"{s}");
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 25, 1);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
 
                 ind_bt_in = 0;
                 dl_jpeg_in = -1;
@@ -711,7 +667,7 @@ namespace ReceivingStation.Decode
             {         
                 Yt += 8;              
 
-                if (Yt % Constants.HGT == 0) // Если набралось 10 строчек.
+                if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
                 {                                    
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
 
@@ -804,6 +760,29 @@ namespace ReceivingStation.Decode
                 }
                 x += 8;
             }
+        }
+
+        #endregion
+
+        #region Запись той служебной информации в лог файл которая формируется через StringBuilder.
+        private void WriteServiceDataToLogFile(byte[] data, string header, int startIndex, int lastIndex, int iterStep)
+        {
+            _sb.Append(header);
+
+            for (int i = startIndex; i < lastIndex; i += iterStep)
+            {
+                if (iterStep == 1)
+                {
+                    _sb.Append(data[i].ToString("X") + " ");
+                }
+                else
+                {
+                    _sb.Append(data[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ");
+                }
+            }
+
+            _sw.WriteLine($"{_sb.ToString()}");
+            _sb.Clear();
         }
 
         #endregion

@@ -44,14 +44,29 @@ namespace ReceivingStation
 
         public MainForm()
         {
-            InitializeComponent();
+            InitializeComponent();   
+        }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             tabControl1.SelectedTab = tabPage7;
+
             _remoteModeFlag = false;
+            _isReceivingStarting = false;
+            _counterForSaveWorkingTime = _timeForSaveWorkingTime;
+
             for (int i = 0; i < 6; i++)
             {
                 _listImagesForSave[i] = new List<Bitmap>();
             }
+
+            var server = new Server.Server(this)
+            {
+                ThreadSafeChangeMode = ChangeMode,
+                ThreadSafeSetReceiveParameters = SetReceiveParameters,
+                ThreadSafeStartReceiving = StartReceiving,
+                ThreadSafeStopReceiving = StopReceiving
+            };
 
             try
             {
@@ -78,21 +93,8 @@ namespace ReceivingStation
             _allChannels[5] = flpAllChannels6;
 
             slTime.Text = DateTime.Now.ToString();
-            _counterForSaveWorkingTime = _timeForSaveWorkingTime;
-
             timer1.Start();
-
-            _isReceivingStarting = false;
-
-            var server = new Server.Server(this)
-            {
-                ThreadSafeChangeMode = ChangeMode,
-                ThreadSafeSetReceiveParameters = RemoteSetReceiveParameters,
-                ThreadSafeStartReceiving = StartReceiving,
-                ThreadSafeStopReceiving = StopReceiving
-            };
-
-            Task.Run(() => server.StartServer());            
+            Task.Run(() => server.StartServer());
         }
 
         private void tsmiExit_Click(object sender, EventArgs e)
@@ -232,25 +234,23 @@ namespace ReceivingStation
         #endregion
 
         #region Установка параметров записи потока в дистанционном режиме управления.
-        private void RemoteSetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
+        private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
         {
             _fcp = fcp;
             _prd = prd;
             _freq = freq;
-            _interliving = interliving;
-            WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
+            _interliving = interliving;            
         }
 
         #endregion
 
         #region Установка параметров записи потока в местном режиме управления.
-        private void LocalSetReceiveParameters()
+        private void SetReceiveParameters()
         {
             _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
             _prd = Convert.ToByte(rbPRDMain.Checked ? 0x1 : 0x2);
             _freq = Convert.ToByte(rbFreq1.Checked ? 0x1 : 0x2);
             _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
-            WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
         }
 
         #endregion
@@ -260,14 +260,12 @@ namespace ReceivingStation
         {
             if (!_remoteModeFlag)
             {
-                LocalSetReceiveParameters();
+                SetReceiveParameters();
             }
+
             _startWorkingTimeOnboard = DateTime.Now;
-
+            WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
             WriteToLogUserActions("Запись потока начата");
-            // Receiver receiver = new Receiver(_fcp, _prd, _freq, _interliving);
-            // receiver.StartReceive();
-
         }
 
         #endregion
