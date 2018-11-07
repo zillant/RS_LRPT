@@ -97,7 +97,7 @@ namespace ReceivingStation.Decode
 
             FillQuant();
 
-            while (x < Constants.WDT && ind_jpeg_in < _dl_jpeg_in - 1)
+            while (ind_jpeg_in < _dl_jpeg_in)
             {
                 Row = HuffmanCodeOfDC();
 

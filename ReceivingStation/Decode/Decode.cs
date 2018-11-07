@@ -211,10 +211,7 @@ namespace ReceivingStation.Decode
                     {
                         bt = Convert.ToByte(((in_buf[j * 10 + i] << k) & 0xFF) | (in_buf[j * 10 + i + 1] >> (8 - k)));
 
-                        if (bt == 0x27)
-                            kol++;
-                        else
-                            kol = 0;
+                        kol = bt == 0x27 ? kol + 1 : 0;
 
                         if (kol == 4) // Нашли синхромаркер.
                         {
@@ -263,7 +260,9 @@ namespace ReceivingStation.Decode
                 while (Convert.ToBoolean(tek_mask))
                 {
                     if (ind_mark_uw == 80)
+                    {
                         ind_mark_uw = 0;
+                    }
 
                     if (ind_mark_uw > 7) //Если находимся вне зоны маркера.
                     {
@@ -284,16 +283,21 @@ namespace ReceivingStation.Decode
 
                             //Меняем индексы
                             ind_small++;
+
                             if (ind_small >= 36)
                             {
                                 ind_small = 0;
                                 ind_big++;
+
                                 if (ind_big > 2047)
                                 {
                                     ind_big = 0;
                                     ind_fr++;
+
                                     if (ind_fr >= 36)
+                                    {
                                         ind_fr = 0;
+                                    }
                                 }
                             }
 
@@ -367,7 +371,9 @@ namespace ReceivingStation.Decode
                     if (Ind_mar_tk_bit < 32) //зона маркера тк
                     {
                         if (bit == Convert.ToBoolean(Constants.zag_tk_bit[Ind_mar_tk_bit]))
+                        {
                             cnt_mark++; //считаем биты маркера
+                        }
                         else
                         {
                             if (Fl_err) //если первый поиск или потеря
@@ -380,10 +386,13 @@ namespace ReceivingStation.Decode
                         }
 
                         Ind_mar_tk_bit++;
+
                         if (Ind_mar_tk_bit == 32)
                         {
                             if (cnt_mark == 32)
+                            {
                                 Fl_err = Convert.ToBoolean(0);
+                            }
 
                             if (cnt_mark < 28)      //потеря маркера
                             {
@@ -401,9 +410,10 @@ namespace ReceivingStation.Decode
                     }
                     else            //набор кадра
                     {
-
                         if (bit)
+                        {
                             tk_in[ind_tk_in] |= mask_out_tk;
+                        }
 
                         mask_out_tk = Convert.ToByte(mask_out_tk >> 1);
 
@@ -439,11 +449,15 @@ namespace ReceivingStation.Decode
             bool[] buf = new bool[32];
 
             if (!Convert.ToBoolean(k))
+            {
                 return 0;
+            }
 
             //Формируем полученную последовательность
             for (i = 0; i < k; i++)
+            {
                 buf[i] = Convert.ToBoolean(Constants.zag_tk_bit[i]);
+            }
 
             buf[i] = !Convert.ToBoolean(Constants.zag_tk_bit[i]);    //след. бит
 
@@ -452,13 +466,16 @@ namespace ReceivingStation.Decode
             for (i = k; i >= 0; i--)
             {
                 n = 0;
+
                 for (j = i; j < kol; j++)
                 {
                     if (Convert.ToBoolean(Constants.zag_tk_bit[n]) != buf[j])
+                    {
                         return (kol - i - 1);
+                    }
+                    
                     n++;
                 }
-
             }
 
             return 0;
@@ -509,8 +526,12 @@ namespace ReceivingStation.Decode
             }
 
             for (i = 5; i < 8; i++)    //проверка поля меток
+            {
                 if (Convert.ToBoolean(tk_in[i]))
+                {
                     break;
+                }
+            }
 
             if (i < 8)
             {
@@ -523,17 +544,12 @@ namespace ReceivingStation.Decode
                 return;
             }
 
-            Kol_tk++;
-            /////////////////////////////////////////////////////////////////       
+            Kol_tk++;      
             _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
-            /////////////////////////////////////////////////////////////////
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
-            if (tk_last == 0xffffff)  //максим. знач.счетчика
-                pr = 0;
-            else
-                pr = tk_last + 1;
+            pr = tk_last == 0xffffff ? 0 : tk_last + 1; //максим. знач.счетчика
 
             if (tk_last >= 0 && beg != pr)
             {
@@ -551,14 +567,20 @@ namespace ReceivingStation.Decode
             }
 
             if (!Convert.ToBoolean(bt))            //заголовок есть
+            {
                 beg = (tk_in[8] << 8 | tk_in[9]) + 10;    //указатель заголовка
+            }
             else
+            {
                 beg = -1;           //заголовка нет
+            }
 
             for (i = 10; i < 892; i++)
             {
                 if (ind_bt_in == dl_jpeg_in || i == beg)        //набрали пакет, дошли до заголовка
+                {
                     Razbor_parc();
+                }
 
                 _jpeg.jpeg_buf_in[ind_bt_in++] = tk_in[i];
 
@@ -598,7 +620,9 @@ namespace ReceivingStation.Decode
             s = " ПП: ";
 
             for (i = 0; i < 20; i++)
+            {
                 s += _jpeg.jpeg_buf_in[i].ToString("X") + " ";
+            }
 
             _sw.WriteLine($"{s}"); //вывод в лог-файл 
 
@@ -616,16 +640,15 @@ namespace ReceivingStation.Decode
             }
 
             data = ((_jpeg.jpeg_buf_in[2] & 0x3f) << 8) | _jpeg.jpeg_buf_in[3]; //счетчик пакетов
-            if (last_count_pac == 0x3fff)   //набрали максимум
-                i = 0;
-            else
-                i = last_count_pac + 1;
+
+            i = last_count_pac == 0x3fff ? 0 : last_count_pac + 1; //набрали максимум
 
             if (last_count_pac >= 0 && data != i)
             {
                 errs++;
                 _sw.WriteLine("    ----- ошибка счетчика пакетов");
             }
+
             last_count_pac = data;
 
             //если служебный пакет
@@ -633,27 +656,37 @@ namespace ReceivingStation.Decode
             {
                 s = "Служебная сканера: ";
                 for (i = 14; i < 25; i++)
+                {
                     s += _jpeg.jpeg_buf_in[i].ToString("X") + " ";
+                }
                 _sw.WriteLine($"{s}");
 
                 s = "#ТД: ";
                 for (i = 64; i < 72; i += 2)
+                {
                     s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
+                }
                 _sw.WriteLine($"{s}");
 
                 s = "#ОШВ: ";
                 for (i = 72; i < 76; i += 2)
+                {
                     s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
+                }
                 _sw.WriteLine($"{s}");
 
                 s = "#БШВ: ";
                 for (i = 76; i < 96; i += 2)
+                {
                     s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
+                }
                 _sw.WriteLine($"{s}");
 
                 s = "#ПДЦМ: ";
                 for (i = 96; i < 124; i += 2)
+                {
                     s += _jpeg.jpeg_buf_in[i].ToString("X") + _jpeg.jpeg_buf_in[i + 1].ToString("X") + " ";
+                }
                 _sw.WriteLine($"{s}");
 
                 ind_bt_in = 0;
@@ -700,6 +733,7 @@ namespace ReceivingStation.Decode
                 {
                     dt = (tm - tm_last) / 1000f; //разница в секундах
                     _sw.WriteLine($"Разница: {dt}");
+
                     if (dt < 1.2 || dt > 1.25)
                     {
                         _sw.WriteLine("??????????????????????????????????????????????");
@@ -725,6 +759,7 @@ namespace ReceivingStation.Decode
             }
 
             Q_Value = _jpeg.jpeg_buf_in[19];
+
             if (Q_Value > Constants.MAX_Q)
             {
                 Q_Value = 75;

@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using ReceivingStation.Other;
 using System.Text;
 using ReceivingStation.Decode;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ReceivingStation
 {
@@ -23,13 +25,14 @@ namespace ReceivingStation
 
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
+        private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
         private FileInfo _fileInfo;
 
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
         private TimeSpan _fullWorkingTimeOnboard;
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
 
-        private bool _isReceivingStarting;
+        private bool _isReceivingStarting; // Для контроля времени наработки борта.
 
         private DateTime _worktimestart;
 
@@ -45,6 +48,10 @@ namespace ReceivingStation
 
             tabControl1.SelectedTab = tabPage7;
             _remoteModeFlag = false;
+            for (int i = 0; i < 6; i++)
+            {
+                _listImagesForSave[i] = new List<Bitmap>();
+            }
 
             try
             {
@@ -104,6 +111,7 @@ namespace ReceivingStation
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     _fileName = openFileDialog1.FileName;
+                    _fileInfo = new FileInfo(_fileName);
                     lblFileName.Text = openFileDialog1.SafeFileName;
                 }
 
@@ -135,7 +143,7 @@ namespace ReceivingStation
             _isReceivingStarting = true;
             btnStartRecieve.Enabled = false;
             btnStopRecieve.Enabled = true;
-            StartReceiving();
+            StartReceiving();          
             tabControl1.Focus(); // Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.
         }
 
@@ -150,7 +158,7 @@ namespace ReceivingStation
             _isReceivingStarting = false;
             btnStartRecieve.Enabled = true;
             btnStopRecieve.Enabled = false;
-            StopReceiving();
+            StopReceiving();          
             tabControl1.Focus(); // Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.
         }
 
@@ -165,7 +173,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString();
 
             _counterForSaveWorkingTime -= 1;
-
+           
             if (_counterForSaveWorkingTime == 0)
             {
                 if (_isReceivingStarting)
@@ -176,6 +184,28 @@ namespace ReceivingStation
                 }
                 _counterForSaveWorkingTime = _timeForSaveWorkingTime;
             }
+        }
+
+        private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Parallel.For(0, _listImagesForSave.Length, i =>
+            {
+                using (Bitmap bmp = new Bitmap(Constants.WDT, _listImagesForSave[i].Count * Constants.HGT))
+                {
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        int yOffset = 0;
+
+                        foreach (var item in _listImagesForSave[i])
+                        {
+                            g.DrawImage(item, new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
+                            yOffset += Constants.HGT;
+                        }
+                    }
+
+                    bmp.Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
+                }
+            });
         }
 
         #region Смена режима управления.
@@ -265,17 +295,13 @@ namespace ReceivingStation
                 ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
                 ThreadSafeUpdateImagesContent = AddImages,
                 ThreadSafeStopDecoding = StopDecoding
-            };
-
-            _fileInfo = new FileInfo(_fileName);
-
-            Task.Run(() => decode.StartDecode(_cancellationToken));
-            _worktimestart = DateTime.Now;
+            };        
 
             for (int i = 0; i < 6; i++)
             {
                 _allChannels[i].Controls.Clear();
                 _channels[i].Controls.Clear();
+                _listImagesForSave[i].Clear();
             }
 
             btnStartDecode.Enabled = false;
@@ -283,6 +309,9 @@ namespace ReceivingStation
             btnStopDecode.Enabled = true;
             tsmiStopDecoding.Enabled = true;
             gbDecodeParameters.Enabled = false;
+
+            _worktimestart = DateTime.Now;
+            Task.Run(() => decode.StartDecode(_cancellationToken));
         }
 
         #endregion
@@ -300,9 +329,16 @@ namespace ReceivingStation
         {
             for (int i = 0; i < images.Length; i++)
             {
-                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = new Bitmap(images[i].Bitmap), Margin = new Padding(0) });
-                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = new Bitmap(images[i].Bitmap), Margin = new Padding(0)});
-            }                      
+                Bitmap image = new Bitmap(images[i].Bitmap);
+
+                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
+
+                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
+
+                _listImagesForSave[i].Add(image);
+            }
+
+            bwImageSaver.RunWorkerAsync();
         }
 
         #endregion
