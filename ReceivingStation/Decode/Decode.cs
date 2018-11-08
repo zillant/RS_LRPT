@@ -734,10 +734,9 @@ namespace ReceivingStation.Decode
         #region Формирование изображения.
         private void PreparePicture()
         {
-            int i, j, k, x;
-            int num, nc;
+            int k, x, num, nc, color;
 
-            nc = apid - Constants.APID_1;		//номер канала
+            nc = apid - Constants.APID_1; // Номер канала.
 
             if (nc < 0 || nc > 5)
             {
@@ -749,15 +748,16 @@ namespace ReceivingStation.Decode
 
             while (k < kol_pix)
             {
-                for (i = 0; i < 8; i++)
+                for (int i = 0; i < 8; i++)
                 {
-                    for (j = 0; j < 8; j++)
+                    for (int j = 0; j < 8; j++)
                     {
                         num = _jpeg.video_mass[k++];
-                        int color = (num << 16) | (num << 8) | num;
+                        color = (num << 16) | (num << 8) | num;
                         _bmps[nc].SetPixel(x + j, Yt + i, Color.FromArgb(255, Color.FromArgb(color)));
                     }
                 }
+
                 x += 8;
             }
         }
@@ -765,11 +765,11 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Запись той служебной информации в лог файл которая формируется через StringBuilder.
-        private void WriteServiceDataToLogFile(byte[] data, string header, int startIndex, int lastIndex, int iterStep)
+        private void WriteServiceDataToLogFile(byte[] data, string header, int startIndex, int finishIndex, int iterStep)
         {
             _sb.Append(header);
 
-            for (int i = startIndex; i < lastIndex; i += iterStep)
+            for (int i = startIndex; i < finishIndex; i += iterStep)
             {
                 if (iterStep == 1)
                 {

@@ -446,7 +446,9 @@
             // 
             // flpAllChannels3
             // 
-            this.flpAllChannels3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpAllChannels3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels3.Location = new System.Drawing.Point(305, 3);
             this.flpAllChannels3.Name = "flpAllChannels3";
@@ -456,7 +458,9 @@
             // 
             // flpAllChannels2
             // 
-            this.flpAllChannels2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpAllChannels2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels2.Location = new System.Drawing.Point(154, 3);
             this.flpAllChannels2.Name = "flpAllChannels2";
@@ -466,7 +470,9 @@
             // 
             // flpAllChannels1
             // 
-            this.flpAllChannels1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpAllChannels1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels1.Location = new System.Drawing.Point(3, 3);
             this.flpAllChannels1.Name = "flpAllChannels1";

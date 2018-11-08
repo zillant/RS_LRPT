@@ -180,7 +180,7 @@ namespace ReceivingStation.Decode
 
                 for (int i = 0; i < 255; i++)
                 {
-                    incomingTransportFrame[i * 4 + m] = GF_elem[u1[i]];
+                   incomingTransportFrame[i * 4 + m] = GF_elem[u1[i]];
                 }
             }
         }

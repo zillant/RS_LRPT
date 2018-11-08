@@ -198,9 +198,9 @@ namespace ReceivingStation
                     {
                         int yOffset = 0;
 
-                        foreach (var item in _listImagesForSave[i])
+                        for (int j = 0; j < _listImagesForSave[i].Count; j++)
                         {
-                            g.DrawImage(item, new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
+                            g.DrawImage(_listImagesForSave[i][j], new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
                             yOffset += Constants.HGT;
                         }
                     }
@@ -332,7 +332,7 @@ namespace ReceivingStation
                 _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
 
                 _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
-
+                
                 _listImagesForSave[i].Add(image);
             }
 
@@ -351,7 +351,7 @@ namespace ReceivingStation
                 btnStopDecode.Enabled = false;
                 tsmiStopDecoding.Enabled = false;
                 gbDecodeParameters.Enabled = true;
-
+                
                 DateTime worktimefinish = DateTime.Now;
                 TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
                 slWorkingTimeOnboard.Text = deltaWorkingTime.ToString();
