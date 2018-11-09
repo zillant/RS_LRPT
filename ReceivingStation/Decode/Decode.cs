@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ReceivingStation.Other;
 using Color = System.Drawing.Color;
 
@@ -539,7 +540,7 @@ namespace ReceivingStation.Decode
             }
 
             Kol_tk++;      
-            _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
+            _form.BeginInvoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -665,17 +666,17 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {         
-                Yt += 8;              
+                Yt += 8;
 
                 if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
-                {                                    
+                {
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
 
-                    for (int j = 0; j < _bmps.Length; j++)
+                    Parallel.For(0, _bmps.Length, j =>
                     {
                         _bmps[j].Dispose();
                         _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
-                    }
+                    });
 
                     Yt = 0;
                 }

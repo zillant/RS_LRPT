@@ -145,14 +145,14 @@ namespace ReceivingStation
             _isReceivingStarting = true;
             btnStartRecieve.Enabled = false;
             btnStopRecieve.Enabled = true;
-            StartReceiving();          
-            tabControl1.Focus(); // Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.
+            StartReceiving();
+            AntiCollapsiblePanelBug();
         }
 
         private void btnStartDecode_Click(object sender, EventArgs e)
         {
             StartDecoding();
-            tabControl1.Focus(); // Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.
+            AntiCollapsiblePanelBug();
         }
 
         private void btnStopRecieve_Click(object sender, EventArgs e)
@@ -160,14 +160,14 @@ namespace ReceivingStation
             _isReceivingStarting = false;
             btnStartRecieve.Enabled = true;
             btnStopRecieve.Enabled = false;
-            StopReceiving();          
-            tabControl1.Focus(); // Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.
+            StopReceiving();
+            AntiCollapsiblePanelBug();
         }
 
         private void btnStopDecode_Click(object sender, EventArgs e)
         {
             ForcedStopDecoding();
-            tabControl1.Focus(); // Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.
+            AntiCollapsiblePanelBug();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -418,8 +418,15 @@ namespace ReceivingStation
         #endregion
 
         #region Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.      
+        private void AntiCollapsiblePanelBug()
+        {
+            // Вставил в Event Click для кнопок.
+            tabControl1.Focus();
+        }
+
         private void AntiCollapsiblePanelBug(object sender, EventArgs e)
         {
+            // Event для RadioButtons.
             tabControl1.Focus(); 
         }
 
