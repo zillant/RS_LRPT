@@ -9,6 +9,7 @@ using System.Text;
 using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace ReceivingStation
 {
@@ -334,6 +335,9 @@ namespace ReceivingStation
                 _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
                 
                 _listImagesForSave[i].Add(image);
+
+                //Invoke(new Action(() => { _channels[i].AutoScrollPosition = new Point(0, _channels[i].VerticalScroll.Maximum); }));
+                
             }
 
             bwImageSaver.RunWorkerAsync();

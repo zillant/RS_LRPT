@@ -5,7 +5,7 @@
         public const int WDT = 1568; // Ширина рисунка.
         public const int HGT = 400; // Высота рисунка. (50 строчек)
 
-        public const int DL_JPEG = 1000; // Длина буфера jpeg с запасом - полос + на шапку.
+        public const int DL_JPEG = 1500; // Длина буфера jpeg с запасом - полос + на шапку.
         public const int DL_VIDEO = 896; // Длина видеобуфера.
 
         public const int DL_IN_BUF = 32768; // Длина входного буфера, должно делиться на 2048.

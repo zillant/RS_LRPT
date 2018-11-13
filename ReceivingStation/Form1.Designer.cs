@@ -290,7 +290,7 @@
             // flpChannel2
             // 
             this.flpChannel2.AutoScroll = true;
-            this.flpChannel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flpChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel2.Location = new System.Drawing.Point(3, 3);
             this.flpChannel2.Name = "flpChannel2";
             this.flpChannel2.Size = new System.Drawing.Size(909, 680);

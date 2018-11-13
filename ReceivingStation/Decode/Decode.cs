@@ -670,8 +670,9 @@ namespace ReceivingStation.Decode
 
                 if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
                 {
-                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
 
+                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+                    
                     Parallel.For(0, _bmps.Length, j =>
                     {
                         _bmps[j].Dispose();
