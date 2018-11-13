@@ -29,7 +29,6 @@ namespace ReceivingStation.Decode
         private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
 
         private string _fileName; // Имя открытого файла.
-        private FileInfo _fileInfo;
         private FileStream _fs; // Содержимое открытого .dat файла.
         private StreamWriter _sw;
         private StringBuilder _sb;
@@ -76,13 +75,13 @@ namespace ReceivingStation.Decode
         private bool _isReedSolo; // Состояние checkBox "Рида-Соломона".
         private byte Q_Value; // Фактор качества.
         private int dl_jpeg_in; //Длина данных jpeg.
-        public int Xt, Yt;    //Индекс полосы при выводе.    
+        private int Xt, Yt;    //Индекс полосы при выводе.    
 
         // Для НРЗ.
         private bool _isNrz; // Состояние checkBox "НРЗ".
         private bool last_bit_in;
 
-        #region Конструктор.
+        #region Конструктор для открытого файла.
         public Decode(MainForm form, string fileName, bool reedSoloFlag, bool nrzFlag)
         {
             _fileName = fileName;
@@ -94,10 +93,8 @@ namespace ReceivingStation.Decode
             _jpeg = new Jpeg();
             _form = form;
 
-            _fileInfo = new FileInfo(_fileName);
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
-
-            _decodeLogFileName = $"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
             _sb = new StringBuilder();
 
@@ -111,7 +108,32 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Начать декодирование.
+        #region Конструктор для приемника.
+        public Decode(MainForm form,  string fileName)
+        {
+            _isNrz = false;
+            _isReedSolo = true;
+            
+            _reedSolo = new ReedSolo();
+            _viterbi = new Viterbi();
+            _jpeg = new Jpeg();
+            _form = form;
+
+            _decodeLogFileName = $"{fileName}_info.txt";
+            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+            _sb = new StringBuilder();
+
+            for (int i = 0; i < 6; i++)
+            {
+                _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
+            }
+
+            Init();
+        }
+
+        #endregion
+
+        #region Начать декодирование для открытого файла.
         public void StartDecode(CancellationToken token)
         {
             int bytesCount;
@@ -145,8 +167,42 @@ namespace ReceivingStation.Decode
 
             } while (!token.IsCancellationRequested);
 
+            FinishDecode();
+        }
+
+        #endregion
+
+        #region Начать декодирование для приемника.
+        public void StartDecode(byte[] data)
+        {
+            Array.Copy(data, in_buf, data.Length);
+
+            beg_mark_uw = Test_uw();
+            _isInterliving = beg_mark_uw != -1;
+
+            if (_isInterliving)
+            {
+                beg_mark_uw = Test_uw();
+                Deinterl(); //деинтерливинг
+            }
+            else
+            {
+                for (int i = 0; i < Constants.DL_IN_BUF; i += 2048)
+                {
+                    To_bits(i);
+                    ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
+                    Find_tk_in();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Завершение декодирования.
+        public void FinishDecode()
+        {
             _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
-            _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));            
+            _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");

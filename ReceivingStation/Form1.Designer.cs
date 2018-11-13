@@ -1222,10 +1222,10 @@
         private System.Windows.Forms.Button btnStartDecode;
         private System.Windows.Forms.Button btnStopRecieve;
         private CollapsiblePanel.CollapsiblePanel collapsiblePanel2;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.Label label7;
         private CollapsiblePanel.CollapsiblePanel collapsiblePanel1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox gbDecodeParameters;

@@ -9,7 +9,8 @@ using System.Text;
 using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Threading;
+using ReceivingStation.Demodulator;
+using Platform.IO;
 
 namespace ReceivingStation
 {
@@ -23,11 +24,10 @@ namespace ReceivingStation
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
-
+        
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
-        private FileInfo _fileInfo;
 
         private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
         private TimeSpan _fullWorkingTimeOnboard;
@@ -36,6 +36,9 @@ namespace ReceivingStation
         private bool _isReceivingStarting; // Для контроля времени наработки борта.
 
         private DateTime _worktimestart;
+
+        private Demodulating _receiver;
+        private Decode.Decode _decode;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -114,7 +117,6 @@ namespace ReceivingStation
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     _fileName = openFileDialog1.FileName;
-                    _fileInfo = new FileInfo(_fileName);
                     lblFileName.Text = openFileDialog1.SafeFileName;
                 }
 
@@ -206,7 +208,7 @@ namespace ReceivingStation
                         }
                     }
 
-                    bmp.Save($"{_fileInfo.DirectoryName}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
+                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
                 }
             });
         }
@@ -259,16 +261,30 @@ namespace ReceivingStation
         #region Начать прием потока.
         public void StartReceiving()
         {
+            
             if (!_remoteModeFlag)
             {
                 SetReceiveParameters();
             }
-
+            
             _startWorkingTimeOnboard = DateTime.Now;
             WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
             WriteToLogUserActions("Запись потока начата");
+
+            _receiver = new Demodulating(_freq);
+            _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+            Task.Run(() => Drawing());                                     
         }
 
+        public void Drawing()
+        {
+            byte[] demodulatedData;
+            demodulatedData = new byte[16384 * 5];
+
+            _receiver.DSP_Process(this, demodulatedData);
+            _decode.StartDecode(demodulatedData);           
+        }
+      
         #endregion
 
         #region Остановить прием потока.
@@ -330,14 +346,11 @@ namespace ReceivingStation
             {
                 Bitmap image = new Bitmap(images[i].Bitmap);
 
-                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
+                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
 
-                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, images[i].Bitmap.Height), BackgroundImage = image, Margin = new Padding(0) });
+                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
                 
                 _listImagesForSave[i].Add(image);
-
-                //Invoke(new Action(() => { _channels[i].AutoScrollPosition = new Point(0, _channels[i].VerticalScroll.Maximum); }));
-                
             }
 
             bwImageSaver.RunWorkerAsync();

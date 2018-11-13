@@ -46,12 +46,29 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Platform.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="SDRSharp.Meteor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SDRSharp.Meteor.dll</HintPath>
+    </Reference>
+    <Reference Include="SDRSharp.Radio, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SDRSharp.Radio.dll</HintPath>
+    </Reference>
+    <Reference Include="SDRSharp.RTLSDR, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SDRSharp.RTLSDR.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -69,6 +86,13 @@
   <ItemGroup>
     <Compile Include="Decode\Constants.cs" />
     <Compile Include="Decode\Decode.cs" />
+    <Compile Include="Demodulator\BeforeViterbiSync.cs" />
+    <Compile Include="Demodulator\Demodulating.cs" />
+    <Compile Include="Demodulator\FIFO_Stream.cs" />
+    <Compile Include="Demodulator\FileWriter.cs" />
+    <Compile Include="Demodulator\LogWriter.cs" />
+    <Compile Include="Demodulator\Packet.cs" />
+    <Compile Include="Demodulator\ProgramBVS.cs" />
     <Compile Include="Other\DirectBitmap.cs" />
     <Compile Include="Decode\Jpeg.cs" />
     <Compile Include="Decode\ReedSolo.cs" />
