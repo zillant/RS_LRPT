@@ -1,4 +1,5 @@
 ﻿using ReceivingStation.Decode;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -24,6 +25,40 @@ namespace ReceivingStation.Other
 
                 listImagesForSave[i].Add(image);
             }
+        }
+
+        public static void SmoothLoadingForm(Form form)
+        {
+            form.Opacity = 0;
+            Timer timer = new Timer();
+
+            timer.Tick += new EventHandler((sender, e) =>
+            {
+                if ((form.Opacity += 0.05d) == 1)
+                {
+                    timer.Stop();
+                }
+            });
+
+            timer.Interval = 10;
+            timer.Start();
+        }
+
+        public static void SmoothHidingForm(Form form)
+        {
+            Timer timer = new Timer();
+
+            timer.Tick += new EventHandler((sender, e) =>
+            {
+                if ((form.Opacity -= 0.05d) == 0)
+                {
+                    timer.Stop();
+                    form.Hide();
+                }
+            });
+
+            timer.Interval = 10;
+            timer.Start();
         }
     }
 }

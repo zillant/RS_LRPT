@@ -117,7 +117,7 @@
             this.управлениеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1188, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1204, 24);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -192,7 +192,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(7);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1188, 625);
+            this.tabControl1.Size = new System.Drawing.Size(1204, 660);
             this.tabControl1.TabIndex = 19;
             // 
             // tabPage1
@@ -201,7 +201,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage1.Size = new System.Drawing.Size(1196, 634);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -214,7 +214,7 @@
             this.flpChannel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpChannel1.Location = new System.Drawing.Point(3, 3);
             this.flpChannel1.Name = "flpChannel1";
-            this.flpChannel1.Size = new System.Drawing.Size(1174, 593);
+            this.flpChannel1.Size = new System.Drawing.Size(1190, 628);
             this.flpChannel1.TabIndex = 2;
             this.flpChannel1.WrapContents = false;
             // 
@@ -511,10 +511,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slTime,
             this.slDecodeTime});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 736);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 771);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(1188, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(1204, 24);
             this.statusStrip1.Stretch = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -526,7 +526,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1108, 19);
+            this.slTime.Size = new System.Drawing.Size(1124, 19);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -556,7 +556,7 @@
             this.pnlScroll.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pnlScroll.Location = new System.Drawing.Point(0, 24);
             this.pnlScroll.Name = "pnlScroll";
-            this.pnlScroll.Size = new System.Drawing.Size(1188, 87);
+            this.pnlScroll.Size = new System.Drawing.Size(1204, 87);
             this.pnlScroll.TabIndex = 23;
             // 
             // flowLayoutPanel1
@@ -568,7 +568,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1188, 87);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1204, 87);
             this.flowLayoutPanel1.TabIndex = 23;
             // 
             // groupBox4
@@ -775,7 +775,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1188, 760);
+            this.ClientSize = new System.Drawing.Size(1204, 795);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.pnlScroll);
             this.Controls.Add(this.menuStrip1);

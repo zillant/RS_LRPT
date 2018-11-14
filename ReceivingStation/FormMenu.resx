@@ -118,6 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnClose.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAJFJREFUOE/l
+        kksOgDAIRHsDD+7veOpp6ptI3RT87vQlRDIdaISmH5FzbiwNOfXIQCxEZ1IFZyMxy2uSD4aeEL1JO2hq
+        IlqTjsE4bP48mHS/SYGCUqjvsyYFCksD8ayJoPh9Iwr33yG6LY236UJBNRPycJsuGMPBolXbdMGgB6nH
+        Fs6DM100yWuSz6kBrng+Q0orhWfYvOQsnl8AAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAgAgIAAAAEAIAAoCAEAhgAAAFBQAAABACAA6GcAAK4IAQBISAAAAQAgAIhUAACWcAEAQEAAAAEA

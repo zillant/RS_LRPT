@@ -47,7 +47,8 @@ namespace ReceivingStation
 
         public FormReceive()
         {
-            InitializeComponent();   
+            InitializeComponent();            
+            GuiUpdater.SmoothLoadingForm(this);
         }
 
         private void FormReceive_Load(object sender, EventArgs e)

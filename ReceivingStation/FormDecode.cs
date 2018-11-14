@@ -30,6 +30,7 @@ namespace ReceivingStation
         public FormDecode()
         {
             InitializeComponent();
+            GuiUpdater.SmoothLoadingForm(this);
         }
 
         private void FormDecode_Load(object sender, EventArgs e)

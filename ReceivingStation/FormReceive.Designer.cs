@@ -230,7 +230,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage2.Size = new System.Drawing.Size(1180, 549);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Канал 2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -250,7 +250,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage3.Size = new System.Drawing.Size(1180, 549);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Канал 3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -261,7 +261,7 @@
             this.flpChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel3.Location = new System.Drawing.Point(3, 3);
             this.flpChannel3.Name = "flpChannel3";
-            this.flpChannel3.Size = new System.Drawing.Size(1174, 593);
+            this.flpChannel3.Size = new System.Drawing.Size(1174, 543);
             this.flpChannel3.TabIndex = 3;
             // 
             // tabPage4
@@ -270,7 +270,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage4.Size = new System.Drawing.Size(1180, 549);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Канал 4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -281,7 +281,7 @@
             this.flpChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel4.Location = new System.Drawing.Point(3, 3);
             this.flpChannel4.Name = "flpChannel4";
-            this.flpChannel4.Size = new System.Drawing.Size(1174, 593);
+            this.flpChannel4.Size = new System.Drawing.Size(1174, 543);
             this.flpChannel4.TabIndex = 3;
             // 
             // tabPage5
@@ -290,7 +290,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage5.Size = new System.Drawing.Size(1180, 549);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Канал 5";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -301,7 +301,7 @@
             this.flpChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel5.Location = new System.Drawing.Point(3, 3);
             this.flpChannel5.Name = "flpChannel5";
-            this.flpChannel5.Size = new System.Drawing.Size(1174, 593);
+            this.flpChannel5.Size = new System.Drawing.Size(1174, 543);
             this.flpChannel5.TabIndex = 3;
             // 
             // tabPage6
@@ -310,7 +310,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage6.Size = new System.Drawing.Size(1180, 549);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Канал 6";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -321,7 +321,7 @@
             this.flpChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel6.Location = new System.Drawing.Point(3, 3);
             this.flpChannel6.Name = "flpChannel6";
-            this.flpChannel6.Size = new System.Drawing.Size(1174, 593);
+            this.flpChannel6.Size = new System.Drawing.Size(1174, 543);
             this.flpChannel6.TabIndex = 3;
             // 
             // tabPage7
@@ -332,7 +332,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(1180, 599);
+            this.tabPage7.Size = new System.Drawing.Size(1180, 549);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Все каналы";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -359,7 +359,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1174, 552);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1174, 502);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flpAllChannels4
@@ -368,7 +368,7 @@
             this.flpAllChannels4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels4.Location = new System.Drawing.Point(588, 3);
             this.flpAllChannels4.Name = "flpAllChannels4";
-            this.flpAllChannels4.Size = new System.Drawing.Size(189, 546);
+            this.flpAllChannels4.Size = new System.Drawing.Size(189, 496);
             this.flpAllChannels4.TabIndex = 3;
             this.flpAllChannels4.WrapContents = false;
             // 
@@ -378,7 +378,7 @@
             this.flpAllChannels6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels6.Location = new System.Drawing.Point(978, 3);
             this.flpAllChannels6.Name = "flpAllChannels6";
-            this.flpAllChannels6.Size = new System.Drawing.Size(193, 546);
+            this.flpAllChannels6.Size = new System.Drawing.Size(193, 496);
             this.flpAllChannels6.TabIndex = 5;
             this.flpAllChannels6.WrapContents = false;
             // 
@@ -388,7 +388,7 @@
             this.flpAllChannels5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels5.Location = new System.Drawing.Point(783, 3);
             this.flpAllChannels5.Name = "flpAllChannels5";
-            this.flpAllChannels5.Size = new System.Drawing.Size(189, 546);
+            this.flpAllChannels5.Size = new System.Drawing.Size(189, 496);
             this.flpAllChannels5.TabIndex = 4;
             this.flpAllChannels5.WrapContents = false;
             // 
@@ -400,7 +400,7 @@
             this.flpAllChannels3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels3.Location = new System.Drawing.Point(393, 3);
             this.flpAllChannels3.Name = "flpAllChannels3";
-            this.flpAllChannels3.Size = new System.Drawing.Size(189, 546);
+            this.flpAllChannels3.Size = new System.Drawing.Size(189, 496);
             this.flpAllChannels3.TabIndex = 2;
             this.flpAllChannels3.WrapContents = false;
             // 
@@ -412,7 +412,7 @@
             this.flpAllChannels2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels2.Location = new System.Drawing.Point(198, 3);
             this.flpAllChannels2.Name = "flpAllChannels2";
-            this.flpAllChannels2.Size = new System.Drawing.Size(189, 546);
+            this.flpAllChannels2.Size = new System.Drawing.Size(189, 496);
             this.flpAllChannels2.TabIndex = 1;
             this.flpAllChannels2.WrapContents = false;
             // 
@@ -424,7 +424,7 @@
             this.flpAllChannels1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels1.Location = new System.Drawing.Point(3, 3);
             this.flpAllChannels1.Name = "flpAllChannels1";
-            this.flpAllChannels1.Size = new System.Drawing.Size(189, 546);
+            this.flpAllChannels1.Size = new System.Drawing.Size(189, 496);
             this.flpAllChannels1.TabIndex = 0;
             this.flpAllChannels1.WrapContents = false;
             // 
@@ -596,7 +596,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(805, 112);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
