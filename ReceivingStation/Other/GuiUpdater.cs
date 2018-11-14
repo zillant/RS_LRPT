@@ -5,14 +5,14 @@ using System.Windows.Forms;
 
 namespace ReceivingStation.Other
 {
-    class GuiUpdater
+    static class GuiUpdater
     {
-        public void UpdateFrameCounterValue(Label label , uint counter)
+        public static void SetLabelText(Label label , string text)
         {
-            label.Text = counter.ToString();
+            label.Text = text;
         }
 
-        public void AddImages(FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, List<Bitmap>[] listImagesForSave, DirectBitmap[] images)
+        public static void AddImages(FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, List<Bitmap>[] listImagesForSave, DirectBitmap[] images)
         {
             for (int i = 0; i < images.Length; i++)
             {

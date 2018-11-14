@@ -588,7 +588,7 @@
             this.btnStartStopDecode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnStartStopDecode.Enabled = false;
             this.btnStartStopDecode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartStopDecode.Location = new System.Drawing.Point(9, 16);
+            this.btnStartStopDecode.Location = new System.Drawing.Point(9, 19);
             this.btnStartStopDecode.Name = "btnStartStopDecode";
             this.btnStartStopDecode.Size = new System.Drawing.Size(56, 52);
             this.btnStartStopDecode.TabIndex = 0;

@@ -20,8 +20,6 @@ namespace ReceivingStation
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
 
-        private GuiUpdater guiUpdater;
-
         private bool _remoteModeFlag;
         private Thread _serverThread;
 
@@ -56,8 +54,6 @@ namespace ReceivingStation
         {
             tabControl1.SelectedTab = tabPage7;
 
-            guiUpdater = new GuiUpdater();
-
             _remoteModeFlag = false;
             _isReceivingStarting = false;
             _counterForSaveWorkingTime = _timeForSaveWorkingTime;
@@ -66,14 +62,6 @@ namespace ReceivingStation
             {
                 _listImagesForSave[i] = new List<Bitmap>();
             }
-
-            _server = new Server.Server(this)
-            {
-                ThreadSafeChangeMode = ChangeMode,
-                ThreadSafeSetReceiveParameters = SetReceiveParameters,
-                ThreadSafeStartReceiving = StartStopReceiving,
-                ThreadSafeStopReceiving = StopReceiving
-            };
 
             try
             {
@@ -102,9 +90,17 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString();
             timer1.Start();
 
+            _server = new Server.Server(this)
+            {
+                ThreadSafeChangeMode = ChangeMode,
+                ThreadSafeSetReceiveParameters = SetReceiveParameters,
+                ThreadSafeStartReceiving = StartStopReceiving,
+                ThreadSafeStopReceiving = StopReceiving
+            };
+
             _serverThread = new Thread(new ThreadStart(_server.StartServer));
             _serverThread.IsBackground = true;
-            _serverThread.Start();
+            _serverThread.Start();            
         }
 
         private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
@@ -286,15 +282,15 @@ namespace ReceivingStation
         #region Обновление счетчика кадров при декодировании.
         private void UpdateFrameCounterValue(uint counter)
         {
-            guiUpdater.UpdateFrameCounterValue(lblFramesCounter, counter);
+            GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
         }
 
         #endregion
 
-        #region Добавление полученных изображений при декодировании.
-        private void AddImages(DirectBitmap[] images)
+        #region Обновление изображений при декодировании.
+        private void UpdateChannelsImages(DirectBitmap[] images)
         {
-            guiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
+            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
             bwImageSaver.RunWorkerAsync();
         }

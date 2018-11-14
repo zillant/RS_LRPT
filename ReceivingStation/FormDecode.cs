@@ -15,8 +15,6 @@ namespace ReceivingStation
 {
     public partial class FormDecode : Form
     {
-        private GuiUpdater guiUpdater;
-
         private string _fileName;
         private bool _isDecodeStarting;        
 
@@ -39,8 +37,6 @@ namespace ReceivingStation
             tabControl1.SelectedTab = tabPage7;
 
             _isDecodeStarting = false;
-
-            guiUpdater = new GuiUpdater();
 
             for (int i = 0; i < 6; i++)
             {
@@ -164,7 +160,7 @@ namespace ReceivingStation
                 var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
                 {
                     ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
-                    ThreadSafeUpdateImagesContent = AddImages,
+                    ThreadSafeUpdateImagesContent = UpdateChannelsImages,
                     ThreadSafeStopDecoding = StopDecoding
                 };
 
@@ -194,15 +190,15 @@ namespace ReceivingStation
         #region Обновление счетчика кадров при декодировании.
         private void UpdateFrameCounterValue(uint counter)
         {
-            guiUpdater.UpdateFrameCounterValue(lblFramesCounter, counter);        
+            GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
         }
 
         #endregion
 
-        #region Добавление полученных изображений при декодировании.
-        private void AddImages(DirectBitmap[] images)
+        #region Обновление изображений при декодировании.
+        private void UpdateChannelsImages(DirectBitmap[] images)
         {
-            guiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
+            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
             bwImageSaver.RunWorkerAsync();
         }
