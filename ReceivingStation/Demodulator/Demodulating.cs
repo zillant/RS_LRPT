@@ -24,7 +24,7 @@ namespace ReceivingStation.Demodulator
         public delegate void GuiLabelUpdater(Label label, string text);
         public static GuiLabelUpdater ThreadGuiLabelsUpdater;
 
-        static MainForm _form;
+        static FormReceive _form;
         static byte _FrequencyMode;
         static byte _Interliving;
 
@@ -254,7 +254,7 @@ namespace ReceivingStation.Demodulator
             System.IO.File.WriteAllLines(filename, Result);
         }
         #region Запуск Демодулятора
-        public void DSP_Process(MainForm form, byte[] correctedArray) // Метод запускает поток демодулятора и поток, записывающий файл. _beforeSyncBitStream  возвращаем в класс обращения к данному методу, чтобы потом скорректировать поток к нужному созвездию.
+        public void DSP_Process(FormReceive form, byte[] correctedArray) // Метод запускает поток демодулятора и поток, записывающий файл. _beforeSyncBitStream  возвращаем в класс обращения к данному методу, чтобы потом скорректировать поток к нужному созвездию.
         {
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;

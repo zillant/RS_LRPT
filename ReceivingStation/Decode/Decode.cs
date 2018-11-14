@@ -21,7 +21,7 @@ namespace ReceivingStation.Decode
         public delegate void StopDecodingDelegate();
         public StopDecodingDelegate ThreadSafeStopDecoding;
 
-        private MainForm _form;
+        private FormReceive _form;
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
@@ -82,7 +82,7 @@ namespace ReceivingStation.Decode
         private bool last_bit_in;
 
         #region Конструктор для открытого файла.
-        public Decode(MainForm form, string fileName, bool reedSoloFlag, bool nrzFlag)
+        public Decode(FormReceive form, string fileName, bool reedSoloFlag, bool nrzFlag)
         {
             _fileName = fileName;
             _isNrz = nrzFlag;
@@ -109,7 +109,7 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Конструктор для приемника.
-        public Decode(MainForm form,  string fileName)
+        public Decode(FormReceive form,  string fileName)
         {
             _isNrz = false;
             _isReedSolo = true;

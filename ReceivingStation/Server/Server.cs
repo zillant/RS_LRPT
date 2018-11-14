@@ -17,7 +17,7 @@ namespace ReceivingStation.Server
         public delegate void StopReceivingDelegate();
         public StopReceivingDelegate ThreadSafeStopReceiving;
 
-        private MainForm _form;
+        private FormReceive _form;
 
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
@@ -31,7 +31,7 @@ namespace ReceivingStation.Server
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
        
-        public Server(MainForm form)
+        public Server(FormReceive form)
         {
             _form = form;
         }

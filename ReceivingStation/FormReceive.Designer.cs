@@ -1,6 +1,6 @@
 ﻿namespace ReceivingStation
 {
-    partial class MainForm
+    partial class FormReceive
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReceive));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -201,7 +201,6 @@
             // 
             // начатьПриемToolStripMenuItem
             // 
-            this.начатьПриемToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("начатьПриемToolStripMenuItem.Image")));
             this.начатьПриемToolStripMenuItem.Name = "начатьПриемToolStripMenuItem";
             this.начатьПриемToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.начатьПриемToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
@@ -209,7 +208,6 @@
             // 
             // остановитьПриемToolStripMenuItem
             // 
-            this.остановитьПриемToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("остановитьПриемToolStripMenuItem.Image")));
             this.остановитьПриемToolStripMenuItem.Name = "остановитьПриемToolStripMenuItem";
             this.остановитьПриемToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.остановитьПриемToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
@@ -218,7 +216,6 @@
             // tsmiStartDecoding
             // 
             this.tsmiStartDecoding.Enabled = false;
-            this.tsmiStartDecoding.Image = ((System.Drawing.Image)(resources.GetObject("tsmiStartDecoding.Image")));
             this.tsmiStartDecoding.Name = "tsmiStartDecoding";
             this.tsmiStartDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
             this.tsmiStartDecoding.Size = new System.Drawing.Size(299, 22);
@@ -883,7 +880,7 @@
             // 
             this.btnStopRecieve.AutoSize = true;
             this.btnStopRecieve.BackColor = System.Drawing.SystemColors.Control;
-            this.btnStopRecieve.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStopRecieve.BackgroundImage")));
+            this.btnStopRecieve.BackgroundImage = global::ReceivingStation.Properties.Resources.stop_icon;
             this.btnStopRecieve.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnStopRecieve.Enabled = false;
             this.btnStopRecieve.Location = new System.Drawing.Point(122, 19);
@@ -1084,7 +1081,7 @@
             // btnStartDecode
             // 
             this.btnStartDecode.BackColor = System.Drawing.SystemColors.Control;
-            this.btnStartDecode.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStartDecode.BackgroundImage")));
+            this.btnStartDecode.BackgroundImage = global::ReceivingStation.Properties.Resources.start_icon;
             this.btnStartDecode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnStartDecode.Enabled = false;
             this.btnStartDecode.Location = new System.Drawing.Point(51, 19);
@@ -1111,7 +1108,7 @@
             // 
             this.bwImageSaver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageSaver_DoWork);
             // 
-            // MainForm
+            // FormReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1123,10 +1120,12 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1204, 795);
-            this.Name = "MainForm";
+            this.Name = "FormReceive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormReceive_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReceive_FormClosed);
+            this.Load += new System.EventHandler(this.FormReceive_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);

@@ -4,9 +4,9 @@ using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
-    public partial class SettingsForm : Form
+    public partial class FormServerSettings : Form
     {
-        public SettingsForm()
+        public FormServerSettings()
         {
             InitializeComponent();
             SetIpAddress(Settings.Default.ipAddressIVK);

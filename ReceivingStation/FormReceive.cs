@@ -14,7 +14,7 @@ using Platform.IO;
 
 namespace ReceivingStation
 {
-    public partial class MainForm : Form
+    public partial class FormReceive : Form
     {
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
@@ -46,12 +46,12 @@ namespace ReceivingStation
         private byte _freq;
         private byte _interliving;
 
-        public MainForm()
+        public FormReceive()
         {
             InitializeComponent();   
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void FormReceive_Load(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage7;
 
@@ -101,6 +101,23 @@ namespace ReceivingStation
             Task.Run(() => server.StartServer());
         }
 
+        private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Точно выйти?", "Внимание",
+                          MessageBoxButtons.YesNo,
+                          MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void FormReceive_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void tsmiExit_Click(object sender, EventArgs e)
         {
             Close();           
@@ -127,7 +144,7 @@ namespace ReceivingStation
 
         private void tsmiSettings_Click(object sender, EventArgs e)
         {
-            using (SettingsForm settingsForm = new SettingsForm())
+            using (FormServerSettings settingsForm = new FormServerSettings())
             {
                 settingsForm.ShowDialog();
             }

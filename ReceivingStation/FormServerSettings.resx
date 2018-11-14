@@ -117,63 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="начатьПриемToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAL5JREFUWEft
-        ltENwjAMRDMCIzACIzACm8AGsAlsAhvQDWAD2ADOCEsInWjz4eSQ/KSnqv3xya2dliRJknEW76sMD7iF
-        s9edABbIvMClPeiNB3L3sGu3vgOZN7iCXWCB3COcw6awIJ9at9awGSwE8wybrAhW/JfhK4IVHTN0RbCC
-        Uw1ZEazQVA9QItAVyryyHZT4qAcoMfZ3uIHNYCHcE5Q4OqwrModryCjX4EFCR7kGCxM+yjXI/eQnSfLH
-        lPIEocGsPFK17PQAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="остановитьПриемToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAFpJREFUWEft
-        zLENwEAQhMDrv2m7AZJHhDsSKTczM84XlaG5KUNzU4bmpgzNTRmamzI0N2VobsrQ3JShuSlDc1OG5qYM
-        zU0ZmpsyNDdlaG7K0NyUoblpZmbe3P1RuULMxL6GZwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="tsmiStartDecoding.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAL5JREFUWEft
-        ltENwjAMRDMCIzACIzACm8AGsAlsAhvQDWAD2ADOCEsInWjz4eSQ/KSnqv3xya2dliRJknEW76sMD7iF
-        s9edABbIvMClPeiNB3L3sGu3vgOZN7iCXWCB3COcw6awIJ9at9awGSwE8wybrAhW/JfhK4IVHTN0RbCC
-        Uw1ZEazQVA9QItAVyryyHZT4qAcoMfZ3uIHNYCHcE5Q4OqwrModryCjX4EFCR7kGCxM+yjXI/eQnSfLH
-        lPIEocGsPFK17PQAAAAASUVORK5CYII=
-</value>
-  </data>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>115, 19</value>
-  </metadata>
-  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>231, 19</value>
-  </metadata>
-  <data name="btnStopRecieve.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAFpJREFUWEft
-        zLENwEAQhMDrv2m7AZJHhDsSKTczM84XlaG5KUNzU4bmpgzNTRmamzI0N2VobsrQ3JShuSlDc1OG5qYM
-        zU0ZmpsyNDdlaG7K0NyUoblpZmbe3P1RuULMxL6GZwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="btnStartDecode.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAABGdBTUEAALGPC/xhBQAAAL5JREFUWEft
-        ltENwjAMRDMCIzACIzACm8AGsAlsAhvQDWAD2ADOCEsInWjz4eSQ/KSnqv3xya2dliRJknEW76sMD7iF
-        s9edABbIvMClPeiNB3L3sGu3vgOZN7iCXWCB3COcw6awIJ9at9awGSwE8wybrAhW/JfhK4IVHTN0RbCC
-        Uw1ZEazQVA9QItAVyryyHZT4qAcoMfZ3uIHNYCHcE5Q4OqwrModryCjX4EFCR7kGCxM+yjXI/eQnSfLH
-        lPIEocGsPFK17PQAAAAASUVORK5CYII=
-</value>
-  </data>
-  <metadata name="bwImageSaver.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>318, 19</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>44</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAgAgIAAAAEAIAAoCAEAhgAAAFBQAAABACAA6GcAAK4IAQBISAAAAQAgAIhUAACWcAEAQEAAAAEA
