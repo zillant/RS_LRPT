@@ -72,7 +72,7 @@
             this.pnlScroll = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnStartDecode = new System.Windows.Forms.Button();
+            this.btnStartStopDecode = new System.Windows.Forms.Button();
             this.gbDecodeParameters = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.gbNRZ = new System.Windows.Forms.GroupBox();
@@ -526,7 +526,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1077, 19);
+            this.slTime.Size = new System.Drawing.Size(1108, 19);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -573,7 +573,7 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.btnStartDecode);
+            this.groupBox4.Controls.Add(this.btnStartStopDecode);
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.MinimumSize = new System.Drawing.Size(76, 83);
             this.groupBox4.Name = "groupBox4";
@@ -581,19 +581,19 @@
             this.groupBox4.TabIndex = 33;
             this.groupBox4.TabStop = false;
             // 
-            // btnStartDecode
+            // btnStartStopDecode
             // 
-            this.btnStartDecode.BackColor = System.Drawing.SystemColors.Control;
-            this.btnStartDecode.BackgroundImage = global::ReceivingStation.Properties.Resources.start_icon;
-            this.btnStartDecode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnStartDecode.Enabled = false;
-            this.btnStartDecode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartDecode.Location = new System.Drawing.Point(9, 16);
-            this.btnStartDecode.Name = "btnStartDecode";
-            this.btnStartDecode.Size = new System.Drawing.Size(56, 52);
-            this.btnStartDecode.TabIndex = 0;
-            this.btnStartDecode.UseVisualStyleBackColor = false;
-            this.btnStartDecode.Click += new System.EventHandler(this.btnStartDecode_Click);
+            this.btnStartStopDecode.BackColor = System.Drawing.SystemColors.Control;
+            this.btnStartStopDecode.BackgroundImage = global::ReceivingStation.Properties.Resources.start_icon;
+            this.btnStartStopDecode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnStartStopDecode.Enabled = false;
+            this.btnStartStopDecode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStartStopDecode.Location = new System.Drawing.Point(9, 16);
+            this.btnStartStopDecode.Name = "btnStartStopDecode";
+            this.btnStartStopDecode.Size = new System.Drawing.Size(56, 52);
+            this.btnStartStopDecode.TabIndex = 0;
+            this.btnStartStopDecode.UseVisualStyleBackColor = false;
+            this.btnStartStopDecode.Click += new System.EventHandler(this.btnStartStopDecode_Click);
             // 
             // gbDecodeParameters
             // 
@@ -854,7 +854,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiStartDecoding;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel pnlScroll;
-        private System.Windows.Forms.Button btnStartDecode;
+        private System.Windows.Forms.Button btnStartStopDecode;
         private System.Windows.Forms.GroupBox gbDecodeParameters;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label lblFramesCounter;

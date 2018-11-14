@@ -20,6 +20,8 @@ namespace ReceivingStation
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
 
+        private GuiUpdater guiUpdater;
+
         private bool _remoteModeFlag;
         private Thread _serverThread;
 
@@ -53,6 +55,8 @@ namespace ReceivingStation
         private void FormReceive_Load(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage7;
+
+            guiUpdater = new GuiUpdater();
 
             _remoteModeFlag = false;
             _isReceivingStarting = false;
@@ -282,7 +286,7 @@ namespace ReceivingStation
         #region Обновление счетчика кадров при декодировании.
         private void UpdateFrameCounterValue(uint counter)
         {
-            lblFramesCounter.Text = counter.ToString();            
+            guiUpdater.UpdateFrameCounterValue(lblFramesCounter, counter);
         }
 
         #endregion
@@ -290,16 +294,7 @@ namespace ReceivingStation
         #region Добавление полученных изображений при декодировании.
         private void AddImages(DirectBitmap[] images)
         {
-            for (int i = 0; i < images.Length; i++)
-            {
-                Bitmap image = new Bitmap(images[i].Bitmap);
-
-                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
-
-                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
-                
-                _listImagesForSave[i].Add(image);
-            }
+            guiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
             bwImageSaver.RunWorkerAsync();
         }

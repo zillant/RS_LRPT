@@ -14,9 +14,11 @@ using ReceivingStation.Properties;
 namespace ReceivingStation
 {
     public partial class FormDecode : Form
-    { 
+    {
+        private GuiUpdater guiUpdater;
+
         private string _fileName;
-        private bool _isDecodeStarting;
+        private bool _isDecodeStarting;        
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
@@ -29,7 +31,7 @@ namespace ReceivingStation
 
         public FormDecode()
         {
-            InitializeComponent();   
+            InitializeComponent();
         }
 
         private void FormDecode_Load(object sender, EventArgs e)
@@ -37,6 +39,8 @@ namespace ReceivingStation
             tabControl1.SelectedTab = tabPage7;
 
             _isDecodeStarting = false;
+
+            guiUpdater = new GuiUpdater();
 
             for (int i = 0; i < 6; i++)
             {
@@ -95,10 +99,10 @@ namespace ReceivingStation
                 {
                     _fileName = openFileDialog1.FileName;
                     lblFileName.Text = openFileDialog1.SafeFileName;
-                }
 
-                btnStartDecode.Enabled = true;
-                tsmiStartDecoding.Enabled = true;
+                    btnStartStopDecode.Enabled = true;
+                    tsmiStartDecoding.Enabled = true;
+                }                
             }          
         }
 
@@ -112,14 +116,9 @@ namespace ReceivingStation
             ForcedStopDecoding();           
         }
 
-        private void btnStartDecode_Click(object sender, EventArgs e)
+        private void btnStartStopDecode_Click(object sender, EventArgs e)
         {
             StartStopDecoding();
-        }
-
-        private void btnStopDecode_Click(object sender, EventArgs e)
-        {
-            ForcedStopDecoding();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -160,7 +159,7 @@ namespace ReceivingStation
                 _cancellationTokenSource = new CancellationTokenSource();
                 _cancellationToken = _cancellationTokenSource.Token;
                 _isDecodeStarting = true;
-                btnStartDecode.BackgroundImage = Resources.stop_icon;
+                btnStartStopDecode.BackgroundImage = Resources.stop_icon;
 
                 var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
                 {
@@ -195,7 +194,7 @@ namespace ReceivingStation
         #region Обновление счетчика кадров при декодировании.
         private void UpdateFrameCounterValue(uint counter)
         {
-            lblFramesCounter.Text = counter.ToString();            
+            guiUpdater.UpdateFrameCounterValue(lblFramesCounter, counter);        
         }
 
         #endregion
@@ -203,16 +202,7 @@ namespace ReceivingStation
         #region Добавление полученных изображений при декодировании.
         private void AddImages(DirectBitmap[] images)
         {
-            for (int i = 0; i < images.Length; i++)
-            {
-                Bitmap image = new Bitmap(images[i].Bitmap);
-
-                _channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
-
-                _allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
-                
-                _listImagesForSave[i].Add(image);
-            }
+            guiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
             bwImageSaver.RunWorkerAsync();
         }
@@ -223,7 +213,7 @@ namespace ReceivingStation
         private void StopDecoding()
         {
             _isDecodeStarting = false;
-            btnStartDecode.BackgroundImage = Resources.start_icon;
+            btnStartStopDecode.BackgroundImage = Resources.start_icon;
 
             tsmiStartDecoding.Enabled = true;
             tsmiStopDecoding.Enabled = false;
