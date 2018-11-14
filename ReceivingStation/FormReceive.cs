@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using ReceivingStation.Demodulator;
 using Platform.IO;
+using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
@@ -19,8 +20,8 @@ namespace ReceivingStation
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
 
-        private string _fileName;
         private bool _remoteModeFlag;
+        private Thread _serverThread;
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
@@ -35,10 +36,8 @@ namespace ReceivingStation
 
         private bool _isReceivingStarting; // Для контроля времени наработки борта.
 
-        private DateTime _worktimestart;
-
         private Demodulating _receiver;
-        private Decode.Decode _decode;
+        private Server.Server _server;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -64,11 +63,11 @@ namespace ReceivingStation
                 _listImagesForSave[i] = new List<Bitmap>();
             }
 
-            var server = new Server.Server(this)
+            _server = new Server.Server(this)
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
-                ThreadSafeStartReceiving = StartReceiving,
+                ThreadSafeStartReceiving = StartStopReceiving,
                 ThreadSafeStopReceiving = StopReceiving
             };
 
@@ -98,7 +97,10 @@ namespace ReceivingStation
 
             slTime.Text = DateTime.Now.ToString();
             timer1.Start();
-            Task.Run(() => server.StartServer());
+
+            _serverThread = new Thread(new ThreadStart(_server.StartServer));
+            _serverThread.IsBackground = true;
+            _serverThread.Start();
         }
 
         private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
@@ -115,31 +117,15 @@ namespace ReceivingStation
 
         private void FormReceive_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _server._stopThread = true;
+            _serverThread.Join(100);
+
             Application.Exit();
         }
 
         private void tsmiExit_Click(object sender, EventArgs e)
         {
             Close();           
-        }
-
-        private void tsmiFileOpen_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
-            {
-                openFileDialog1.Title = "Выбор файла телеметрии";
-                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
-                openFileDialog1.FilterIndex = 1;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    _fileName = openFileDialog1.FileName;
-                    lblFileName.Text = openFileDialog1.SafeFileName;
-                }
-
-                btnStartDecode.Enabled = true;
-                tsmiStartDecoding.Enabled = true;
-            }          
         }
 
         private void tsmiSettings_Click(object sender, EventArgs e)
@@ -150,44 +136,9 @@ namespace ReceivingStation
             }
         }
 
-        private void tsmiStartDecoding_Click(object sender, EventArgs e)
-        {
-            StartDecoding();
-        }
-
-        private void tsmiStopDecoding_Click(object sender, EventArgs e)
-        {
-            ForcedStopDecoding();           
-        }
-
         private void btnStartRecieve_Click(object sender, EventArgs e)
-        {
-            _isReceivingStarting = true;
-            btnStartRecieve.Enabled = false;
-            btnStopRecieve.Enabled = true;
-            StartReceiving();
-            AntiCollapsiblePanelBug();
-        }
-
-        private void btnStartDecode_Click(object sender, EventArgs e)
-        {
-            StartDecoding();
-            AntiCollapsiblePanelBug();
-        }
-
-        private void btnStopRecieve_Click(object sender, EventArgs e)
-        {
-            _isReceivingStarting = false;
-            btnStartRecieve.Enabled = true;
-            btnStopRecieve.Enabled = false;
-            StopReceiving();
-            AntiCollapsiblePanelBug();
-        }
-
-        private void btnStopDecode_Click(object sender, EventArgs e)
-        {
-            ForcedStopDecoding();
-            AntiCollapsiblePanelBug();
+        {           
+            StartStopReceiving();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -225,7 +176,7 @@ namespace ReceivingStation
                         }
                     }
 
-                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
+                    //bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
                 }
             });
         }
@@ -276,74 +227,54 @@ namespace ReceivingStation
         #endregion
 
         #region Начать прием потока.
-        public void StartReceiving()
+        public void StartStopReceiving()
         {
-            
-            if (!_remoteModeFlag)
+            if (!_isReceivingStarting)
             {
-                SetReceiveParameters();
+                _isReceivingStarting = true;
+                btnStartRecieve.BackgroundImage = Resources.stop_icon;
+
+                if (!_remoteModeFlag)
+                {
+                    SetReceiveParameters();
+                }
+
+                _startWorkingTimeOnboard = DateTime.Now;
+                WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
+                WriteToLogUserActions("Запись потока начата");
+
+                //_receiver = new Demodulating(_freq);
+                //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                //Task.Run(() => Drawing());
             }
-            
-            _startWorkingTimeOnboard = DateTime.Now;
-            WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
-            WriteToLogUserActions("Запись потока начата");
-
-            _receiver = new Demodulating(_freq);
-            _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-            Task.Run(() => Drawing());                                     
+            else
+            {
+                StopReceiving();
+            }
+                              
         }
 
-        public void Drawing()
-        {
-            byte[] demodulatedData;
-            demodulatedData = new byte[16384 * 5];
+        //public void Drawing()
+        //{
+        //    byte[] demodulatedData;
+        //    demodulatedData = new byte[16384 * 5];
 
-            _receiver.DSP_Process(this, demodulatedData);
-            _decode.StartDecode(demodulatedData);           
-        }
+        //    _receiver.DSP_Process(this, demodulatedData);
+        //    _decode.StartDecode(demodulatedData);           
+        //}
       
         #endregion
 
         #region Остановить прием потока.
         public void StopReceiving()
         {
+            _isReceivingStarting = false;
+            btnStartRecieve.BackgroundImage = Resources.start_icon;
+
             CountWorkingTime(ref _fullWorkingTimeOnboard);
             WriteToLogWorkingTime(_workingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
-        }
 
-        #endregion
-
-        #region Начать декодирование.
-        private void StartDecoding()
-        {
-            bool reedSoloFlag = rbRSYes.Checked;
-            bool nrzFlag = rbNRZYes.Checked;
-
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
-
-            //var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
-            //{
-            //    ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
-            //    ThreadSafeUpdateImagesContent = AddImages,
-            //    ThreadSafeStopDecoding = StopDecoding
-            //};        
-
-            for (int i = 0; i < 6; i++)
-            {
-                _allChannels[i].Controls.Clear();
-                _channels[i].Controls.Clear();
-                _listImagesForSave[i].Clear();
-            }
-
-            btnStartDecode.Enabled = false;
-            tsmiStartDecoding.Enabled = false;
-            btnStopDecode.Enabled = true;
-            tsmiStopDecoding.Enabled = true;
-            gbDecodeParameters.Enabled = false;
-
-            _worktimestart = DateTime.Now;
-           // Task.Run(() => decode.StartDecode(_cancellationToken));
+            WriteToLogUserActions("Запись потока завершена");
         }
 
         #endregion
@@ -371,38 +302,6 @@ namespace ReceivingStation
             }
 
             bwImageSaver.RunWorkerAsync();
-        }
-
-        #endregion
-
-        #region Остановка декодирования.
-        private void StopDecoding()
-        {
-            if (InvokeRequired == false)
-            {
-                btnStartDecode.Enabled = true;
-                tsmiStartDecoding.Enabled = true;
-                btnStopDecode.Enabled = false;
-                tsmiStopDecoding.Enabled = false;
-                gbDecodeParameters.Enabled = true;
-                
-                DateTime worktimefinish = DateTime.Now;
-                TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
-                slWorkingTimeOnboard.Text = deltaWorkingTime.ToString();
-            }
-            else
-            {
-                Decode.Decode.StopDecodingDelegate stopDecoding = StopDecoding;
-                Invoke(stopDecoding);
-            }
-        }
-
-        #endregion
-
-        #region Принудительная остановка декодирования.
-        private void ForcedStopDecoding()
-        {
-            _cancellationTokenSource.Cancel();
         }
 
         #endregion
@@ -447,21 +346,6 @@ namespace ReceivingStation
                 fullWorkingTime = TimeSpan.Parse(sr.ReadLine());
                 WorkingTimeLabel.Text = $"{(long)fullWorkingTime.TotalHours}:{fullWorkingTime.Minutes.ToString("D2")}:{fullWorkingTime.Seconds}";              
             }
-        }
-
-        #endregion
-
-        #region Костыль, для смены фокуса от collapsiblePanel. Иначе постоянно скролит к последнему нажатию на нем.      
-        private void AntiCollapsiblePanelBug()
-        {
-            // Вставил в Event Click для кнопок.
-            tabControl1.Focus();
-        }
-
-        private void AntiCollapsiblePanelBug(object sender, EventArgs e)
-        {
-            // Event для RadioButtons.
-            tabControl1.Focus(); 
         }
 
         #endregion

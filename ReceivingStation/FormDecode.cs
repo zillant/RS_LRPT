@@ -104,7 +104,7 @@ namespace ReceivingStation
 
         private void tsmiStartDecoding_Click(object sender, EventArgs e)
         {
-            StartDecoding();
+            StartStopDecoding();
         }
 
         private void tsmiStopDecoding_Click(object sender, EventArgs e)
@@ -114,7 +114,7 @@ namespace ReceivingStation
 
         private void btnStartDecode_Click(object sender, EventArgs e)
         {
-            StartDecoding();
+            StartStopDecoding();
         }
 
         private void btnStopDecode_Click(object sender, EventArgs e)
@@ -150,7 +150,7 @@ namespace ReceivingStation
         }
 
         #region Начать декодирование.
-        private void StartDecoding()
+        private void StartStopDecoding()
         {
             if (!_isDecodeStarting)
             {
@@ -186,8 +186,6 @@ namespace ReceivingStation
             }
             else
             {
-                _isDecodeStarting = false;
-                btnStartDecode.BackgroundImage = Resources.start_icon;
                 ForcedStopDecoding();
             }          
         }
@@ -224,6 +222,9 @@ namespace ReceivingStation
         #region Остановка декодирования.
         private void StopDecoding()
         {
+            _isDecodeStarting = false;
+            btnStartDecode.BackgroundImage = Resources.start_icon;
+
             tsmiStartDecoding.Enabled = true;
             tsmiStopDecoding.Enabled = false;
             gbDecodeParameters.Enabled = true;

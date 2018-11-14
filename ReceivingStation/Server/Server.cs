@@ -18,6 +18,7 @@ namespace ReceivingStation.Server
         public StopReceivingDelegate ThreadSafeStopReceiving;
 
         private FormReceive _form;
+        public bool _stopThread;
 
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
@@ -34,6 +35,7 @@ namespace ReceivingStation.Server
         public Server(FormReceive form)
         {
             _form = form;
+            _stopThread = false;
         }
 
         #region Запустить работу сервера.
@@ -54,7 +56,7 @@ namespace ReceivingStation.Server
                 _setParametersFlag = false;
                 _receivingStartedFlag = false;
 
-                while (true)
+                while (_stopThread == false)
                 {
                     // Перевод в местный режим управления.
                     _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
@@ -87,6 +89,7 @@ namespace ReceivingStation.Server
                         client.Close();
                     }
                 }
+                server.Stop();
             }
             catch (Exception ex)
             {

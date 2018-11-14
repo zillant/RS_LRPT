@@ -74,6 +74,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnStartDecode = new System.Windows.Forms.Button();
             this.gbDecodeParameters = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.gbNRZ = new System.Windows.Forms.GroupBox();
             this.rbNRZNo = new System.Windows.Forms.RadioButton();
             this.rbNRZYes = new System.Windows.Forms.RadioButton();
@@ -87,7 +88,6 @@
             this.lblFramesCounter = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bwImageSaver = new System.ComponentModel.BackgroundWorker();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -104,10 +104,10 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.gbDecodeParameters.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.gbNRZ.SuspendLayout();
             this.gbRS.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -135,7 +135,7 @@
             this.tsmiFileOpen.Image = global::ReceivingStation.Properties.Resources.file_icon;
             this.tsmiFileOpen.Name = "tsmiFileOpen";
             this.tsmiFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.tsmiFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.tsmiFileOpen.Size = new System.Drawing.Size(164, 22);
             this.tsmiFileOpen.Text = "Открыть";
             this.tsmiFileOpen.Click += new System.EventHandler(this.tsmiFileOpen_Click);
             // 
@@ -144,7 +144,7 @@
             this.tsmiExit.Image = global::ReceivingStation.Properties.Resources.exit_icon;
             this.tsmiExit.Name = "tsmiExit";
             this.tsmiExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.tsmiExit.Size = new System.Drawing.Size(180, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(164, 22);
             this.tsmiExit.Text = "Выход";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -162,8 +162,8 @@
             this.tsmiStartDecoding.Enabled = false;
             this.tsmiStartDecoding.Image = global::ReceivingStation.Properties.Resources.start_icon;
             this.tsmiStartDecoding.Name = "tsmiStartDecoding";
-            this.tsmiStartDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.tsmiStartDecoding.Size = new System.Drawing.Size(299, 22);
+            this.tsmiStartDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsmiStartDecoding.Size = new System.Drawing.Size(303, 22);
             this.tsmiStartDecoding.Text = "Начать расшифровку данных";
             this.tsmiStartDecoding.Click += new System.EventHandler(this.tsmiStartDecoding_Click);
             // 
@@ -172,8 +172,8 @@
             this.tsmiStopDecoding.Enabled = false;
             this.tsmiStopDecoding.Image = global::ReceivingStation.Properties.Resources.stop_icon;
             this.tsmiStopDecoding.Name = "tsmiStopDecoding";
-            this.tsmiStopDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
-            this.tsmiStopDecoding.Size = new System.Drawing.Size(299, 22);
+            this.tsmiStopDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsmiStopDecoding.Size = new System.Drawing.Size(303, 22);
             this.tsmiStopDecoding.Text = "Остановить расшифровку данных";
             this.tsmiStopDecoding.Click += new System.EventHandler(this.tsmiStopDecoding_Click);
             // 
@@ -224,7 +224,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1180, 573);
+            this.tabPage2.Size = new System.Drawing.Size(1180, 599);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Канал 2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -244,7 +244,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1180, 573);
+            this.tabPage3.Size = new System.Drawing.Size(1180, 599);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Канал 3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -255,7 +255,7 @@
             this.flpChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel3.Location = new System.Drawing.Point(3, 3);
             this.flpChannel3.Name = "flpChannel3";
-            this.flpChannel3.Size = new System.Drawing.Size(1174, 567);
+            this.flpChannel3.Size = new System.Drawing.Size(1174, 593);
             this.flpChannel3.TabIndex = 3;
             // 
             // tabPage4
@@ -264,7 +264,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1180, 573);
+            this.tabPage4.Size = new System.Drawing.Size(1180, 599);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Канал 4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -275,7 +275,7 @@
             this.flpChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel4.Location = new System.Drawing.Point(3, 3);
             this.flpChannel4.Name = "flpChannel4";
-            this.flpChannel4.Size = new System.Drawing.Size(1174, 567);
+            this.flpChannel4.Size = new System.Drawing.Size(1174, 593);
             this.flpChannel4.TabIndex = 3;
             // 
             // tabPage5
@@ -284,7 +284,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1180, 573);
+            this.tabPage5.Size = new System.Drawing.Size(1180, 599);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Канал 5";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -295,7 +295,7 @@
             this.flpChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel5.Location = new System.Drawing.Point(3, 3);
             this.flpChannel5.Name = "flpChannel5";
-            this.flpChannel5.Size = new System.Drawing.Size(1174, 567);
+            this.flpChannel5.Size = new System.Drawing.Size(1174, 593);
             this.flpChannel5.TabIndex = 3;
             // 
             // tabPage6
@@ -304,7 +304,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1180, 573);
+            this.tabPage6.Size = new System.Drawing.Size(1180, 599);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Канал 6";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -315,7 +315,7 @@
             this.flpChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel6.Location = new System.Drawing.Point(3, 3);
             this.flpChannel6.Name = "flpChannel6";
-            this.flpChannel6.Size = new System.Drawing.Size(1174, 567);
+            this.flpChannel6.Size = new System.Drawing.Size(1174, 593);
             this.flpChannel6.TabIndex = 3;
             // 
             // tabPage7
@@ -326,7 +326,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(1180, 573);
+            this.tabPage7.Size = new System.Drawing.Size(1180, 599);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Все каналы";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -353,7 +353,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1174, 526);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1174, 552);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flpAllChannels4
@@ -362,7 +362,7 @@
             this.flpAllChannels4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels4.Location = new System.Drawing.Point(588, 3);
             this.flpAllChannels4.Name = "flpAllChannels4";
-            this.flpAllChannels4.Size = new System.Drawing.Size(189, 520);
+            this.flpAllChannels4.Size = new System.Drawing.Size(189, 546);
             this.flpAllChannels4.TabIndex = 3;
             this.flpAllChannels4.WrapContents = false;
             // 
@@ -372,7 +372,7 @@
             this.flpAllChannels6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels6.Location = new System.Drawing.Point(978, 3);
             this.flpAllChannels6.Name = "flpAllChannels6";
-            this.flpAllChannels6.Size = new System.Drawing.Size(193, 520);
+            this.flpAllChannels6.Size = new System.Drawing.Size(193, 546);
             this.flpAllChannels6.TabIndex = 5;
             this.flpAllChannels6.WrapContents = false;
             // 
@@ -382,7 +382,7 @@
             this.flpAllChannels5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels5.Location = new System.Drawing.Point(783, 3);
             this.flpAllChannels5.Name = "flpAllChannels5";
-            this.flpAllChannels5.Size = new System.Drawing.Size(189, 520);
+            this.flpAllChannels5.Size = new System.Drawing.Size(189, 546);
             this.flpAllChannels5.TabIndex = 4;
             this.flpAllChannels5.WrapContents = false;
             // 
@@ -394,7 +394,7 @@
             this.flpAllChannels3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels3.Location = new System.Drawing.Point(393, 3);
             this.flpAllChannels3.Name = "flpAllChannels3";
-            this.flpAllChannels3.Size = new System.Drawing.Size(189, 520);
+            this.flpAllChannels3.Size = new System.Drawing.Size(189, 546);
             this.flpAllChannels3.TabIndex = 2;
             this.flpAllChannels3.WrapContents = false;
             // 
@@ -406,7 +406,7 @@
             this.flpAllChannels2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels2.Location = new System.Drawing.Point(198, 3);
             this.flpAllChannels2.Name = "flpAllChannels2";
-            this.flpAllChannels2.Size = new System.Drawing.Size(189, 520);
+            this.flpAllChannels2.Size = new System.Drawing.Size(189, 546);
             this.flpAllChannels2.TabIndex = 1;
             this.flpAllChannels2.WrapContents = false;
             // 
@@ -418,7 +418,7 @@
             this.flpAllChannels1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels1.Location = new System.Drawing.Point(3, 3);
             this.flpAllChannels1.Name = "flpAllChannels1";
-            this.flpAllChannels1.Size = new System.Drawing.Size(189, 520);
+            this.flpAllChannels1.Size = new System.Drawing.Size(189, 546);
             this.flpAllChannels1.TabIndex = 0;
             this.flpAllChannels1.WrapContents = false;
             // 
@@ -526,7 +526,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1092, 19);
+            this.slTime.Size = new System.Drawing.Size(1077, 19);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -537,8 +537,8 @@
             this.slDecodeTime.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.slDecodeTime.Image = global::ReceivingStation.Properties.Resources.time_icon;
             this.slDecodeTime.Name = "slDecodeTime";
-            this.slDecodeTime.Size = new System.Drawing.Size(79, 19);
-            this.slDecodeTime.Text = "12:12:01";
+            this.slDecodeTime.Size = new System.Drawing.Size(63, 19);
+            this.slDecodeTime.Text = "0:00:0";
             this.slDecodeTime.ToolTipText = "Время декодирования";
             // 
             // timer1
@@ -561,16 +561,14 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.groupBox4);
             this.flowLayoutPanel1.Controls.Add(this.gbDecodeParameters);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1188, 113);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1188, 87);
             this.flowLayoutPanel1.TabIndex = 23;
             // 
             // groupBox4
@@ -608,6 +606,22 @@
             this.gbDecodeParameters.TabIndex = 33;
             this.gbDecodeParameters.TabStop = false;
             this.gbDecodeParameters.Text = "Параметры";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.gbNRZ, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.gbRS, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(527, 64);
+            this.tableLayoutPanel3.TabIndex = 0;
             // 
             // gbNRZ
             // 
@@ -757,22 +771,6 @@
             // 
             this.bwImageSaver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageSaver_DoWork);
             // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.gbNRZ, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.gbRS, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(527, 64);
-            this.tableLayoutPanel3.TabIndex = 0;
-            // 
             // FormDecode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -812,13 +810,13 @@
             this.flowLayoutPanel1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.gbDecodeParameters.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.gbNRZ.ResumeLayout(false);
             this.gbNRZ.PerformLayout();
             this.gbRS.ResumeLayout(false);
             this.gbRS.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

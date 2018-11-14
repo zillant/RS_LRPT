@@ -16,20 +16,14 @@ namespace ReceivingStation
         {
             DialogResult result;
             string message = "Изменения вступят в силу после перезапуска программы.";
-            string caption = "Перезапустить программу?";
+            string caption = "Внимание";
             
             if (GetIpAddress() != Settings.Default.ipAddressIVK)
             {
                 Settings.Default.ipAddressIVK = GetIpAddress();
                 Settings.Default.Save();
 
-                result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    Application.Restart();
-                }
-
-                Close();
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             Close();
