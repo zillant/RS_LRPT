@@ -163,8 +163,8 @@
             this.tsmiStartDecoding.Image = global::ReceivingStation.Properties.Resources.start_icon;
             this.tsmiStartDecoding.Name = "tsmiStartDecoding";
             this.tsmiStartDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.tsmiStartDecoding.Size = new System.Drawing.Size(303, 22);
-            this.tsmiStartDecoding.Text = "Начать расшифровку данных";
+            this.tsmiStartDecoding.Size = new System.Drawing.Size(266, 22);
+            this.tsmiStartDecoding.Text = "Начать декодирование";
             this.tsmiStartDecoding.Click += new System.EventHandler(this.tsmiStartDecoding_Click);
             // 
             // tsmiStopDecoding
@@ -173,8 +173,8 @@
             this.tsmiStopDecoding.Image = global::ReceivingStation.Properties.Resources.stop_icon;
             this.tsmiStopDecoding.Name = "tsmiStopDecoding";
             this.tsmiStopDecoding.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsmiStopDecoding.Size = new System.Drawing.Size(303, 22);
-            this.tsmiStopDecoding.Text = "Остановить расшифровку данных";
+            this.tsmiStopDecoding.Size = new System.Drawing.Size(266, 22);
+            this.tsmiStopDecoding.Text = "Остановить декодирование";
             this.tsmiStopDecoding.Click += new System.EventHandler(this.tsmiStopDecoding_Click);
             // 
             // tabControl1
