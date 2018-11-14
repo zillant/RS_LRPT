@@ -322,12 +322,12 @@ namespace ReceivingStation
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
 
-            var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
-            {
-                ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
-                ThreadSafeUpdateImagesContent = AddImages,
-                ThreadSafeStopDecoding = StopDecoding
-            };        
+            //var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
+            //{
+            //    ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
+            //    ThreadSafeUpdateImagesContent = AddImages,
+            //    ThreadSafeStopDecoding = StopDecoding
+            //};        
 
             for (int i = 0; i < 6; i++)
             {
@@ -343,7 +343,7 @@ namespace ReceivingStation
             gbDecodeParameters.Enabled = false;
 
             _worktimestart = DateTime.Now;
-            Task.Run(() => decode.StartDecode(_cancellationToken));
+           // Task.Run(() => decode.StartDecode(_cancellationToken));
         }
 
         #endregion

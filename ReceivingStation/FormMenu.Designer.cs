@@ -93,6 +93,7 @@
             this.btnDecode.TabIndex = 2;
             this.btnDecode.Text = "Декодирование";
             this.btnDecode.UseVisualStyleBackColor = true;
+            this.btnDecode.Click += new System.EventHandler(this.btnDecode_Click);
             // 
             // FormMenu
             // 

@@ -5,8 +5,6 @@ namespace ReceivingStation
 {
     public partial class FormMenu : Form
     {
-        FormReceive form;
-
         public FormMenu()
         {
             InitializeComponent();
@@ -15,8 +13,17 @@ namespace ReceivingStation
         private void btnReceive_Click(object sender, EventArgs e)
         {
             Hide();
-            form = new FormReceive();
-            form.Show();
+
+            var formReceive = new FormReceive();
+            formReceive.Show();
+        }
+
+        private void btnDecode_Click(object sender, EventArgs e)
+        {
+            Hide();
+
+            var formDecode = new FormDecode();
+            formDecode.Show();
         }
     }
 }

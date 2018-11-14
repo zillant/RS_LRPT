@@ -21,7 +21,7 @@ namespace ReceivingStation.Decode
         public delegate void StopDecodingDelegate();
         public StopDecodingDelegate ThreadSafeStopDecoding;
 
-        private FormReceive _form;
+        private FormDecode _form;
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
@@ -82,7 +82,7 @@ namespace ReceivingStation.Decode
         private bool last_bit_in;
 
         #region Конструктор для открытого файла.
-        public Decode(FormReceive form, string fileName, bool reedSoloFlag, bool nrzFlag)
+        public Decode(FormDecode form, string fileName, bool reedSoloFlag, bool nrzFlag)
         {
             _fileName = fileName;
             _isNrz = nrzFlag;
@@ -109,27 +109,27 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Конструктор для приемника.
-        public Decode(FormReceive form,  string fileName)
-        {
-            _isNrz = false;
-            _isReedSolo = true;
+        //public Decode(FormReceive form,  string fileName)
+        //{
+        //    _isNrz = false;
+        //    _isReedSolo = true;
             
-            _reedSolo = new ReedSolo();
-            _viterbi = new Viterbi();
-            _jpeg = new Jpeg();
-            _form = form;
+        //    _reedSolo = new ReedSolo();
+        //    _viterbi = new Viterbi();
+        //    _jpeg = new Jpeg();
+        //    _form = form;
 
-            _decodeLogFileName = $"{fileName}_info.txt";
-            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
-            _sb = new StringBuilder();
+        //    _decodeLogFileName = $"{fileName}_info.txt";
+        //    _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+        //    _sb = new StringBuilder();
 
-            for (int i = 0; i < 6; i++)
-            {
-                _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
-            }
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
+        //    }
 
-            Init();
-        }
+        //    Init();
+        //}
 
         #endregion
 
