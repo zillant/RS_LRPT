@@ -53,7 +53,6 @@ namespace ReceivingStation.Other
                 if ((form.Opacity -= 0.05d) == 0)
                 {
                     timer.Stop();
-                    form.Hide();
                 }
             });
 

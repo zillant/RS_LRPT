@@ -16,15 +16,23 @@ namespace ReceivingStation
         private void btnReceive_Click(object sender, EventArgs e)
         {
             GuiUpdater.SmoothHidingForm(this);
+
             var formReceive = new FormReceive();
             formReceive.Show();
+
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
         }
 
         private void btnDecode_Click(object sender, EventArgs e)
         {
             GuiUpdater.SmoothHidingForm(this);
+
             var formDecode = new FormDecode();
             formDecode.Show();
+
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
         }     
     }
 }

@@ -9,7 +9,6 @@ using System.Text;
 using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ReceivingStation.Properties;
 using MaterialSkin.Controls;
 
 namespace ReceivingStation
@@ -17,7 +16,8 @@ namespace ReceivingStation
     public partial class FormDecode : MaterialForm
     {
         private string _fileName;
-        private bool _isDecodeStarting;        
+        private bool _isDecodeStarting;
+        private bool _isFileOpened;
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
@@ -39,6 +39,7 @@ namespace ReceivingStation
             materialTabControl1.SelectedTab = tabPage14;
 
             _isDecodeStarting = false;
+            _isFileOpened = false;
 
             for (int i = 0; i < 6; i++)
             {
@@ -85,6 +86,24 @@ namespace ReceivingStation
             StartStopDecoding();
         }
 
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                openFileDialog1.Title = "Выбор файла телеметрии";
+                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
+                openFileDialog1.FilterIndex = 1;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    _fileName = openFileDialog1.FileName;
+                    lblFileName.Text = openFileDialog1.SafeFileName;
+                    _isFileOpened = true;
+                    lblFileName.ForeColor = Color.FromArgb(222, 0, 0, 0);
+                }
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString();
@@ -110,45 +129,52 @@ namespace ReceivingStation
                     bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
                 }
             });
-        }
+        }       
 
         #region Начать декодирование.
         private void StartStopDecoding()
         {
-            if (!_isDecodeStarting)
+            if (_isFileOpened)
             {
-                bool reedSoloFlag = rbRSYes.Checked;
-                bool nrzFlag = rbNRZYes.Checked;
-
-                _cancellationTokenSource = new CancellationTokenSource();
-                _cancellationToken = _cancellationTokenSource.Token;
-                _isDecodeStarting = true;
-                btnStartStopDecode.Text = "Остановить";
-
-                var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
+                if (!_isDecodeStarting)
                 {
-                    ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
-                    ThreadSafeUpdateImagesContent = UpdateChannelsImages,
-                    ThreadSafeStopDecoding = StopDecoding
-                };
+                    bool reedSoloFlag = rbRSYes.Checked;
+                    bool nrzFlag = rbNRZYes.Checked;
 
-                for (int i = 0; i < 6; i++)
-                {
-                    _allChannels[i].Controls.Clear();
-                    _channels[i].Controls.Clear();
-                    _listImagesForSave[i].Clear();
+                    _cancellationTokenSource = new CancellationTokenSource();
+                    _cancellationToken = _cancellationTokenSource.Token;
+                    _isDecodeStarting = true;
+                    btnStartStopDecode.Text = "Остановить";
+
+                    var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
+                    {
+                        ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
+                        ThreadSafeUpdateImagesContent = UpdateChannelsImages,
+                        ThreadSafeStopDecoding = StopDecoding
+                    };
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        _allChannels[i].Controls.Clear();
+                        _channels[i].Controls.Clear();
+                        _listImagesForSave[i].Clear();
+                    }
+
+                    tlpDecodingParameters.Enabled = false;
+
+                    _worktimestart = DateTime.Now;
+                    Task.Run(() => decode.StartDecode(_cancellationToken));
+                    WriteToLogUserActions($"Начата расшифровка файла - {_fileName}");
                 }
-
-                tlpDecodingParameters.Enabled = false;
-
-                _worktimestart = DateTime.Now;
-                Task.Run(() => decode.StartDecode(_cancellationToken));
-                WriteToLogUserActions($"Начата расшифровка файла - {_fileName}");
+                else
+                {
+                    ForcedStopDecoding();
+                }
             }
             else
             {
-                ForcedStopDecoding();
-            }          
+                lblFileName.ForeColor = Color.FromArgb(222, 211, 47, 47);              
+            }
         }
 
         #endregion
@@ -205,24 +231,6 @@ namespace ReceivingStation
             }
         }
 
-        #endregion
-
-        private void btnOpenFile_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
-            {
-                openFileDialog1.Title = "Выбор файла телеметрии";
-                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
-                openFileDialog1.FilterIndex = 1;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    _fileName = openFileDialog1.FileName;
-                    lblFileName.Text = openFileDialog1.SafeFileName;
-
-                    btnStartStopDecode.Enabled = true;
-                }
-            }
-        }
+        #endregion      
     }
 }
