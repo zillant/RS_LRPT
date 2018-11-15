@@ -30,14 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReceive));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.управлениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.начатьПриемToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.остановитьПриемToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.slTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.slWorkingTimeOnboard = new System.Windows.Forms.ToolStripStatusLabel();
+            this.slMode = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.bwImageSaver = new System.ComponentModel.BackgroundWorker();
+            this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flpChannel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -51,53 +50,51 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.flpChannel6 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.flpAllChannels4 = new System.Windows.Forms.FlowLayoutPanel();
             this.flpAllChannels6 = new System.Windows.Forms.FlowLayoutPanel();
             this.flpAllChannels5 = new System.Windows.Forms.FlowLayoutPanel();
             this.flpAllChannels3 = new System.Windows.Forms.FlowLayoutPanel();
             this.flpAllChannels2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flpAllChannels1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.slTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.slWorkingTimeOnboard = new System.Windows.Forms.ToolStripStatusLabel();
-            this.slMode = new System.Windows.Forms.ToolStripStatusLabel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.gbFreq = new System.Windows.Forms.GroupBox();
-            this.rbFreq2 = new System.Windows.Forms.RadioButton();
-            this.rbFreq1 = new System.Windows.Forms.RadioButton();
-            this.gbFCP = new System.Windows.Forms.GroupBox();
-            this.rbFCPReserve = new System.Windows.Forms.RadioButton();
-            this.rbFCPMain = new System.Windows.Forms.RadioButton();
-            this.gbPRD = new System.Windows.Forms.GroupBox();
-            this.rbPRDReserve = new System.Windows.Forms.RadioButton();
-            this.rbPRDMain = new System.Windows.Forms.RadioButton();
-            this.gbInterlivingReceive = new System.Windows.Forms.GroupBox();
-            this.rbInterlivingReceiveOn = new System.Windows.Forms.RadioButton();
-            this.rbInterlivingReceiveOff = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnStartRecieve = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.bwImageSaver = new System.ComponentModel.BackgroundWorker();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.lblFramesCounter = new System.Windows.Forms.Label();
-            this.menuStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnStartRecieve = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.tlpDecodingParameters = new System.Windows.Forms.TableLayoutPanel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.rbPRDReserve = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbPRDMain = new MaterialSkin.Controls.MaterialRadioButton();
+            this.lblPRD = new MaterialSkin.Controls.MaterialLabel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
+            this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.rbFreq2 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbFreq1 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.lblFreq = new MaterialSkin.Controls.MaterialLabel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.materialRadioButton2 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbFCPMain = new MaterialSkin.Controls.MaterialRadioButton();
+            this.lblFCP = new MaterialSkin.Controls.MaterialLabel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label10 = new MaterialSkin.Controls.MaterialLabel();
+            this.label9 = new MaterialSkin.Controls.MaterialLabel();
+            this.label8 = new MaterialSkin.Controls.MaterialLabel();
+            this.label7 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel82 = new MaterialSkin.Controls.MaterialLabel();
+            this.lblFramesCounter = new MaterialSkin.Controls.MaterialLabel();
+            this.statusStrip1.SuspendLayout();
+            this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -105,101 +102,93 @@
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.gbFreq.SuspendLayout();
-            this.gbFCP.SuspendLayout();
-            this.gbPRD.SuspendLayout();
-            this.gbInterlivingReceive.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.tlpDecodingParameters.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // statusStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.управлениеToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1188, 24);
-            this.menuStrip1.TabIndex = 16;
-            this.menuStrip1.Text = "menuStrip1";
+            this.statusStrip1.AllowMerge = false;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.slTime,
+            this.slWorkingTimeOnboard,
+            this.slMode});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 770);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.ShowItemToolTips = true;
+            this.statusStrip1.Size = new System.Drawing.Size(1578, 25);
+            this.statusStrip1.Stretch = false;
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // файлToolStripMenuItem
+            // slTime
             // 
-            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiSettings,
-            this.tsmiExit});
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.файлToolStripMenuItem.Text = "Файл";
+            this.slTime.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.slTime.Image = global::ReceivingStation.Properties.Resources.time_icon;
+            this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
+            this.slTime.Name = "slTime";
+            this.slTime.Size = new System.Drawing.Size(159, 20);
+            this.slTime.Text = "01/01/1668 12:12:01";
+            this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.slTime.ToolTipText = "Дата/Время";
             // 
-            // tsmiSettings
+            // slWorkingTimeOnboard
             // 
-            this.tsmiSettings.Image = global::ReceivingStation.Properties.Resources.settings_icon;
-            this.tsmiSettings.Name = "tsmiSettings";
-            this.tsmiSettings.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.tsmiSettings.Size = new System.Drawing.Size(175, 22);
-            this.tsmiSettings.Text = "Настройки";
-            this.tsmiSettings.Click += new System.EventHandler(this.tsmiSettings_Click);
+            this.slWorkingTimeOnboard.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.slWorkingTimeOnboard.Image = global::ReceivingStation.Properties.Resources.time_icon;
+            this.slWorkingTimeOnboard.Margin = new System.Windows.Forms.Padding(60, 3, 0, 2);
+            this.slWorkingTimeOnboard.Name = "slWorkingTimeOnboard";
+            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(79, 20);
+            this.slWorkingTimeOnboard.Text = "12:12:01";
+            this.slWorkingTimeOnboard.ToolTipText = "Время наработки системы (ЧЧ:ММ:СС)";
             // 
-            // tsmiExit
+            // slMode
             // 
-            this.tsmiExit.Image = global::ReceivingStation.Properties.Resources.exit_icon;
-            this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.tsmiExit.Size = new System.Drawing.Size(175, 22);
-            this.tsmiExit.Text = "Выход";
-            this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
+            this.slMode.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.slMode.Image = global::ReceivingStation.Properties.Resources.mode_icon;
+            this.slMode.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.slMode.Name = "slMode";
+            this.slMode.Size = new System.Drawing.Size(1232, 20);
+            this.slMode.Spring = true;
+            this.slMode.Text = "Местное управление";
+            this.slMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // управлениеToolStripMenuItem
+            // timer1
             // 
-            this.управлениеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.начатьПриемToolStripMenuItem,
-            this.остановитьПриемToolStripMenuItem});
-            this.управлениеToolStripMenuItem.Name = "управлениеToolStripMenuItem";
-            this.управлениеToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
-            this.управлениеToolStripMenuItem.Text = "Управление";
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // начатьПриемToolStripMenuItem
+            // bwImageSaver
             // 
-            this.начатьПриемToolStripMenuItem.Image = global::ReceivingStation.Properties.Resources.start_icon;
-            this.начатьПриемToolStripMenuItem.Name = "начатьПриемToolStripMenuItem";
-            this.начатьПриемToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.начатьПриемToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.начатьПриемToolStripMenuItem.Text = "Начать прием данных";
+            this.bwImageSaver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageSaver_DoWork);
             // 
-            // остановитьПриемToolStripMenuItem
+            // materialTabControl1
             // 
-            this.остановитьПриемToolStripMenuItem.Image = global::ReceivingStation.Properties.Resources.stop_icon;
-            this.остановитьПриемToolStripMenuItem.Name = "остановитьПриемToolStripMenuItem";
-            this.остановитьПриемToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.остановитьПриемToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
-            this.остановитьПриемToolStripMenuItem.Text = "Остановить прием данных";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Controls.Add(this.tabPage7);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl1.Location = new System.Drawing.Point(0, 161);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1188, 575);
-            this.tabControl1.TabIndex = 19;
+            this.materialTabControl1.Controls.Add(this.tabPage1);
+            this.materialTabControl1.Controls.Add(this.tabPage2);
+            this.materialTabControl1.Controls.Add(this.tabPage3);
+            this.materialTabControl1.Controls.Add(this.tabPage4);
+            this.materialTabControl1.Controls.Add(this.tabPage5);
+            this.materialTabControl1.Controls.Add(this.tabPage6);
+            this.materialTabControl1.Controls.Add(this.tabPage7);
+            this.materialTabControl1.Depth = 0;
+            this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.materialTabControl1.Location = new System.Drawing.Point(0, 208);
+            this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabControl1.Name = "materialTabControl1";
+            this.materialTabControl1.SelectedIndex = 0;
+            this.materialTabControl1.Size = new System.Drawing.Size(1578, 562);
+            this.materialTabControl1.TabIndex = 36;
             // 
             // tabPage1
             // 
@@ -207,7 +196,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage1.Size = new System.Drawing.Size(1570, 536);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -220,7 +209,7 @@
             this.flpChannel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpChannel1.Location = new System.Drawing.Point(3, 3);
             this.flpChannel1.Name = "flpChannel1";
-            this.flpChannel1.Size = new System.Drawing.Size(1174, 543);
+            this.flpChannel1.Size = new System.Drawing.Size(1564, 530);
             this.flpChannel1.TabIndex = 2;
             this.flpChannel1.WrapContents = false;
             // 
@@ -230,7 +219,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage2.Size = new System.Drawing.Size(1570, 536);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Канал 2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -241,7 +230,7 @@
             this.flpChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel2.Location = new System.Drawing.Point(3, 3);
             this.flpChannel2.Name = "flpChannel2";
-            this.flpChannel2.Size = new System.Drawing.Size(1174, 680);
+            this.flpChannel2.Size = new System.Drawing.Size(1564, 530);
             this.flpChannel2.TabIndex = 3;
             // 
             // tabPage3
@@ -250,7 +239,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage3.Size = new System.Drawing.Size(1570, 536);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Канал 3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -261,7 +250,7 @@
             this.flpChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel3.Location = new System.Drawing.Point(3, 3);
             this.flpChannel3.Name = "flpChannel3";
-            this.flpChannel3.Size = new System.Drawing.Size(1174, 543);
+            this.flpChannel3.Size = new System.Drawing.Size(1564, 530);
             this.flpChannel3.TabIndex = 3;
             // 
             // tabPage4
@@ -270,7 +259,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage4.Size = new System.Drawing.Size(1570, 536);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Канал 4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -281,7 +270,7 @@
             this.flpChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel4.Location = new System.Drawing.Point(3, 3);
             this.flpChannel4.Name = "flpChannel4";
-            this.flpChannel4.Size = new System.Drawing.Size(1174, 543);
+            this.flpChannel4.Size = new System.Drawing.Size(1564, 530);
             this.flpChannel4.TabIndex = 3;
             // 
             // tabPage5
@@ -290,7 +279,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage5.Size = new System.Drawing.Size(1570, 536);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Канал 5";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -301,7 +290,7 @@
             this.flpChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel5.Location = new System.Drawing.Point(3, 3);
             this.flpChannel5.Name = "flpChannel5";
-            this.flpChannel5.Size = new System.Drawing.Size(1174, 543);
+            this.flpChannel5.Size = new System.Drawing.Size(1564, 530);
             this.flpChannel5.TabIndex = 3;
             // 
             // tabPage6
@@ -310,7 +299,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage6.Size = new System.Drawing.Size(1570, 536);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Канал 6";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -321,54 +310,53 @@
             this.flpChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel6.Location = new System.Drawing.Point(3, 3);
             this.flpChannel6.Name = "flpChannel6";
-            this.flpChannel6.Size = new System.Drawing.Size(1174, 543);
+            this.flpChannel6.Size = new System.Drawing.Size(1564, 530);
             this.flpChannel6.TabIndex = 3;
             // 
             // tabPage7
             // 
-            this.tabPage7.AutoScroll = true;
-            this.tabPage7.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage7.Controls.Add(this.tableLayoutPanel2);
+            this.tabPage7.Controls.Add(this.tableLayoutPanel4);
+            this.tabPage7.Controls.Add(this.tableLayoutPanel5);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(1180, 549);
+            this.tabPage7.Size = new System.Drawing.Size(1570, 537);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Все каналы";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel4
             // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 6;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Controls.Add(this.flpAllChannels4, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flpAllChannels6, 5, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flpAllChannels5, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flpAllChannels3, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flpAllChannels2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flpAllChannels1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 44);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1174, 502);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel4.AutoScroll = true;
+            this.tableLayoutPanel4.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel4.ColumnCount = 6;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel4.Controls.Add(this.flpAllChannels4, 3, 0);
+            this.tableLayoutPanel4.Controls.Add(this.flpAllChannels6, 5, 0);
+            this.tableLayoutPanel4.Controls.Add(this.flpAllChannels5, 4, 0);
+            this.tableLayoutPanel4.Controls.Add(this.flpAllChannels3, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.flpAllChannels2, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.flpAllChannels1, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 44);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1564, 490);
+            this.tableLayoutPanel4.TabIndex = 0;
             // 
             // flpAllChannels4
             // 
             this.flpAllChannels4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAllChannels4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels4.Location = new System.Drawing.Point(588, 3);
+            this.flpAllChannels4.Location = new System.Drawing.Point(783, 3);
             this.flpAllChannels4.Name = "flpAllChannels4";
-            this.flpAllChannels4.Size = new System.Drawing.Size(189, 496);
+            this.flpAllChannels4.Size = new System.Drawing.Size(254, 484);
             this.flpAllChannels4.TabIndex = 3;
             this.flpAllChannels4.WrapContents = false;
             // 
@@ -376,9 +364,9 @@
             // 
             this.flpAllChannels6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAllChannels6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels6.Location = new System.Drawing.Point(978, 3);
+            this.flpAllChannels6.Location = new System.Drawing.Point(1303, 3);
             this.flpAllChannels6.Name = "flpAllChannels6";
-            this.flpAllChannels6.Size = new System.Drawing.Size(193, 496);
+            this.flpAllChannels6.Size = new System.Drawing.Size(258, 484);
             this.flpAllChannels6.TabIndex = 5;
             this.flpAllChannels6.WrapContents = false;
             // 
@@ -386,9 +374,9 @@
             // 
             this.flpAllChannels5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAllChannels5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels5.Location = new System.Drawing.Point(783, 3);
+            this.flpAllChannels5.Location = new System.Drawing.Point(1043, 3);
             this.flpAllChannels5.Name = "flpAllChannels5";
-            this.flpAllChannels5.Size = new System.Drawing.Size(189, 496);
+            this.flpAllChannels5.Size = new System.Drawing.Size(254, 484);
             this.flpAllChannels5.TabIndex = 4;
             this.flpAllChannels5.WrapContents = false;
             // 
@@ -398,9 +386,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels3.Location = new System.Drawing.Point(393, 3);
+            this.flpAllChannels3.Location = new System.Drawing.Point(523, 3);
             this.flpAllChannels3.Name = "flpAllChannels3";
-            this.flpAllChannels3.Size = new System.Drawing.Size(189, 496);
+            this.flpAllChannels3.Size = new System.Drawing.Size(254, 484);
             this.flpAllChannels3.TabIndex = 2;
             this.flpAllChannels3.WrapContents = false;
             // 
@@ -410,9 +398,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels2.Location = new System.Drawing.Point(198, 3);
+            this.flpAllChannels2.Location = new System.Drawing.Point(263, 3);
             this.flpAllChannels2.Name = "flpAllChannels2";
-            this.flpAllChannels2.Size = new System.Drawing.Size(189, 496);
+            this.flpAllChannels2.Size = new System.Drawing.Size(254, 484);
             this.flpAllChannels2.TabIndex = 1;
             this.flpAllChannels2.WrapContents = false;
             // 
@@ -424,285 +412,231 @@
             this.flpAllChannels1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels1.Location = new System.Drawing.Point(3, 3);
             this.flpAllChannels1.Name = "flpAllChannels1";
-            this.flpAllChannels1.Size = new System.Drawing.Size(189, 496);
+            this.flpAllChannels1.Size = new System.Drawing.Size(254, 484);
             this.flpAllChannels1.TabIndex = 0;
             this.flpAllChannels1.WrapContents = false;
             // 
-            // tableLayoutPanel2
+            // tableLayoutPanel5
             // 
-            this.tableLayoutPanel2.ColumnCount = 6;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.Controls.Add(this.label6, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label5, 4, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label4, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1174, 41);
-            this.tableLayoutPanel2.TabIndex = 1;
+            this.tableLayoutPanel5.ColumnCount = 6;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.Controls.Add(this.materialLabel6, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.materialLabel5, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.materialLabel4, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.materialLabel3, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.materialLabel2, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.materialLabel1, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1564, 41);
+            this.tableLayoutPanel5.TabIndex = 1;
             // 
-            // label6
+            // materialLabel6
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1048, 13);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 15);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Канал 6";
+            this.materialLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel6.AutoSize = true;
+            this.materialLabel6.Depth = 0;
+            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel6.Location = new System.Drawing.Point(877, 11);
+            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel6.Name = "materialLabel6";
+            this.materialLabel6.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel6.TabIndex = 11;
+            this.materialLabel6.Text = "Канал 4";
             // 
-            // label5
+            // materialLabel5
             // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(851, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 15);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Канал 5";
+            this.materialLabel5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel5.AutoSize = true;
+            this.materialLabel5.Depth = 0;
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel5.Location = new System.Drawing.Point(1137, 11);
+            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel5.Name = "materialLabel5";
+            this.materialLabel5.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel5.TabIndex = 10;
+            this.materialLabel5.Text = "Канал 5";
             // 
-            // label4
+            // materialLabel4
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(656, 13);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 15);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Канал 4";
+            this.materialLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel4.Location = new System.Drawing.Point(1399, 11);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel4.TabIndex = 9;
+            this.materialLabel4.Text = "Канал 6";
             // 
-            // label3
+            // materialLabel3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(461, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Канал 3";
+            this.materialLabel3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel3.Location = new System.Drawing.Point(97, 11);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel3.TabIndex = 8;
+            this.materialLabel3.Text = "Канал 1";
             // 
-            // label2
+            // materialLabel2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(266, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Канал 2";
+            this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(357, 11);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel2.TabIndex = 7;
+            this.materialLabel2.Text = "Канал 2";
             // 
-            // label1
+            // materialLabel1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Канал 1";
+            this.materialLabel1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(617, 11);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel1.TabIndex = 6;
+            this.materialLabel1.Text = "Канал 3";
             // 
-            // statusStrip1
+            // materialTabSelector1
             // 
-            this.statusStrip1.AllowMerge = false;
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.slTime,
-            this.slWorkingTimeOnboard,
-            this.slMode});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 736);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(1188, 24);
-            this.statusStrip1.Stretch = false;
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
+            this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialTabSelector1.Location = new System.Drawing.Point(0, 168);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(1578, 40);
+            this.materialTabSelector1.TabIndex = 37;
+            this.materialTabSelector1.Text = "materialTabSelector1";
             // 
-            // slTime
+            // materialDivider1
             // 
-            this.slTime.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.slTime.Image = global::ReceivingStation.Properties.Resources.time_icon;
-            this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
-            this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(389, 19);
-            this.slTime.Spring = true;
-            this.slTime.Text = "01/01/1668 12:12:01";
-            this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.slTime.ToolTipText = "Дата/Время";
+            this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialDivider1.Depth = 0;
+            this.materialDivider1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialDivider1.Enabled = false;
+            this.materialDivider1.Location = new System.Drawing.Point(0, 0);
+            this.materialDivider1.MaximumSize = new System.Drawing.Size(1, 54);
+            this.materialDivider1.MinimumSize = new System.Drawing.Size(1, 54);
+            this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialDivider1.Name = "materialDivider1";
+            this.materialDivider1.Size = new System.Drawing.Size(1, 54);
+            this.materialDivider1.TabIndex = 38;
+            this.materialDivider1.Text = "materialDivider1";
             // 
-            // slWorkingTimeOnboard
+            // tableLayoutPanel1
             // 
-            this.slWorkingTimeOnboard.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.slWorkingTimeOnboard.Image = global::ReceivingStation.Properties.Resources.time_icon;
-            this.slWorkingTimeOnboard.Name = "slWorkingTimeOnboard";
-            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(391, 19);
-            this.slWorkingTimeOnboard.Spring = true;
-            this.slWorkingTimeOnboard.Text = "12:12:01";
-            this.slWorkingTimeOnboard.ToolTipText = "Время наработки системы (ЧЧ:ММ:СС)";
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel1.Controls.Add(this.panel5, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tlpDecodingParameters, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel6, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 54);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1578, 114);
+            this.tableLayoutPanel1.TabIndex = 46;
             // 
-            // slMode
+            // panel5
             // 
-            this.slMode.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.slMode.Image = global::ReceivingStation.Properties.Resources.mode_icon;
-            this.slMode.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.slMode.Name = "slMode";
-            this.slMode.Size = new System.Drawing.Size(391, 19);
-            this.slMode.Spring = true;
-            this.slMode.Text = "Местное управление";
-            this.slMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.panel5.Controls.Add(this.btnStartRecieve);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(713, 3);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(151, 108);
+            this.panel5.TabIndex = 43;
             // 
-            // timer1
+            // btnStartRecieve
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.btnStartRecieve.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStartRecieve.Depth = 0;
+            this.btnStartRecieve.Location = new System.Drawing.Point(0, 41);
+            this.btnStartRecieve.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnStartRecieve.Name = "btnStartRecieve";
+            this.btnStartRecieve.Primary = true;
+            this.btnStartRecieve.Size = new System.Drawing.Size(151, 43);
+            this.btnStartRecieve.TabIndex = 43;
+            this.btnStartRecieve.Text = "Начать";
+            this.btnStartRecieve.UseVisualStyleBackColor = true;
+            this.btnStartRecieve.Click += new System.EventHandler(this.btnStartRecieve_Click);
             // 
-            // groupBox1
+            // tlpDecodingParameters
             // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel3);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(83, 3);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox1.MinimumSize = new System.Drawing.Size(0, 83);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox1.Size = new System.Drawing.Size(809, 131);
-            this.groupBox1.TabIndex = 34;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Параметры";
+            this.tlpDecodingParameters.ColumnCount = 4;
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.82012F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.98066F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.19923F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 222F));
+            this.tlpDecodingParameters.Controls.Add(this.panel7, 0, 0);
+            this.tlpDecodingParameters.Controls.Add(this.panel2, 2, 0);
+            this.tlpDecodingParameters.Controls.Add(this.panel3, 1, 0);
+            this.tlpDecodingParameters.Controls.Add(this.panel4, 0, 0);
+            this.tlpDecodingParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpDecodingParameters.Location = new System.Drawing.Point(3, 3);
+            this.tlpDecodingParameters.Name = "tlpDecodingParameters";
+            this.tlpDecodingParameters.RowCount = 1;
+            this.tlpDecodingParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpDecodingParameters.Size = new System.Drawing.Size(704, 108);
+            this.tlpDecodingParameters.TabIndex = 45;
             // 
-            // tableLayoutPanel3
+            // panel7
             // 
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Controls.Add(this.gbFreq, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.gbFCP, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.gbPRD, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.gbInterlivingReceive, 3, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 16);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(805, 112);
-            this.tableLayoutPanel3.TabIndex = 0;
-            // 
-            // gbFreq
-            // 
-            this.gbFreq.Controls.Add(this.rbFreq2);
-            this.gbFreq.Controls.Add(this.rbFreq1);
-            this.gbFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gbFreq.Location = new System.Drawing.Point(404, 3);
-            this.gbFreq.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbFreq.Name = "gbFreq";
-            this.gbFreq.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbFreq.Size = new System.Drawing.Size(193, 102);
-            this.gbFreq.TabIndex = 12;
-            this.gbFreq.TabStop = false;
-            this.gbFreq.Text = "Несущая частота (МГц)";
-            // 
-            // rbFreq2
-            // 
-            this.rbFreq2.AutoSize = true;
-            this.rbFreq2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbFreq2.Location = new System.Drawing.Point(106, 41);
-            this.rbFreq2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.rbFreq2.Name = "rbFreq2";
-            this.rbFreq2.Size = new System.Drawing.Size(56, 19);
-            this.rbFreq2.TabIndex = 7;
-            this.rbFreq2.Text = "137.9";
-            this.rbFreq2.UseVisualStyleBackColor = true;
-            // 
-            // rbFreq1
-            // 
-            this.rbFreq1.AutoSize = true;
-            this.rbFreq1.Checked = true;
-            this.rbFreq1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbFreq1.Location = new System.Drawing.Point(38, 41);
-            this.rbFreq1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.rbFreq1.Name = "rbFreq1";
-            this.rbFreq1.Size = new System.Drawing.Size(56, 19);
-            this.rbFreq1.TabIndex = 6;
-            this.rbFreq1.TabStop = true;
-            this.rbFreq1.Text = "137.1";
-            this.rbFreq1.UseVisualStyleBackColor = true;
-            // 
-            // gbFCP
-            // 
-            this.gbFCP.Controls.Add(this.rbFCPReserve);
-            this.gbFCP.Controls.Add(this.rbFCPMain);
-            this.gbFCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gbFCP.Location = new System.Drawing.Point(2, 3);
-            this.gbFCP.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbFCP.Name = "gbFCP";
-            this.gbFCP.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbFCP.Size = new System.Drawing.Size(194, 102);
-            this.gbFCP.TabIndex = 13;
-            this.gbFCP.TabStop = false;
-            this.gbFCP.Text = "ФЦП-М";
-            // 
-            // rbFCPReserve
-            // 
-            this.rbFCPReserve.AutoSize = true;
-            this.rbFCPReserve.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbFCPReserve.Location = new System.Drawing.Point(103, 41);
-            this.rbFCPReserve.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.rbFCPReserve.Name = "rbFCPReserve";
-            this.rbFCPReserve.Size = new System.Drawing.Size(90, 19);
-            this.rbFCPReserve.TabIndex = 7;
-            this.rbFCPReserve.Text = "Резервный";
-            this.rbFCPReserve.UseVisualStyleBackColor = true;
-            // 
-            // rbFCPMain
-            // 
-            this.rbFCPMain.AutoSize = true;
-            this.rbFCPMain.Checked = true;
-            this.rbFCPMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbFCPMain.Location = new System.Drawing.Point(6, 41);
-            this.rbFCPMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.rbFCPMain.Name = "rbFCPMain";
-            this.rbFCPMain.Size = new System.Drawing.Size(82, 19);
-            this.rbFCPMain.TabIndex = 6;
-            this.rbFCPMain.TabStop = true;
-            this.rbFCPMain.Text = "Основной";
-            this.rbFCPMain.UseVisualStyleBackColor = true;
-            // 
-            // gbPRD
-            // 
-            this.gbPRD.Controls.Add(this.rbPRDReserve);
-            this.gbPRD.Controls.Add(this.rbPRDMain);
-            this.gbPRD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gbPRD.Location = new System.Drawing.Point(203, 3);
-            this.gbPRD.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbPRD.Name = "gbPRD";
-            this.gbPRD.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbPRD.Size = new System.Drawing.Size(193, 102);
-            this.gbPRD.TabIndex = 14;
-            this.gbPRD.TabStop = false;
-            this.gbPRD.Text = "ПРД";
+            this.panel7.AutoSize = true;
+            this.panel7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel7.Controls.Add(this.rbPRDReserve);
+            this.panel7.Controls.Add(this.rbPRDMain);
+            this.panel7.Controls.Add(this.lblPRD);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(141, 3);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(138, 102);
+            this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
             // 
             this.rbPRDReserve.AutoSize = true;
-            this.rbPRDReserve.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbPRDReserve.Location = new System.Drawing.Point(102, 41);
-            this.rbPRDReserve.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.rbPRDReserve.Depth = 0;
+            this.rbPRDReserve.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbPRDReserve.Location = new System.Drawing.Point(7, 60);
+            this.rbPRDReserve.Margin = new System.Windows.Forms.Padding(0);
+            this.rbPRDReserve.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbPRDReserve.MouseState = MaterialSkin.MouseState.HOVER;
             this.rbPRDReserve.Name = "rbPRDReserve";
-            this.rbPRDReserve.Size = new System.Drawing.Size(90, 19);
-            this.rbPRDReserve.TabIndex = 7;
+            this.rbPRDReserve.Ripple = true;
+            this.rbPRDReserve.Size = new System.Drawing.Size(102, 30);
+            this.rbPRDReserve.TabIndex = 41;
             this.rbPRDReserve.Text = "Резервный";
             this.rbPRDReserve.UseVisualStyleBackColor = true;
             // 
@@ -710,212 +644,319 @@
             // 
             this.rbPRDMain.AutoSize = true;
             this.rbPRDMain.Checked = true;
-            this.rbPRDMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbPRDMain.Location = new System.Drawing.Point(6, 41);
-            this.rbPRDMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.rbPRDMain.Depth = 0;
+            this.rbPRDMain.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbPRDMain.Location = new System.Drawing.Point(7, 30);
+            this.rbPRDMain.Margin = new System.Windows.Forms.Padding(0);
+            this.rbPRDMain.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbPRDMain.MouseState = MaterialSkin.MouseState.HOVER;
             this.rbPRDMain.Name = "rbPRDMain";
-            this.rbPRDMain.Size = new System.Drawing.Size(82, 19);
-            this.rbPRDMain.TabIndex = 6;
+            this.rbPRDMain.Ripple = true;
+            this.rbPRDMain.Size = new System.Drawing.Size(93, 30);
+            this.rbPRDMain.TabIndex = 40;
             this.rbPRDMain.TabStop = true;
             this.rbPRDMain.Text = "Основной";
             this.rbPRDMain.UseVisualStyleBackColor = true;
             // 
-            // gbInterlivingReceive
+            // lblPRD
             // 
-            this.gbInterlivingReceive.Controls.Add(this.rbInterlivingReceiveOn);
-            this.gbInterlivingReceive.Controls.Add(this.rbInterlivingReceiveOff);
-            this.gbInterlivingReceive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gbInterlivingReceive.Location = new System.Drawing.Point(605, 3);
-            this.gbInterlivingReceive.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbInterlivingReceive.Name = "gbInterlivingReceive";
-            this.gbInterlivingReceive.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.gbInterlivingReceive.Size = new System.Drawing.Size(198, 102);
-            this.gbInterlivingReceive.TabIndex = 13;
-            this.gbInterlivingReceive.TabStop = false;
-            this.gbInterlivingReceive.Text = "Интерливинг";
+            this.lblPRD.Depth = 0;
+            this.lblPRD.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblPRD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblPRD.Location = new System.Drawing.Point(3, 6);
+            this.lblPRD.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblPRD.Name = "lblPRD";
+            this.lblPRD.Size = new System.Drawing.Size(64, 19);
+            this.lblPRD.TabIndex = 38;
+            this.lblPRD.Text = "ПРД";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
+            this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
+            this.panel2.Controls.Add(this.lblInterliving);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(483, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(218, 102);
+            this.panel2.TabIndex = 42;
+            // 
+            // rbInterlivingReceiveOff
+            // 
+            this.rbInterlivingReceiveOff.AutoSize = true;
+            this.rbInterlivingReceiveOff.Depth = 0;
+            this.rbInterlivingReceiveOff.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbInterlivingReceiveOff.Location = new System.Drawing.Point(7, 60);
+            this.rbInterlivingReceiveOff.Margin = new System.Windows.Forms.Padding(0);
+            this.rbInterlivingReceiveOff.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbInterlivingReceiveOff.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbInterlivingReceiveOff.Name = "rbInterlivingReceiveOff";
+            this.rbInterlivingReceiveOff.Ripple = true;
+            this.rbInterlivingReceiveOff.Size = new System.Drawing.Size(105, 30);
+            this.rbInterlivingReceiveOff.TabIndex = 45;
+            this.rbInterlivingReceiveOff.Text = "Выключить";
+            this.rbInterlivingReceiveOff.UseVisualStyleBackColor = true;
             // 
             // rbInterlivingReceiveOn
             // 
             this.rbInterlivingReceiveOn.AutoSize = true;
             this.rbInterlivingReceiveOn.Checked = true;
-            this.rbInterlivingReceiveOn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbInterlivingReceiveOn.Location = new System.Drawing.Point(8, 41);
-            this.rbInterlivingReceiveOn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.rbInterlivingReceiveOn.Depth = 0;
+            this.rbInterlivingReceiveOn.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbInterlivingReceiveOn.Location = new System.Drawing.Point(7, 30);
+            this.rbInterlivingReceiveOn.Margin = new System.Windows.Forms.Padding(0);
+            this.rbInterlivingReceiveOn.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbInterlivingReceiveOn.MouseState = MaterialSkin.MouseState.HOVER;
             this.rbInterlivingReceiveOn.Name = "rbInterlivingReceiveOn";
-            this.rbInterlivingReceiveOn.Size = new System.Drawing.Size(82, 19);
-            this.rbInterlivingReceiveOn.TabIndex = 8;
+            this.rbInterlivingReceiveOn.Ripple = true;
+            this.rbInterlivingReceiveOn.Size = new System.Drawing.Size(94, 30);
+            this.rbInterlivingReceiveOn.TabIndex = 44;
             this.rbInterlivingReceiveOn.TabStop = true;
             this.rbInterlivingReceiveOn.Text = "Включить";
             this.rbInterlivingReceiveOn.UseVisualStyleBackColor = true;
             // 
-            // rbInterlivingReceiveOff
+            // lblInterliving
             // 
-            this.rbInterlivingReceiveOff.AutoSize = true;
-            this.rbInterlivingReceiveOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rbInterlivingReceiveOff.Location = new System.Drawing.Point(104, 41);
-            this.rbInterlivingReceiveOff.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.rbInterlivingReceiveOff.Name = "rbInterlivingReceiveOff";
-            this.rbInterlivingReceiveOff.Size = new System.Drawing.Size(91, 19);
-            this.rbInterlivingReceiveOff.TabIndex = 9;
-            this.rbInterlivingReceiveOff.Text = "Выключить";
-            this.rbInterlivingReceiveOff.UseVisualStyleBackColor = true;
+            this.lblInterliving.Depth = 0;
+            this.lblInterliving.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblInterliving.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblInterliving.Location = new System.Drawing.Point(3, 6);
+            this.lblInterliving.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblInterliving.Name = "lblInterliving";
+            this.lblInterliving.Size = new System.Drawing.Size(108, 19);
+            this.lblInterliving.TabIndex = 38;
+            this.lblInterliving.Text = "Интерливинг";
             // 
-            // groupBox2
+            // panel3
             // 
-            this.groupBox2.Controls.Add(this.btnStartRecieve);
-            this.groupBox2.Location = new System.Drawing.Point(2, 3);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox2.MinimumSize = new System.Drawing.Size(76, 83);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox2.Size = new System.Drawing.Size(77, 131);
-            this.groupBox2.TabIndex = 33;
-            this.groupBox2.TabStop = false;
+            this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.rbFreq2);
+            this.panel3.Controls.Add(this.rbFreq1);
+            this.panel3.Controls.Add(this.lblFreq);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(285, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(192, 102);
+            this.panel3.TabIndex = 43;
             // 
-            // btnStartRecieve
+            // rbFreq2
             // 
-            this.btnStartRecieve.AutoSize = true;
-            this.btnStartRecieve.BackColor = System.Drawing.SystemColors.Control;
-            this.btnStartRecieve.BackgroundImage = global::ReceivingStation.Properties.Resources.start_icon;
-            this.btnStartRecieve.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnStartRecieve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartRecieve.Location = new System.Drawing.Point(10, 43);
-            this.btnStartRecieve.Name = "btnStartRecieve";
-            this.btnStartRecieve.Size = new System.Drawing.Size(55, 52);
-            this.btnStartRecieve.TabIndex = 6;
-            this.btnStartRecieve.UseVisualStyleBackColor = false;
-            this.btnStartRecieve.Click += new System.EventHandler(this.btnStartRecieve_Click);
+            this.rbFreq2.AutoSize = true;
+            this.rbFreq2.Depth = 0;
+            this.rbFreq2.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFreq2.Location = new System.Drawing.Point(7, 60);
+            this.rbFreq2.Margin = new System.Windows.Forms.Padding(0);
+            this.rbFreq2.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbFreq2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbFreq2.Name = "rbFreq2";
+            this.rbFreq2.Ripple = true;
+            this.rbFreq2.Size = new System.Drawing.Size(64, 30);
+            this.rbFreq2.TabIndex = 43;
+            this.rbFreq2.Text = "137.9";
+            this.rbFreq2.UseVisualStyleBackColor = true;
+            // 
+            // rbFreq1
+            // 
+            this.rbFreq1.AutoSize = true;
+            this.rbFreq1.Checked = true;
+            this.rbFreq1.Depth = 0;
+            this.rbFreq1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFreq1.Location = new System.Drawing.Point(7, 30);
+            this.rbFreq1.Margin = new System.Windows.Forms.Padding(0);
+            this.rbFreq1.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbFreq1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbFreq1.Name = "rbFreq1";
+            this.rbFreq1.Ripple = true;
+            this.rbFreq1.Size = new System.Drawing.Size(64, 30);
+            this.rbFreq1.TabIndex = 42;
+            this.rbFreq1.TabStop = true;
+            this.rbFreq1.Text = "137.1";
+            this.rbFreq1.UseVisualStyleBackColor = true;
+            // 
+            // lblFreq
+            // 
+            this.lblFreq.Depth = 0;
+            this.lblFreq.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblFreq.Location = new System.Drawing.Point(3, 6);
+            this.lblFreq.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblFreq.Name = "lblFreq";
+            this.lblFreq.Size = new System.Drawing.Size(175, 19);
+            this.lblFreq.TabIndex = 38;
+            this.lblFreq.Text = "Несущая частота (МГц)";
+            // 
+            // panel4
+            // 
+            this.panel4.AutoSize = true;
+            this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel4.Controls.Add(this.materialRadioButton2);
+            this.panel4.Controls.Add(this.rbFCPMain);
+            this.panel4.Controls.Add(this.lblFCP);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(132, 102);
+            this.panel4.TabIndex = 44;
+            // 
+            // materialRadioButton2
+            // 
+            this.materialRadioButton2.AutoSize = true;
+            this.materialRadioButton2.Depth = 0;
+            this.materialRadioButton2.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialRadioButton2.Location = new System.Drawing.Point(13, 60);
+            this.materialRadioButton2.Margin = new System.Windows.Forms.Padding(0);
+            this.materialRadioButton2.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialRadioButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRadioButton2.Name = "materialRadioButton2";
+            this.materialRadioButton2.Ripple = true;
+            this.materialRadioButton2.Size = new System.Drawing.Size(102, 30);
+            this.materialRadioButton2.TabIndex = 39;
+            this.materialRadioButton2.Text = "Резервный";
+            this.materialRadioButton2.UseVisualStyleBackColor = true;
+            // 
+            // rbFCPMain
+            // 
+            this.rbFCPMain.AutoSize = true;
+            this.rbFCPMain.Checked = true;
+            this.rbFCPMain.Depth = 0;
+            this.rbFCPMain.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFCPMain.Location = new System.Drawing.Point(13, 30);
+            this.rbFCPMain.Margin = new System.Windows.Forms.Padding(0);
+            this.rbFCPMain.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbFCPMain.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbFCPMain.Name = "rbFCPMain";
+            this.rbFCPMain.Ripple = true;
+            this.rbFCPMain.Size = new System.Drawing.Size(93, 30);
+            this.rbFCPMain.TabIndex = 38;
+            this.rbFCPMain.TabStop = true;
+            this.rbFCPMain.Text = "Основной";
+            this.rbFCPMain.UseVisualStyleBackColor = true;
+            // 
+            // lblFCP
+            // 
+            this.lblFCP.Depth = 0;
+            this.lblFCP.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblFCP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblFCP.Location = new System.Drawing.Point(10, 6);
+            this.lblFCP.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblFCP.Name = "lblFCP";
+            this.lblFCP.Size = new System.Drawing.Size(64, 19);
+            this.lblFCP.TabIndex = 37;
+            this.lblFCP.Text = "ФЦП-М";
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.label10);
+            this.panel6.Controls.Add(this.label9);
+            this.panel6.Controls.Add(this.label8);
+            this.panel6.Controls.Add(this.label7);
+            this.panel6.Controls.Add(this.materialLabel82);
+            this.panel6.Controls.Add(this.lblFramesCounter);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(870, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(705, 108);
+            this.panel6.TabIndex = 44;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(16, 85);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Depth = 0;
+            this.label10.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label10.Location = new System.Drawing.Point(16, 83);
+            this.label10.MouseState = MaterialSkin.MouseState.HOVER;
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(48, 15);
-            this.label10.TabIndex = 5;
+            this.label10.Size = new System.Drawing.Size(57, 19);
+            this.label10.TabIndex = 40;
             this.label10.Text = "label10";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(16, 63);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Depth = 0;
+            this.label9.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label9.Location = new System.Drawing.Point(15, 57);
+            this.label9.MouseState = MaterialSkin.MouseState.HOVER;
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 15);
-            this.label9.TabIndex = 4;
+            this.label9.Size = new System.Drawing.Size(49, 19);
+            this.label9.TabIndex = 39;
             this.label9.Text = "label9";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(16, 20);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 15);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "label7";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(16, 41);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Depth = 0;
+            this.label8.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label8.Location = new System.Drawing.Point(16, 32);
+            this.label8.MouseState = MaterialSkin.MouseState.HOVER;
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 15);
-            this.label8.TabIndex = 3;
+            this.label8.Size = new System.Drawing.Size(49, 19);
+            this.label8.TabIndex = 38;
             this.label8.Text = "label8";
             // 
-            // bwImageSaver
+            // label7
             // 
-            this.bwImageSaver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageSaver_DoWork);
+            this.label7.AutoSize = true;
+            this.label7.Depth = 0;
+            this.label7.Font = new System.Drawing.Font("Roboto", 11F);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label7.Location = new System.Drawing.Point(16, 7);
+            this.label7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 19);
+            this.label7.TabIndex = 37;
+            this.label7.Text = "label7";
             // 
-            // panel1
+            // materialLabel82
             // 
-            this.panel1.Controls.Add(this.flowLayoutPanel1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 24);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1188, 137);
-            this.panel1.TabIndex = 35;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.groupBox2);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox3);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1188, 137);
-            this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.lblFramesCounter);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(897, 3);
-            this.groupBox3.MinimumSize = new System.Drawing.Size(0, 77);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(287, 131);
-            this.groupBox3.TabIndex = 35;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Информация";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(16, 106);
-            this.label12.Margin = new System.Windows.Forms.Padding(3);
-            this.label12.MinimumSize = new System.Drawing.Size(0, 2);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 15);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Кол-во кадров:";
+            this.materialLabel82.AutoSize = true;
+            this.materialLabel82.Depth = 0;
+            this.materialLabel82.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel82.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel82.Location = new System.Drawing.Point(231, 9);
+            this.materialLabel82.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel82.Name = "materialLabel82";
+            this.materialLabel82.Size = new System.Drawing.Size(118, 19);
+            this.materialLabel82.TabIndex = 36;
+            this.materialLabel82.Text = "Кол-во кадров:";
             // 
             // lblFramesCounter
             // 
             this.lblFramesCounter.AutoSize = true;
-            this.lblFramesCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFramesCounter.Location = new System.Drawing.Point(116, 106);
-            this.lblFramesCounter.Margin = new System.Windows.Forms.Padding(3);
-            this.lblFramesCounter.MinimumSize = new System.Drawing.Size(0, 2);
+            this.lblFramesCounter.Depth = 0;
+            this.lblFramesCounter.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblFramesCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblFramesCounter.Location = new System.Drawing.Point(355, 9);
+            this.lblFramesCounter.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblFramesCounter.Name = "lblFramesCounter";
-            this.lblFramesCounter.Size = new System.Drawing.Size(14, 15);
-            this.lblFramesCounter.TabIndex = 11;
+            this.lblFramesCounter.Size = new System.Drawing.Size(17, 19);
+            this.lblFramesCounter.TabIndex = 35;
             this.lblFramesCounter.Text = "0";
             // 
             // FormReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1188, 760);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.menuStrip1);
+            this.ClientSize = new System.Drawing.Size(1578, 795);
+            this.Controls.Add(this.materialTabControl1);
+            this.Controls.Add(this.materialTabSelector1);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(1204, 795);
+            this.MinimumSize = new System.Drawing.Size(1578, 795);
             this.Name = "FormReceive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormReceive_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReceive_FormClosed);
             this.Load += new System.EventHandler(this.FormReceive_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            this.materialTabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -923,99 +964,92 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.gbFreq.ResumeLayout(false);
-            this.gbFreq.PerformLayout();
-            this.gbFCP.ResumeLayout(false);
-            this.gbFCP.PerformLayout();
-            this.gbPRD.ResumeLayout(false);
-            this.gbPRD.PerformLayout();
-            this.gbInterlivingReceive.ResumeLayout(false);
-            this.gbInterlivingReceive.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.tlpDecodingParameters.ResumeLayout(false);
+            this.tlpDecodingParameters.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmiExit;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel slTime;
         private System.Windows.Forms.ToolStripStatusLabel slMode;
-        private System.Windows.Forms.GroupBox gbFreq;
-        private System.Windows.Forms.RadioButton rbFreq2;
-        private System.Windows.Forms.RadioButton rbFreq1;
-        private System.Windows.Forms.GroupBox gbFCP;
-        private System.Windows.Forms.RadioButton rbFCPReserve;
-        private System.Windows.Forms.RadioButton rbFCPMain;
-        private System.Windows.Forms.GroupBox gbPRD;
-        private System.Windows.Forms.RadioButton rbPRDReserve;
-        private System.Windows.Forms.RadioButton rbPRDMain;
-        private System.Windows.Forms.GroupBox gbInterlivingReceive;
-        private System.Windows.Forms.RadioButton rbInterlivingReceiveOn;
-        private System.Windows.Forms.RadioButton rbInterlivingReceiveOff;
-        private System.Windows.Forms.ToolStripMenuItem управлениеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem начатьПриемToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem остановитьПриемToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem tsmiSettings;
-        public System.Windows.Forms.Label label10;
-        public System.Windows.Forms.Label label9;
-        public System.Windows.Forms.Label label8;
-        public System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnStartRecieve;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.ComponentModel.BackgroundWorker bwImageSaver;
+        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeOnboard;
+        private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.FlowLayoutPanel flpChannel1;
+        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.FlowLayoutPanel flpChannel2;
+        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.FlowLayoutPanel flpChannel3;
+        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.FlowLayoutPanel flpChannel4;
+        private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.FlowLayoutPanel flpChannel5;
+        private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.FlowLayoutPanel flpChannel6;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.FlowLayoutPanel flpAllChannels4;
         private System.Windows.Forms.FlowLayoutPanel flpAllChannels6;
         private System.Windows.Forms.FlowLayoutPanel flpAllChannels5;
-        private System.Windows.Forms.FlowLayoutPanel flpAllChannels4;
         private System.Windows.Forms.FlowLayoutPanel flpAllChannels3;
         private System.Windows.Forms.FlowLayoutPanel flpAllChannels2;
         private System.Windows.Forms.FlowLayoutPanel flpAllChannels1;
-        private System.ComponentModel.BackgroundWorker bwImageSaver;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label lblFramesCounter;
-        private System.Windows.Forms.ToolStripStatusLabel slWorkingTimeOnboard;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private MaterialSkin.Controls.MaterialLabel materialLabel6;
+        private MaterialSkin.Controls.MaterialLabel materialLabel5;
+        private MaterialSkin.Controls.MaterialLabel materialLabel4;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
+        private MaterialSkin.Controls.MaterialDivider materialDivider1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel5;
+        private MaterialSkin.Controls.MaterialRaisedButton btnStartRecieve;
+        private System.Windows.Forms.TableLayoutPanel tlpDecodingParameters;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel6;
+        private MaterialSkin.Controls.MaterialLabel lblFramesCounter;
+        private System.Windows.Forms.Panel panel7;
+        private MaterialSkin.Controls.MaterialRadioButton rbPRDReserve;
+        private MaterialSkin.Controls.MaterialRadioButton rbPRDMain;
+        private MaterialSkin.Controls.MaterialLabel lblPRD;
+        private MaterialSkin.Controls.MaterialRadioButton rbInterlivingReceiveOff;
+        private MaterialSkin.Controls.MaterialRadioButton rbInterlivingReceiveOn;
+        private MaterialSkin.Controls.MaterialLabel lblInterliving;
+        private MaterialSkin.Controls.MaterialRadioButton rbFreq2;
+        private MaterialSkin.Controls.MaterialRadioButton rbFreq1;
+        private MaterialSkin.Controls.MaterialLabel lblFreq;
+        private MaterialSkin.Controls.MaterialRadioButton materialRadioButton2;
+        private MaterialSkin.Controls.MaterialRadioButton rbFCPMain;
+        private MaterialSkin.Controls.MaterialLabel lblFCP;
+        public MaterialSkin.Controls.MaterialLabel label10;
+        public MaterialSkin.Controls.MaterialLabel label9;
+        public MaterialSkin.Controls.MaterialLabel label8;
+        public MaterialSkin.Controls.MaterialLabel label7;
+        private MaterialSkin.Controls.MaterialLabel materialLabel82;
     }
 }
 

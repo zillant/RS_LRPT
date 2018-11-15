@@ -12,10 +12,11 @@ using System.ComponentModel;
 using ReceivingStation.Demodulator;
 using Platform.IO;
 using ReceivingStation.Properties;
+using MaterialSkin.Controls;
 
 namespace ReceivingStation
 {
-    public partial class FormReceive : Form
+    public partial class FormReceive : MaterialForm
     {
         private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
@@ -53,7 +54,7 @@ namespace ReceivingStation
 
         private void FormReceive_Load(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabPage7;
+            materialTabControl1.SelectedTab = tabPage7;
 
             _remoteModeFlag = false;
             _isReceivingStarting = false;
@@ -122,11 +123,6 @@ namespace ReceivingStation
             _serverThread.Join(100);
 
             Application.Exit();
-        }
-
-        private void tsmiExit_Click(object sender, EventArgs e)
-        {
-            Close();           
         }
 
         private void tsmiSettings_Click(object sender, EventArgs e)
@@ -233,7 +229,7 @@ namespace ReceivingStation
             if (!_isReceivingStarting)
             {
                 _isReceivingStarting = true;
-                btnStartRecieve.BackgroundImage = Resources.stop_icon;
+                btnStartRecieve.Text = "Остановить";
 
                 if (!_remoteModeFlag)
                 {
@@ -270,7 +266,7 @@ namespace ReceivingStation
         public void StopReceiving()
         {
             _isReceivingStarting = false;
-            btnStartRecieve.BackgroundImage = Resources.start_icon;
+            btnStartRecieve.Text = "Начать";
 
             CountWorkingTime(ref _fullWorkingTimeOnboard);
             WriteToLogWorkingTime(_workingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());

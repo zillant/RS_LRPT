@@ -52,18 +52,18 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnStartStopDecode = new MaterialSkin.Controls.MaterialRaisedButton();
             this.tlpDecodingParameters = new System.Windows.Forms.TableLayoutPanel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
-            this.btnOpenFile = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.lblFileName = new MaterialSkin.Controls.MaterialLabel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.rbRSYes = new MaterialSkin.Controls.MaterialRadioButton();
-            this.rbRSNo = new MaterialSkin.Controls.MaterialRadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             this.rbNRZNo = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbNRZYes = new MaterialSkin.Controls.MaterialRadioButton();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.rbRSYes = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbRSNo = new MaterialSkin.Controls.MaterialRadioButton();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            this.btnOpenFile = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.lblFileName = new MaterialSkin.Controls.MaterialLabel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
             this.lblFramesCounter = new MaterialSkin.Controls.MaterialLabel();
@@ -92,9 +92,9 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tlpDecodingParameters.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage8.SuspendLayout();
@@ -276,7 +276,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1498, 20);
+            this.slTime.Size = new System.Drawing.Size(1467, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -369,57 +369,60 @@
             this.tlpDecodingParameters.Size = new System.Drawing.Size(704, 108);
             this.tlpDecodingParameters.TabIndex = 45;
             // 
-            // panel4
+            // panel2
             // 
-            this.panel4.AutoSize = true;
-            this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel4.Controls.Add(this.materialLabel10);
-            this.panel4.Controls.Add(this.btnOpenFile);
-            this.panel4.Controls.Add(this.lblFileName);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(231, 102);
-            this.panel4.TabIndex = 44;
+            this.panel2.Controls.Add(this.materialLabel7);
+            this.panel2.Controls.Add(this.rbNRZNo);
+            this.panel2.Controls.Add(this.rbNRZYes);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(380, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(321, 102);
+            this.panel2.TabIndex = 42;
             // 
-            // materialLabel10
+            // materialLabel7
             // 
-            this.materialLabel10.AutoSize = true;
-            this.materialLabel10.Depth = 0;
-            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel10.Location = new System.Drawing.Point(9, 9);
-            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel10.Name = "materialLabel10";
-            this.materialLabel10.Size = new System.Drawing.Size(92, 19);
-            this.materialLabel10.TabIndex = 40;
-            this.materialLabel10.Text = "Имя файла:";
+            this.materialLabel7.Depth = 0;
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel7.Location = new System.Drawing.Point(3, 9);
+            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(147, 19);
+            this.materialLabel7.TabIndex = 37;
+            this.materialLabel7.Text = "NRZ (Метор 2.1/2.2)";
             // 
-            // btnOpenFile
+            // rbNRZNo
             // 
-            this.btnOpenFile.Depth = 0;
-            this.btnOpenFile.Location = new System.Drawing.Point(37, 41);
-            this.btnOpenFile.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnOpenFile.Name = "btnOpenFile";
-            this.btnOpenFile.Primary = true;
-            this.btnOpenFile.Size = new System.Drawing.Size(151, 43);
-            this.btnOpenFile.TabIndex = 44;
-            this.btnOpenFile.Text = "Выберите файл";
-            this.btnOpenFile.UseVisualStyleBackColor = true;
-            this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
+            this.rbNRZNo.Depth = 0;
+            this.rbNRZNo.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbNRZNo.Location = new System.Drawing.Point(7, 65);
+            this.rbNRZNo.Margin = new System.Windows.Forms.Padding(0);
+            this.rbNRZNo.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbNRZNo.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbNRZNo.Name = "rbNRZNo";
+            this.rbNRZNo.Ripple = true;
+            this.rbNRZNo.Size = new System.Drawing.Size(53, 30);
+            this.rbNRZNo.TabIndex = 35;
+            this.rbNRZNo.Text = "Нет";
+            this.rbNRZNo.UseVisualStyleBackColor = true;
             // 
-            // lblFileName
+            // rbNRZYes
             // 
-            this.lblFileName.AutoEllipsis = true;
-            this.lblFileName.Depth = 0;
-            this.lblFileName.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblFileName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblFileName.Location = new System.Drawing.Point(103, 9);
-            this.lblFileName.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(126, 19);
-            this.lblFileName.TabIndex = 41;
-            this.lblFileName.Text = "Файл не выбран";
+            this.rbNRZYes.Checked = true;
+            this.rbNRZYes.Depth = 0;
+            this.rbNRZYes.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbNRZYes.Location = new System.Drawing.Point(7, 35);
+            this.rbNRZYes.Margin = new System.Windows.Forms.Padding(0);
+            this.rbNRZYes.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbNRZYes.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbNRZYes.Name = "rbNRZYes";
+            this.rbNRZYes.Ripple = true;
+            this.rbNRZYes.Size = new System.Drawing.Size(47, 30);
+            this.rbNRZYes.TabIndex = 36;
+            this.rbNRZYes.TabStop = true;
+            this.rbNRZYes.Text = "Да";
+            this.rbNRZYes.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -477,60 +480,57 @@
             this.rbRSNo.Text = "Нет";
             this.rbRSNo.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // panel4
             // 
-            this.panel2.Controls.Add(this.materialLabel7);
-            this.panel2.Controls.Add(this.rbNRZNo);
-            this.panel2.Controls.Add(this.rbNRZYes);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(380, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(321, 102);
-            this.panel2.TabIndex = 42;
+            this.panel4.AutoSize = true;
+            this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel4.Controls.Add(this.materialLabel10);
+            this.panel4.Controls.Add(this.btnOpenFile);
+            this.panel4.Controls.Add(this.lblFileName);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(231, 102);
+            this.panel4.TabIndex = 44;
             // 
-            // materialLabel7
+            // materialLabel10
             // 
-            this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel7.Location = new System.Drawing.Point(3, 9);
-            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(147, 19);
-            this.materialLabel7.TabIndex = 37;
-            this.materialLabel7.Text = "NRZ (Метор 2.1/2.2)";
+            this.materialLabel10.AutoSize = true;
+            this.materialLabel10.Depth = 0;
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel10.Location = new System.Drawing.Point(9, 9);
+            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel10.Name = "materialLabel10";
+            this.materialLabel10.Size = new System.Drawing.Size(92, 19);
+            this.materialLabel10.TabIndex = 40;
+            this.materialLabel10.Text = "Имя файла:";
             // 
-            // rbNRZNo
+            // btnOpenFile
             // 
-            this.rbNRZNo.Depth = 0;
-            this.rbNRZNo.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNRZNo.Location = new System.Drawing.Point(7, 65);
-            this.rbNRZNo.Margin = new System.Windows.Forms.Padding(0);
-            this.rbNRZNo.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbNRZNo.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbNRZNo.Name = "rbNRZNo";
-            this.rbNRZNo.Ripple = true;
-            this.rbNRZNo.Size = new System.Drawing.Size(53, 30);
-            this.rbNRZNo.TabIndex = 35;
-            this.rbNRZNo.Text = "Нет";
-            this.rbNRZNo.UseVisualStyleBackColor = true;
+            this.btnOpenFile.Depth = 0;
+            this.btnOpenFile.Location = new System.Drawing.Point(37, 41);
+            this.btnOpenFile.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnOpenFile.Name = "btnOpenFile";
+            this.btnOpenFile.Primary = true;
+            this.btnOpenFile.Size = new System.Drawing.Size(151, 43);
+            this.btnOpenFile.TabIndex = 44;
+            this.btnOpenFile.Text = "Выберите файл";
+            this.btnOpenFile.UseVisualStyleBackColor = true;
+            this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
             // 
-            // rbNRZYes
+            // lblFileName
             // 
-            this.rbNRZYes.Checked = true;
-            this.rbNRZYes.Depth = 0;
-            this.rbNRZYes.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNRZYes.Location = new System.Drawing.Point(7, 35);
-            this.rbNRZYes.Margin = new System.Windows.Forms.Padding(0);
-            this.rbNRZYes.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbNRZYes.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbNRZYes.Name = "rbNRZYes";
-            this.rbNRZYes.Ripple = true;
-            this.rbNRZYes.Size = new System.Drawing.Size(47, 30);
-            this.rbNRZYes.TabIndex = 36;
-            this.rbNRZYes.TabStop = true;
-            this.rbNRZYes.Text = "Да";
-            this.rbNRZYes.UseVisualStyleBackColor = true;
+            this.lblFileName.AutoEllipsis = true;
+            this.lblFileName.Depth = 0;
+            this.lblFileName.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblFileName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblFileName.Location = new System.Drawing.Point(103, 9);
+            this.lblFileName.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(126, 19);
+            this.lblFileName.TabIndex = 41;
+            this.lblFileName.Text = "Файл не выбран";
             // 
             // panel6
             // 
@@ -838,10 +838,10 @@
             this.panel5.ResumeLayout(false);
             this.tlpDecodingParameters.ResumeLayout(false);
             this.tlpDecodingParameters.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.materialTabControl1.ResumeLayout(false);
