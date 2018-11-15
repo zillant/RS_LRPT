@@ -10,10 +10,11 @@ using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
 using ReceivingStation.Properties;
+using MaterialSkin.Controls;
 
 namespace ReceivingStation
 {
-    public partial class FormDecode : Form
+    public partial class FormDecode : MaterialForm
     {
         private string _fileName;
         private bool _isDecodeStarting;        
@@ -35,7 +36,7 @@ namespace ReceivingStation
 
         private void FormDecode_Load(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabPage7;
+            materialTabControl1.SelectedTab = tabPage14;
 
             _isDecodeStarting = false;
 
@@ -77,40 +78,6 @@ namespace ReceivingStation
         private void FormDecode_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
-        }
-
-        private void tsmiExit_Click(object sender, EventArgs e)
-        {
-            Close();           
-        }
-
-        private void tsmiFileOpen_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
-            {
-                openFileDialog1.Title = "Выбор файла телеметрии";
-                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
-                openFileDialog1.FilterIndex = 1;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    _fileName = openFileDialog1.FileName;
-                    lblFileName.Text = openFileDialog1.SafeFileName;
-
-                    btnStartStopDecode.Enabled = true;
-                    tsmiStartDecoding.Enabled = true;
-                }                
-            }          
-        }
-
-        private void tsmiStartDecoding_Click(object sender, EventArgs e)
-        {
-            StartStopDecoding();
-        }
-
-        private void tsmiStopDecoding_Click(object sender, EventArgs e)
-        {
-            ForcedStopDecoding();           
         }
 
         private void btnStartStopDecode_Click(object sender, EventArgs e)
@@ -156,7 +123,7 @@ namespace ReceivingStation
                 _cancellationTokenSource = new CancellationTokenSource();
                 _cancellationToken = _cancellationTokenSource.Token;
                 _isDecodeStarting = true;
-                btnStartStopDecode.BackgroundImage = Resources.stop_icon;
+                btnStartStopDecode.Text = "Остановить";
 
                 var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
                 {
@@ -172,9 +139,7 @@ namespace ReceivingStation
                     _listImagesForSave[i].Clear();
                 }
 
-                tsmiStartDecoding.Enabled = false;
-                tsmiStopDecoding.Enabled = true;
-                gbDecodeParameters.Enabled = false;
+                tlpDecodingParameters.Enabled = false;
 
                 _worktimestart = DateTime.Now;
                 Task.Run(() => decode.StartDecode(_cancellationToken));
@@ -210,11 +175,9 @@ namespace ReceivingStation
         private void StopDecoding()
         {
             _isDecodeStarting = false;
-            btnStartStopDecode.BackgroundImage = Resources.start_icon;
+            btnStartStopDecode.Text = "Начать";
 
-            tsmiStartDecoding.Enabled = true;
-            tsmiStopDecoding.Enabled = false;
-            gbDecodeParameters.Enabled = true;
+            tlpDecodingParameters.Enabled = true;
 
             DateTime worktimefinish = DateTime.Now;
             TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
@@ -243,5 +206,23 @@ namespace ReceivingStation
         }
 
         #endregion
+
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                openFileDialog1.Title = "Выбор файла телеметрии";
+                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
+                openFileDialog1.FilterIndex = 1;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    _fileName = openFileDialog1.FileName;
+                    lblFileName.Text = openFileDialog1.SafeFileName;
+
+                    btnStartStopDecode.Enabled = true;
+                }
+            }
+        }
     }
 }
