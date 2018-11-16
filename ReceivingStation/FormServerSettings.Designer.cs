@@ -47,10 +47,10 @@
             // tbIP2
             // 
             this.tbIP2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbIP2.Location = new System.Drawing.Point(44, 6);
+            this.tbIP2.Location = new System.Drawing.Point(46, 4);
             this.tbIP2.MaxLength = 3;
             this.tbIP2.Name = "tbIP2";
-            this.tbIP2.Size = new System.Drawing.Size(40, 17);
+            this.tbIP2.Size = new System.Drawing.Size(38, 17);
             this.tbIP2.TabIndex = 6;
             this.tbIP2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbIP2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_KeyPress);
@@ -58,10 +58,10 @@
             // tbIP3
             // 
             this.tbIP3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbIP3.Location = new System.Drawing.Point(90, 6);
+            this.tbIP3.Location = new System.Drawing.Point(94, 4);
             this.tbIP3.MaxLength = 3;
             this.tbIP3.Name = "tbIP3";
-            this.tbIP3.Size = new System.Drawing.Size(42, 17);
+            this.tbIP3.Size = new System.Drawing.Size(38, 17);
             this.tbIP3.TabIndex = 7;
             this.tbIP3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbIP3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_KeyPress);
@@ -69,7 +69,7 @@
             // tbIP4
             // 
             this.tbIP4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbIP4.Location = new System.Drawing.Point(139, 6);
+            this.tbIP4.Location = new System.Drawing.Point(139, 4);
             this.tbIP4.MaxLength = 3;
             this.tbIP4.Name = "tbIP4";
             this.tbIP4.Size = new System.Drawing.Size(38, 17);
@@ -81,10 +81,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(36, 9);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(36, 4);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(12, 17);
+            this.label2.Size = new System.Drawing.Size(12, 18);
             this.label2.TabIndex = 9;
             this.label2.Text = ".";
             // 
@@ -92,10 +92,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(82, 9);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(82, 4);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(12, 17);
+            this.label3.Size = new System.Drawing.Size(12, 18);
             this.label3.TabIndex = 10;
             this.label3.Text = ".";
             // 
@@ -103,10 +103,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(129, 9);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(129, 4);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(12, 17);
+            this.label4.Size = new System.Drawing.Size(12, 18);
             this.label4.TabIndex = 11;
             this.label4.Text = ".";
             // 
@@ -131,7 +131,7 @@
             // tbIP1
             // 
             this.tbIP1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbIP1.Location = new System.Drawing.Point(0, 6);
+            this.tbIP1.Location = new System.Drawing.Point(0, 4);
             this.tbIP1.MaxLength = 3;
             this.tbIP1.Name = "tbIP1";
             this.tbIP1.Size = new System.Drawing.Size(38, 17);
@@ -146,7 +146,7 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(120, 86);
+            this.materialLabel1.Location = new System.Drawing.Point(118, 85);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(101, 19);
