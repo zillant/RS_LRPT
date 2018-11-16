@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenu));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSelfTest = new MaterialSkin.Controls.MaterialFlatButton();
             this.btnReceive = new MaterialSkin.Controls.MaterialFlatButton();
             this.btnDecode = new MaterialSkin.Controls.MaterialFlatButton();
+            this.btnSelfTest = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -56,24 +56,9 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(311, 451);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // btnSelfTest
-            // 
-            this.btnSelfTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSelfTest.BackColor = System.Drawing.SystemColors.Control;
-            this.btnSelfTest.Depth = 0;
-            this.btnSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSelfTest.Location = new System.Drawing.Point(4, 6);
-            this.btnSelfTest.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnSelfTest.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnSelfTest.Name = "btnSelfTest";
-            this.btnSelfTest.Primary = false;
-            this.btnSelfTest.Size = new System.Drawing.Size(303, 138);
-            this.btnSelfTest.TabIndex = 0;
-            this.btnSelfTest.Text = "Самопроверка";
-            this.btnSelfTest.UseVisualStyleBackColor = false;
-            // 
             // btnReceive
             // 
+            this.btnReceive.AutoSize = true;
             this.btnReceive.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnReceive.BackColor = System.Drawing.SystemColors.Control;
             this.btnReceive.Depth = 0;
@@ -91,6 +76,7 @@
             // 
             // btnDecode
             // 
+            this.btnDecode.AutoSize = true;
             this.btnDecode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnDecode.BackColor = System.Drawing.SystemColors.Control;
             this.btnDecode.Depth = 0;
@@ -105,6 +91,23 @@
             this.btnDecode.Text = "Декодирование";
             this.btnDecode.UseVisualStyleBackColor = false;
             this.btnDecode.Click += new System.EventHandler(this.btnDecode_Click);
+            // 
+            // btnSelfTest
+            // 
+            this.btnSelfTest.AutoSize = true;
+            this.btnSelfTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSelfTest.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSelfTest.Depth = 0;
+            this.btnSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSelfTest.Location = new System.Drawing.Point(4, 6);
+            this.btnSelfTest.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnSelfTest.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnSelfTest.Name = "btnSelfTest";
+            this.btnSelfTest.Primary = false;
+            this.btnSelfTest.Size = new System.Drawing.Size(303, 138);
+            this.btnSelfTest.TabIndex = 0;
+            this.btnSelfTest.Text = "Самопроверка";
+            this.btnSelfTest.UseVisualStyleBackColor = false;
             // 
             // materialDivider1
             // 
@@ -131,10 +134,15 @@
             this.Controls.Add(this.materialDivider1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(311, 510);
+            this.MinimumSize = new System.Drawing.Size(311, 510);
             this.Name = "FormMenu";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMenu_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

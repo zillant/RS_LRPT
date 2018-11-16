@@ -13,6 +13,16 @@ namespace ReceivingStation
             GuiUpdater.SmoothLoadingForm(this);
         }
 
+        private void FormMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = FormCloseMessageBox.Show();
+
+            if (result != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
+
         private void btnReceive_Click(object sender, EventArgs e)
         {
             GuiUpdater.SmoothHidingForm(this);
@@ -33,6 +43,7 @@ namespace ReceivingStation
 
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
-        }     
+        }
+
     }
 }

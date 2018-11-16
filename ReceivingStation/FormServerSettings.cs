@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
+using ReceivingStation.MessageBoxes;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation
@@ -25,7 +26,7 @@ namespace ReceivingStation
                 Settings.Default.ipAddressIVK = GetIpAddress();
                 Settings.Default.Save();
 
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FormInformationMessageBox.Show(caption, message);
             }
 
             Close();

@@ -67,9 +67,7 @@ namespace ReceivingStation
 
         private void FormDecode_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var result = MessageBox.Show("Точно выйти?", "Внимание",
-                          MessageBoxButtons.YesNo,
-                          MessageBoxIcon.Question);
+            var result = FormCloseMessageBox.Show();
 
             if (result != DialogResult.Yes)
             {
