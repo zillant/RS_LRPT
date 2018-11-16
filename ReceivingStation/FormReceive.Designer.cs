@@ -604,7 +604,7 @@
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.82012F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.98066F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.19923F));
-            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 243F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 245F));
             this.tlpDecodingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel3, 1, 0);
@@ -628,7 +628,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(135, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(132, 102);
+            this.panel7.Size = new System.Drawing.Size(131, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -684,9 +684,9 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(462, 3);
+            this.panel2.Location = new System.Drawing.Point(461, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(239, 102);
+            this.panel2.Size = new System.Drawing.Size(240, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -743,7 +743,7 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(273, 3);
+            this.panel3.Location = new System.Drawing.Point(272, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(183, 102);
             this.panel3.TabIndex = 43;
