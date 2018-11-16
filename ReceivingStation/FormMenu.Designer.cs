@@ -39,13 +39,13 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(241)))));
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.btnSelfTest, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnReceive, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnDecode, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btnSelfTest, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 59);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -58,8 +58,8 @@
             // 
             // btnSelfTest
             // 
-            this.btnSelfTest.AutoSize = true;
             this.btnSelfTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSelfTest.BackColor = System.Drawing.SystemColors.Control;
             this.btnSelfTest.Depth = 0;
             this.btnSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSelfTest.Location = new System.Drawing.Point(4, 6);
@@ -70,12 +70,12 @@
             this.btnSelfTest.Size = new System.Drawing.Size(303, 138);
             this.btnSelfTest.TabIndex = 0;
             this.btnSelfTest.Text = "Самопроверка";
-            this.btnSelfTest.UseVisualStyleBackColor = true;
+            this.btnSelfTest.UseVisualStyleBackColor = false;
             // 
             // btnReceive
             // 
-            this.btnReceive.AutoSize = true;
             this.btnReceive.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReceive.BackColor = System.Drawing.SystemColors.Control;
             this.btnReceive.Depth = 0;
             this.btnReceive.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnReceive.Location = new System.Drawing.Point(4, 156);
@@ -86,13 +86,13 @@
             this.btnReceive.Size = new System.Drawing.Size(303, 138);
             this.btnReceive.TabIndex = 1;
             this.btnReceive.Text = "Прием";
-            this.btnReceive.UseVisualStyleBackColor = true;
+            this.btnReceive.UseVisualStyleBackColor = false;
             this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
             // 
             // btnDecode
             // 
-            this.btnDecode.AutoSize = true;
             this.btnDecode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnDecode.BackColor = System.Drawing.SystemColors.Control;
             this.btnDecode.Depth = 0;
             this.btnDecode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDecode.Location = new System.Drawing.Point(4, 306);
@@ -103,7 +103,7 @@
             this.btnDecode.Size = new System.Drawing.Size(303, 139);
             this.btnDecode.TabIndex = 2;
             this.btnDecode.Text = "Декодирование";
-            this.btnDecode.UseVisualStyleBackColor = true;
+            this.btnDecode.UseVisualStyleBackColor = false;
             this.btnDecode.Click += new System.EventHandler(this.btnDecode_Click);
             // 
             // materialDivider1
@@ -125,7 +125,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(190)))), ((int)(((byte)(197)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(311, 510);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.materialDivider1);
@@ -135,7 +135,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

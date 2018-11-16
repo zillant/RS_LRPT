@@ -265,6 +265,7 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
             this.statusStrip1.Size = new System.Drawing.Size(1578, 25);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.Stretch = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -276,7 +277,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1467, 20);
+            this.slTime.Size = new System.Drawing.Size(1498, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -312,6 +313,7 @@
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -329,6 +331,7 @@
             // 
             // panel5
             // 
+            this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.btnStartStopDecode);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(713, 3);
@@ -354,6 +357,7 @@
             // 
             // tlpDecodingParameters
             // 
+            this.tlpDecodingParameters.BackColor = System.Drawing.SystemColors.Window;
             this.tlpDecodingParameters.ColumnCount = 3;
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.80682F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.02841F));
@@ -371,6 +375,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Window;
             this.panel2.Controls.Add(this.materialLabel7);
             this.panel2.Controls.Add(this.rbNRZNo);
             this.panel2.Controls.Add(this.rbNRZYes);
@@ -382,6 +387,7 @@
             // 
             // materialLabel7
             // 
+            this.materialLabel7.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel7.Depth = 0;
             this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -427,6 +433,7 @@
             // panel3
             // 
             this.panel3.AutoSize = true;
+            this.panel3.BackColor = System.Drawing.SystemColors.Window;
             this.panel3.Controls.Add(this.materialLabel9);
             this.panel3.Controls.Add(this.rbRSYes);
             this.panel3.Controls.Add(this.rbRSNo);
@@ -438,6 +445,7 @@
             // 
             // materialLabel9
             // 
+            this.materialLabel9.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel9.Depth = 0;
             this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -484,6 +492,7 @@
             // 
             this.panel4.AutoSize = true;
             this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel4.BackColor = System.Drawing.SystemColors.Window;
             this.panel4.Controls.Add(this.materialLabel10);
             this.panel4.Controls.Add(this.btnOpenFile);
             this.panel4.Controls.Add(this.lblFileName);
@@ -496,6 +505,7 @@
             // materialLabel10
             // 
             this.materialLabel10.AutoSize = true;
+            this.materialLabel10.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel10.Depth = 0;
             this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -522,6 +532,7 @@
             // lblFileName
             // 
             this.lblFileName.AutoEllipsis = true;
+            this.lblFileName.BackColor = System.Drawing.SystemColors.Window;
             this.lblFileName.Depth = 0;
             this.lblFileName.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblFileName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -534,6 +545,7 @@
             // 
             // panel6
             // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Window;
             this.panel6.Controls.Add(this.materialLabel8);
             this.panel6.Controls.Add(this.lblFramesCounter);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -545,6 +557,7 @@
             // materialLabel8
             // 
             this.materialLabel8.AutoSize = true;
+            this.materialLabel8.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel8.Depth = 0;
             this.materialLabel8.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -558,6 +571,7 @@
             // lblFramesCounter
             // 
             this.lblFramesCounter.AutoSize = true;
+            this.lblFramesCounter.BackColor = System.Drawing.SystemColors.Window;
             this.lblFramesCounter.Depth = 0;
             this.lblFramesCounter.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblFramesCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -824,6 +838,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1578, 795);
             this.Name = "FormDecode";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormDecode_FormClosing);

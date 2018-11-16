@@ -9,6 +9,7 @@ using System.Text;
 using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using MaterialSkin.Controls;
 
 namespace ReceivingStation
@@ -60,7 +61,7 @@ namespace ReceivingStation
             _allChannels[4] = flpAllChannels5;
             _allChannels[5] = flpAllChannels6;
 
-            slTime.Text = DateTime.Now.ToString();
+            slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             timer1.Start();
         }
 
@@ -106,7 +107,7 @@ namespace ReceivingStation
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            slTime.Text = DateTime.Now.ToString();
+            slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
         }
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)

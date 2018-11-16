@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
+using MaterialSkin.Controls;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
-    public partial class FormServerSettings : Form
+    public partial class FormServerSettings : MaterialForm
     {
+        const string DefaultIpAddress = "192.168.1.1";
+
         public FormServerSettings()
         {
             InitializeComponent();
@@ -14,7 +17,6 @@ namespace ReceivingStation
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            DialogResult result;
             string message = "Изменения вступят в силу после перезапуска программы.";
             string caption = "Внимание";
             
@@ -35,10 +37,8 @@ namespace ReceivingStation
         }
 
         private void btnDefault_Click(object sender, EventArgs e)
-        {
-            string defaultIpAddress = "192.168.1.1";
-
-            SetIpAddress(defaultIpAddress);
+        {           
+            SetIpAddress(DefaultIpAddress);
         }
 
         private string GetIpAddress()

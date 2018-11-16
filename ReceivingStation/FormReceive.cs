@@ -18,14 +18,11 @@ namespace ReceivingStation
 {
     public partial class FormReceive : MaterialForm
     {
-        private const int _timeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
-        private const string _workingTimeOnboardFileName = "working_time_onboard.txt";
+        private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
+        private const string WorkingTimeOnboardFileName = "working_time_onboard.txt";
 
         private bool _remoteModeFlag;
         private Thread _serverThread;
-
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
         
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
@@ -37,7 +34,7 @@ namespace ReceivingStation
 
         private bool _isReceivingStarting; // Для контроля времени наработки борта.
 
-        private Demodulating _receiver;
+        // private Demodulating _receiver;
         private Server.Server _server;
 
         // Параметры приема битового потока.
@@ -58,7 +55,7 @@ namespace ReceivingStation
 
             _remoteModeFlag = false;
             _isReceivingStarting = false;
-            _counterForSaveWorkingTime = _timeForSaveWorkingTime;
+            _counterForSaveWorkingTime = TimeForSaveWorkingTime;
 
             for (int i = 0; i < 6; i++)
             {
@@ -67,12 +64,12 @@ namespace ReceivingStation
 
             try
             {
-                ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
+                ReadFromLogWorkingTime(WorkingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
             catch (Exception)
             {
-                WriteToLogWorkingTime(_workingTimeOnboardFileName, "0:0:0");
-                ReadFromLogWorkingTime(_workingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
+                WriteToLogWorkingTime(WorkingTimeOnboardFileName, "0:0:0");
+                ReadFromLogWorkingTime(WorkingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
             }
 
             _channels[0] = flpChannel1;
@@ -125,17 +122,17 @@ namespace ReceivingStation
             Application.Exit();
         }
 
-        private void tsmiSettings_Click(object sender, EventArgs e)
+        private void btnStartRecieve_Click(object sender, EventArgs e)
+        {           
+            StartStopReceiving();
+        }
+
+        private void slMode_DoubleClick(object sender, EventArgs e)
         {
             using (FormServerSettings settingsForm = new FormServerSettings())
             {
                 settingsForm.ShowDialog();
             }
-        }
-
-        private void btnStartRecieve_Click(object sender, EventArgs e)
-        {           
-            StartStopReceiving();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -150,9 +147,9 @@ namespace ReceivingStation
                 {
                     CountWorkingTime(ref _fullWorkingTimeOnboard);
                     _startWorkingTimeOnboard = DateTime.Now;
-                    WriteToLogWorkingTime(_workingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
+                    WriteToLogWorkingTime(WorkingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
                 }
-                _counterForSaveWorkingTime = _timeForSaveWorkingTime;
+                _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
         }
 
@@ -269,7 +266,7 @@ namespace ReceivingStation
             btnStartRecieve.Text = "Начать";
 
             CountWorkingTime(ref _fullWorkingTimeOnboard);
-            WriteToLogWorkingTime(_workingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
+            WriteToLogWorkingTime(WorkingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
 
             WriteToLogUserActions("Запись потока завершена");
         }

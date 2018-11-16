@@ -125,6 +125,7 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
             this.statusStrip1.Size = new System.Drawing.Size(1578, 25);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.Stretch = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -145,22 +146,25 @@
             // 
             this.slWorkingTimeOnboard.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.slWorkingTimeOnboard.Image = global::ReceivingStation.Properties.Resources.time_icon;
-            this.slWorkingTimeOnboard.Margin = new System.Windows.Forms.Padding(60, 3, 0, 2);
             this.slWorkingTimeOnboard.Name = "slWorkingTimeOnboard";
-            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(79, 20);
+            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(1230, 20);
+            this.slWorkingTimeOnboard.Spring = true;
             this.slWorkingTimeOnboard.Text = "12:12:01";
+            this.slWorkingTimeOnboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slWorkingTimeOnboard.ToolTipText = "Время наработки системы (ЧЧ:ММ:СС)";
             // 
             // slMode
             // 
+            this.slMode.DoubleClickEnabled = true;
             this.slMode.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.slMode.Image = global::ReceivingStation.Properties.Resources.mode_icon;
             this.slMode.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slMode.Name = "slMode";
-            this.slMode.Size = new System.Drawing.Size(1263, 20);
-            this.slMode.Spring = true;
+            this.slMode.Size = new System.Drawing.Size(172, 20);
             this.slMode.Text = "Местное управление";
             this.slMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.slMode.ToolTipText = "Режим управления";
+            this.slMode.DoubleClick += new System.EventHandler(this.slMode_DoubleClick);
             // 
             // timer1
             // 
@@ -552,6 +556,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -569,6 +574,7 @@
             // 
             // panel5
             // 
+            this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.btnStartRecieve);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(713, 3);
@@ -598,7 +604,7 @@
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.82012F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.98066F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.19923F));
-            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 231F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 241F));
             this.tlpDecodingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel3, 1, 0);
@@ -615,13 +621,14 @@
             // 
             this.panel7.AutoSize = true;
             this.panel7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel7.BackColor = System.Drawing.SystemColors.Window;
             this.panel7.Controls.Add(this.rbPRDReserve);
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(139, 3);
+            this.panel7.Location = new System.Drawing.Point(136, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(135, 102);
+            this.panel7.Size = new System.Drawing.Size(132, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -672,13 +679,14 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Window;
             this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(474, 3);
+            this.panel2.Location = new System.Drawing.Point(464, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(227, 102);
+            this.panel2.Size = new System.Drawing.Size(237, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -730,13 +738,14 @@
             // panel3
             // 
             this.panel3.AutoSize = true;
+            this.panel3.BackColor = System.Drawing.SystemColors.Window;
             this.panel3.Controls.Add(this.rbFreq2);
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(280, 3);
+            this.panel3.Location = new System.Drawing.Point(274, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(188, 102);
+            this.panel3.Size = new System.Drawing.Size(184, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -789,13 +798,14 @@
             // 
             this.panel4.AutoSize = true;
             this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel4.BackColor = System.Drawing.SystemColors.Window;
             this.panel4.Controls.Add(this.materialRadioButton2);
             this.panel4.Controls.Add(this.rbFCPMain);
             this.panel4.Controls.Add(this.lblFCP);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(130, 102);
+            this.panel4.Size = new System.Drawing.Size(127, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialRadioButton2
@@ -846,6 +856,7 @@
             // 
             // panel6
             // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Window;
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label9);
             this.panel6.Controls.Add(this.label8);
@@ -949,6 +960,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1578, 795);
             this.Name = "FormReceive";
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Приемная станция";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormReceive_FormClosing);
