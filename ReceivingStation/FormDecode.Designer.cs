@@ -70,6 +70,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.bwImageSaver = new System.ComponentModel.BackgroundWorker();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.tabPage13 = new System.Windows.Forms.TabPage();
             this.tabPage14 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
@@ -78,12 +84,6 @@
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.tabPage11 = new System.Windows.Forms.TabPage();
-            this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.tabPage13 = new System.Windows.Forms.TabPage();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tableLayoutPanel1.SuspendLayout();
@@ -97,14 +97,14 @@
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
-            this.tabPage14.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.tabPage10.SuspendLayout();
             this.tabPage11.SuspendLayout();
             this.tabPage12.SuspendLayout();
             this.tabPage13.SuspendLayout();
+            this.tabPage14.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flpChannel1
@@ -115,7 +115,7 @@
             this.flpChannel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpChannel1.Location = new System.Drawing.Point(3, 3);
             this.flpChannel1.Name = "flpChannel1";
-            this.flpChannel1.Size = new System.Drawing.Size(1564, 530);
+            this.flpChannel1.Size = new System.Drawing.Size(1574, 530);
             this.flpChannel1.TabIndex = 2;
             this.flpChannel1.WrapContents = false;
             // 
@@ -264,7 +264,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 770);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(1578, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1588, 25);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.Stretch = false;
             this.statusStrip1.TabIndex = 3;
@@ -277,7 +277,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1498, 20);
+            this.slTime.Size = new System.Drawing.Size(1508, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -308,7 +308,7 @@
             this.pnlControls.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pnlControls.Location = new System.Drawing.Point(0, 54);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(1578, 114);
+            this.pnlControls.Size = new System.Drawing.Size(1588, 114);
             this.pnlControls.TabIndex = 23;
             // 
             // tableLayoutPanel3
@@ -326,7 +326,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1578, 114);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1588, 114);
             this.tableLayoutPanel3.TabIndex = 45;
             // 
             // panel5
@@ -334,9 +334,9 @@
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.btnStartStopDecode);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(713, 3);
+            this.panel5.Location = new System.Drawing.Point(717, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(151, 108);
+            this.panel5.Size = new System.Drawing.Size(152, 108);
             this.panel5.TabIndex = 43;
             // 
             // btnStartStopDecode
@@ -349,7 +349,7 @@
             this.btnStartStopDecode.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnStartStopDecode.Name = "btnStartStopDecode";
             this.btnStartStopDecode.Primary = true;
-            this.btnStartStopDecode.Size = new System.Drawing.Size(151, 43);
+            this.btnStartStopDecode.Size = new System.Drawing.Size(152, 43);
             this.btnStartStopDecode.TabIndex = 43;
             this.btnStartStopDecode.Text = "Начать";
             this.btnStartStopDecode.UseVisualStyleBackColor = true;
@@ -370,7 +370,7 @@
             this.tlpDecodingParameters.Name = "tlpDecodingParameters";
             this.tlpDecodingParameters.RowCount = 1;
             this.tlpDecodingParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDecodingParameters.Size = new System.Drawing.Size(704, 108);
+            this.tlpDecodingParameters.Size = new System.Drawing.Size(708, 108);
             this.tlpDecodingParameters.TabIndex = 45;
             // 
             // panel2
@@ -380,9 +380,9 @@
             this.panel2.Controls.Add(this.rbNRZNo);
             this.panel2.Controls.Add(this.rbNRZYes);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(380, 3);
+            this.panel2.Location = new System.Drawing.Point(383, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(321, 102);
+            this.panel2.Size = new System.Drawing.Size(322, 102);
             this.panel2.TabIndex = 42;
             // 
             // materialLabel7
@@ -438,9 +438,9 @@
             this.panel3.Controls.Add(this.rbRSYes);
             this.panel3.Controls.Add(this.rbRSNo);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(240, 3);
+            this.panel3.Location = new System.Drawing.Point(242, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(134, 102);
+            this.panel3.Size = new System.Drawing.Size(135, 102);
             this.panel3.TabIndex = 43;
             // 
             // materialLabel9
@@ -499,7 +499,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(231, 102);
+            this.panel4.Size = new System.Drawing.Size(233, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialLabel10
@@ -549,9 +549,9 @@
             this.panel6.Controls.Add(this.materialLabel8);
             this.panel6.Controls.Add(this.lblFramesCounter);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(870, 3);
+            this.panel6.Location = new System.Drawing.Point(875, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(705, 108);
+            this.panel6.Size = new System.Drawing.Size(710, 108);
             this.panel6.TabIndex = 44;
             // 
             // materialLabel8
@@ -610,8 +610,74 @@
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(1578, 562);
+            this.materialTabControl1.Size = new System.Drawing.Size(1588, 562);
             this.materialTabControl1.TabIndex = 24;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.flpChannel1);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(1580, 536);
+            this.tabPage8.TabIndex = 0;
+            this.tabPage8.Text = "Канал 1";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.flpChannel2);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage9.TabIndex = 1;
+            this.tabPage9.Text = "Канал 2";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.flpChannel3);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage10.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage10.TabIndex = 2;
+            this.tabPage10.Text = "Канал 3";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // tabPage11
+            // 
+            this.tabPage11.Controls.Add(this.flpChannel4);
+            this.tabPage11.Location = new System.Drawing.Point(4, 22);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage11.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage11.TabIndex = 3;
+            this.tabPage11.Text = "Канал 4";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // tabPage12
+            // 
+            this.tabPage12.Controls.Add(this.flpChannel5);
+            this.tabPage12.Location = new System.Drawing.Point(4, 22);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage12.TabIndex = 4;
+            this.tabPage12.Text = "Канал 5";
+            this.tabPage12.UseVisualStyleBackColor = true;
+            // 
+            // tabPage13
+            // 
+            this.tabPage13.Controls.Add(this.flpChannel6);
+            this.tabPage13.Location = new System.Drawing.Point(4, 22);
+            this.tabPage13.Name = "tabPage13";
+            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage13.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage13.TabIndex = 5;
+            this.tabPage13.Text = "Канал 6";
+            this.tabPage13.UseVisualStyleBackColor = true;
             // 
             // tabPage14
             // 
@@ -732,72 +798,6 @@
             this.materialLabel1.TabIndex = 6;
             this.materialLabel1.Text = "Канал 3";
             // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.flpChannel1);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(1570, 536);
-            this.tabPage8.TabIndex = 0;
-            this.tabPage8.Text = "Канал 1";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Controls.Add(this.flpChannel2);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(1570, 536);
-            this.tabPage9.TabIndex = 1;
-            this.tabPage9.Text = "Канал 2";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // tabPage10
-            // 
-            this.tabPage10.Controls.Add(this.flpChannel3);
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(1570, 536);
-            this.tabPage10.TabIndex = 2;
-            this.tabPage10.Text = "Канал 3";
-            this.tabPage10.UseVisualStyleBackColor = true;
-            // 
-            // tabPage11
-            // 
-            this.tabPage11.Controls.Add(this.flpChannel4);
-            this.tabPage11.Location = new System.Drawing.Point(4, 22);
-            this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(1570, 536);
-            this.tabPage11.TabIndex = 3;
-            this.tabPage11.Text = "Канал 4";
-            this.tabPage11.UseVisualStyleBackColor = true;
-            // 
-            // tabPage12
-            // 
-            this.tabPage12.Controls.Add(this.flpChannel5);
-            this.tabPage12.Location = new System.Drawing.Point(4, 22);
-            this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(1570, 536);
-            this.tabPage12.TabIndex = 4;
-            this.tabPage12.Text = "Канал 5";
-            this.tabPage12.UseVisualStyleBackColor = true;
-            // 
-            // tabPage13
-            // 
-            this.tabPage13.Controls.Add(this.flpChannel6);
-            this.tabPage13.Location = new System.Drawing.Point(4, 22);
-            this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(1570, 536);
-            this.tabPage13.TabIndex = 5;
-            this.tabPage13.Text = "Канал 6";
-            this.tabPage13.UseVisualStyleBackColor = true;
-            // 
             // materialTabSelector1
             // 
             this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
@@ -806,7 +806,7 @@
             this.materialTabSelector1.Location = new System.Drawing.Point(0, 168);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(1578, 40);
+            this.materialTabSelector1.Size = new System.Drawing.Size(1588, 40);
             this.materialTabSelector1.TabIndex = 25;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
@@ -829,14 +829,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1578, 795);
+            this.ClientSize = new System.Drawing.Size(1588, 795);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.pnlControls);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1578, 795);
+            this.MinimumSize = new System.Drawing.Size(1588, 795);
             this.Name = "FormDecode";
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -860,15 +860,15 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.materialTabControl1.ResumeLayout(false);
-            this.tabPage14.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.tabPage8.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage10.ResumeLayout(false);
             this.tabPage11.ResumeLayout(false);
             this.tabPage12.ResumeLayout(false);
             this.tabPage13.ResumeLayout(false);
+            this.tabPage14.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

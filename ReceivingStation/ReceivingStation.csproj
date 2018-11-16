@@ -187,17 +187,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\titleBackground.jpg" />
-    <None Include="Resources\settings_icon.png" />
-    <None Include="Resources\file_icon.png" />
-    <None Include="Resources\help_icon.png" />
-    <None Include="Resources\exit_icon.png" />
     <None Include="Resources\mode_icon.png" />
     <None Include="Resources\time_icon.png" />
-    <None Include="Resources\info_frames_icon.png" />
-    <None Include="Resources\receive_frames_icon.png" />
-    <None Include="Resources\stop_icon.png" />
-    <None Include="Resources\start_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -213,9 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\close_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\door_exit_icon.png" />
