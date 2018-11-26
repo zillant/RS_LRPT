@@ -97,6 +97,12 @@
     <Compile Include="Demodulator\LogWriter.cs" />
     <Compile Include="Demodulator\Packet.cs" />
     <Compile Include="Demodulator\ProgramBVS.cs" />
+    <Compile Include="FormModeSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormModeSettings.Designer.cs">
+      <DependentUpon>FormModeSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxes\FormCloseMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     <Compile Include="FormServerSettings.Designer.cs">
       <DependentUpon>FormServerSettings.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormModeSettings.resx">
+      <DependentUpon>FormModeSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessageBoxes\FormCloseMessageBox.resx">
       <DependentUpon>FormCloseMessageBox.cs</DependentUpon>
     </EmbeddedResource>

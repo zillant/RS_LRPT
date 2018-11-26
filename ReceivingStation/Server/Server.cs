@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using ReceivingStation.Properties;
 
-namespace ReceivingStation.Server
+namespace ReceivingStation
 {
     class Server
     {
@@ -17,9 +17,10 @@ namespace ReceivingStation.Server
         public delegate void StopReceivingDelegate();
         public StopReceivingDelegate ThreadSafeStopReceiving;
 
+        public bool stopThread;
+           
         private FormReceive _form;
-        public bool _stopThread;
-
+       
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
         private const byte ParametersNotSetMessage = 0x2; // Не установлены параметры записи потока.
@@ -28,14 +29,13 @@ namespace ReceivingStation.Server
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начата.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начата.
        
-        private bool _remoteControlFlag; // Включен ли удаленный режим управления.
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
        
         public Server(FormReceive form)
         {
             _form = form;
-            _stopThread = false;
+            stopThread = false;
         }
 
         #region Запустить работу сервера.
@@ -56,11 +56,12 @@ namespace ReceivingStation.Server
                 _setParametersFlag = false;
                 _receivingStartedFlag = false;
 
-                while (_stopThread == false)
+                while (stopThread == false)
                 {
                     // Перевод в местный режим управления.
                     _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
-                    _remoteControlFlag = false;
+                    _form.remoteModeFlag = false;
+                    client = null;
 
                     server.Start();
 
@@ -160,9 +161,9 @@ namespace ReceivingStation.Server
             if (commandValue == 0x01)
             {
                 // Режим местного управления.
-                if (_remoteControlFlag)
+                if (_form.remoteModeFlag)
                 {
-                    _remoteControlFlag = false;
+                    _form.remoteModeFlag = false;
                     _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
                 }
                 else
@@ -174,9 +175,9 @@ namespace ReceivingStation.Server
             else if (commandValue == 0xFF)
             {
                 // Режим дистанционного управления.
-                if (!_remoteControlFlag)
+                if (!_form.remoteModeFlag)
                 {
-                    _remoteControlFlag = true;
+                    _form.remoteModeFlag = true;
                     _form.Invoke(new Action(() => { ThreadSafeChangeMode(0); }));
                 }
                 else
@@ -193,7 +194,7 @@ namespace ReceivingStation.Server
         #region Получить статус установки параметров приема потока.
         private byte SetReceiveParameters(byte[] command)
         {
-            if (_remoteControlFlag)
+            if (_form.remoteModeFlag)
             {
                 // Проверяем содержимое команды после заголовка и до резервного байта.
                 for (int i = 1; i < 5; i++)

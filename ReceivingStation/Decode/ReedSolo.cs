@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ReceivingStation.Decode
+namespace ReceivingStation
 {
     class ReedSolo
     {

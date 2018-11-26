@@ -1,4 +1,4 @@
-﻿namespace ReceivingStation.Decode
+﻿namespace ReceivingStation
 {
     class Constants
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReceivingStation.Decode
+namespace ReceivingStation
 {
     class Jpeg
     {

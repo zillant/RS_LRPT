@@ -6,22 +6,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.Other;
 using System.Text;
-using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ReceivingStation.Demodulator;
-using Platform.IO;
-using ReceivingStation.Properties;
 using MaterialSkin.Controls;
 
 namespace ReceivingStation
 {
     public partial class FormReceive : MaterialForm
     {
+        public bool remoteModeFlag;
+
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private const string WorkingTimeOnboardFileName = "working_time_onboard.txt";
-
-        private bool _remoteModeFlag;
+      
         private Thread _serverThread;
         
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
@@ -35,7 +32,7 @@ namespace ReceivingStation
         private bool _isReceivingStarting; // Для контроля времени наработки борта.
 
         // private Demodulating _receiver;
-        private Server.Server _server;
+        private Server _server;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -46,17 +43,17 @@ namespace ReceivingStation
         public FormReceive()
         {
             InitializeComponent();            
-            GuiUpdater.SmoothLoadingForm(this);
+            GuiUpdater.SmoothLoadingForm(this);           
         }
 
         private void FormReceive_Load(object sender, EventArgs e)
         {
             materialTabControl1.SelectedTab = tabPage7;
 
-            _remoteModeFlag = false;
+            remoteModeFlag = false;
             _isReceivingStarting = false;
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
-
+            
             for (int i = 0; i < 6; i++)
             {
                 _listImagesForSave[i] = new List<Bitmap>();
@@ -89,7 +86,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString();
             timer1.Start();
 
-            _server = new Server.Server(this)
+            _server = new Server(this)
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
@@ -114,7 +111,7 @@ namespace ReceivingStation
 
         private void FormReceive_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _server._stopThread = true;
+            _server.stopThread = true;
             _serverThread.Join(100);
 
             Application.Exit();
@@ -127,9 +124,10 @@ namespace ReceivingStation
 
         private void slMode_DoubleClick(object sender, EventArgs e)
         {
-            using (FormServerSettings settingsForm = new FormServerSettings())
+            using (FormModeSettings modeSettingsForm = new FormModeSettings(this))
             {
-                settingsForm.ShowDialog();
+                modeSettingsForm.ChangeMode = ChangeMode;
+                modeSettingsForm.ShowDialog();
             }
         }
 
@@ -179,18 +177,18 @@ namespace ReceivingStation
             if (modeNumber == 0)
             {
                 // Дистанционное управление
-                Enabled = false;
+                tlpReceiveSettings.Enabled = false;
                 slMode.Text = "Дистанционное управление";
                 WriteToLogUserActions("Дистанционное управление");
-                _remoteModeFlag = true;
+                remoteModeFlag = true;
             }
             else if (modeNumber == 1)
             {
                 // Местное управление
-                Enabled = true;
+                tlpReceiveSettings.Enabled = true;
                 slMode.Text = "Местное управление";
                 WriteToLogUserActions("Местное управление");
-                _remoteModeFlag = false;
+                remoteModeFlag = false;
             }           
         }
 
@@ -226,7 +224,7 @@ namespace ReceivingStation
                 _isReceivingStarting = true;
                 btnStartRecieve.Text = "Остановить";
 
-                if (!_remoteModeFlag)
+                if (!remoteModeFlag)
                 {
                     SetReceiveParameters();
                 }

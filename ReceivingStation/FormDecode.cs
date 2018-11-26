@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.Other;
 using System.Text;
-using ReceivingStation.Decode;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -145,7 +144,7 @@ namespace ReceivingStation
                     _isDecodeStarting = true;
                     btnStartStopDecode.Text = "Остановить";
 
-                    var decode = new Decode.Decode(this, _fileName, reedSoloFlag, nrzFlag)
+                    var decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
                         ThreadSafeUpdateImagesContent = UpdateChannelsImages,

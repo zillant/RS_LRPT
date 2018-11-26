@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace ReceivingStation.Decode
-{
+namespace ReceivingStation
+{   
     class Viterbi
     {
         private int[,] _mettab = new int[2,2]; // Metric table, [sent sym, rx symbol]

@@ -39,12 +39,12 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.BackColor = System.Drawing.SystemColors.Window;
             this.lblInfo.Depth = 0;
-            this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblInfo.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfo.Location = new System.Drawing.Point(115, 91);
             this.lblInfo.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(48, 18);
+            this.lblInfo.Size = new System.Drawing.Size(49, 19);
             this.lblInfo.TabIndex = 6;
             this.lblInfo.Text = "Текст";
             // 
@@ -86,6 +86,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormInformationMessageBox";
+            this.ShowInTaskbar = false;
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Заголовок";

@@ -125,7 +125,7 @@
             this.flpChannel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel2.Location = new System.Drawing.Point(3, 3);
             this.flpChannel2.Name = "flpChannel2";
-            this.flpChannel2.Size = new System.Drawing.Size(1564, 530);
+            this.flpChannel2.Size = new System.Drawing.Size(1574, 530);
             this.flpChannel2.TabIndex = 3;
             // 
             // flpChannel3
@@ -134,7 +134,7 @@
             this.flpChannel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel3.Location = new System.Drawing.Point(3, 3);
             this.flpChannel3.Name = "flpChannel3";
-            this.flpChannel3.Size = new System.Drawing.Size(1564, 530);
+            this.flpChannel3.Size = new System.Drawing.Size(1574, 530);
             this.flpChannel3.TabIndex = 3;
             // 
             // flpChannel4
@@ -143,7 +143,7 @@
             this.flpChannel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel4.Location = new System.Drawing.Point(3, 3);
             this.flpChannel4.Name = "flpChannel4";
-            this.flpChannel4.Size = new System.Drawing.Size(1564, 530);
+            this.flpChannel4.Size = new System.Drawing.Size(1574, 530);
             this.flpChannel4.TabIndex = 3;
             // 
             // flpChannel5
@@ -152,7 +152,7 @@
             this.flpChannel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel5.Location = new System.Drawing.Point(3, 3);
             this.flpChannel5.Name = "flpChannel5";
-            this.flpChannel5.Size = new System.Drawing.Size(1564, 530);
+            this.flpChannel5.Size = new System.Drawing.Size(1574, 530);
             this.flpChannel5.TabIndex = 3;
             // 
             // flpChannel6
@@ -161,7 +161,7 @@
             this.flpChannel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpChannel6.Location = new System.Drawing.Point(3, 3);
             this.flpChannel6.Name = "flpChannel6";
-            this.flpChannel6.Size = new System.Drawing.Size(1564, 530);
+            this.flpChannel6.Size = new System.Drawing.Size(1574, 530);
             this.flpChannel6.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -186,16 +186,16 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1564, 489);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1574, 489);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flpAllChannels4
             // 
             this.flpAllChannels4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAllChannels4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels4.Location = new System.Drawing.Point(783, 3);
+            this.flpAllChannels4.Location = new System.Drawing.Point(789, 3);
             this.flpAllChannels4.Name = "flpAllChannels4";
-            this.flpAllChannels4.Size = new System.Drawing.Size(254, 483);
+            this.flpAllChannels4.Size = new System.Drawing.Size(256, 483);
             this.flpAllChannels4.TabIndex = 3;
             this.flpAllChannels4.WrapContents = false;
             // 
@@ -203,7 +203,7 @@
             // 
             this.flpAllChannels6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAllChannels6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels6.Location = new System.Drawing.Point(1303, 3);
+            this.flpAllChannels6.Location = new System.Drawing.Point(1313, 3);
             this.flpAllChannels6.Name = "flpAllChannels6";
             this.flpAllChannels6.Size = new System.Drawing.Size(258, 483);
             this.flpAllChannels6.TabIndex = 5;
@@ -213,9 +213,9 @@
             // 
             this.flpAllChannels5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAllChannels5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels5.Location = new System.Drawing.Point(1043, 3);
+            this.flpAllChannels5.Location = new System.Drawing.Point(1051, 3);
             this.flpAllChannels5.Name = "flpAllChannels5";
-            this.flpAllChannels5.Size = new System.Drawing.Size(254, 483);
+            this.flpAllChannels5.Size = new System.Drawing.Size(256, 483);
             this.flpAllChannels5.TabIndex = 4;
             this.flpAllChannels5.WrapContents = false;
             // 
@@ -225,9 +225,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels3.Location = new System.Drawing.Point(523, 3);
+            this.flpAllChannels3.Location = new System.Drawing.Point(527, 3);
             this.flpAllChannels3.Name = "flpAllChannels3";
-            this.flpAllChannels3.Size = new System.Drawing.Size(254, 483);
+            this.flpAllChannels3.Size = new System.Drawing.Size(256, 483);
             this.flpAllChannels3.TabIndex = 2;
             this.flpAllChannels3.WrapContents = false;
             // 
@@ -237,9 +237,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAllChannels2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAllChannels2.Location = new System.Drawing.Point(263, 3);
+            this.flpAllChannels2.Location = new System.Drawing.Point(265, 3);
             this.flpAllChannels2.Name = "flpAllChannels2";
-            this.flpAllChannels2.Size = new System.Drawing.Size(254, 483);
+            this.flpAllChannels2.Size = new System.Drawing.Size(256, 483);
             this.flpAllChannels2.TabIndex = 1;
             this.flpAllChannels2.WrapContents = false;
             // 
@@ -251,7 +251,7 @@
             this.flpAllChannels1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpAllChannels1.Location = new System.Drawing.Point(3, 3);
             this.flpAllChannels1.Name = "flpAllChannels1";
-            this.flpAllChannels1.Size = new System.Drawing.Size(254, 483);
+            this.flpAllChannels1.Size = new System.Drawing.Size(256, 483);
             this.flpAllChannels1.TabIndex = 0;
             this.flpAllChannels1.WrapContents = false;
             // 
@@ -630,7 +630,7 @@
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage9.Size = new System.Drawing.Size(1580, 536);
             this.tabPage9.TabIndex = 1;
             this.tabPage9.Text = "Канал 2";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -641,7 +641,7 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage10.Size = new System.Drawing.Size(1580, 536);
             this.tabPage10.TabIndex = 2;
             this.tabPage10.Text = "Канал 3";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -652,7 +652,7 @@
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage11.Size = new System.Drawing.Size(1580, 536);
             this.tabPage11.TabIndex = 3;
             this.tabPage11.Text = "Канал 4";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -663,7 +663,7 @@
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage12.Size = new System.Drawing.Size(1580, 536);
             this.tabPage12.TabIndex = 4;
             this.tabPage12.Text = "Канал 5";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -674,7 +674,7 @@
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage13.Size = new System.Drawing.Size(1580, 536);
             this.tabPage13.TabIndex = 5;
             this.tabPage13.Text = "Канал 6";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -686,7 +686,7 @@
             this.tabPage14.Location = new System.Drawing.Point(4, 22);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(1570, 536);
+            this.tabPage14.Size = new System.Drawing.Size(1580, 536);
             this.tabPage14.TabIndex = 6;
             this.tabPage14.Text = "Все каналы";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -711,7 +711,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1564, 41);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1574, 41);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // materialLabel6
@@ -721,7 +721,7 @@
             this.materialLabel6.Depth = 0;
             this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(877, 11);
+            this.materialLabel6.Location = new System.Drawing.Point(884, 11);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
             this.materialLabel6.Size = new System.Drawing.Size(65, 19);
@@ -735,7 +735,7 @@
             this.materialLabel5.Depth = 0;
             this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(1137, 11);
+            this.materialLabel5.Location = new System.Drawing.Point(1146, 11);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
             this.materialLabel5.Size = new System.Drawing.Size(65, 19);
@@ -749,7 +749,7 @@
             this.materialLabel4.Depth = 0;
             this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(1399, 11);
+            this.materialLabel4.Location = new System.Drawing.Point(1409, 11);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
             this.materialLabel4.Size = new System.Drawing.Size(65, 19);
@@ -763,7 +763,7 @@
             this.materialLabel3.Depth = 0;
             this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(97, 11);
+            this.materialLabel3.Location = new System.Drawing.Point(98, 11);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
             this.materialLabel3.Size = new System.Drawing.Size(65, 19);
@@ -777,7 +777,7 @@
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(357, 11);
+            this.materialLabel2.Location = new System.Drawing.Point(360, 11);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(65, 19);
@@ -791,7 +791,7 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(617, 11);
+            this.materialLabel1.Location = new System.Drawing.Point(622, 11);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(65, 19);

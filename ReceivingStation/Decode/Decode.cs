@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using ReceivingStation.Other;
 using Color = System.Drawing.Color;
 
-namespace ReceivingStation.Decode
+namespace ReceivingStation
 {
     class Decode
     {       
