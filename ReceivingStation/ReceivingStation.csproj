@@ -103,6 +103,12 @@
     <Compile Include="FormModeSettings.Designer.cs">
       <DependentUpon>FormModeSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormWorkingTimes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWorkingTimes.Designer.cs">
+      <DependentUpon>FormWorkingTimes.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxes\FormCloseMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </Compile>
     <EmbeddedResource Include="FormModeSettings.resx">
       <DependentUpon>FormModeSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWorkingTimes.resx">
+      <DependentUpon>FormWorkingTimes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MessageBoxes\FormCloseMessageBox.resx">
       <DependentUpon>FormCloseMessageBox.cs</DependentUpon>

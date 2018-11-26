@@ -152,6 +152,7 @@
             this.slWorkingTimeOnboard.Text = "12:12:01";
             this.slWorkingTimeOnboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slWorkingTimeOnboard.ToolTipText = "Время наработки системы (ЧЧ:ММ:СС)";
+            this.slWorkingTimeOnboard.Click += new System.EventHandler(this.slWorkingTimeOnboard_Click);
             // 
             // slMode
             // 
@@ -604,7 +605,7 @@
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.82012F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.98066F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.19923F));
-            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 254F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 257F));
             this.tlpDecodingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel3, 1, 0);
@@ -626,9 +627,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(133, 3);
+            this.panel7.Location = new System.Drawing.Point(132, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(130, 102);
+            this.panel7.Size = new System.Drawing.Size(129, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -684,9 +685,9 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(456, 3);
+            this.panel2.Location = new System.Drawing.Point(452, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(249, 102);
+            this.panel2.Size = new System.Drawing.Size(253, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -743,9 +744,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(269, 3);
+            this.panel3.Location = new System.Drawing.Point(267, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(181, 102);
+            this.panel3.Size = new System.Drawing.Size(179, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -805,7 +806,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(124, 102);
+            this.panel4.Size = new System.Drawing.Size(123, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialRadioButton2

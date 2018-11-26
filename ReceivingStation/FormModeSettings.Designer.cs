@@ -64,6 +64,7 @@
             // 
             // lblConnection
             // 
+            this.lblConnection.BackColor = System.Drawing.SystemColors.Window;
             this.lblConnection.Depth = 0;
             this.lblConnection.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblConnection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));

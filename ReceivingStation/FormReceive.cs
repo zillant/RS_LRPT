@@ -9,6 +9,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using MaterialSkin.Controls;
+using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
@@ -17,16 +18,22 @@ namespace ReceivingStation
         public bool remoteModeFlag;
 
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
-        private const string WorkingTimeOnboardFileName = "working_time_onboard.txt";
-      
+
+        private string WorkingTimeOnboardFileName = Settings.Default.OnboardWorkingTimeFileName;
+
         private Thread _serverThread;
         
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
-        private DateTime _startWorkingTimeOnboard; // Время начала работы борта.
-        private TimeSpan _fullWorkingTimeOnboard;
+        private DateTime _startWorkingTime; // Время начала работы борта.
+        private TimeSpan _mainFCPWorkingTime;
+        private TimeSpan _reserveFCPWorkingTime;
+        private TimeSpan _mainPRDWorkingTime;
+        private TimeSpan _reservePRDWorkingTime;
+        private TimeSpan _fullWorkingTime; // Общее время работы системы.
+
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
 
         private bool _isReceivingStarting; // Для контроля времени наработки борта.
@@ -61,12 +68,14 @@ namespace ReceivingStation
 
             try
             {
-                ReadFromLogWorkingTime(WorkingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
+                ReadFromLogWorkingTime(WorkingTimeOnboardFileName);
+                slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
             }
             catch (Exception)
             {
-                WriteToLogWorkingTime(WorkingTimeOnboardFileName, "0:0:0");
-                ReadFromLogWorkingTime(WorkingTimeOnboardFileName, out _fullWorkingTimeOnboard, slWorkingTimeOnboard);
+                WriteToLogWorkingTime(WorkingTimeOnboardFileName);
+                ReadFromLogWorkingTime(WorkingTimeOnboardFileName);
+                slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
             }
 
             _channels[0] = flpChannel1;
@@ -131,6 +140,14 @@ namespace ReceivingStation
             }
         }
 
+        private void slWorkingTimeOnboard_Click(object sender, EventArgs e)
+        {
+            using (FormWorkingTimes workingTimesForm = new FormWorkingTimes())
+            {
+                workingTimesForm.ShowDialog();
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString();
@@ -141,9 +158,10 @@ namespace ReceivingStation
             {
                 if (_isReceivingStarting)
                 {
-                    CountWorkingTime(ref _fullWorkingTimeOnboard);
-                    _startWorkingTimeOnboard = DateTime.Now;
-                    WriteToLogWorkingTime(WorkingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
+                    CountWorkingTime();
+                    _startWorkingTime = DateTime.Now;
+                    WriteToLogWorkingTime(WorkingTimeOnboardFileName);
+                    slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
@@ -229,7 +247,7 @@ namespace ReceivingStation
                     SetReceiveParameters();
                 }
 
-                _startWorkingTimeOnboard = DateTime.Now;
+                _startWorkingTime = DateTime.Now;
                 WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 WriteToLogUserActions("Запись потока начата");
 
@@ -261,8 +279,9 @@ namespace ReceivingStation
             _isReceivingStarting = false;
             btnStartRecieve.Text = "Начать";
 
-            CountWorkingTime(ref _fullWorkingTimeOnboard);
-            WriteToLogWorkingTime(WorkingTimeOnboardFileName, _fullWorkingTimeOnboard.ToString());
+            CountWorkingTime();
+            WriteToLogWorkingTime(WorkingTimeOnboardFileName);
+            slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
 
             WriteToLogUserActions("Запись потока завершена");
         }
@@ -299,33 +318,58 @@ namespace ReceivingStation
         #endregion
 
         #region Расчет времени наработки.
-        private void CountWorkingTime(ref TimeSpan fullWorkingTime)
+        private void CountWorkingTime()
         {
             DateTime finishWorkingTime = DateTime.Now;
-            TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTimeOnboard;
-            fullWorkingTime += deltaWorkingTime;
+            TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTime;
+            _fullWorkingTime += deltaWorkingTime;
+
+            if (rbFCPMain.Checked)
+            {
+                _mainFCPWorkingTime += deltaWorkingTime;
+            }
+            else
+            {
+                _reserveFCPWorkingTime += deltaWorkingTime;
+            }
+
+            if (rbPRDMain.Checked)
+            {
+                _mainPRDWorkingTime += deltaWorkingTime;
+            }
+            else
+            {
+                _reservePRDWorkingTime += deltaWorkingTime;
+            }
         }
 
         #endregion
 
         #region Запись в лог файл времени наработки.
-        private void WriteToLogWorkingTime(string fileName, string time)
+        private void WriteToLogWorkingTime(string fileName)
         {
             using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8, 65536))
             {
-                sw.WriteLine(time);
+                sw.WriteLine(_mainFCPWorkingTime);
+                sw.WriteLine(_reserveFCPWorkingTime);
+                sw.WriteLine(_mainPRDWorkingTime);
+                sw.WriteLine(_reservePRDWorkingTime);
+                sw.WriteLine(_fullWorkingTime);
             }
         }
 
         #endregion
 
         #region Чтение из лог файла времени наработки.
-        private void ReadFromLogWorkingTime(string fileName, out TimeSpan fullWorkingTime, ToolStripStatusLabel WorkingTimeLabel)
+        private void ReadFromLogWorkingTime(string fileName)
         {
             using (StreamReader sr = new StreamReader(fileName))
             {
-                fullWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                WorkingTimeLabel.Text = $"{(long)fullWorkingTime.TotalHours}:{fullWorkingTime.Minutes.ToString("D2")}:{fullWorkingTime.Seconds}";              
+                _mainFCPWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                _reserveFCPWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                _mainPRDWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                _reservePRDWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                _fullWorkingTime = TimeSpan.Parse(sr.ReadLine());                           
             }
         }
 
