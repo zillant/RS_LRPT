@@ -180,7 +180,10 @@ namespace ReceivingStation
         #region Обновление счетчика кадров при декодировании.
         private void UpdateFrameCounterValue(uint counter)
         {
-            GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
+            if (lblFramesCounter.InvokeRequired)
+                Invoke((Action)(() => { GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString()); }));
+            else
+                GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
         }
 
         #endregion
@@ -188,9 +191,21 @@ namespace ReceivingStation
         #region Обновление изображений при декодировании.
         private void UpdateChannelsImages(DirectBitmap[] images)
         {
-            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
+            if (flpChannel6.InvokeRequired & flpAllChannels6.InvokeRequired)
+                Invoke((Action)(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images); }));
+            else
+                GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
-            bwImageSaver.RunWorkerAsync();
+            if (flpChannel1.Height > pScroll1.Height - 29)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    _allChannels[i].Controls.Clear();
+                    _channels[i].Controls.Clear();
+                    _listImagesForSave[i].Clear();
+                }
+            }
+            //bwImageSaver.RunWorkerAsync();
         }
 
         #endregion

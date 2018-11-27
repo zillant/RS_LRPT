@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ReceivingStation.Other;
 using Color = System.Drawing.Color;
 
@@ -592,7 +593,7 @@ namespace ReceivingStation
             }
 
             Kol_tk++;      
-            _form.BeginInvoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
+            _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 

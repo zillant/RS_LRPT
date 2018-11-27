@@ -69,13 +69,13 @@ namespace ReceivingStation
             try
             {
                 ReadFromLogWorkingTime(WorkingTimeOnboardFileName);
-                slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
+                DisplayWorkingTime();
             }
             catch (Exception)
             {
                 WriteToLogWorkingTime(WorkingTimeOnboardFileName);
                 ReadFromLogWorkingTime(WorkingTimeOnboardFileName);
-                slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
+                DisplayWorkingTime();
             }
 
             _channels[0] = flpChannel1;
@@ -140,7 +140,7 @@ namespace ReceivingStation
             }
         }
 
-        private void slWorkingTimeOnboard_Click(object sender, EventArgs e)
+        private void slWorkingTimeOnboard_DoubleClick(object sender, EventArgs e)
         {
             using (FormWorkingTimes workingTimesForm = new FormWorkingTimes())
             {
@@ -161,7 +161,7 @@ namespace ReceivingStation
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
                     WriteToLogWorkingTime(WorkingTimeOnboardFileName);
-                    slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
+                    DisplayWorkingTime();
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
@@ -281,7 +281,7 @@ namespace ReceivingStation
 
             CountWorkingTime();
             WriteToLogWorkingTime(WorkingTimeOnboardFileName);
-            slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
+            DisplayWorkingTime();
 
             WriteToLogUserActions("Запись потока завершена");
         }
@@ -371,6 +371,14 @@ namespace ReceivingStation
                 _reservePRDWorkingTime = TimeSpan.Parse(sr.ReadLine());
                 _fullWorkingTime = TimeSpan.Parse(sr.ReadLine());                           
             }
+        }
+
+        #endregion
+
+        #region Отображение времени наработки.
+        private void DisplayWorkingTime()
+        {
+            slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
         }
 
         #endregion

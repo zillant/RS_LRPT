@@ -26,6 +26,21 @@ namespace ReceivingStation
             InitializeComponent();
         }
 
+        private void FormWorkingTimes_Load(object sender, EventArgs e)
+        {
+            ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+            DisplayWorkinTime(lblFCPMain, _mainFCPWorkingTime);
+            DisplayWorkinTime(lblFCPReserve, _reserveFCPWorkingTime);
+            DisplayWorkinTime(lblPRDMain, _mainPRDWorkingTime);
+            DisplayWorkinTime(lblPRDReserve, _reservePRDWorkingTime);
+            DisplayWorkinTime(lblFull, _fullWorkingTime);            
+        }
+
+        private void DisplayWorkinTime(MaterialLabel label, TimeSpan workingTime)
+        {
+            label.Text = $"{(long)workingTime.TotalHours}:{workingTime.Minutes.ToString("D2")}:{workingTime.Seconds.ToString("D2")}.{workingTime.Milliseconds.ToString("D2")}";
+        }
+
         private void ReadFromLogWorkingTime(string fileName)
         {
             using (StreamReader sr = new StreamReader(fileName))
@@ -36,16 +51,6 @@ namespace ReceivingStation
                 _reservePRDWorkingTime = TimeSpan.Parse(sr.ReadLine());
                 _fullWorkingTime = TimeSpan.Parse(sr.ReadLine());
             }
-        }
-
-        private void FormWorkingTimes_Load(object sender, EventArgs e)
-        {
-            ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
-            lblFCPMain.Text = $"{(long)_mainFCPWorkingTime.TotalHours}:{_mainFCPWorkingTime.Minutes.ToString("D2")}:{_mainFCPWorkingTime.Seconds.ToString("D2")}";
-            lblFCPReserve.Text = $"{(long)_reserveFCPWorkingTime.TotalHours}:{_reserveFCPWorkingTime.Minutes.ToString("D2")}:{_reserveFCPWorkingTime.Seconds.ToString("D2")}";
-            lblPRDMain.Text = $"{(long)_mainPRDWorkingTime.TotalHours}:{_mainPRDWorkingTime.Minutes.ToString("D2")}:{_mainPRDWorkingTime.Seconds.ToString("D2")}";
-            lblPRDReserve.Text = $"{(long)_reservePRDWorkingTime.TotalHours}:{_reservePRDWorkingTime.Minutes.ToString("D2")}:{_reservePRDWorkingTime.Seconds.ToString("D2")}";
-            lblFull.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
         }
     }  
 }

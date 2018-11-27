@@ -38,6 +38,8 @@
             this.lblPRDReserve = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.lblFull = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // materialLabel1
@@ -47,13 +49,13 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(12, 82);
+            this.materialLabel1.Location = new System.Drawing.Point(12, 111);
             this.materialLabel1.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(123, 19);
+            this.materialLabel1.Size = new System.Drawing.Size(85, 19);
             this.materialLabel1.TabIndex = 0;
-            this.materialLabel1.Text = "ФЦП Основной:";
+            this.materialLabel1.Text = "Основной:";
             // 
             // lblFCPMain
             // 
@@ -62,7 +64,7 @@
             this.lblFCPMain.Depth = 0;
             this.lblFCPMain.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblFCPMain.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblFCPMain.Location = new System.Drawing.Point(157, 82);
+            this.lblFCPMain.Location = new System.Drawing.Point(157, 111);
             this.lblFCPMain.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.lblFCPMain.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblFCPMain.Name = "lblFCPMain";
@@ -77,13 +79,13 @@
             this.materialLabel3.Depth = 0;
             this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(12, 130);
+            this.materialLabel3.Location = new System.Drawing.Point(12, 152);
             this.materialLabel3.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(131, 19);
+            this.materialLabel3.Size = new System.Drawing.Size(93, 19);
             this.materialLabel3.TabIndex = 2;
-            this.materialLabel3.Text = "ФЦП Резервный:";
+            this.materialLabel3.Text = "Резервный:";
             // 
             // lblFCPReserve
             // 
@@ -92,7 +94,7 @@
             this.lblFCPReserve.Depth = 0;
             this.lblFCPReserve.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblFCPReserve.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblFCPReserve.Location = new System.Drawing.Point(157, 130);
+            this.lblFCPReserve.Location = new System.Drawing.Point(157, 152);
             this.lblFCPReserve.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.lblFCPReserve.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblFCPReserve.Name = "lblFCPReserve";
@@ -107,13 +109,13 @@
             this.materialLabel5.Depth = 0;
             this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(12, 178);
+            this.materialLabel5.Location = new System.Drawing.Point(12, 239);
             this.materialLabel5.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(120, 19);
+            this.materialLabel5.Size = new System.Drawing.Size(85, 19);
             this.materialLabel5.TabIndex = 4;
-            this.materialLabel5.Text = "ПРД Основной:";
+            this.materialLabel5.Text = "Основной:";
             // 
             // lblPRDMain
             // 
@@ -122,7 +124,7 @@
             this.lblPRDMain.Depth = 0;
             this.lblPRDMain.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblPRDMain.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblPRDMain.Location = new System.Drawing.Point(157, 178);
+            this.lblPRDMain.Location = new System.Drawing.Point(157, 239);
             this.lblPRDMain.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.lblPRDMain.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblPRDMain.Name = "lblPRDMain";
@@ -137,13 +139,13 @@
             this.materialLabel7.Depth = 0;
             this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel7.Location = new System.Drawing.Point(12, 226);
+            this.materialLabel7.Location = new System.Drawing.Point(12, 280);
             this.materialLabel7.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
             this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(128, 19);
+            this.materialLabel7.Size = new System.Drawing.Size(93, 19);
             this.materialLabel7.TabIndex = 6;
-            this.materialLabel7.Text = "ПРД Резервный:";
+            this.materialLabel7.Text = "Резервный:";
             // 
             // lblPRDReserve
             // 
@@ -152,7 +154,7 @@
             this.lblPRDReserve.Depth = 0;
             this.lblPRDReserve.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblPRDReserve.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblPRDReserve.Location = new System.Drawing.Point(157, 226);
+            this.lblPRDReserve.Location = new System.Drawing.Point(157, 280);
             this.lblPRDReserve.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.lblPRDReserve.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblPRDReserve.Name = "lblPRDReserve";
@@ -167,7 +169,7 @@
             this.materialLabel9.Depth = 0;
             this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel9.Location = new System.Drawing.Point(12, 274);
+            this.materialLabel9.Location = new System.Drawing.Point(12, 345);
             this.materialLabel9.Margin = new System.Windows.Forms.Padding(10, 0, 3, 0);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
@@ -182,7 +184,7 @@
             this.lblFull.Depth = 0;
             this.lblFull.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblFull.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblFull.Location = new System.Drawing.Point(157, 274);
+            this.lblFull.Location = new System.Drawing.Point(157, 345);
             this.lblFull.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.lblFull.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblFull.Name = "lblFull";
@@ -190,12 +192,42 @@
             this.lblFull.TabIndex = 9;
             this.lblFull.Text = "0";
             // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.BackColor = System.Drawing.SystemColors.Window;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(104, 70);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(43, 19);
+            this.materialLabel2.TabIndex = 10;
+            this.materialLabel2.Text = "ФЦП";
+            // 
+            // materialLabel4
+            // 
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.BackColor = System.Drawing.SystemColors.Window;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel4.Location = new System.Drawing.Point(104, 198);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(40, 19);
+            this.materialLabel4.TabIndex = 11;
+            this.materialLabel4.Text = "ПРД";
+            // 
             // FormWorkingTimes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(195, 322);
+            this.ClientSize = new System.Drawing.Size(196, 394);
+            this.Controls.Add(this.materialLabel4);
+            this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.lblFull);
             this.Controls.Add(this.materialLabel9);
             this.Controls.Add(this.lblPRDReserve);
@@ -230,5 +262,7 @@
         private MaterialSkin.Controls.MaterialLabel lblPRDReserve;
         private MaterialSkin.Controls.MaterialLabel materialLabel9;
         private MaterialSkin.Controls.MaterialLabel lblFull;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialLabel materialLabel4;
     }
 }
