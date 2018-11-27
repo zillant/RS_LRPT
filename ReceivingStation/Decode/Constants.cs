@@ -3,7 +3,7 @@
     class Constants
     {
         public const int WDT = 1568; // Ширина рисунка.
-        public const int HGT = 24; // Высота рисунка. (5 строчек)
+        public const int HGT = 32; // Высота рисунка.
 
         public const int DL_JPEG = 1500; // Длина буфера jpeg с запасом - полос + на шапку.
         public const int DL_VIDEO = 896; // Длина видеобуфера.

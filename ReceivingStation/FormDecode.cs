@@ -196,7 +196,7 @@ namespace ReceivingStation
             else
                 GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
-            if (flpChannel1.Height > pScroll1.Height - 29)
+            if (flpChannel1.Height > pScroll1.Height)
             {
                 for (int i = 0; i < 6; i++)
                 {
