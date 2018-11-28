@@ -25,7 +25,9 @@ namespace ReceivingStation
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
-             
+        private Panel[] panels = new Panel[6];
+        private Panel[] panels2 = new Panel[6];
+
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
         public FormDecode()
@@ -59,6 +61,20 @@ namespace ReceivingStation
             _allChannels[3] = flpAllChannels4;
             _allChannels[4] = flpAllChannels5;
             _allChannels[5] = flpAllChannels6;
+
+            panels[0] = panel7;
+            panels[1] = panel8;
+            panels[2] = panel9;
+            panels[3] = panel10;
+            panels[4] = panel11;
+            panels[5] = panel12;
+
+            panels2[0] = pScroll1;
+            panels2[1] = pScroll2;
+            panels2[2] = pScroll3;
+            panels2[3] = pScroll4;
+            panels2[4] = pScroll5;
+            panels2[5] = pScroll6;
 
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             timer1.Start();
@@ -196,14 +212,20 @@ namespace ReceivingStation
             else
                 GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
-            if (flpChannel1.Height > pScroll1.Height)
+
+            if (_allChannels[0].Height <= panels[0].Height) return;
+
+            for (int i = 0; i < 6; i++)
             {
-                for (int i = 0; i < 6; i++)
-                {
-                    _allChannels[i].Controls.Clear();
-                    _channels[i].Controls.Clear();
-                    _listImagesForSave[i].Clear();
-                }
+                _allChannels[i].Dispose();
+                _allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8)); 
+                panels[i].Controls.Add(_allChannels[i]);
+
+                _channels[i].Dispose();
+                _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
+                panels2[i].Controls.Add(_channels[i]);
+
+                //_listImagesForSave[i].Clear();
             }
             //bwImageSaver.RunWorkerAsync();
         }
@@ -244,6 +266,23 @@ namespace ReceivingStation
             }
         }
 
-        #endregion      
+        #endregion
+
+        #region Создание контейнера для изображений.
+        private FlowLayoutPanel GetFlp(string name, Size size)
+        {
+            FlowLayoutPanel flp = new FlowLayoutPanel
+            {
+                Name = name,
+                FlowDirection = FlowDirection.TopDown,
+                Size = size,
+                AutoSize = true,
+                Location = new Point(0, 0)
+            };
+
+            return flp;
+        }
+
+        #endregion
     }
 }
