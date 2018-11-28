@@ -218,8 +218,7 @@ namespace ReceivingStation
                     _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
                     _channelsPanels[i].Controls.Add(_channels[i]);
 
-                    bwImageSaver.RunWorkerAsync();
-                  
+                    bwImageSaver.RunWorkerAsync();                  
                 }
             }
 
