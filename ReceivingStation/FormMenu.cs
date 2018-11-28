@@ -2,6 +2,7 @@
 using ReceivingStation.Other;
 using System;
 using System.Windows.Forms;
+using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
@@ -15,7 +16,7 @@ namespace ReceivingStation
 
         private void FormMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var result = FormCloseMessageBox.Show();
+            var result = FormDialogMessageBox.Show("Выход", "Вы уверены, что хотите закрыть программу?", Resources.door_exit_icon);
 
             if (result != DialogResult.Yes)
             {

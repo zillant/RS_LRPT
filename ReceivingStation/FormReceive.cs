@@ -14,12 +14,16 @@ using ReceivingStation.Properties;
 namespace ReceivingStation
 {
     public partial class FormReceive : MaterialForm
-    {
+    {       
+        public static TimeSpan MainFcpWorkingTime;
+        public static TimeSpan ReserveFcpWorkingTime;
+        public static TimeSpan MainPrdWorkingTime;
+        public static TimeSpan ReservePrdWorkingTime;
+        public static TimeSpan FullWorkingTime; // Общее время работы системы. (Не используем в релизе) 
+
         public bool remoteModeFlag;
 
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
-
-        private string WorkingTimeOnboardFileName = Settings.Default.OnboardWorkingTimeFileName;
 
         private Thread _serverThread;
         
@@ -28,11 +32,6 @@ namespace ReceivingStation
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
         private DateTime _startWorkingTime; // Время начала работы борта.
-        private TimeSpan _mainFCPWorkingTime;
-        private TimeSpan _reserveFCPWorkingTime;
-        private TimeSpan _mainPRDWorkingTime;
-        private TimeSpan _reservePRDWorkingTime;
-        private TimeSpan _fullWorkingTime; // Общее время работы системы.
 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
 
@@ -60,23 +59,13 @@ namespace ReceivingStation
             remoteModeFlag = false;
             _isReceivingStarting = false;
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
-            
+
             for (int i = 0; i < 6; i++)
             {
                 _listImagesForSave[i] = new List<Bitmap>();
             }
 
-            try
-            {
-                ReadFromLogWorkingTime(WorkingTimeOnboardFileName);
-                DisplayWorkingTime();
-            }
-            catch (Exception)
-            {
-                WriteToLogWorkingTime(WorkingTimeOnboardFileName);
-                ReadFromLogWorkingTime(WorkingTimeOnboardFileName);
-                DisplayWorkingTime();
-            }
+            OpenLogWorkingTimeFile();
 
             _channels[0] = flpChannel1;
             _channels[1] = flpChannel2;
@@ -103,14 +92,13 @@ namespace ReceivingStation
                 ThreadSafeStopReceiving = StopReceiving
             };
 
-            _serverThread = new Thread(new ThreadStart(_server.StartServer));
-            _serverThread.IsBackground = true;
-            _serverThread.Start();            
+            _serverThread = new Thread(_server.StartServer) {IsBackground = true};
+            _serverThread.Start();
         }
 
         private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var result = FormCloseMessageBox.Show();
+            var result = FormDialogMessageBox.Show("Выход", "Вы уверены, что хотите закрыть программу?", Resources.door_exit_icon);
 
             if (result != DialogResult.Yes)
             {
@@ -160,8 +148,7 @@ namespace ReceivingStation
                 {
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
-                    WriteToLogWorkingTime(WorkingTimeOnboardFileName);
-                    DisplayWorkingTime();
+                    WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
@@ -242,6 +229,8 @@ namespace ReceivingStation
                 _isReceivingStarting = true;
                 btnStartRecieve.Text = "Остановить";
 
+                OpenLogWorkingTimeFile();
+
                 if (!remoteModeFlag)
                 {
                     SetReceiveParameters();
@@ -280,8 +269,7 @@ namespace ReceivingStation
             btnStartRecieve.Text = "Начать";
 
             CountWorkingTime();
-            WriteToLogWorkingTime(WorkingTimeOnboardFileName);
-            DisplayWorkingTime();
+            WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
 
             WriteToLogUserActions("Запись потока завершена");
         }
@@ -322,27 +310,43 @@ namespace ReceivingStation
         {
             DateTime finishWorkingTime = DateTime.Now;
             TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTime;
-            _fullWorkingTime += deltaWorkingTime;
+            FullWorkingTime += deltaWorkingTime;
 
             if (rbFCPMain.Checked)
             {
-                _mainFCPWorkingTime += deltaWorkingTime;
+                MainFcpWorkingTime += deltaWorkingTime;
             }
             else
             {
-                _reserveFCPWorkingTime += deltaWorkingTime;
+                ReserveFcpWorkingTime += deltaWorkingTime;
             }
 
             if (rbPRDMain.Checked)
             {
-                _mainPRDWorkingTime += deltaWorkingTime;
+                MainPrdWorkingTime += deltaWorkingTime;
             }
             else
             {
-                _reservePRDWorkingTime += deltaWorkingTime;
+                ReservePrdWorkingTime += deltaWorkingTime;
             }
         }
 
+        #endregion
+
+        #region Открытие файла времени наработки.
+        private void OpenLogWorkingTimeFile()
+        {
+            try
+            {
+                ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+            }
+            catch (Exception)
+            {
+                WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+                ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+            }
+        }
+        
         #endregion
 
         #region Запись в лог файл времени наработки.
@@ -350,11 +354,11 @@ namespace ReceivingStation
         {
             using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8, 65536))
             {
-                sw.WriteLine(_mainFCPWorkingTime);
-                sw.WriteLine(_reserveFCPWorkingTime);
-                sw.WriteLine(_mainPRDWorkingTime);
-                sw.WriteLine(_reservePRDWorkingTime);
-                sw.WriteLine(_fullWorkingTime);
+                sw.WriteLine(MainFcpWorkingTime);
+                sw.WriteLine(ReserveFcpWorkingTime);
+                sw.WriteLine(MainPrdWorkingTime);
+                sw.WriteLine(ReservePrdWorkingTime);
+                sw.WriteLine(FullWorkingTime);
             }
         }
 
@@ -365,22 +369,15 @@ namespace ReceivingStation
         {
             using (StreamReader sr = new StreamReader(fileName))
             {
-                _mainFCPWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                _reserveFCPWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                _mainPRDWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                _reservePRDWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                _fullWorkingTime = TimeSpan.Parse(sr.ReadLine());                           
+                MainFcpWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                ReserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                MainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                ReservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                FullWorkingTime = TimeSpan.Parse(sr.ReadLine());                           
             }
         }
 
         #endregion
 
-        #region Отображение времени наработки.
-        private void DisplayWorkingTime()
-        {
-            slWorkingTimeOnboard.Text = $"{(long)_fullWorkingTime.TotalHours}:{_fullWorkingTime.Minutes.ToString("D2")}:{_fullWorkingTime.Seconds.ToString("D2")}";
-        }
-
-        #endregion
     }
 }

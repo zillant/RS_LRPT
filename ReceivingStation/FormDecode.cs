@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using MaterialSkin.Controls;
+using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
@@ -25,8 +26,8 @@ namespace ReceivingStation
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
-        private Panel[] panels = new Panel[6];
-        private Panel[] panels2 = new Panel[6];
+        private Panel[] _allChannelsPanels = new Panel[6];
+        private Panel[] _channelsPanels = new Panel[6];
 
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
@@ -43,38 +44,29 @@ namespace ReceivingStation
             _isDecodeStarting = false;
             _isFileOpened = false;
 
+            _allChannelsPanels[0] = panel7;
+            _allChannelsPanels[1] = panel8;
+            _allChannelsPanels[2] = panel9;
+            _allChannelsPanels[3] = panel10;
+            _allChannelsPanels[4] = panel11;
+            _allChannelsPanels[5] = panel12;
+
+            _channelsPanels[0] = pScroll1;
+            _channelsPanels[1] = pScroll2;
+            _channelsPanels[2] = pScroll3;
+            _channelsPanels[3] = pScroll4;
+            _channelsPanels[4] = pScroll5;
+            _channelsPanels[5] = pScroll6;
+
+
             for (int i = 0; i < 6; i++)
             {
+                _allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8));
+                _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
+                _allChannelsPanels[i].Controls.Add(_allChannels[i]);
+                _channelsPanels[i].Controls.Add(_channels[i]);
                 _listImagesForSave[i] = new List<Bitmap>();
             }
-
-            _channels[0] = flpChannel1;
-            _channels[1] = flpChannel2;
-            _channels[2] = flpChannel3;
-            _channels[3] = flpChannel4;
-            _channels[4] = flpChannel5;
-            _channels[5] = flpChannel6;
-
-            _allChannels[0] = flpAllChannels1;
-            _allChannels[1] = flpAllChannels2;
-            _allChannels[2] = flpAllChannels3;
-            _allChannels[3] = flpAllChannels4;
-            _allChannels[4] = flpAllChannels5;
-            _allChannels[5] = flpAllChannels6;
-
-            panels[0] = panel7;
-            panels[1] = panel8;
-            panels[2] = panel9;
-            panels[3] = panel10;
-            panels[4] = panel11;
-            panels[5] = panel12;
-
-            panels2[0] = pScroll1;
-            panels2[1] = pScroll2;
-            panels2[2] = pScroll3;
-            panels2[3] = pScroll4;
-            panels2[4] = pScroll5;
-            panels2[5] = pScroll6;
 
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             timer1.Start();
@@ -82,7 +74,7 @@ namespace ReceivingStation
 
         private void FormDecode_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var result = FormCloseMessageBox.Show();
+            var result = FormDialogMessageBox.Show("Выход", "Вы уверены, что хотите закрыть программу?", Resources.door_exit_icon);
 
             if (result != DialogResult.Yes)
             {
@@ -207,25 +199,26 @@ namespace ReceivingStation
         #region Обновление изображений при декодировании.
         private void UpdateChannelsImages(DirectBitmap[] images)
         {
-            if (flpChannel6.InvokeRequired & flpAllChannels6.InvokeRequired)
+            if (_channelsPanels[0].InvokeRequired & _allChannelsPanels[0].InvokeRequired)
                 Invoke((Action)(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images); }));
             else
                 GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
 
 
-            if (_allChannels[0].Height <= panels[0].Height) return;
-
-            for (int i = 0; i < 6; i++)
+            if (_allChannels[0].Height >= _allChannelsPanels[0].Height)
             {
-                _allChannels[i].Dispose();
-                _allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8)); 
-                panels[i].Controls.Add(_allChannels[i]);
+                for (int i = 0; i < 6; i++)
+                {
+                    _allChannels[i].Dispose();
+                    _allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8));
+                    _allChannelsPanels[i].Controls.Add(_allChannels[i]);
 
-                _channels[i].Dispose();
-                _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
-                panels2[i].Controls.Add(_channels[i]);
+                    _channels[i].Dispose();
+                    _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
+                    _channelsPanels[i].Controls.Add(_channels[i]);
 
-                //_listImagesForSave[i].Clear();
+                    //_listImagesForSave[i].Clear();
+                }
             }
             //bwImageSaver.RunWorkerAsync();
         }

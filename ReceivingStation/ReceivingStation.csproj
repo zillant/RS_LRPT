@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -109,11 +109,11 @@
     <Compile Include="FormWorkingTimes.Designer.cs">
       <DependentUpon>FormWorkingTimes.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessageBoxes\FormCloseMessageBox.cs">
+    <Compile Include="MessageBoxes\FormDialogMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MessageBoxes\FormCloseMessageBox.Designer.cs">
-      <DependentUpon>FormCloseMessageBox.cs</DependentUpon>
+    <Compile Include="MessageBoxes\FormDialogMessageBox.Designer.cs">
+      <DependentUpon>FormDialogMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMenu.cs">
       <SubType>Form</SubType>
@@ -162,8 +162,8 @@
     <EmbeddedResource Include="FormWorkingTimes.resx">
       <DependentUpon>FormWorkingTimes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MessageBoxes\FormCloseMessageBox.resx">
-      <DependentUpon>FormCloseMessageBox.cs</DependentUpon>
+    <EmbeddedResource Include="MessageBoxes\FormDialogMessageBox.resx">
+      <DependentUpon>FormDialogMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDecode.resx">
       <DependentUpon>FormDecode.cs</DependentUpon>
@@ -228,6 +228,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\info_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clear_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

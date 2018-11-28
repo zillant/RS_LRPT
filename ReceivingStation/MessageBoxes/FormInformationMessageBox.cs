@@ -21,7 +21,7 @@ namespace ReceivingStation.MessageBoxes
         }
 
         public static void Show(string title, string text)
-        {
+        {         
             _formInformationMessageBox = new FormInformationMessageBox();
             _formInformationMessageBox.Text = title;
             _formInformationMessageBox.lblInfo.Text = text;

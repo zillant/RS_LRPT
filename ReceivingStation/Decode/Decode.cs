@@ -190,7 +190,7 @@ namespace ReceivingStation
                     ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
                     Find_tk_in();
                 }
-            }
+            }             
         }
 
         #endregion
@@ -450,7 +450,7 @@ namespace ReceivingStation
                                 Fl_err = Convert.ToBoolean(0);
                             }
 
-                            if (cnt_mark < 28)      //потеря маркера
+                            if (cnt_mark < 16)      //потеря маркера
                             {
                                 Ind_mar_tk_bit = 0;
                                 cnt_mark = 0;
@@ -699,6 +699,22 @@ namespace ReceivingStation
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
 
+                Yt += 8;
+                if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
+                {
+                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+
+                    Parallel.For(0, _bmps.Length, j =>
+                    {
+                        _bmps[j].Dispose();
+                        _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
+                    });
+
+                    Yt = 0;
+                }
+
+                PreparePicture();
+
                 ind_bt_in = 0;
                 dl_jpeg_in = -1;
 
@@ -719,22 +735,7 @@ namespace ReceivingStation
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {         
-                Yt += 8;
 
-                if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
-                {
-
-                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
-                    
-                    Parallel.For(0, _bmps.Length, j =>
-                    {
-                        _bmps[j].Dispose();
-                        _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
-                    });
-
-                    Yt = 0;
-                }
-                
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
                 _sw.WriteLine($"Миллисекунды: {tm}");
                 _sw.WriteLine($"Микросекунды: {mc}");
