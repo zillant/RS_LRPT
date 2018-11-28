@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MaterialSkin.Controls;
 using ReceivingStation.Other;
 using Color = System.Drawing.Color;
 
@@ -18,7 +19,7 @@ namespace ReceivingStation
         public delegate void StopDecodingDelegate();
         public StopDecodingDelegate ThreadSafeStopDecoding;
 
-        private FormDecode _form;
+        private MaterialForm _form;
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;

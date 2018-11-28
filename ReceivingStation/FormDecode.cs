@@ -22,27 +22,32 @@ namespace ReceivingStation
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
-        
-        private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
-        private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
-        private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
+
+        private long _frameCounter;
+
         private Panel[] _allChannelsPanels = new Panel[6];
         private Panel[] _channelsPanels = new Panel[6];
+        private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
+        private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
+
+        private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
         public FormDecode()
         {
-            InitializeComponent();
-            GuiUpdater.SmoothLoadingForm(this);
+            InitializeComponent();            
         }
 
         private void FormDecode_Load(object sender, EventArgs e)
         {
+            GuiUpdater.SmoothLoadingForm(this);
+
             materialTabControl1.SelectedTab = tabPage14;
 
             _isDecodeStarting = false;
             _isFileOpened = false;
+            _frameCounter = 0;
 
             _allChannelsPanels[0] = panel7;
             _allChannelsPanels[1] = panel8;
@@ -116,7 +121,7 @@ namespace ReceivingStation
         }
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
-        {
+        {          
             Parallel.For(0, _listImagesForSave.Length, i =>
             {
                 using (Bitmap bmp = new Bitmap(Constants.WDT, _listImagesForSave[i].Count * Constants.HGT))
@@ -132,9 +137,11 @@ namespace ReceivingStation
                         }
                     }
 
-                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
+                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}_{_frameCounter}.bmp");               
                 }
+                _listImagesForSave[i].Clear();
             });
+            _frameCounter += 1;
         }       
 
         #region Начать декодирование.
@@ -198,13 +205,7 @@ namespace ReceivingStation
 
         #region Обновление изображений при декодировании.
         private void UpdateChannelsImages(DirectBitmap[] images)
-        {
-            if (_channelsPanels[0].InvokeRequired & _allChannelsPanels[0].InvokeRequired)
-                Invoke((Action)(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images); }));
-            else
-                GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
-
-
+        {          
             if (_allChannels[0].Height >= _allChannelsPanels[0].Height)
             {
                 for (int i = 0; i < 6; i++)
@@ -217,10 +218,15 @@ namespace ReceivingStation
                     _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
                     _channelsPanels[i].Controls.Add(_channels[i]);
 
-                    //_listImagesForSave[i].Clear();
+                    bwImageSaver.RunWorkerAsync();
+                  
                 }
             }
-            //bwImageSaver.RunWorkerAsync();
+
+            if (_channelsPanels[0].InvokeRequired & _allChannelsPanels[0].InvokeRequired)
+                Invoke((Action)(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images); }));
+            else
+                GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
         }
 
         #endregion
