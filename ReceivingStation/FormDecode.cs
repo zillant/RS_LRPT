@@ -19,6 +19,7 @@ namespace ReceivingStation
         private string _fileName;
         private bool _isDecodeStarting;
         private bool _isFileOpened;
+        private int _callingUpdateImageCounter;
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
@@ -47,7 +48,6 @@ namespace ReceivingStation
 
             _isDecodeStarting = false;
             _isFileOpened = false;
-            _frameCounter = 0;
 
             _allChannelsPanels[0] = panel7;
             _allChannelsPanels[1] = panel8;
@@ -121,26 +121,8 @@ namespace ReceivingStation
         }
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
-        {          
-            Parallel.For(0, _listImagesForSave.Length, i =>
-            {
-                using (Bitmap bmp = new Bitmap(Constants.WDT, _listImagesForSave[i].Count * Constants.HGT))
-                {
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        int yOffset = 0;
-
-                        for (int j = 0; j < _listImagesForSave[i].Count; j++)
-                        {
-                            g.DrawImage(_listImagesForSave[i][j], new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
-                            yOffset += Constants.HGT;
-                        }
-                    }
-
-                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}_{_frameCounter}.bmp");               
-                }
-                _listImagesForSave[i].Clear();
-            });
+        {
+            Parallel.For(0, _listImagesForSave.Length, i => { SaveImage(i); });
             _frameCounter += 1;
         }       
 
@@ -153,6 +135,8 @@ namespace ReceivingStation
                 {
                     bool reedSoloFlag = rbRSYes.Checked;
                     bool nrzFlag = rbNRZYes.Checked;
+                    _frameCounter = 0;
+                    _callingUpdateImageCounter = 0;
 
                     _cancellationTokenSource = new CancellationTokenSource();
                     _cancellationToken = _cancellationTokenSource.Token;
@@ -162,16 +146,27 @@ namespace ReceivingStation
                     var decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
+                        ThreadSafeUpdateMko = UpdateMko,
                         ThreadSafeUpdateImagesContent = UpdateChannelsImages,
                         ThreadSafeStopDecoding = StopDecoding
                     };
 
+                    // Очистка всего перед новым запуском.
                     for (int i = 0; i < 6; i++)
                     {
-                        _allChannels[i].Controls.Clear();
+                        _allChannels[i].Controls.Clear();                        
                         _channels[i].Controls.Clear();
                         _listImagesForSave[i].Clear();
+                        Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                        DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+
+                        foreach (FileInfo file in di.GetFiles())
+                        {
+                            file.Delete();
+                        }
                     }
+                    dgvMKO.Rows.Clear();
+                    dgvMKO.Refresh();
 
                     tlpDecodingParameters.Enabled = false;
 
@@ -205,7 +200,9 @@ namespace ReceivingStation
 
         #region Обновление изображений при декодировании.
         private void UpdateChannelsImages(DirectBitmap[] images)
-        {          
+        {
+            _callingUpdateImageCounter++;
+
             if (_allChannels[0].Height >= _allChannelsPanels[0].Height)
             {
                 for (int i = 0; i < 6; i++)
@@ -216,11 +213,17 @@ namespace ReceivingStation
 
                     _channels[i].Dispose();
                     _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
-                    _channelsPanels[i].Controls.Add(_channels[i]);
-
-                   // bwImageSaver.RunWorkerAsync();                  
-                }
+                    _channelsPanels[i].Controls.Add(_channels[i]);                              
+                }                             
             }
+
+            // Набрал 960 строчек изображения (16 * 60).
+            if (_callingUpdateImageCounter == 60)
+            {
+                bwImageSaver.RunWorkerAsync();
+                _callingUpdateImageCounter = 0;
+            }
+            
 
             if (_channelsPanels[0].InvokeRequired & _allChannelsPanels[0].InvokeRequired)
                 Invoke((Action)(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images); }));
@@ -230,19 +233,32 @@ namespace ReceivingStation
 
         #endregion
 
+        #region Обновление МКО при декодировании.
+        private void UpdateMko(string td, string oshv, string bshv, string pdcm)
+        {
+            if (dgvMKO.InvokeRequired)
+                Invoke((Action)(() => { GuiUpdater.AddRowToDataGrid(dgvMKO, td, oshv, bshv, pdcm); }));
+            else
+                GuiUpdater.AddRowToDataGrid(dgvMKO, td, oshv, bshv, pdcm);
+        }
+
+        #endregion
+
         #region Остановка декодирования.
         private void StopDecoding()
         {
+            bwImageSaver.RunWorkerAsync();
+
             _isDecodeStarting = false;
             btnStartStopDecode.Text = "Начать";
 
             tlpDecodingParameters.Enabled = true;
-
+           
             DateTime worktimefinish = DateTime.Now;
             TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
             slDecodeTime.Text = deltaWorkingTime.ToString();
 
-            WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");        
+            WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");         
         }
 
         #endregion
@@ -280,6 +296,63 @@ namespace ReceivingStation
 
             return flp;
         }
+
+        #endregion
+
+        #region Сохранение изображений.
+        private void SaveImage(int i)
+        {
+
+            List<Bitmap> listImages = new List<Bitmap>(_listImagesForSave[i]);
+            _listImagesForSave[i].Clear();
+
+            using (Bitmap bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    int yOffset = 0;
+
+                    for (int j = 0; j < listImages.Count; j++)
+                    {
+                        g.DrawImage(listImages[j], new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
+                        yOffset += Constants.HGT;
+                    }
+                }
+
+                bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}_{_frameCounter}.bmp");
+            }
+        }
+
+        #endregion
+
+        #region Создание полного изображения (Работает на маленьких изображениях, создать картинку 15ХХ х Over9000 конечно не получится).
+        private void CreateFullImage(int i)
+        {
+            DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+            List<Bitmap> images = new List<Bitmap>();
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                images.Add(new Bitmap(file.FullName));
+            }
+
+            using (Bitmap bmp = new Bitmap(Constants.WDT, images.Count * 960))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    int yOffset = 0;
+
+                    for (int j = 0; j < images.Count; j++)
+                    {
+                        g.DrawImage(images[j], new Rectangle(0, yOffset, Constants.WDT, images[j].Height));
+                        yOffset += images[j].Height;
+                    }
+                }
+
+                bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+            }
+        }
+
 
         #endregion
     }

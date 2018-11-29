@@ -229,8 +229,6 @@ namespace ReceivingStation
                 _isReceivingStarting = true;
                 btnStartRecieve.Text = "Остановить";
 
-                OpenLogWorkingTimeFile();
-
                 if (!remoteModeFlag)
                 {
                     SetReceiveParameters();
@@ -333,6 +331,8 @@ namespace ReceivingStation
 
         #endregion
 
+        #region Работа с файлом времени наработки.
+
         #region Открытие файла времени наработки.
         private void OpenLogWorkingTimeFile()
         {
@@ -346,11 +346,11 @@ namespace ReceivingStation
                 ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
             }
         }
-        
+
         #endregion
 
-        #region Запись в лог файл времени наработки.
-        private void WriteToLogWorkingTime(string fileName)
+        #region Запись в файл времени наработки.
+        public static void WriteToLogWorkingTime(string fileName)
         {
             using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8, 65536))
             {
@@ -364,7 +364,7 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Чтение из лог файла времени наработки.
+        #region Чтение из файла времени наработки.
         private void ReadFromLogWorkingTime(string fileName)
         {
             using (StreamReader sr = new StreamReader(fileName))
@@ -373,9 +373,11 @@ namespace ReceivingStation
                 ReserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine());
                 MainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine());
                 ReservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                FullWorkingTime = TimeSpan.Parse(sr.ReadLine());                           
+                FullWorkingTime = TimeSpan.Parse(sr.ReadLine());
             }
         }
+
+        #endregion
 
         #endregion
 

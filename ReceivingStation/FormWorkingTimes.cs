@@ -32,13 +32,13 @@ namespace ReceivingStation
 
             if (result == DialogResult.Yes)
             {
-                File.Delete(Settings.Default.OnboardWorkingTimeFileName);
-
                 FormReceive.MainFcpWorkingTime = TimeSpan.Zero;
                 FormReceive.ReserveFcpWorkingTime = TimeSpan.Zero;
                 FormReceive.MainPrdWorkingTime = TimeSpan.Zero;
                 FormReceive.ReservePrdWorkingTime = TimeSpan.Zero;
                 FormReceive.FullWorkingTime = TimeSpan.Zero;
+
+                FormReceive.WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
 
                 DisplayWorkinTime(lblFCPMain, FormReceive.MainFcpWorkingTime);
                 DisplayWorkinTime(lblFCPReserve, FormReceive.ReserveFcpWorkingTime);

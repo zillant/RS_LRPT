@@ -26,6 +26,11 @@ namespace ReceivingStation.Other
             }
         }
 
+        public static void AddRowToDataGrid(DataGridView dgView , string td, string oshv, string bshv, string pdcm)
+        {
+            dgView.Rows.Add(td, oshv, bshv, pdcm);
+        }
+
         public static void SmoothLoadingForm(Form form)
         {
             form.Opacity = 0;

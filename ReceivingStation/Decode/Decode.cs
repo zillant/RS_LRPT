@@ -14,6 +14,8 @@ namespace ReceivingStation
     {       
         public delegate void UpdateFrameCounterDelegate(uint counter);
         public UpdateFrameCounterDelegate ThreadSafeUpdateFrameCounterValue;
+        public delegate void UpdateMkoDelegate(string td, string oshv, string bshv, string pdcm);
+        public UpdateMkoDelegate ThreadSafeUpdateMko;
         public delegate void UpdateImagesContentDelegate(DirectBitmap[] list);
         public UpdateImagesContentDelegate ThreadSafeUpdateImagesContent;
         public delegate void StopDecodingDelegate();
@@ -26,10 +28,14 @@ namespace ReceivingStation
        
         private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
 
+        private string _td;
+        private string _oshv;
+        private string _bshv;
+        private string _pdcm;
+
         private string _fileName; // Имя открытого файла.
         private FileStream _fs; // Содержимое открытого .dat файла.
         private StreamWriter _sw;
-        private StringBuilder _sb;
         private string _decodeLogFileName; // Файл для записи информации.
 
         private uint Kol_tk; //Считает число транспортных кадров.       
@@ -94,7 +100,6 @@ namespace ReceivingStation
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
             _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
-            _sb = new StringBuilder();
 
             for (int i = 0; i < 6; i++)
             {
@@ -694,11 +699,15 @@ namespace ReceivingStation
             //если служебный пакет
             if (apid == Constants.APID_c)
             {
+                // МКО.
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 25, 1);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
+
+                _form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
+
 
                 Yt += 8;
                 if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
@@ -824,8 +833,8 @@ namespace ReceivingStation
         #region Запись той служебной информации в лог файл которая формируется через StringBuilder.
         private void WriteServiceDataToLogFile(byte[] data, string header, int startIndex, int finishIndex, int iterStep)
         {
-            _sb.Append(header);
-
+            StringBuilder _sb = new StringBuilder();
+           
             for (int i = startIndex; i < finishIndex; i += iterStep)
             {
                 if (iterStep == 1)
@@ -838,8 +847,17 @@ namespace ReceivingStation
                 }
             }
 
-            _sw.WriteLine($"{_sb.ToString()}");
-            _sb.Clear();
+            switch (header)
+            {
+                case "#ТД: ": _td = _sb.ToString(); break;
+                case "#ОШВ: ": _oshv = _sb.ToString(); break;
+                case "#БШВ: ": _bshv = _sb.ToString(); break;
+                case "#ПДЦМ: ": _pdcm = _sb.ToString(); break;
+            }
+
+            _sb.Insert(0, header);
+
+            _sw.WriteLine($"{_sb}");
         }
 
         #endregion
