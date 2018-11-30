@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using MaterialSkin.Controls;
 
 namespace ReceivingStation.Other
 {
@@ -26,9 +27,33 @@ namespace ReceivingStation.Other
             }
         }
 
-        public static void AddRowToDataGrid(DataGridView dgView , string td, string oshv, string bshv, string pdcm)
+        public static void UpdateMko(MaterialLabel[] labels, string td, string oshv, string bshv, string pcdm)
         {
-            dgView.Rows.Add(td, oshv, bshv, pdcm);
+            string[] tdd = td.Split(' ');
+            string[] oshvv = oshv.Split(' ');
+            string[] bshvv = bshv.Split(' ');
+            string[] pcdmm = pcdm.Split(' ');
+
+            // ТД.
+            labels[0].Text = $"{tdd[0]} {tdd[1]}";
+            labels[1].Text = $"{tdd[2]}";
+            labels[2].Text = $"{tdd[3]}";
+
+            // ОШВ.
+            labels[3].Text = $"{oshvv[0]} {oshvv[1]}";
+
+            // БШВ.
+            labels[4].Text = $"{bshvv[0]} {bshvv[1]}";
+            labels[5].Text = $"{bshvv[2]} {bshvv[3]}";
+            labels[6].Text = $"{bshvv[4]} {bshvv[5]}";
+            labels[7].Text = $"{bshvv[6]} {bshvv[7]}";
+            labels[8].Text = $"{bshvv[8]} {bshvv[9]}";
+
+            // ПЦДМ.
+            labels[9].Text = $"{pcdmm[0]} {pcdmm[1]}";
+            labels[10].Text = $"{pcdmm[2]} {pcdmm[3]} {pcdmm[4]} {pcdmm[5]}";
+            labels[11].Text = $"{pcdmm[6]} {pcdmm[7]} {pcdmm[8]} {pcdmm[9]}";
+            labels[12].Text = $"{pcdmm[10]} {pcdmm[11]} {pcdmm[12]} {pcdmm[13]}";
         }
 
         public static void SmoothLoadingForm(Form form)

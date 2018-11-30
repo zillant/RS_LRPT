@@ -26,6 +26,8 @@ namespace ReceivingStation
 
         private long _frameCounter;
 
+
+        private  MaterialLabel[] mkoDataLabels = new MaterialLabel[13];
         private Panel[] _allChannelsPanels = new Panel[6];
         private Panel[] _channelsPanels = new Panel[6];
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
@@ -62,6 +64,20 @@ namespace ReceivingStation
             _channelsPanels[3] = pScroll4;
             _channelsPanels[4] = pScroll5;
             _channelsPanels[5] = pScroll6;
+
+            mkoDataLabels[0] = materialLabel12;
+            mkoDataLabels[1] = materialLabel14;
+            mkoDataLabels[2] = materialLabel16;
+            mkoDataLabels[3] = materialLabel18;
+            mkoDataLabels[4] = materialLabel20;
+            mkoDataLabels[5] = materialLabel22;
+            mkoDataLabels[6] = materialLabel24;
+            mkoDataLabels[7] = materialLabel26;
+            mkoDataLabels[8] = materialLabel31;
+            mkoDataLabels[9] = materialLabel30;
+            mkoDataLabels[10] = materialLabel27;
+            mkoDataLabels[11] = materialLabel36;
+            mkoDataLabels[12] = materialLabel33;
 
 
             for (int i = 0; i < 6; i++)
@@ -165,8 +181,6 @@ namespace ReceivingStation
                             file.Delete();
                         }
                     }
-                    dgvMKO.Rows.Clear();
-                    dgvMKO.Refresh();
 
                     tlpDecodingParameters.Enabled = false;
 
@@ -191,7 +205,7 @@ namespace ReceivingStation
         private void UpdateFrameCounterValue(uint counter)
         {
             if (lblFramesCounter.InvokeRequired)
-                Invoke((Action)(() => { GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString()); }));
+                lblFramesCounter.Invoke((Action)(() => { GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString()); }));
             else
                 GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
         }
@@ -217,7 +231,7 @@ namespace ReceivingStation
                 }                             
             }
 
-            // Набрал 960 строчек изображения (16 * 60).
+            // Набрал 480 строчек изображения (8 * 60).
             if (_callingUpdateImageCounter == 60)
             {
                 bwImageSaver.RunWorkerAsync();
@@ -236,10 +250,10 @@ namespace ReceivingStation
         #region Обновление МКО при декодировании.
         private void UpdateMko(string td, string oshv, string bshv, string pdcm)
         {
-            if (dgvMKO.InvokeRequired)
-                Invoke((Action)(() => { GuiUpdater.AddRowToDataGrid(dgvMKO, td, oshv, bshv, pdcm); }));
+            if (tableLayoutPanel4.InvokeRequired)
+                tableLayoutPanel4.Invoke((Action)(() => { GuiUpdater.UpdateMko(mkoDataLabels, td, oshv, bshv, pdcm); }));
             else
-                GuiUpdater.AddRowToDataGrid(dgvMKO, td, oshv, bshv, pdcm);
+                GuiUpdater.UpdateMko(mkoDataLabels, td, oshv, bshv, pdcm);
         }
 
         #endregion
