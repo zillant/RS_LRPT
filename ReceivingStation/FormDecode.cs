@@ -24,8 +24,16 @@ namespace ReceivingStation
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
+        private readonly SynchronizationContext synchronizationContext;
+
         private long _frameCounter;
 
+        private Decode decode;
+
+        string[] tdd = new string[4];
+        string[] oshvv = new string[2];
+        string[] bshvv = new string[10];
+        string[] pcdmm = new string[14];
 
         private  MaterialLabel[] mkoDataLabels = new MaterialLabel[13];
         private Panel[] _allChannelsPanels = new Panel[6];
@@ -39,13 +47,14 @@ namespace ReceivingStation
 
         public FormDecode()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         private void FormDecode_Load(object sender, EventArgs e)
         {
             GuiUpdater.SmoothLoadingForm(this);
-
+           
             materialTabControl1.SelectedTab = tabPage14;
 
             _isDecodeStarting = false;
@@ -159,7 +168,7 @@ namespace ReceivingStation
                     _isDecodeStarting = true;
                     btnStartStopDecode.Text = "Остановить";
 
-                    var decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
+                    decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
                         ThreadSafeUpdateMko = UpdateMko,
@@ -202,12 +211,9 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление счетчика кадров при декодировании.
-        private void UpdateFrameCounterValue(uint counter)
+        private async void UpdateFrameCounterValue(uint counter)
         {
-            if (lblFramesCounter.InvokeRequired)
-                lblFramesCounter.Invoke((Action)(() => { GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString()); }));
-            else
-                GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
+            await Task.Run(() => synchronizationContext.Post(o => { lblFramesCounter.Text = (string) o; }, counter.ToString()));
         }
 
         #endregion
@@ -248,12 +254,35 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление МКО при декодировании.
-        private void UpdateMko(string td, string oshv, string bshv, string pdcm)
+        private async void UpdateMko(string td, string oshv, string bshv, string pcdm)
         {
-            if (tableLayoutPanel4.InvokeRequired)
-                tableLayoutPanel4.Invoke((Action)(() => { GuiUpdater.UpdateMko(mkoDataLabels, td, oshv, bshv, pdcm); }));
-            else
-                GuiUpdater.UpdateMko(mkoDataLabels, td, oshv, bshv, pdcm);
+
+            var tdd = td.Split(' ');
+            var oshvv = oshv.Split(' ');
+            var bshvv = bshv.Split(' ');
+            var pcdmm = pcdm.Split(' ');
+
+            // ТД.
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[0].Text = (string)o; }, $"{tdd[0]} {tdd[1]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[1].Text = (string)o; }, $"{tdd[2]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[2].Text = (string)o; }, $"{tdd[3]}"));
+
+            // ОШВ.
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[3].Text = (string)o; }, $"{oshvv[0]} {oshvv[1]}"));
+
+            // БШВ.
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[4].Text = (string)o; }, $"{bshvv[0]} {bshvv[1]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[5].Text = (string)o; }, $"{bshvv[2]} {bshvv[3]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[6].Text = (string)o; }, $"{bshvv[4]} {bshvv[5]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[7].Text = (string)o; }, $"{bshvv[6]} {bshvv[7]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[8].Text = (string)o; }, $"{bshvv[8]} {bshvv[9]}"));
+
+            // ПЦДМ.
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[9].Text = (string)o; }, $"{pcdmm[0]} {pcdmm[1]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[10].Text = (string)o; }, $"{pcdmm[2]} {pcdmm[3]} {pcdmm[4]} {pcdmm[5]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[11].Text = (string)o; }, $"{pcdmm[6]} {pcdmm[7]} {pcdmm[8]} {pcdmm[9]}"));
+            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[12].Text = (string)o; }, $"{pcdmm[10]} {pcdmm[11]} {pcdmm[12]} {pcdmm[13]}"));
+
         }
 
         #endregion

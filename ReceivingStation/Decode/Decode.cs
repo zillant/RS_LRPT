@@ -598,8 +598,10 @@ namespace ReceivingStation
                 return;
             }
 
-            Kol_tk++;      
-            _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
+            Kol_tk++;
+            ThreadSafeUpdateFrameCounterValue(Kol_tk);
+           
+            //_form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -706,15 +708,18 @@ namespace ReceivingStation
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
 
-                _form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
+                ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
+                //_form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
 
 
                 Yt += 8;
                 if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
                 {
+                   // ThreadSafeUpdateImagesContent(_bmps);
                     _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+                    
 
-                    Parallel.For(0, _bmps.Length, j =>
+                   Parallel.For(0, _bmps.Length, j =>
                     {
                         _bmps[j].Dispose();
                         _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
