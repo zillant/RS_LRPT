@@ -1,16 +1,16 @@
-﻿using System;
-using System.IO;
+﻿using MaterialSkin.Controls;
+using ReceivingStation.Other;
+using ReceivingStation.Properties;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ReceivingStation.Other;
-using System.Text;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using MaterialSkin.Controls;
-using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
@@ -19,28 +19,27 @@ namespace ReceivingStation
         private string _fileName;
         private bool _isDecodeStarting;
         private bool _isFileOpened;
+
         private int _callingUpdateImageCounter;
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
-        private readonly SynchronizationContext synchronizationContext;
+        private long _imageCounter;
 
-        private long _frameCounter;
+        private uint _frameCounter;
+        private string[] _td = new string[4];
+        private string[] _oshv = new string[2];
+        private string[] _bshv = new string[10];
+        private string[] _pcdm = new string[14];
+        private DirectBitmap[] _images = new DirectBitmap[6];
 
         private Decode decode;
 
-        string[] tdd = new string[4];
-        string[] oshvv = new string[2];
-        string[] bshvv = new string[10];
-        string[] pcdmm = new string[14];
-
-        private  MaterialLabel[] mkoDataLabels = new MaterialLabel[13];
         private Panel[] _allChannelsPanels = new Panel[6];
         private Panel[] _channelsPanels = new Panel[6];
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
-
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
@@ -48,17 +47,17 @@ namespace ReceivingStation
         public FormDecode()
         {
             InitializeComponent();
-            synchronizationContext = SynchronizationContext.Current;
         }
 
         private void FormDecode_Load(object sender, EventArgs e)
         {
             GuiUpdater.SmoothLoadingForm(this);
-           
+
             materialTabControl1.SelectedTab = tabPage14;
 
             _isDecodeStarting = false;
             _isFileOpened = false;
+            _frameCounter = 0;
 
             _allChannelsPanels[0] = panel7;
             _allChannelsPanels[1] = panel8;
@@ -74,25 +73,10 @@ namespace ReceivingStation
             _channelsPanels[4] = pScroll5;
             _channelsPanels[5] = pScroll6;
 
-            mkoDataLabels[0] = materialLabel12;
-            mkoDataLabels[1] = materialLabel14;
-            mkoDataLabels[2] = materialLabel16;
-            mkoDataLabels[3] = materialLabel18;
-            mkoDataLabels[4] = materialLabel20;
-            mkoDataLabels[5] = materialLabel22;
-            mkoDataLabels[6] = materialLabel24;
-            mkoDataLabels[7] = materialLabel26;
-            mkoDataLabels[8] = materialLabel31;
-            mkoDataLabels[9] = materialLabel30;
-            mkoDataLabels[10] = materialLabel27;
-            mkoDataLabels[11] = materialLabel36;
-            mkoDataLabels[12] = materialLabel33;
-
-
             for (int i = 0; i < 6; i++)
             {
-                _allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8));
-                _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
+                _allChannels[i] = GuiUpdater.GetFlp($"flpAllChannels{i}", new Size(242, 8));
+                _channels[i] = GuiUpdater.GetFlp($"flpChannel{i}", new Size(1556, 40));
                 _allChannelsPanels[i].Controls.Add(_allChannels[i]);
                 _channelsPanels[i].Controls.Add(_channels[i]);
                 _listImagesForSave[i] = new List<Bitmap>();
@@ -147,12 +131,12 @@ namespace ReceivingStation
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
         {
-            Parallel.For(0, _listImagesForSave.Length, i => { SaveImage(i); });
-            _frameCounter += 1;
-        }       
+            Parallel.For(0, _listImagesForSave.Length, SaveImage);
+            _imageCounter += 1;
+        }
 
         #region Начать декодирование.
-        private void StartStopDecoding()
+        private async void StartStopDecoding()
         {
             if (_isFileOpened)
             {
@@ -160,7 +144,7 @@ namespace ReceivingStation
                 {
                     bool reedSoloFlag = rbRSYes.Checked;
                     bool nrzFlag = rbNRZYes.Checked;
-                    _frameCounter = 0;
+                    _imageCounter = 0;
                     _callingUpdateImageCounter = 0;
 
                     _cancellationTokenSource = new CancellationTokenSource();
@@ -173,13 +157,14 @@ namespace ReceivingStation
                         ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
                         ThreadSafeUpdateMko = UpdateMko,
                         ThreadSafeUpdateImagesContent = UpdateChannelsImages,
+                        ThreadSafeUpdateGui = UpdateGui,
                         ThreadSafeStopDecoding = StopDecoding
                     };
 
                     // Очистка всего перед новым запуском.
                     for (int i = 0; i < 6; i++)
                     {
-                        _allChannels[i].Controls.Clear();                        
+                        _allChannels[i].Controls.Clear();
                         _channels[i].Controls.Clear();
                         _listImagesForSave[i].Clear();
                         Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
@@ -194,8 +179,10 @@ namespace ReceivingStation
                     tlpDecodingParameters.Enabled = false;
 
                     _worktimestart = DateTime.Now;
-                    Task.Run(() => decode.StartDecode(_cancellationToken));
                     WriteToLogUserActions($"Начата расшифровка файла - {_fileName}");
+
+                    await Task.Run(() => decode.StartDecode(_cancellationToken));
+
                 }
                 else
                 {
@@ -204,16 +191,16 @@ namespace ReceivingStation
             }
             else
             {
-                lblFileName.ForeColor = Color.FromArgb(222, 211, 47, 47);              
+                lblFileName.ForeColor = Color.FromArgb(222, 211, 47, 47);
             }
         }
 
         #endregion
 
         #region Обновление счетчика кадров при декодировании.
-        private async void UpdateFrameCounterValue(uint counter)
+        private void UpdateFrameCounterValue(uint counter)
         {
-            await Task.Run(() => synchronizationContext.Post(o => { lblFramesCounter.Text = (string) o; }, counter.ToString()));
+            _frameCounter = counter;
         }
 
         #endregion
@@ -221,21 +208,9 @@ namespace ReceivingStation
         #region Обновление изображений при декодировании.
         private void UpdateChannelsImages(DirectBitmap[] images)
         {
+            _images = images;
+
             _callingUpdateImageCounter++;
-
-            if (_allChannels[0].Height >= _allChannelsPanels[0].Height)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    _allChannels[i].Dispose();
-                    _allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8));
-                    _allChannelsPanels[i].Controls.Add(_allChannels[i]);
-
-                    _channels[i].Dispose();
-                    _channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
-                    _channelsPanels[i].Controls.Add(_channels[i]);                              
-                }                             
-            }
 
             // Набрал 480 строчек изображения (8 * 60).
             if (_callingUpdateImageCounter == 60)
@@ -243,46 +218,18 @@ namespace ReceivingStation
                 bwImageSaver.RunWorkerAsync();
                 _callingUpdateImageCounter = 0;
             }
-            
-
-            if (_channelsPanels[0].InvokeRequired & _allChannelsPanels[0].InvokeRequired)
-                Invoke((Action)(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images); }));
-            else
-                GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
         }
 
         #endregion
 
         #region Обновление МКО при декодировании.
-        private async void UpdateMko(string td, string oshv, string bshv, string pcdm)
+
+        private void UpdateMko(string tdd, string oshvv, string bshvv, string pcdmm)
         {
-
-            var tdd = td.Split(' ');
-            var oshvv = oshv.Split(' ');
-            var bshvv = bshv.Split(' ');
-            var pcdmm = pcdm.Split(' ');
-
-            // ТД.
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[0].Text = (string)o; }, $"{tdd[0]} {tdd[1]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[1].Text = (string)o; }, $"{tdd[2]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[2].Text = (string)o; }, $"{tdd[3]}"));
-
-            // ОШВ.
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[3].Text = (string)o; }, $"{oshvv[0]} {oshvv[1]}"));
-
-            // БШВ.
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[4].Text = (string)o; }, $"{bshvv[0]} {bshvv[1]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[5].Text = (string)o; }, $"{bshvv[2]} {bshvv[3]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[6].Text = (string)o; }, $"{bshvv[4]} {bshvv[5]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[7].Text = (string)o; }, $"{bshvv[6]} {bshvv[7]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[8].Text = (string)o; }, $"{bshvv[8]} {bshvv[9]}"));
-
-            // ПЦДМ.
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[9].Text = (string)o; }, $"{pcdmm[0]} {pcdmm[1]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[10].Text = (string)o; }, $"{pcdmm[2]} {pcdmm[3]} {pcdmm[4]} {pcdmm[5]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[11].Text = (string)o; }, $"{pcdmm[6]} {pcdmm[7]} {pcdmm[8]} {pcdmm[9]}"));
-            await Task.Run(() => synchronizationContext.Send(o => { mkoDataLabels[12].Text = (string)o; }, $"{pcdmm[10]} {pcdmm[11]} {pcdmm[12]} {pcdmm[13]}"));
-
+            _td = tdd.Split(' ');
+            _oshv = oshvv.Split(' ');
+            _bshv = bshvv.Split(' ');
+            _pcdm = pcdmm.Split(' ');
         }
 
         #endregion
@@ -296,12 +243,12 @@ namespace ReceivingStation
             btnStartStopDecode.Text = "Начать";
 
             tlpDecodingParameters.Enabled = true;
-           
+
             DateTime worktimefinish = DateTime.Now;
             TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
             slDecodeTime.Text = deltaWorkingTime.ToString();
 
-            WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");         
+            WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");
         }
 
         #endregion
@@ -313,7 +260,7 @@ namespace ReceivingStation
         }
 
         #endregion
-     
+
         #region Запись в лог файл действий пользователя.
         private void WriteToLogUserActions(string logMessage)
         {
@@ -321,23 +268,6 @@ namespace ReceivingStation
             {
                 sw.WriteLine($"{DateTime.Now} - {logMessage}");
             }
-        }
-
-        #endregion
-
-        #region Создание контейнера для изображений.
-        private FlowLayoutPanel GetFlp(string name, Size size)
-        {
-            FlowLayoutPanel flp = new FlowLayoutPanel
-            {
-                Name = name,
-                FlowDirection = FlowDirection.TopDown,
-                Size = size,
-                AutoSize = true,
-                Location = new Point(0, 0)
-            };
-
-            return flp;
         }
 
         #endregion
@@ -362,7 +292,7 @@ namespace ReceivingStation
                     }
                 }
 
-                bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}_{_frameCounter}.bmp");
+                bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}_{_imageCounter}.bmp");
             }
         }
 
@@ -398,5 +328,34 @@ namespace ReceivingStation
 
 
         #endregion
+
+        #region Обновление GUI.
+        private void UpdateGui()
+        {
+            GuiUpdater.SetLabelText(lblFramesCounter, _frameCounter.ToString());
+            // ТД.
+            GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
+            GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");
+            GuiUpdater.SetLabelText(lblTD3, $"{_td[3]}");
+            // ОШВ.
+            GuiUpdater.SetLabelText(lblOSHV1, $"{_oshv[0]} {_oshv[1]}");
+            // БШВ.
+            GuiUpdater.SetLabelText(lblBSHV1, $"{_bshv[0]} {_bshv[1]}");
+            GuiUpdater.SetLabelText(lblBSHV2, $"{_bshv[2]} {_bshv[3]}");
+            GuiUpdater.SetLabelText(lblBSHV3, $"{_bshv[4]} {_bshv[5]}");
+            GuiUpdater.SetLabelText(lblBSHV4, $"{_bshv[6]} {_bshv[7]}");
+            GuiUpdater.SetLabelText(lblBSHV5, $"{_bshv[8]} {_bshv[9]}");
+            // ПЦДМ.
+            GuiUpdater.SetLabelText(lblPCDM1, $"{_pcdm[0]} {_pcdm[1]}");
+            GuiUpdater.SetLabelText(lblPCDM2, $"{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}");
+            GuiUpdater.SetLabelText(lblPCDM3, $"{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}");
+            GuiUpdater.SetLabelText(lblPCDM4, $"{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}");
+            // Изображение.
+            GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels);
+            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images);
+        }
+
+        #endregion
+
     }
 }

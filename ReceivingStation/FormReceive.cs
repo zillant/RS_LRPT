@@ -26,7 +26,19 @@ namespace ReceivingStation
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
 
         private Thread _serverThread;
-        
+
+        private string _fileName;
+        private int _callingUpdateImageCounter;
+        private long _imageCounter;
+        private uint _frameCounter;
+        private string[] _td = new string[4];
+        private string[] _oshv = new string[2];
+        private string[] _bshv = new string[10];
+        private string[] _pcdm = new string[14];
+        private DirectBitmap[] _images = new DirectBitmap[6];
+
+        private Panel[] _allChannelsPanels = new Panel[6];
+        private Panel[] _channelsPanels = new Panel[6];
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
@@ -48,38 +60,43 @@ namespace ReceivingStation
 
         public FormReceive()
         {
-            InitializeComponent();            
-            GuiUpdater.SmoothLoadingForm(this);           
+            InitializeComponent();                                
         }
 
         private void FormReceive_Load(object sender, EventArgs e)
         {
+            GuiUpdater.SmoothLoadingForm(this);
+
             materialTabControl1.SelectedTab = tabPage7;
 
             remoteModeFlag = false;
             _isReceivingStarting = false;
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
 
-            for (int i = 0; i < 6; i++)
-            {
-                _listImagesForSave[i] = new List<Bitmap>();
-            }
-
             OpenLogWorkingTimeFile();
 
-            _channels[0] = flpChannel1;
-            _channels[1] = flpChannel2;
-            _channels[2] = flpChannel3;
-            _channels[3] = flpChannel4;
-            _channels[4] = flpChannel5;
-            _channels[5] = flpChannel6;
+            _channelsPanels[0] = pScroll1;
+            _channelsPanels[1] = pScroll2;
+            _channelsPanels[2] = pScroll3;
+            _channelsPanels[3] = pScroll4;
+            _channelsPanels[4] = pScroll5;
+            _channelsPanels[5] = pScroll6;
 
-            _allChannels[0] = flpAllChannels1;
-            _allChannels[1] = flpAllChannels2;
-            _allChannels[2] = flpAllChannels3;
-            _allChannels[3] = flpAllChannels4;
-            _allChannels[4] = flpAllChannels5;
-            _allChannels[5] = flpAllChannels6;
+            _allChannelsPanels[0] = pScroll7;
+            _allChannelsPanels[1] = pScroll8;
+            _allChannelsPanels[2] = pScroll9;
+            _allChannelsPanels[3] = pScroll10;
+            _allChannelsPanels[4] = pScroll11;
+            _allChannelsPanels[5] = pScroll12;
+
+            for (int i = 0; i < 6; i++)
+            {
+                _allChannels[i] = GuiUpdater.GetFlp($"flpAllChannels{i}", new Size(242, 8));
+                _channels[i] = GuiUpdater.GetFlp($"flpChannel{i}", new Size(1556, 40));
+                _allChannelsPanels[i].Controls.Add(_allChannels[i]);
+                _channelsPanels[i].Controls.Add(_channels[i]);
+                _listImagesForSave[i] = new List<Bitmap>();
+            }
 
             slTime.Text = DateTime.Now.ToString();
             timer1.Start();
@@ -156,24 +173,8 @@ namespace ReceivingStation
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
         {
-            Parallel.For(0, _listImagesForSave.Length, i =>
-            {
-                using (Bitmap bmp = new Bitmap(Constants.WDT, _listImagesForSave[i].Count * Constants.HGT))
-                {
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        int yOffset = 0;
-
-                        for (int j = 0; j < _listImagesForSave[i].Count; j++)
-                        {
-                            g.DrawImage(_listImagesForSave[i][j], new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
-                            yOffset += Constants.HGT;
-                        }
-                    }
-
-                    //bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i}.bmp");
-                }
-            });
+            Parallel.For(0, _listImagesForSave.Length, SaveImage);
+            _imageCounter += 1;
         }
 
         #region Смена режима управления.
@@ -234,7 +235,24 @@ namespace ReceivingStation
                     SetReceiveParameters();
                 }
 
+                // Очистка всего перед новым запуском.
+                //for (int i = 0; i < 6; i++)
+                //{
+                //    _allChannels[i].Controls.Clear();
+                //    _channels[i].Controls.Clear();
+                //    _listImagesForSave[i].Clear();
+                //    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                //    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+
+                //    foreach (FileInfo file in di.GetFiles())
+                //    {
+                //        file.Delete();
+                //    }
+                //}
+
                 _startWorkingTime = DateTime.Now;
+                _imageCounter = 0;
+                _callingUpdateImageCounter = 0;
                 WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 WriteToLogUserActions("Запись потока начата");
 
@@ -277,7 +295,7 @@ namespace ReceivingStation
         #region Обновление счетчика кадров при декодировании.
         private void UpdateFrameCounterValue(uint counter)
         {
-            GuiUpdater.SetLabelText(lblFramesCounter, counter.ToString());
+            _frameCounter = counter;
         }
 
         #endregion
@@ -285,13 +303,32 @@ namespace ReceivingStation
         #region Обновление изображений при декодировании.
         private void UpdateChannelsImages(DirectBitmap[] images)
         {
-            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, images);
+            _images = images;
 
-            bwImageSaver.RunWorkerAsync();
+            _callingUpdateImageCounter++;
+
+            // Набрал 480 строчек изображения (8 * 60).
+            if (_callingUpdateImageCounter == 60)
+            {
+                bwImageSaver.RunWorkerAsync();
+                _callingUpdateImageCounter = 0;
+            }
         }
 
         #endregion
-     
+
+        #region Обновление МКО при декодировании.
+
+        private void UpdateMko(string tdd, string oshvv, string bshvv, string pcdmm)
+        {
+            _td = tdd.Split(' ');
+            _oshv = oshvv.Split(' ');
+            _bshv = bshvv.Split(' ');
+            _pcdm = pcdmm.Split(' ');
+        }
+
+        #endregion
+
         #region Запись в лог файл действий пользователя.
         private void WriteToLogUserActions(string logMessage)
         {
@@ -381,5 +418,57 @@ namespace ReceivingStation
 
         #endregion
 
+        #region Сохранение изображений.
+        private void SaveImage(int i)
+        {
+            List<Bitmap> listImages = new List<Bitmap>(_listImagesForSave[i]);
+            _listImagesForSave[i].Clear();
+
+            using (Bitmap bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
+            {
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    int yOffset = 0;
+
+                    for (int j = 0; j < listImages.Count; j++)
+                    {
+                        g.DrawImage(listImages[j], new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
+                        yOffset += Constants.HGT;
+                    }
+                }
+
+                //bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}_{_imageCounter}.bmp");
+            }
+        }
+
+        #endregion
+
+        #region Обновление GUI.
+        private void UpdateGui()
+        {
+            GuiUpdater.SetLabelText(lblFramesCounter, _frameCounter.ToString());
+            // ТД.
+            GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
+            GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");
+            GuiUpdater.SetLabelText(lblTD3, $"{_td[3]}");
+            // ОШВ.
+            GuiUpdater.SetLabelText(lblOSHV1, $"{_oshv[0]} {_oshv[1]}");
+            // БШВ.
+            GuiUpdater.SetLabelText(lblBSHV1, $"{_bshv[0]} {_bshv[1]}");
+            GuiUpdater.SetLabelText(lblBSHV2, $"{_bshv[2]} {_bshv[3]}");
+            GuiUpdater.SetLabelText(lblBSHV3, $"{_bshv[4]} {_bshv[5]}");
+            GuiUpdater.SetLabelText(lblBSHV4, $"{_bshv[6]} {_bshv[7]}");
+            GuiUpdater.SetLabelText(lblBSHV5, $"{_bshv[8]} {_bshv[9]}");
+            // ПЦДМ.
+            GuiUpdater.SetLabelText(lblPCDM1, $"{_pcdm[0]} {_pcdm[1]}");
+            GuiUpdater.SetLabelText(lblPCDM2, $"{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}");
+            GuiUpdater.SetLabelText(lblPCDM3, $"{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}");
+            GuiUpdater.SetLabelText(lblPCDM4, $"{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}");
+            // Изображение.
+            GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels);
+            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images);
+        }
+
+        #endregion
     }
 }

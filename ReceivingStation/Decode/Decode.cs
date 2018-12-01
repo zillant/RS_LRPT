@@ -18,6 +18,8 @@ namespace ReceivingStation
         public UpdateMkoDelegate ThreadSafeUpdateMko;
         public delegate void UpdateImagesContentDelegate(DirectBitmap[] list);
         public UpdateImagesContentDelegate ThreadSafeUpdateImagesContent;
+        public delegate void UpdateGuiDelegate();
+        public UpdateGuiDelegate ThreadSafeUpdateGui;
         public delegate void StopDecodingDelegate();
         public StopDecodingDelegate ThreadSafeStopDecoding;
 
@@ -112,27 +114,26 @@ namespace ReceivingStation
         #endregion
 
         #region Конструктор для приемника.
-        //public Decode(FormReceive form,  string fileName)
-        //{
-        //    _isNrz = false;
-        //    _isReedSolo = true;
-            
-        //    _reedSolo = new ReedSolo();
-        //    _viterbi = new Viterbi();
-        //    _jpeg = new Jpeg();
-        //    _form = form;
+        public Decode(FormReceive form, string fileName)
+        {
+            _isNrz = false;
+            _isReedSolo = true;
 
-        //    _decodeLogFileName = $"{fileName}_info.txt";
-        //    _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
-        //    _sb = new StringBuilder();
+            _reedSolo = new ReedSolo();
+            _viterbi = new Viterbi();
+            _jpeg = new Jpeg();
+            _form = form;
 
-        //    for (int i = 0; i < 6; i++)
-        //    {
-        //        _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
-        //    }
+            _decodeLogFileName = $"{fileName}_info.txt";
+            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
-        //    Init();
-        //}
+            for (int i = 0; i < 6; i++)
+            {
+                _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
+            }
+
+            Init();
+        }
 
         #endregion
 
@@ -598,10 +599,8 @@ namespace ReceivingStation
                 return;
             }
 
-            Kol_tk++;
-            ThreadSafeUpdateFrameCounterValue(Kol_tk);
-           
-            //_form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
+            Kol_tk++;            
+            ThreadSafeUpdateFrameCounterValue(Kol_tk);          
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -706,27 +705,18 @@ namespace ReceivingStation
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
-
-                ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
-                //_form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
-
-
-                Yt += 8;
-                if (Yt % Constants.HGT == 0) // Если набралось 50 строчек.
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);            
+   
+                _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+                _form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
+                _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
+                
+                Parallel.For(0, _bmps.Length, j =>
                 {
-                   // ThreadSafeUpdateImagesContent(_bmps);
-                    _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
-                    
+                    _bmps[j].Dispose();
+                    _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
 
-                   Parallel.For(0, _bmps.Length, j =>
-                    {
-                        _bmps[j].Dispose();
-                        _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
-                    });
-
-                    Yt = 0;
-                }
+                });
 
                 PreparePicture();
 
@@ -750,7 +740,6 @@ namespace ReceivingStation
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {         
-
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
                 _sw.WriteLine($"Миллисекунды: {tm}");
                 _sw.WriteLine($"Микросекунды: {mc}");
