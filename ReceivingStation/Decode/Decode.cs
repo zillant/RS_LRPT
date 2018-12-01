@@ -205,8 +205,9 @@ namespace ReceivingStation
         #region Завершение декодирования.
         public void FinishDecode()
         {
-            _form.Invoke(new Action(() => { ThreadSafeUpdateFrameCounterValue(Kol_tk); }));
             _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
+            _form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
+            _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
