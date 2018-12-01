@@ -154,7 +154,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 770);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(1588, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1556, 25);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.Stretch = false;
             this.statusStrip1.TabIndex = 3;
@@ -178,7 +178,7 @@
             this.slWorkingTimeOnboard.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.slWorkingTimeOnboard.Image = global::ReceivingStation.Properties.Resources.time_icon;
             this.slWorkingTimeOnboard.Name = "slWorkingTimeOnboard";
-            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(1240, 20);
+            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(1208, 20);
             this.slWorkingTimeOnboard.Spring = true;
             this.slWorkingTimeOnboard.Text = "Время наработки";
             this.slWorkingTimeOnboard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -223,7 +223,7 @@
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(1588, 562);
+            this.materialTabControl1.Size = new System.Drawing.Size(1556, 562);
             this.materialTabControl1.TabIndex = 36;
             // 
             // tabPage1
@@ -232,7 +232,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1580, 536);
+            this.tabPage1.Size = new System.Drawing.Size(1548, 536);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -243,7 +243,7 @@
             this.pScroll1.Location = new System.Drawing.Point(3, 3);
             this.pScroll1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.pScroll1.Name = "pScroll1";
-            this.pScroll1.Size = new System.Drawing.Size(1574, 530);
+            this.pScroll1.Size = new System.Drawing.Size(1542, 530);
             this.pScroll1.TabIndex = 4;
             // 
             // tabPage2
@@ -1019,7 +1019,7 @@
             this.materialTabSelector1.Location = new System.Drawing.Point(0, 168);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(1588, 40);
+            this.materialTabSelector1.Size = new System.Drawing.Size(1556, 40);
             this.materialTabSelector1.TabIndex = 37;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
@@ -1053,7 +1053,7 @@
             this.tlpReceiveSettings.Name = "tlpReceiveSettings";
             this.tlpReceiveSettings.RowCount = 1;
             this.tlpReceiveSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpReceiveSettings.Size = new System.Drawing.Size(1588, 114);
+            this.tlpReceiveSettings.Size = new System.Drawing.Size(1556, 114);
             this.tlpReceiveSettings.TabIndex = 46;
             // 
             // panel5
@@ -1061,9 +1061,9 @@
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.btnStartRecieve);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(717, 3);
+            this.panel5.Location = new System.Drawing.Point(703, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(152, 108);
+            this.panel5.Size = new System.Drawing.Size(149, 108);
             this.panel5.TabIndex = 43;
             // 
             // btnStartRecieve
@@ -1076,7 +1076,7 @@
             this.btnStartRecieve.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnStartRecieve.Name = "btnStartRecieve";
             this.btnStartRecieve.Primary = true;
-            this.btnStartRecieve.Size = new System.Drawing.Size(152, 43);
+            this.btnStartRecieve.Size = new System.Drawing.Size(149, 43);
             this.btnStartRecieve.TabIndex = 43;
             this.btnStartRecieve.Text = "Начать";
             this.btnStartRecieve.UseVisualStyleBackColor = true;
@@ -1088,7 +1088,7 @@
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.82012F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.98066F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.19923F));
-            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 277F));
+            this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 278F));
             this.tlpDecodingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel3, 1, 0);
@@ -1098,7 +1098,7 @@
             this.tlpDecodingParameters.Name = "tlpDecodingParameters";
             this.tlpDecodingParameters.RowCount = 1;
             this.tlpDecodingParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDecodingParameters.Size = new System.Drawing.Size(708, 108);
+            this.tlpDecodingParameters.Size = new System.Drawing.Size(694, 108);
             this.tlpDecodingParameters.TabIndex = 45;
             // 
             // panel7
@@ -1110,9 +1110,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(127, 3);
+            this.panel7.Location = new System.Drawing.Point(122, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(123, 102);
+            this.panel7.Size = new System.Drawing.Size(118, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -1168,9 +1168,9 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(433, 3);
+            this.panel2.Location = new System.Drawing.Point(417, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(272, 102);
+            this.panel2.Size = new System.Drawing.Size(274, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -1227,9 +1227,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(256, 3);
+            this.panel3.Location = new System.Drawing.Point(246, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(171, 102);
+            this.panel3.Size = new System.Drawing.Size(165, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -1289,7 +1289,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(118, 102);
+            this.panel4.Size = new System.Drawing.Size(113, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialRadioButton2
@@ -1348,9 +1348,9 @@
             this.panel6.Controls.Add(this.materialLabel82);
             this.panel6.Controls.Add(this.lblFramesCounter);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(875, 3);
+            this.panel6.Location = new System.Drawing.Point(858, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(710, 108);
+            this.panel6.Size = new System.Drawing.Size(695, 108);
             this.panel6.TabIndex = 44;
             // 
             // label10
@@ -1435,14 +1435,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1588, 795);
+            this.ClientSize = new System.Drawing.Size(1556, 795);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.tlpReceiveSettings);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1588, 795);
+            this.MinimumSize = new System.Drawing.Size(1534, 795);
             this.Name = "FormReceive";
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
