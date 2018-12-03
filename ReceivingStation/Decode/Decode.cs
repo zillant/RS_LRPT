@@ -207,7 +207,7 @@ namespace ReceivingStation
         #region Завершение декодирования.
         public void FinishDecode()
         {
-            UpdateData();
+            UpdateDataGui();
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
@@ -707,7 +707,7 @@ namespace ReceivingStation
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
 
-                UpdateData();
+                UpdateDataGui();
 
                 Parallel.For(0, _bmps.Length, j =>
                 {
@@ -739,10 +739,11 @@ namespace ReceivingStation
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {         
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
-                _sw.WriteLine($"Миллисекунды: {tm}");
-                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
+                _sw.WriteLine($"Миллисекунды: {tm}");                
                 _sw.WriteLine($"Микросекунды: {mc}");
                 _sw.WriteLine("-----------------------------------------------------------------------");
+
+                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
 
                 if (Convert.ToBoolean(tm_last))
                 {
@@ -855,8 +856,8 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление информации на форме.
-        private void UpdateData()
+        #region Обновление данных и информации на форме.
+        private async void UpdateDataGui()
         {
             ThreadSafeUpdateDateTime(currentLineDate);
             ThreadSafeUpdateImagesContent(_bmps);
@@ -865,17 +866,19 @@ namespace ReceivingStation
         }
         #endregion
 
+        #region Формирование даты и времени.
         private void GetDateTime(int date, long ms)
-        {              
+        {
             if (_isNrz)
             {
-                currentLineDate = Constants.referenceDateWithNRZ + TimeSpan.FromDays(date - 1) + TimeSpan.FromMilliseconds(ms);
+                currentLineDate = Constants.referenceDate + TimeSpan.FromDays(date - 1) + TimeSpan.FromMilliseconds(ms);
             }
             else
             {
-                currentLineDate = Constants.referenceDateWithNRZ + TimeSpan.FromMilliseconds(ms);
+                currentLineDate = Constants.referenceDate + TimeSpan.FromMilliseconds(ms);
             }
-            
         }
+
+        #endregion
     }
 }

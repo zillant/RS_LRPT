@@ -27,7 +27,6 @@ namespace ReceivingStation
 
         private long _imageCounter;
 
-        private uint _frameCounter;
         private string[] _td = new string[4];
         private string[] _oshv = new string[2];
         private string[] _bshv = new string[10];
@@ -42,7 +41,7 @@ namespace ReceivingStation
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
-        private DateTime lineDate;
+        private DateTime _lineDate; // Время пришедшей полосы.
 
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
@@ -59,7 +58,6 @@ namespace ReceivingStation
 
             _isDecodeStarting = false;
             _isFileOpened = false;
-            _frameCounter = 0;
 
             _allChannelsPanels[0] = panel7;
             _allChannelsPanels[1] = panel8;
@@ -202,7 +200,7 @@ namespace ReceivingStation
         #region Обновление даты и времени при декодировании.
         private void UpdateDateTime(DateTime date)
         {
-            lineDate = date;
+            _lineDate = date;
         }
 
         #endregion
@@ -335,8 +333,8 @@ namespace ReceivingStation
         private void UpdateGui()
         {
             // Дата / Время.
-            GuiUpdater.SetLabelText(lblLineDate, $"{lineDate.Day}/{lineDate.Month}/{lineDate.Year}");
-            GuiUpdater.SetLabelText(lblLineTime, $"{lineDate.Hour}:{lineDate.Minute}:{lineDate.Second}");
+            GuiUpdater.SetLabelText(lblLineDate, $"{_lineDate.Day}/{_lineDate.Month}/{_lineDate.Year}");
+            GuiUpdater.SetLabelText(lblLineTime, $"{_lineDate.Hour}:{_lineDate.Minute}:{_lineDate.Second}");
             // ТД.
             GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
             GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");

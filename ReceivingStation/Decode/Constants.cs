@@ -7,7 +7,7 @@ namespace ReceivingStation
         public static int WDT = 1568; // Ширина рисунка.
         public static int HGT = 8; // Высота рисунка.
 
-        public static DateTime referenceDateWithNRZ = new DateTime(2001, 1, 1, 0, 0, 0);
+        public static DateTime referenceDate = new DateTime(2001, 1, 1, 0, 0, 0);
 
         public static int DL_JPEG = 1500; // Длина буфера jpeg с запасом - полос + на шапку.
         public static int DL_VIDEO = 896; // Длина видеобуфера.
