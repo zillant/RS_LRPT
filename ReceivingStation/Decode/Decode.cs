@@ -12,8 +12,8 @@ namespace ReceivingStation
 {
     class Decode
     {       
-        public delegate void UpdateFrameCounterDelegate(uint counter);
-        public UpdateFrameCounterDelegate ThreadSafeUpdateFrameCounterValue;
+        public delegate void UpdateDateTimeDelegate(DateTime date);
+        public UpdateDateTimeDelegate ThreadSafeUpdateDateTime;
         public delegate void UpdateMkoDelegate(string td, string oshv, string bshv, string pdcm);
         public UpdateMkoDelegate ThreadSafeUpdateMko;
         public delegate void UpdateImagesContentDelegate(DirectBitmap[] list);
@@ -27,7 +27,9 @@ namespace ReceivingStation
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
-       
+         
+        private DateTime currentLineDate;
+
         private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
 
         private string _td;
@@ -205,9 +207,7 @@ namespace ReceivingStation
         #region Завершение декодирования.
         public void FinishDecode()
         {
-            _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
-            _form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
-            _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
+            UpdateData();
 
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
@@ -600,8 +600,7 @@ namespace ReceivingStation
                 return;
             }
 
-            Kol_tk++;            
-            ThreadSafeUpdateFrameCounterValue(Kol_tk);          
+            Kol_tk++;                  
 
             beg = (tk_in[2] << 16) | (tk_in[3] << 8) | tk_in[4];
 
@@ -706,12 +705,10 @@ namespace ReceivingStation
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);            
-   
-                _form.Invoke(new Action(() => { ThreadSafeUpdateImagesContent(_bmps); }));
-                _form.Invoke(new Action(() => { ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm); }));
-                _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
-                
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
+
+                UpdateData();
+
                 Parallel.For(0, _bmps.Length, j =>
                 {
                     _bmps[j].Dispose();
@@ -743,6 +740,7 @@ namespace ReceivingStation
             {         
                 _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
                 _sw.WriteLine($"Миллисекунды: {tm}");
+                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
                 _sw.WriteLine($"Микросекунды: {mc}");
                 _sw.WriteLine("-----------------------------------------------------------------------");
 
@@ -856,5 +854,28 @@ namespace ReceivingStation
         }
 
         #endregion
+
+        #region Обновление информации на форме.
+        private void UpdateData()
+        {
+            ThreadSafeUpdateDateTime(currentLineDate);
+            ThreadSafeUpdateImagesContent(_bmps);
+            ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
+            _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
+        }
+        #endregion
+
+        private void GetDateTime(int date, long ms)
+        {              
+            if (_isNrz)
+            {
+                currentLineDate = Constants.referenceDateWithNRZ + TimeSpan.FromDays(date - 1) + TimeSpan.FromMilliseconds(ms);
+            }
+            else
+            {
+                currentLineDate = Constants.referenceDateWithNRZ + TimeSpan.FromMilliseconds(ms);
+            }
+            
+        }
     }
 }

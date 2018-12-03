@@ -113,6 +113,16 @@ namespace ReceivingStation.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap rss_logo {
+            get {
+                object obj = ResourceManager.GetObject("rss_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap time_icon {
             get {
                 object obj = ResourceManager.GetObject("time_icon", resourceCulture);

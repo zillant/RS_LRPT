@@ -42,6 +42,8 @@ namespace ReceivingStation
         private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
+        private DateTime lineDate;
+
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
         public FormDecode()
@@ -154,7 +156,7 @@ namespace ReceivingStation
 
                     decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
                     {
-                        ThreadSafeUpdateFrameCounterValue = UpdateFrameCounterValue,
+                        ThreadSafeUpdateDateTime = UpdateDateTime,
                         ThreadSafeUpdateMko = UpdateMko,
                         ThreadSafeUpdateImagesContent = UpdateChannelsImages,
                         ThreadSafeUpdateGui = UpdateGui,
@@ -197,10 +199,10 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление счетчика кадров при декодировании.
-        private void UpdateFrameCounterValue(uint counter)
+        #region Обновление даты и времени при декодировании.
+        private void UpdateDateTime(DateTime date)
         {
-            _frameCounter = counter;
+            lineDate = date;
         }
 
         #endregion
@@ -332,7 +334,9 @@ namespace ReceivingStation
         #region Обновление GUI.
         private void UpdateGui()
         {
-            GuiUpdater.SetLabelText(lblFramesCounter, _frameCounter.ToString());
+            // Дата / Время.
+            GuiUpdater.SetLabelText(lblLineDate, $"{lineDate.Day}/{lineDate.Month}/{lineDate.Year}");
+            GuiUpdater.SetLabelText(lblLineTime, $"{lineDate.Hour}:{lineDate.Minute}:{lineDate.Second}");
             // ТД.
             GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
             GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");

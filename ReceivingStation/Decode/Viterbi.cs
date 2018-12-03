@@ -160,14 +160,14 @@ namespace ReceivingStation
 
                 _pths[2 * pk + 1] = _decc;
 
-                pk = (pk + 1) % Constants.PMEM;
+                pk = (pk + 1) % Convert.ToUInt64(Constants.PMEM);
 
                 if (Convert.ToBoolean(pk % 64)) continue;
                 if (!Convert.ToBoolean(_gFirst))
                 {
                     _bestState = 0;
 
-                    pu = Convert.ToUInt64(Math.Abs(Convert.ToInt32((pk - 1) % Constants.PMEM)));
+                    pu = Convert.ToUInt64(Math.Abs(Convert.ToInt32((pk - 1) % Convert.ToUInt64(Constants.PMEM))));
 
                     for (int j = 0; j < 64 - 6; j++)
                     {
@@ -175,7 +175,7 @@ namespace ReceivingStation
                             _bestState |= 0x40; 
 
                         _bestState = _bestState >> 1;
-                        pu = (pu - 1) % Constants.PMEM;
+                        pu = (pu - 1) % Convert.ToUInt64(Constants.PMEM);
                     }
 
                     for (int j = 7; j >= 0; j--)
@@ -190,7 +190,7 @@ namespace ReceivingStation
                             }
 
                             _bestState = _bestState >> 1;
-                            pu = (pu - 1) % Constants.PMEM;
+                            pu = (pu - 1) % Convert.ToUInt64(Constants.PMEM);
                         }
                     }
 

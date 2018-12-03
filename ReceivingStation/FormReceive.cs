@@ -44,6 +44,7 @@ namespace ReceivingStation
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
         private DateTime _startWorkingTime; // Время начала работы борта.
+        private DateTime lineDate; 
 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
 
@@ -183,7 +184,7 @@ namespace ReceivingStation
             if (modeNumber == 0)
             {
                 // Дистанционное управление
-                tlpReceiveSettings.Enabled = false;
+                tlp1.Enabled = false;
                 slMode.Text = "Дистанционное управление";
                 WriteToLogUserActions("Дистанционное управление");
                 remoteModeFlag = true;
@@ -191,7 +192,7 @@ namespace ReceivingStation
             else if (modeNumber == 1)
             {
                 // Местное управление
-                tlpReceiveSettings.Enabled = true;
+                tlp1.Enabled = true;
                 slMode.Text = "Местное управление";
                 WriteToLogUserActions("Местное управление");
                 remoteModeFlag = false;
@@ -253,6 +254,7 @@ namespace ReceivingStation
                 _startWorkingTime = DateTime.Now;
                 _imageCounter = 0;
                 _callingUpdateImageCounter = 0;
+                tlpReceivingParameters.Enabled = false;
                 WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 WriteToLogUserActions("Запись потока начата");
 
@@ -283,6 +285,7 @@ namespace ReceivingStation
         {
             _isReceivingStarting = false;
             btnStartRecieve.Text = "Начать";
+            tlpReceivingParameters.Enabled = true;
 
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
@@ -292,10 +295,10 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление счетчика кадров при декодировании.
-        private void UpdateFrameCounterValue(uint counter)
+        #region Обновление даты и времени при декодировании.
+        private void UpdateDateTime(DateTime date)
         {
-            _frameCounter = counter;
+            lineDate = date;
         }
 
         #endregion
@@ -446,7 +449,9 @@ namespace ReceivingStation
         #region Обновление GUI.
         private void UpdateGui()
         {
-            GuiUpdater.SetLabelText(lblFramesCounter, _frameCounter.ToString());
+            // Дата / Время.
+            GuiUpdater.SetLabelText(lblLineDate, $"{lineDate.Day}/{lineDate.Month}/{lineDate.Year}");
+            GuiUpdater.SetLabelText(lblLineTime, $"{lineDate.Hour}:{lineDate.Minute}:{lineDate.Second}");
             // ТД.
             GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
             GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");
