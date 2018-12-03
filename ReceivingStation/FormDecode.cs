@@ -334,7 +334,7 @@ namespace ReceivingStation
         {
             // Дата / Время.
             GuiUpdater.SetLabelText(lblLineDate, $"{_lineDate.Day}/{_lineDate.Month}/{_lineDate.Year}");
-            GuiUpdater.SetLabelText(lblLineTime, $"{_lineDate.Hour}:{_lineDate.Minute}:{_lineDate.Second}");
+            GuiUpdater.SetLabelText(lblLineTime, $"{_lineDate.Hour.ToString("D2")}:{_lineDate.Minute.ToString("D2")}:{_lineDate.Second.ToString("D2")}");
             // ТД.
             GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
             GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");

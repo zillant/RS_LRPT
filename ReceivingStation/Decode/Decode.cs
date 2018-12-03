@@ -206,9 +206,9 @@ namespace ReceivingStation
 
         #region Завершение декодирования.
         public void FinishDecode()
-        {
+        {    
             UpdateDataGui();
-
+                   
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
@@ -857,12 +857,15 @@ namespace ReceivingStation
         #endregion
 
         #region Обновление данных и информации на форме.
-        private async void UpdateDataGui()
+        private void UpdateDataGui()
         {
-            ThreadSafeUpdateDateTime(currentLineDate);
-            ThreadSafeUpdateImagesContent(_bmps);
-            ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
-            _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
+            if (_td != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
+            {
+                ThreadSafeUpdateDateTime(currentLineDate);
+                ThreadSafeUpdateImagesContent(_bmps);
+                ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
+                _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
+            }
         }
         #endregion
 
