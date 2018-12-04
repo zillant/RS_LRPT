@@ -27,19 +27,19 @@ namespace ReceivingStation
 
         // Поля, обновляемые из потока.
         private DateTime _lineDate; // Время пришедшей полосы.
-        private string[] _td = new string[4];
-        private string[] _oshv = new string[2];
-        private string[] _bshv = new string[10];
-        private string[] _pcdm = new string[14];
-        private DirectBitmap[] _images = new DirectBitmap[6];
+        private string[] _td = new string[4]; // Данные ТД.
+        private string[] _oshv = new string[2]; // Данные ОШВ.
+        private string[] _bshv = new string[10]; // Данные БШВ.
+        private string[] _pcdm = new string[14]; // Данные ПЦДМ.
+        private DirectBitmap[] _images = new DirectBitmap[6]; // Полосы изображения для всех каналов.
 
-        private Decode decode;
+        private Decode _decode;
 
-        private Panel[] _allChannelsPanels = new Panel[6];
-        private Panel[] _channelsPanels = new Panel[6];
-        private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6];
-        private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6];
-        private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
+        private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
+        private Panel[] _channelsPanels = new Panel[6]; // Панели на которых находятся FLP для каждого канала.
+        private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для каждого канала.
+        private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для всех каналов.
+        private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6]; // Список для хранения полосок изображения, нужно для сохранения.
       
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
@@ -154,7 +154,7 @@ namespace ReceivingStation
                     _isDecodeStarting = true;
                     btnStartStopDecode.Text = "Остановить";
 
-                    decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
+                    _decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateDateTime = UpdateDateTime,
                         ThreadSafeUpdateMko = UpdateMko,
@@ -183,7 +183,7 @@ namespace ReceivingStation
                     _worktimestart = DateTime.Now;
                     UserLog.WriteToLogUserActions($"Начата расшифровка файла - {_fileName}");
 
-                    await Task.Run(() => decode.StartDecode(_cancellationToken));
+                    await Task.Run(() => _decode.StartDecode(_cancellationToken));
 
                 }
                 else
