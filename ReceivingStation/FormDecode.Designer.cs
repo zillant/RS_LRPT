@@ -87,7 +87,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMko = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
@@ -775,7 +775,7 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.rtbMkoData);
-            this.tabPage1.Controls.Add(this.rtbMko);
+            this.tabPage1.Controls.Add(this.rtbMkoTitle);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(1548, 536);
@@ -807,14 +807,14 @@
             this.rtbMkoData.TabIndex = 106;
             this.rtbMkoData.Text = "";
             // 
-            // rtbMko
+            // rtbMkoTitle
             // 
-            this.rtbMko.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMko.Location = new System.Drawing.Point(442, 33);
-            this.rtbMko.Name = "rtbMko";
-            this.rtbMko.Size = new System.Drawing.Size(581, 475);
-            this.rtbMko.TabIndex = 105;
-            this.rtbMko.Text = "";
+            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
+            this.rtbMkoTitle.TabIndex = 105;
+            this.rtbMkoTitle.Text = "";
             // 
             // doubleBufferedPanel1
             // 
@@ -953,7 +953,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private Other.DoubleBufferedPanel doubleBufferedPanel1;
-        private Other.DisabledRichTextBox rtbMko;
+        private Other.DisabledRichTextBox rtbMkoTitle;
         private Other.DisabledRichTextBox rtbMkoData;
         private Other.DisabledRichTextBox rtbDateTimeTitle;
         private Other.DisabledRichTextBox rtbDateTime;

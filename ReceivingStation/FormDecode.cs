@@ -54,7 +54,7 @@ namespace ReceivingStation
             GuiUpdater.SmoothLoadingForm(this);
             GuiUpdater.LoadFont();
 
-            GuiUpdater.DecodeRichTextBoxInit(rtbMko, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
+            GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
 
             materialTabControl1.SelectedTab = tabPage14;
 
@@ -77,8 +77,8 @@ namespace ReceivingStation
 
             for (int i = 0; i < 6; i++)
             {
-                _allChannels[i] = GuiUpdater.GetFlp($"flpAllChannels{i}", new Size(242, 8));
-                _channels[i] = GuiUpdater.GetFlp($"flpChannel{i}", new Size(1556, 40));
+                _allChannels[i] = GuiUpdater.GetFlp(new Size(242, 8));
+                _channels[i] = GuiUpdater.GetFlp(new Size(1556, 40));
                 _allChannelsPanels[i].Controls.Add(_allChannels[i]);
                 _channelsPanels[i].Controls.Add(_channels[i]);
                 _listImagesForSave[i] = new List<Bitmap>();

@@ -65,7 +65,7 @@
             this.pImage12 = new System.Windows.Forms.Panel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMko = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tlp1 = new System.Windows.Forms.TableLayoutPanel();
@@ -503,7 +503,7 @@
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.rtbMkoData);
-            this.tabPage8.Controls.Add(this.rtbMko);
+            this.tabPage8.Controls.Add(this.rtbMkoTitle);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
@@ -521,14 +521,14 @@
             this.rtbMkoData.TabIndex = 108;
             this.rtbMkoData.Text = "";
             // 
-            // rtbMko
+            // rtbMkoTitle
             // 
-            this.rtbMko.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMko.Location = new System.Drawing.Point(385, 31);
-            this.rtbMko.Name = "rtbMko";
-            this.rtbMko.Size = new System.Drawing.Size(581, 475);
-            this.rtbMko.TabIndex = 107;
-            this.rtbMko.Text = "";
+            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(385, 31);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
+            this.rtbMkoTitle.TabIndex = 107;
+            this.rtbMkoTitle.Text = "";
             // 
             // materialTabSelector1
             // 
@@ -1084,7 +1084,7 @@
         public MaterialSkin.Controls.MaterialLabel label10;
         public MaterialSkin.Controls.MaterialLabel label9;
         private Other.DisabledRichTextBox rtbMkoData;
-        private Other.DisabledRichTextBox rtbMko;
+        private Other.DisabledRichTextBox rtbMkoTitle;
         private Other.DisabledRichTextBox rtbDateTimeTitle;
         private Other.DisabledRichTextBox rtbDateTime;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

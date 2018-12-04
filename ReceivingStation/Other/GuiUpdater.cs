@@ -54,11 +54,11 @@ namespace ReceivingStation.Other
                 for (int i = 0; i < 6; i++)
                 {
                     allChannels[i].Dispose();
-                    allChannels[i] = GetFlp($"flpAllChannels{i}", new Size(242, 8));
+                    allChannels[i] = GetFlp(new Size(242, 8));
                     allChannelsPanels[i].Controls.Add(allChannels[i]);
 
                     channels[i].Dispose();
-                    channels[i] = GetFlp($"flpChannel{i}", new Size(1556, 40));
+                    channels[i] = GetFlp(new Size(1556, 40));
                     channelsPanels[i].Controls.Add(channels[i]);
                 }
             }
@@ -111,11 +111,10 @@ namespace ReceivingStation.Other
             timer.Start();
         }
 
-        public static FlowLayoutPanel GetFlp(string name, Size size)
+        public static FlowLayoutPanel GetFlp(Size size)
         {
             FlowLayoutPanel flp = new FlowLayoutPanel
             {
-                Name = name,
                 FlowDirection = FlowDirection.TopDown,
                 Size = size,
                 AutoSize = true,
