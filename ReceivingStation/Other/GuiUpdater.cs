@@ -138,8 +138,8 @@ namespace ReceivingStation.Other
             rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
 
             // Изображение.
-            allChannelsPanels[5].Invoke(new Action(() => { GuiUpdater.CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels); }));
-            allChannels[5].Invoke(new Action(() => { GuiUpdater.AddImages(channels, allChannels, listImagesForSave, images); }));
+            allChannelsPanels[5].Invoke(new Action(() => { CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels); }));
+            allChannels[5].Invoke(new Action(() => { AddImages(channels, allChannels, listImagesForSave, images); }));
         }
         #endregion
 

@@ -53,7 +53,6 @@ namespace ReceivingStation
         {
             GuiUpdater.SmoothLoadingForm(this);
             GuiUpdater.LoadFont();
-
             GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
 
             materialTabControl1.SelectedTab = tabPage14;

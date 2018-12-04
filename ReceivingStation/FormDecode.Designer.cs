@@ -53,6 +53,9 @@
             this.lblFileName = new MaterialSkin.Controls.MaterialLabel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bwImageSaver = new System.ComponentModel.BackgroundWorker();
@@ -71,13 +74,6 @@
             this.tabPage13 = new System.Windows.Forms.TabPage();
             this.pImage6 = new System.Windows.Forms.Panel();
             this.tabPage14 = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
-            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
@@ -91,6 +87,10 @@
             this.pImage10 = new System.Windows.Forms.Panel();
             this.pImage11 = new System.Windows.Forms.Panel();
             this.pImage12 = new System.Windows.Forms.Panel();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.statusStrip1.SuspendLayout();
             this.pnlControls.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -101,6 +101,7 @@
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.doubleBufferedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.materialTabControl1.SuspendLayout();
             this.tabPage8.SuspendLayout();
@@ -110,14 +111,14 @@
             this.tabPage12.SuspendLayout();
             this.tabPage13.SuspendLayout();
             this.tabPage14.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.doubleBufferedPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.AllowMerge = false;
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.Window;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slTime,
@@ -249,7 +250,7 @@
             // 
             this.materialLabel7.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel7.Location = new System.Drawing.Point(3, 9);
             this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
@@ -261,7 +262,7 @@
             // rbNRZNo
             // 
             this.rbNRZNo.Depth = 0;
-            this.rbNRZNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.rbNRZNo.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbNRZNo.Location = new System.Drawing.Point(7, 65);
             this.rbNRZNo.Margin = new System.Windows.Forms.Padding(0);
             this.rbNRZNo.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -277,7 +278,7 @@
             // 
             this.rbNRZYes.Checked = true;
             this.rbNRZYes.Depth = 0;
-            this.rbNRZYes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.rbNRZYes.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbNRZYes.Location = new System.Drawing.Point(7, 35);
             this.rbNRZYes.Margin = new System.Windows.Forms.Padding(0);
             this.rbNRZYes.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -306,7 +307,7 @@
             // 
             this.materialLabel9.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel9.Depth = 0;
-            this.materialLabel9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel9.Location = new System.Drawing.Point(8, 9);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
@@ -319,7 +320,7 @@
             // 
             this.rbRSYes.Checked = true;
             this.rbRSYes.Depth = 0;
-            this.rbRSYes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.rbRSYes.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbRSYes.Location = new System.Drawing.Point(12, 35);
             this.rbRSYes.Margin = new System.Windows.Forms.Padding(0);
             this.rbRSYes.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -335,7 +336,7 @@
             // rbRSNo
             // 
             this.rbRSNo.Depth = 0;
-            this.rbRSNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.rbRSNo.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbRSNo.Location = new System.Drawing.Point(12, 65);
             this.rbRSNo.Margin = new System.Windows.Forms.Padding(0);
             this.rbRSNo.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -365,12 +366,12 @@
             this.materialLabel10.AutoSize = true;
             this.materialLabel10.BackColor = System.Drawing.SystemColors.Window;
             this.materialLabel10.Depth = 0;
-            this.materialLabel10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel10.Location = new System.Drawing.Point(9, 9);
             this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel10.Name = "materialLabel10";
-            this.materialLabel10.Size = new System.Drawing.Size(92, 18);
+            this.materialLabel10.Size = new System.Drawing.Size(92, 19);
             this.materialLabel10.TabIndex = 40;
             this.materialLabel10.Text = "Имя файла:";
             // 
@@ -393,7 +394,7 @@
             this.lblFileName.AutoEllipsis = true;
             this.lblFileName.BackColor = System.Drawing.SystemColors.Window;
             this.lblFileName.Depth = 0;
-            this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblFileName.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblFileName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblFileName.Location = new System.Drawing.Point(103, 9);
             this.lblFileName.MouseState = MaterialSkin.MouseState.HOVER;
@@ -426,6 +427,34 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(695, 108);
             this.tableLayoutPanel5.TabIndex = 45;
+            // 
+            // doubleBufferedPanel1
+            // 
+            this.doubleBufferedPanel1.Controls.Add(this.rtbDateTimeTitle);
+            this.doubleBufferedPanel1.Controls.Add(this.rtbDateTime);
+            this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
+            this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
+            this.doubleBufferedPanel1.Size = new System.Drawing.Size(574, 102);
+            this.doubleBufferedPanel1.TabIndex = 46;
+            // 
+            // rtbDateTimeTitle
+            // 
+            this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rtbDateTimeTitle.Location = new System.Drawing.Point(400, 0);
+            this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
+            this.rtbDateTimeTitle.Size = new System.Drawing.Size(74, 102);
+            this.rtbDateTimeTitle.TabIndex = 46;
+            this.rtbDateTimeTitle.Text = "";
+            // 
+            // rtbDateTime
+            // 
+            this.rtbDateTime.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rtbDateTime.Location = new System.Drawing.Point(474, 0);
+            this.rtbDateTime.Name = "rtbDateTime";
+            this.rtbDateTime.Size = new System.Drawing.Size(100, 102);
+            this.rtbDateTime.TabIndex = 45;
+            this.rtbDateTime.Text = "";
             // 
             // pictureBox1
             // 
@@ -608,78 +637,6 @@
             this.tabPage14.Text = "Все каналы";
             this.tabPage14.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.rtbMkoData);
-            this.tabPage1.Controls.Add(this.rtbMkoTitle);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1548, 536);
-            this.tabPage1.TabIndex = 7;
-            this.tabPage1.Text = "МКО";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // materialDivider1
-            // 
-            this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialDivider1.Depth = 0;
-            this.materialDivider1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.materialDivider1.Enabled = false;
-            this.materialDivider1.Location = new System.Drawing.Point(0, 0);
-            this.materialDivider1.MaximumSize = new System.Drawing.Size(1, 54);
-            this.materialDivider1.MinimumSize = new System.Drawing.Size(1, 54);
-            this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialDivider1.Name = "materialDivider1";
-            this.materialDivider1.Size = new System.Drawing.Size(1, 54);
-            this.materialDivider1.TabIndex = 26;
-            this.materialDivider1.Text = "materialDivider1";
-            // 
-            // rtbMkoData
-            // 
-            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(1029, 33);
-            this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
-            this.rtbMkoData.TabIndex = 106;
-            this.rtbMkoData.Text = "";
-            // 
-            // rtbMkoTitle
-            // 
-            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
-            this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
-            this.rtbMkoTitle.TabIndex = 105;
-            this.rtbMkoTitle.Text = "";
-            // 
-            // doubleBufferedPanel1
-            // 
-            this.doubleBufferedPanel1.Controls.Add(this.rtbDateTimeTitle);
-            this.doubleBufferedPanel1.Controls.Add(this.rtbDateTime);
-            this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
-            this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
-            this.doubleBufferedPanel1.Size = new System.Drawing.Size(574, 102);
-            this.doubleBufferedPanel1.TabIndex = 46;
-            // 
-            // rtbDateTimeTitle
-            // 
-            this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTimeTitle.Location = new System.Drawing.Point(400, 0);
-            this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
-            this.rtbDateTimeTitle.Size = new System.Drawing.Size(74, 102);
-            this.rtbDateTimeTitle.TabIndex = 46;
-            this.rtbDateTimeTitle.Text = "";
-            // 
-            // rtbDateTime
-            // 
-            this.rtbDateTime.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTime.Location = new System.Drawing.Point(474, 0);
-            this.rtbDateTime.Name = "rtbDateTime";
-            this.rtbDateTime.Size = new System.Drawing.Size(100, 102);
-            this.rtbDateTime.TabIndex = 45;
-            this.rtbDateTime.Text = "";
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoScroll = true;
@@ -844,6 +801,50 @@
             this.pImage12.Size = new System.Drawing.Size(241, 497);
             this.pImage12.TabIndex = 5;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.rtbMkoData);
+            this.tabPage1.Controls.Add(this.rtbMkoTitle);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage1.TabIndex = 7;
+            this.tabPage1.Text = "МКО";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoData.Location = new System.Drawing.Point(1029, 33);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
+            this.rtbMkoData.TabIndex = 106;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMkoTitle
+            // 
+            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
+            this.rtbMkoTitle.TabIndex = 105;
+            this.rtbMkoTitle.Text = "";
+            // 
+            // materialDivider1
+            // 
+            this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialDivider1.Depth = 0;
+            this.materialDivider1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialDivider1.Enabled = false;
+            this.materialDivider1.Location = new System.Drawing.Point(0, 0);
+            this.materialDivider1.MaximumSize = new System.Drawing.Size(1, 54);
+            this.materialDivider1.MinimumSize = new System.Drawing.Size(1, 54);
+            this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialDivider1.Name = "materialDivider1";
+            this.materialDivider1.Size = new System.Drawing.Size(1, 54);
+            this.materialDivider1.TabIndex = 26;
+            this.materialDivider1.Text = "materialDivider1";
+            // 
             // FormDecode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -877,6 +878,7 @@
             this.panel4.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
+            this.doubleBufferedPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.materialTabControl1.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
@@ -886,10 +888,9 @@
             this.tabPage12.ResumeLayout(false);
             this.tabPage13.ResumeLayout(false);
             this.tabPage14.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.doubleBufferedPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
