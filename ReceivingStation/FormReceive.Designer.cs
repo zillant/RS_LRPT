@@ -38,32 +38,31 @@
             this.bwImageSaver = new System.ComponentModel.BackgroundWorker();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.pScroll1 = new System.Windows.Forms.Panel();
+            this.pImage1 = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.pScroll2 = new System.Windows.Forms.Panel();
+            this.pImage2 = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.pScroll3 = new System.Windows.Forms.Panel();
+            this.pImage3 = new System.Windows.Forms.Panel();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.pScroll4 = new System.Windows.Forms.Panel();
+            this.pImage4 = new System.Windows.Forms.Panel();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.pScroll5 = new System.Windows.Forms.Panel();
+            this.pImage5 = new System.Windows.Forms.Panel();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.pScroll6 = new System.Windows.Forms.Panel();
+            this.pImage6 = new System.Windows.Forms.Panel();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.pScroll10 = new System.Windows.Forms.Panel();
-            this.pScroll11 = new System.Windows.Forms.Panel();
-            this.pScroll12 = new System.Windows.Forms.Panel();
-            this.pScroll7 = new System.Windows.Forms.Panel();
-            this.pScroll8 = new System.Windows.Forms.Panel();
-            this.pScroll9 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            this.pImage7 = new System.Windows.Forms.Panel();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
+            this.pImage8 = new System.Windows.Forms.Panel();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.pImage9 = new System.Windows.Forms.Panel();
+            this.pImage10 = new System.Windows.Forms.Panel();
+            this.pImage11 = new System.Windows.Forms.Panel();
+            this.pImage12 = new System.Windows.Forms.Panel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
             this.rtbMko = new ReceivingStation.Other.DisabledRichTextBox();
@@ -108,8 +107,7 @@
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tlp1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -147,7 +145,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(679, 20);
+            this.slTime.Size = new System.Drawing.Size(694, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -171,7 +169,7 @@
             this.slMode.Image = global::ReceivingStation.Properties.Resources.mode_icon;
             this.slMode.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slMode.Name = "slMode";
-            this.slMode.Size = new System.Drawing.Size(681, 20);
+            this.slMode.Size = new System.Drawing.Size(696, 20);
             this.slMode.Spring = true;
             this.slMode.Text = "Местное управление";
             this.slMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -209,7 +207,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.pScroll1);
+            this.tabPage1.Controls.Add(this.pImage1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -218,18 +216,18 @@
             this.tabPage1.Text = "Канал 1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // pScroll1
+            // pImage1
             // 
-            this.pScroll1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll1.Location = new System.Drawing.Point(3, 3);
-            this.pScroll1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll1.Name = "pScroll1";
-            this.pScroll1.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll1.TabIndex = 4;
+            this.pImage1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage1.Location = new System.Drawing.Point(3, 3);
+            this.pImage1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage1.Name = "pImage1";
+            this.pImage1.Size = new System.Drawing.Size(1542, 530);
+            this.pImage1.TabIndex = 4;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.pScroll2);
+            this.tabPage2.Controls.Add(this.pImage2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -238,18 +236,18 @@
             this.tabPage2.Text = "Канал 2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // pScroll2
+            // pImage2
             // 
-            this.pScroll2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll2.Location = new System.Drawing.Point(3, 3);
-            this.pScroll2.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll2.Name = "pScroll2";
-            this.pScroll2.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll2.TabIndex = 4;
+            this.pImage2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage2.Location = new System.Drawing.Point(3, 3);
+            this.pImage2.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage2.Name = "pImage2";
+            this.pImage2.Size = new System.Drawing.Size(1542, 530);
+            this.pImage2.TabIndex = 4;
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.pScroll3);
+            this.tabPage3.Controls.Add(this.pImage3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -258,18 +256,18 @@
             this.tabPage3.Text = "Канал 3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // pScroll3
+            // pImage3
             // 
-            this.pScroll3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll3.Location = new System.Drawing.Point(3, 3);
-            this.pScroll3.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll3.Name = "pScroll3";
-            this.pScroll3.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll3.TabIndex = 4;
+            this.pImage3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage3.Location = new System.Drawing.Point(3, 3);
+            this.pImage3.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage3.Name = "pImage3";
+            this.pImage3.Size = new System.Drawing.Size(1542, 530);
+            this.pImage3.TabIndex = 4;
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.pScroll4);
+            this.tabPage4.Controls.Add(this.pImage4);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -278,18 +276,18 @@
             this.tabPage4.Text = "Канал 4";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // pScroll4
+            // pImage4
             // 
-            this.pScroll4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll4.Location = new System.Drawing.Point(3, 3);
-            this.pScroll4.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll4.Name = "pScroll4";
-            this.pScroll4.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll4.TabIndex = 4;
+            this.pImage4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage4.Location = new System.Drawing.Point(3, 3);
+            this.pImage4.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage4.Name = "pImage4";
+            this.pImage4.Size = new System.Drawing.Size(1542, 530);
+            this.pImage4.TabIndex = 4;
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.pScroll5);
+            this.tabPage5.Controls.Add(this.pImage5);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -298,18 +296,18 @@
             this.tabPage5.Text = "Канал 5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // pScroll5
+            // pImage5
             // 
-            this.pScroll5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll5.Location = new System.Drawing.Point(3, 3);
-            this.pScroll5.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll5.Name = "pScroll5";
-            this.pScroll5.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll5.TabIndex = 4;
+            this.pImage5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage5.Location = new System.Drawing.Point(3, 3);
+            this.pImage5.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage5.Name = "pImage5";
+            this.pImage5.Size = new System.Drawing.Size(1542, 530);
+            this.pImage5.TabIndex = 4;
             // 
             // tabPage6
             // 
-            this.tabPage6.Controls.Add(this.pScroll6);
+            this.tabPage6.Controls.Add(this.pImage6);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
@@ -318,19 +316,18 @@
             this.tabPage6.Text = "Канал 6";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // pScroll6
+            // pImage6
             // 
-            this.pScroll6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll6.Location = new System.Drawing.Point(3, 3);
-            this.pScroll6.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll6.Name = "pScroll6";
-            this.pScroll6.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll6.TabIndex = 4;
+            this.pImage6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage6.Location = new System.Drawing.Point(3, 3);
+            this.pImage6.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage6.Name = "pImage6";
+            this.pImage6.Size = new System.Drawing.Size(1542, 530);
+            this.pImage6.TabIndex = 4;
             // 
             // tabPage7
             // 
-            this.tabPage7.Controls.Add(this.tableLayoutPanel4);
-            this.tabPage7.Controls.Add(this.tableLayoutPanel5);
+            this.tabPage7.Controls.Add(this.tableLayoutPanel1);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
@@ -339,149 +336,37 @@
             this.tabPage7.Text = "Все каналы";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel4
+            // tableLayoutPanel1
             // 
-            this.tableLayoutPanel4.AutoScroll = true;
-            this.tableLayoutPanel4.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel4.ColumnCount = 6;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel4.Controls.Add(this.pScroll10, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pScroll11, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pScroll12, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pScroll7, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pScroll8, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pScroll9, 0, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 44);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1542, 489);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // pScroll10
-            // 
-            this.pScroll10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll10.Location = new System.Drawing.Point(778, 3);
-            this.pScroll10.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.pScroll10.Name = "pScroll10";
-            this.pScroll10.Size = new System.Drawing.Size(236, 483);
-            this.pScroll10.TabIndex = 6;
-            // 
-            // pScroll11
-            // 
-            this.pScroll11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll11.Location = new System.Drawing.Point(1034, 3);
-            this.pScroll11.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.pScroll11.Name = "pScroll11";
-            this.pScroll11.Size = new System.Drawing.Size(236, 483);
-            this.pScroll11.TabIndex = 5;
-            // 
-            // pScroll12
-            // 
-            this.pScroll12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll12.Location = new System.Drawing.Point(1290, 3);
-            this.pScroll12.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.pScroll12.Name = "pScroll12";
-            this.pScroll12.Size = new System.Drawing.Size(242, 483);
-            this.pScroll12.TabIndex = 4;
-            // 
-            // pScroll7
-            // 
-            this.pScroll7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll7.Location = new System.Drawing.Point(10, 3);
-            this.pScroll7.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.pScroll7.Name = "pScroll7";
-            this.pScroll7.Size = new System.Drawing.Size(236, 483);
-            this.pScroll7.TabIndex = 3;
-            // 
-            // pScroll8
-            // 
-            this.pScroll8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll8.Location = new System.Drawing.Point(266, 3);
-            this.pScroll8.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.pScroll8.Name = "pScroll8";
-            this.pScroll8.Size = new System.Drawing.Size(236, 483);
-            this.pScroll8.TabIndex = 2;
-            // 
-            // pScroll9
-            // 
-            this.pScroll9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll9.Location = new System.Drawing.Point(522, 3);
-            this.pScroll9.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.pScroll9.Name = "pScroll9";
-            this.pScroll9.Size = new System.Drawing.Size(236, 483);
-            this.pScroll9.TabIndex = 1;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 6;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.Controls.Add(this.materialLabel6, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.materialLabel5, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.materialLabel4, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.materialLabel3, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.materialLabel2, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.materialLabel1, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1542, 41);
-            this.tableLayoutPanel5.TabIndex = 1;
-            // 
-            // materialLabel6
-            // 
-            this.materialLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.materialLabel6.AutoSize = true;
-            this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(863, 11);
-            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel6.Name = "materialLabel6";
-            this.materialLabel6.Size = new System.Drawing.Size(65, 19);
-            this.materialLabel6.TabIndex = 11;
-            this.materialLabel6.Text = "Канал 4";
-            // 
-            // materialLabel5
-            // 
-            this.materialLabel5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.materialLabel5.AutoSize = true;
-            this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(1119, 11);
-            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(65, 19);
-            this.materialLabel5.TabIndex = 10;
-            this.materialLabel5.Text = "Канал 5";
-            // 
-            // materialLabel4
-            // 
-            this.materialLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(1378, 11);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(65, 19);
-            this.materialLabel4.TabIndex = 9;
-            this.materialLabel4.Text = "Канал 6";
+            this.tableLayoutPanel1.AutoScroll = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel6, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pImage7, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel2, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel5, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pImage8, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel4, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pImage9, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pImage10, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pImage11, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pImage12, 5, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.263158F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.73684F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1542, 530);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // materialLabel3
             // 
@@ -490,26 +375,12 @@
             this.materialLabel3.Depth = 0;
             this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(95, 11);
+            this.materialLabel3.Location = new System.Drawing.Point(95, 4);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
             this.materialLabel3.Size = new System.Drawing.Size(65, 19);
             this.materialLabel3.TabIndex = 8;
             this.materialLabel3.Text = "Канал 1";
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(351, 11);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(65, 19);
-            this.materialLabel2.TabIndex = 7;
-            this.materialLabel2.Text = "Канал 2";
             // 
             // materialLabel1
             // 
@@ -518,12 +389,116 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(607, 11);
+            this.materialLabel1.Location = new System.Drawing.Point(351, 4);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(65, 19);
             this.materialLabel1.TabIndex = 6;
-            this.materialLabel1.Text = "Канал 3";
+            this.materialLabel1.Text = "Канал 2";
+            // 
+            // materialLabel6
+            // 
+            this.materialLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel6.AutoSize = true;
+            this.materialLabel6.Depth = 0;
+            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel6.Location = new System.Drawing.Point(607, 4);
+            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel6.Name = "materialLabel6";
+            this.materialLabel6.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel6.TabIndex = 11;
+            this.materialLabel6.Text = "Канал 3";
+            // 
+            // pImage7
+            // 
+            this.pImage7.Location = new System.Drawing.Point(10, 30);
+            this.pImage7.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage7.Name = "pImage7";
+            this.pImage7.Size = new System.Drawing.Size(236, 497);
+            this.pImage7.TabIndex = 0;
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(863, 4);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel2.TabIndex = 7;
+            this.materialLabel2.Text = "Канал 4";
+            // 
+            // materialLabel5
+            // 
+            this.materialLabel5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel5.AutoSize = true;
+            this.materialLabel5.Depth = 0;
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel5.Location = new System.Drawing.Point(1119, 4);
+            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel5.Name = "materialLabel5";
+            this.materialLabel5.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel5.TabIndex = 10;
+            this.materialLabel5.Text = "Канал 5";
+            // 
+            // pImage8
+            // 
+            this.pImage8.Location = new System.Drawing.Point(266, 30);
+            this.pImage8.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage8.Name = "pImage8";
+            this.pImage8.Size = new System.Drawing.Size(236, 497);
+            this.pImage8.TabIndex = 1;
+            // 
+            // materialLabel4
+            // 
+            this.materialLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel4.Location = new System.Drawing.Point(1378, 4);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel4.TabIndex = 9;
+            this.materialLabel4.Text = "Канал 6";
+            // 
+            // pImage9
+            // 
+            this.pImage9.Location = new System.Drawing.Point(522, 30);
+            this.pImage9.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage9.Name = "pImage9";
+            this.pImage9.Size = new System.Drawing.Size(236, 497);
+            this.pImage9.TabIndex = 2;
+            // 
+            // pImage10
+            // 
+            this.pImage10.Location = new System.Drawing.Point(778, 30);
+            this.pImage10.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage10.Name = "pImage10";
+            this.pImage10.Size = new System.Drawing.Size(236, 497);
+            this.pImage10.TabIndex = 3;
+            // 
+            // pImage11
+            // 
+            this.pImage11.Location = new System.Drawing.Point(1034, 30);
+            this.pImage11.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage11.Name = "pImage11";
+            this.pImage11.Size = new System.Drawing.Size(236, 497);
+            this.pImage11.TabIndex = 4;
+            // 
+            // pImage12
+            // 
+            this.pImage12.Location = new System.Drawing.Point(1290, 30);
+            this.pImage12.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage12.Name = "pImage12";
+            this.pImage12.Size = new System.Drawing.Size(241, 497);
+            this.pImage12.TabIndex = 5;
             // 
             // tabPage8
             // 
@@ -632,7 +607,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.09931F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.2093F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.72093F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 261F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -654,7 +629,7 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(128, 3);
+            this.panel7.Location = new System.Drawing.Point(127, 3);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(110, 102);
             this.panel7.TabIndex = 45;
@@ -712,9 +687,9 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(431, 3);
+            this.panel2.Location = new System.Drawing.Point(429, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(257, 102);
+            this.panel2.Size = new System.Drawing.Size(259, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -771,9 +746,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(244, 3);
+            this.panel3.Location = new System.Drawing.Point(243, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(181, 102);
+            this.panel3.Size = new System.Drawing.Size(180, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -833,7 +808,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(119, 102);
+            this.panel4.Size = new System.Drawing.Size(118, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialRadioButton2
@@ -1031,9 +1006,8 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.tabPage8.ResumeLayout(false);
             this.tlp1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
@@ -1072,14 +1046,6 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private MaterialSkin.Controls.MaterialLabel materialLabel6;
-        private MaterialSkin.Controls.MaterialLabel materialLabel5;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
         private MaterialSkin.Controls.MaterialDivider materialDivider1;
         private System.Windows.Forms.TableLayoutPanel tlp1;
@@ -1102,18 +1068,12 @@
         private MaterialSkin.Controls.MaterialRadioButton materialRadioButton2;
         private MaterialSkin.Controls.MaterialRadioButton rbFCPMain;
         private MaterialSkin.Controls.MaterialLabel lblFCP;
-        private System.Windows.Forms.Panel pScroll10;
-        private System.Windows.Forms.Panel pScroll11;
-        private System.Windows.Forms.Panel pScroll12;
-        private System.Windows.Forms.Panel pScroll7;
-        private System.Windows.Forms.Panel pScroll8;
-        private System.Windows.Forms.Panel pScroll9;
-        private System.Windows.Forms.Panel pScroll1;
-        private System.Windows.Forms.Panel pScroll2;
-        private System.Windows.Forms.Panel pScroll3;
-        private System.Windows.Forms.Panel pScroll4;
-        private System.Windows.Forms.Panel pScroll5;
-        private System.Windows.Forms.Panel pScroll6;
+        private System.Windows.Forms.Panel pImage1;
+        private System.Windows.Forms.Panel pImage2;
+        private System.Windows.Forms.Panel pImage3;
+        private System.Windows.Forms.Panel pImage4;
+        private System.Windows.Forms.Panel pImage5;
+        private System.Windows.Forms.Panel pImage6;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -1127,6 +1087,19 @@
         private Other.DisabledRichTextBox rtbMko;
         private Other.DisabledRichTextBox rtbDateTimeTitle;
         private Other.DisabledRichTextBox rtbDateTime;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel6;
+        private System.Windows.Forms.Panel pImage7;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialLabel materialLabel5;
+        private System.Windows.Forms.Panel pImage8;
+        private MaterialSkin.Controls.MaterialLabel materialLabel4;
+        private System.Windows.Forms.Panel pImage9;
+        private System.Windows.Forms.Panel pImage10;
+        private System.Windows.Forms.Panel pImage11;
+        private System.Windows.Forms.Panel pImage12;
     }
 }
 

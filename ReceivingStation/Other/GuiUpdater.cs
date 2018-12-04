@@ -175,8 +175,8 @@ namespace ReceivingStation.Other
 
         #endregion
 
-        #region Инициализация кастомного richTextBox.
-        public static void RichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime)
+        #region Инициализация кастомного richTextBox с данными декодирования.
+        public static void DecodeRichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime)
         {
             AllocFont(_font, rtbMko, 11);
             AllocFont(_font, rtbMkoData, 11);

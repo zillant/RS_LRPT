@@ -24,14 +24,14 @@ namespace ReceivingStation
 
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
-        private bool _isReceivingStarting; // Для контроля времени наработки борта.
-
+        
         private string _fileName;
-              
+        private bool _isReceivingStarting; 
+
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateImages. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
 
-        // Поля, обновлняемые из потока.
+        // Поля, обновляемые из потока.
         private DateTime _lineDate; // Время пришедшей полосы.
         private string[] _td = new string[4];
         private string[] _oshv = new string[2];
@@ -68,7 +68,7 @@ namespace ReceivingStation
             GuiUpdater.SmoothLoadingForm(this);
             GuiUpdater.LoadFont();
 
-            GuiUpdater.RichTextBoxInit(rtbMko, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
+            GuiUpdater.DecodeRichTextBoxInit(rtbMko, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
 
             materialTabControl1.SelectedTab = tabPage7;
 
@@ -78,19 +78,19 @@ namespace ReceivingStation
 
             OpenLogWorkingTimeFile();
 
-            _channelsPanels[0] = pScroll1;
-            _channelsPanels[1] = pScroll2;
-            _channelsPanels[2] = pScroll3;
-            _channelsPanels[3] = pScroll4;
-            _channelsPanels[4] = pScroll5;
-            _channelsPanels[5] = pScroll6;
+            _channelsPanels[0] = pImage1;
+            _channelsPanels[1] = pImage2;
+            _channelsPanels[2] = pImage3;
+            _channelsPanels[3] = pImage4;
+            _channelsPanels[4] = pImage5;
+            _channelsPanels[5] = pImage6;
 
-            _allChannelsPanels[0] = pScroll7;
-            _allChannelsPanels[1] = pScroll8;
-            _allChannelsPanels[2] = pScroll9;
-            _allChannelsPanels[3] = pScroll10;
-            _allChannelsPanels[4] = pScroll11;
-            _allChannelsPanels[5] = pScroll12;
+            _allChannelsPanels[0] = pImage7;
+            _allChannelsPanels[1] = pImage8;
+            _allChannelsPanels[2] = pImage9;
+            _allChannelsPanels[3] = pImage10;
+            _allChannelsPanels[4] = pImage11;
+            _allChannelsPanels[5] = pImage12;
 
             for (int i = 0; i < 6; i++)
             {

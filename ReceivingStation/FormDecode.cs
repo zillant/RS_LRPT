@@ -25,7 +25,7 @@ namespace ReceivingStation
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateImages. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
 
-        // Поля, обновлняемые из потока.
+        // Поля, обновляемые из потока.
         private DateTime _lineDate; // Время пришедшей полосы.
         private string[] _td = new string[4];
         private string[] _oshv = new string[2];
@@ -54,26 +54,26 @@ namespace ReceivingStation
             GuiUpdater.SmoothLoadingForm(this);
             GuiUpdater.LoadFont();
 
-            GuiUpdater.RichTextBoxInit(rtbMko, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
+            GuiUpdater.DecodeRichTextBoxInit(rtbMko, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
 
             materialTabControl1.SelectedTab = tabPage14;
 
             _isDecodeStarting = false;
             _isFileOpened = false;
 
-            _allChannelsPanels[0] = panel7;
-            _allChannelsPanels[1] = panel8;
-            _allChannelsPanels[2] = panel9;
-            _allChannelsPanels[3] = panel10;
-            _allChannelsPanels[4] = panel11;
-            _allChannelsPanels[5] = panel12;
+            _channelsPanels[0] = pImage1;
+            _channelsPanels[1] = pImage2;
+            _channelsPanels[2] = pImage3;
+            _channelsPanels[3] = pImage4;
+            _channelsPanels[4] = pImage5;
+            _channelsPanels[5] = pImage6;
 
-            _channelsPanels[0] = pScroll1;
-            _channelsPanels[1] = pScroll2;
-            _channelsPanels[2] = pScroll3;
-            _channelsPanels[3] = pScroll4;
-            _channelsPanels[4] = pScroll5;
-            _channelsPanels[5] = pScroll6;
+            _allChannelsPanels[0] = pImage7;
+            _allChannelsPanels[1] = pImage8;
+            _allChannelsPanels[2] = pImage9;
+            _allChannelsPanels[3] = pImage10;
+            _allChannelsPanels[4] = pImage11;
+            _allChannelsPanels[5] = pImage12;
 
             for (int i = 0; i < 6; i++)
             {

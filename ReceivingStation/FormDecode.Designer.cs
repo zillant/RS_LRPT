@@ -59,26 +59,25 @@
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.pScroll1 = new System.Windows.Forms.Panel();
+            this.pImage1 = new System.Windows.Forms.Panel();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.pScroll2 = new System.Windows.Forms.Panel();
+            this.pImage2 = new System.Windows.Forms.Panel();
             this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.pScroll3 = new System.Windows.Forms.Panel();
+            this.pImage3 = new System.Windows.Forms.Panel();
             this.tabPage11 = new System.Windows.Forms.TabPage();
-            this.pScroll4 = new System.Windows.Forms.Panel();
+            this.pImage4 = new System.Windows.Forms.Panel();
             this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.pScroll5 = new System.Windows.Forms.Panel();
+            this.pImage5 = new System.Windows.Forms.Panel();
             this.tabPage13 = new System.Windows.Forms.TabPage();
-            this.pScroll6 = new System.Windows.Forms.Panel();
+            this.pImage6 = new System.Windows.Forms.Panel();
             this.tabPage14 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pImage12 = new System.Windows.Forms.Panel();
+            this.pImage11 = new System.Windows.Forms.Panel();
+            this.pImage10 = new System.Windows.Forms.Panel();
+            this.pImage9 = new System.Windows.Forms.Panel();
+            this.pImage8 = new System.Windows.Forms.Panel();
+            this.pImage7 = new System.Windows.Forms.Panel();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
@@ -112,7 +111,6 @@
             this.tabPage13.SuspendLayout();
             this.tabPage14.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.doubleBufferedPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -486,7 +484,7 @@
             // 
             // tabPage8
             // 
-            this.tabPage8.Controls.Add(this.pScroll1);
+            this.tabPage8.Controls.Add(this.pImage1);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
@@ -495,18 +493,18 @@
             this.tabPage8.Text = "Канал 1";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // pScroll1
+            // pImage1
             // 
-            this.pScroll1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll1.Location = new System.Drawing.Point(3, 3);
-            this.pScroll1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.pScroll1.Name = "pScroll1";
-            this.pScroll1.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll1.TabIndex = 3;
+            this.pImage1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage1.Location = new System.Drawing.Point(3, 3);
+            this.pImage1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.pImage1.Name = "pImage1";
+            this.pImage1.Size = new System.Drawing.Size(1542, 530);
+            this.pImage1.TabIndex = 3;
             // 
             // tabPage9
             // 
-            this.tabPage9.Controls.Add(this.pScroll2);
+            this.tabPage9.Controls.Add(this.pImage2);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
@@ -515,17 +513,17 @@
             this.tabPage9.Text = "Канал 2";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
-            // pScroll2
+            // pImage2
             // 
-            this.pScroll2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll2.Location = new System.Drawing.Point(3, 3);
-            this.pScroll2.Name = "pScroll2";
-            this.pScroll2.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll2.TabIndex = 4;
+            this.pImage2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage2.Location = new System.Drawing.Point(3, 3);
+            this.pImage2.Name = "pImage2";
+            this.pImage2.Size = new System.Drawing.Size(1542, 530);
+            this.pImage2.TabIndex = 4;
             // 
             // tabPage10
             // 
-            this.tabPage10.Controls.Add(this.pScroll3);
+            this.tabPage10.Controls.Add(this.pImage3);
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
@@ -534,17 +532,17 @@
             this.tabPage10.Text = "Канал 3";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
-            // pScroll3
+            // pImage3
             // 
-            this.pScroll3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll3.Location = new System.Drawing.Point(3, 3);
-            this.pScroll3.Name = "pScroll3";
-            this.pScroll3.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll3.TabIndex = 5;
+            this.pImage3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage3.Location = new System.Drawing.Point(3, 3);
+            this.pImage3.Name = "pImage3";
+            this.pImage3.Size = new System.Drawing.Size(1542, 530);
+            this.pImage3.TabIndex = 5;
             // 
             // tabPage11
             // 
-            this.tabPage11.Controls.Add(this.pScroll4);
+            this.tabPage11.Controls.Add(this.pImage4);
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
@@ -553,17 +551,17 @@
             this.tabPage11.Text = "Канал 4";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
-            // pScroll4
+            // pImage4
             // 
-            this.pScroll4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll4.Location = new System.Drawing.Point(3, 3);
-            this.pScroll4.Name = "pScroll4";
-            this.pScroll4.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll4.TabIndex = 6;
+            this.pImage4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage4.Location = new System.Drawing.Point(3, 3);
+            this.pImage4.Name = "pImage4";
+            this.pImage4.Size = new System.Drawing.Size(1542, 530);
+            this.pImage4.TabIndex = 6;
             // 
             // tabPage12
             // 
-            this.tabPage12.Controls.Add(this.pScroll5);
+            this.tabPage12.Controls.Add(this.pImage5);
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
@@ -572,17 +570,17 @@
             this.tabPage12.Text = "Канал 5";
             this.tabPage12.UseVisualStyleBackColor = true;
             // 
-            // pScroll5
+            // pImage5
             // 
-            this.pScroll5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll5.Location = new System.Drawing.Point(3, 3);
-            this.pScroll5.Name = "pScroll5";
-            this.pScroll5.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll5.TabIndex = 6;
+            this.pImage5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage5.Location = new System.Drawing.Point(3, 3);
+            this.pImage5.Name = "pImage5";
+            this.pImage5.Size = new System.Drawing.Size(1542, 530);
+            this.pImage5.TabIndex = 6;
             // 
             // tabPage13
             // 
-            this.tabPage13.Controls.Add(this.pScroll6);
+            this.tabPage13.Controls.Add(this.pImage6);
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
@@ -591,18 +589,17 @@
             this.tabPage13.Text = "Канал 6";
             this.tabPage13.UseVisualStyleBackColor = true;
             // 
-            // pScroll6
+            // pImage6
             // 
-            this.pScroll6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pScroll6.Location = new System.Drawing.Point(3, 3);
-            this.pScroll6.Name = "pScroll6";
-            this.pScroll6.Size = new System.Drawing.Size(1542, 530);
-            this.pScroll6.TabIndex = 6;
+            this.pImage6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pImage6.Location = new System.Drawing.Point(3, 3);
+            this.pImage6.Name = "pImage6";
+            this.pImage6.Size = new System.Drawing.Size(1542, 530);
+            this.pImage6.TabIndex = 6;
             // 
             // tabPage14
             // 
             this.tabPage14.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage14.Controls.Add(this.tableLayoutPanel2);
             this.tabPage14.Location = new System.Drawing.Point(4, 22);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
@@ -622,96 +619,74 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Controls.Add(this.panel12, 5, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel11, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel10, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel9, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel8, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel7, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel6, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pImage7, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel2, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel5, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pImage8, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.materialLabel4, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pImage9, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pImage10, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pImage11, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pImage12, 5, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 23);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1542, 510);
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.263158F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.73684F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1542, 530);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // panel12
+            // pImage12
             // 
-            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(1290, 3);
-            this.panel12.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(242, 504);
-            this.panel12.TabIndex = 5;
+            this.pImage12.Location = new System.Drawing.Point(1291, 30);
+            this.pImage12.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage12.Name = "pImage12";
+            this.pImage12.Size = new System.Drawing.Size(241, 497);
+            this.pImage12.TabIndex = 5;
             // 
-            // panel11
+            // pImage11
             // 
-            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(1034, 3);
-            this.panel11.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(236, 504);
-            this.panel11.TabIndex = 4;
+            this.pImage11.Location = new System.Drawing.Point(1035, 30);
+            this.pImage11.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage11.Name = "pImage11";
+            this.pImage11.Size = new System.Drawing.Size(236, 497);
+            this.pImage11.TabIndex = 4;
             // 
-            // panel10
+            // pImage10
             // 
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(778, 3);
-            this.panel10.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(236, 504);
-            this.panel10.TabIndex = 3;
+            this.pImage10.Location = new System.Drawing.Point(779, 30);
+            this.pImage10.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage10.Name = "pImage10";
+            this.pImage10.Size = new System.Drawing.Size(236, 497);
+            this.pImage10.TabIndex = 3;
             // 
-            // panel9
+            // pImage9
             // 
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(522, 3);
-            this.panel9.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(236, 504);
-            this.panel9.TabIndex = 2;
+            this.pImage9.Location = new System.Drawing.Point(523, 30);
+            this.pImage9.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage9.Name = "pImage9";
+            this.pImage9.Size = new System.Drawing.Size(236, 497);
+            this.pImage9.TabIndex = 2;
             // 
-            // panel8
+            // pImage8
             // 
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(266, 3);
-            this.panel8.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(236, 504);
-            this.panel8.TabIndex = 1;
+            this.pImage8.Location = new System.Drawing.Point(267, 30);
+            this.pImage8.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage8.Name = "pImage8";
+            this.pImage8.Size = new System.Drawing.Size(236, 497);
+            this.pImage8.TabIndex = 1;
             // 
-            // panel7
+            // pImage7
             // 
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(10, 3);
-            this.panel7.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(236, 504);
-            this.panel7.TabIndex = 0;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 6;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.Controls.Add(this.materialLabel6, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.materialLabel5, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.materialLabel4, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.materialLabel3, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.materialLabel2, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.materialLabel1, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1542, 20);
-            this.tableLayoutPanel2.TabIndex = 1;
+            this.pImage7.Location = new System.Drawing.Point(10, 30);
+            this.pImage7.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.pImage7.Name = "pImage7";
+            this.pImage7.Size = new System.Drawing.Size(236, 497);
+            this.pImage7.TabIndex = 0;
             // 
             // materialLabel6
             // 
@@ -720,12 +695,12 @@
             this.materialLabel6.Depth = 0;
             this.materialLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(864, 1);
+            this.materialLabel6.Location = new System.Drawing.Point(609, 4);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
             this.materialLabel6.Size = new System.Drawing.Size(63, 18);
             this.materialLabel6.TabIndex = 11;
-            this.materialLabel6.Text = "Канал 4";
+            this.materialLabel6.Text = "Канал 3";
             // 
             // materialLabel5
             // 
@@ -734,7 +709,7 @@
             this.materialLabel5.Depth = 0;
             this.materialLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(1120, 1);
+            this.materialLabel5.Location = new System.Drawing.Point(1121, 4);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
             this.materialLabel5.Size = new System.Drawing.Size(63, 18);
@@ -748,7 +723,7 @@
             this.materialLabel4.Depth = 0;
             this.materialLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(1379, 1);
+            this.materialLabel4.Location = new System.Drawing.Point(1380, 4);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
             this.materialLabel4.Size = new System.Drawing.Size(63, 18);
@@ -762,7 +737,7 @@
             this.materialLabel3.Depth = 0;
             this.materialLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(96, 1);
+            this.materialLabel3.Location = new System.Drawing.Point(97, 4);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
             this.materialLabel3.Size = new System.Drawing.Size(63, 18);
@@ -776,12 +751,12 @@
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(352, 1);
+            this.materialLabel2.Location = new System.Drawing.Point(865, 4);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(63, 18);
             this.materialLabel2.TabIndex = 7;
-            this.materialLabel2.Text = "Канал 2";
+            this.materialLabel2.Text = "Канал 4";
             // 
             // materialLabel1
             // 
@@ -790,12 +765,12 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(608, 1);
+            this.materialLabel1.Location = new System.Drawing.Point(353, 4);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(63, 18);
             this.materialLabel1.TabIndex = 6;
-            this.materialLabel1.Text = "Канал 3";
+            this.materialLabel1.Text = "Канал 2";
             // 
             // tabPage1
             // 
@@ -912,8 +887,7 @@
             this.tabPage13.ResumeLayout(false);
             this.tabPage14.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.doubleBufferedPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -950,26 +924,25 @@
         private System.Windows.Forms.TableLayoutPanel tlpDecodingParameters;
         private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
         private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.Panel pScroll1;
+        private System.Windows.Forms.Panel pImage1;
         private System.Windows.Forms.TabPage tabPage9;
-        private System.Windows.Forms.Panel pScroll2;
+        private System.Windows.Forms.Panel pImage2;
         private System.Windows.Forms.TabPage tabPage10;
-        private System.Windows.Forms.Panel pScroll3;
+        private System.Windows.Forms.Panel pImage3;
         private System.Windows.Forms.TabPage tabPage11;
-        private System.Windows.Forms.Panel pScroll4;
+        private System.Windows.Forms.Panel pImage4;
         private System.Windows.Forms.TabPage tabPage12;
-        private System.Windows.Forms.Panel pScroll5;
+        private System.Windows.Forms.Panel pImage5;
         private System.Windows.Forms.TabPage tabPage13;
-        private System.Windows.Forms.Panel pScroll6;
+        private System.Windows.Forms.Panel pImage6;
         private System.Windows.Forms.TabPage tabPage14;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Panel pImage12;
+        private System.Windows.Forms.Panel pImage11;
+        private System.Windows.Forms.Panel pImage10;
+        private System.Windows.Forms.Panel pImage9;
+        private System.Windows.Forms.Panel pImage8;
+        private System.Windows.Forms.Panel pImage7;
         private MaterialSkin.Controls.MaterialLabel materialLabel6;
         private MaterialSkin.Controls.MaterialLabel materialLabel5;
         private MaterialSkin.Controls.MaterialLabel materialLabel4;
