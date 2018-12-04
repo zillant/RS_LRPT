@@ -159,7 +159,7 @@ namespace ReceivingStation
                         ThreadSafeUpdateDateTime = UpdateDateTime,
                         ThreadSafeUpdateMko = UpdateMko,
                         ThreadSafeUpdateImagesContent = UpdateImages,
-                        ThreadSafeUpdateGui = UpdateGui,
+                        ThreadSafeUpdateGui = UpdateGuiDecodeData,
                         ThreadSafeStopDecoding = StopDecoding
                     };
 
@@ -263,21 +263,10 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление GUI.
-        private void UpdateGui()
+        #region Обновление данных декодирования на GUI.
+        private void UpdateGuiDecodeData()
         {
-            // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
-            var mkoData = $"{_td[0]} {_td[1]}\n\n{_td[2]}\n\n{_td[3]}\n\n{_oshv[0]} {_oshv[1]}\n\n{_bshv[0]} {_bshv[1]}\n\n{_bshv[2]} {_bshv[3]}\n\n{_bshv[4]} {_bshv[5]}\n\n{_bshv[6]} {_bshv[7]}\n\n{_bshv[8]} {_bshv[9]}\n\n{_pcdm[0]} {_pcdm[1]}\n\n{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}\n\n{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}\n\n{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}";
-            var date = $"{_lineDate.Day}.{_lineDate.Month}.{_lineDate.Year}";
-            var time = $"{_lineDate.Hour.ToString("D2")}:{_lineDate.Minute.ToString("D2")}:{_lineDate.Second.ToString("D2")}";
-            var dateTime = $"\n{date}\n\n{time}";
-
-            rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
-            rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
-
-            // Изображение.
-            _allChannelsPanels[5].Invoke(new Action(() => { GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels); }));
-            _allChannels[5].Invoke(new Action(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images); }));
+            GuiUpdater.UpdateGuiDecodeData(_td, _oshv, _bshv, _pcdm, _lineDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, _images);
         }
 
         #endregion
