@@ -864,7 +864,7 @@ namespace ReceivingStation
                 ThreadSafeUpdateDateTime(currentLineDate);
                 ThreadSafeUpdateImagesContent(_bmps);
                 ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
-                _form.Invoke(new Action(() => { ThreadSafeUpdateGui(); }));
+                ThreadSafeUpdateGui();
             }
         }
         #endregion

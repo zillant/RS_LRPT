@@ -44,7 +44,7 @@ namespace ReceivingStation
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
         private DateTime _startWorkingTime; // Время начала работы борта.
-        private DateTime lineDate; 
+        private DateTime _lineDate; 
 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
 
@@ -61,12 +61,16 @@ namespace ReceivingStation
 
         public FormReceive()
         {
-            InitializeComponent();                                
+            InitializeComponent();
+            DoubleBuffered = true;
         }
 
         private void FormReceive_Load(object sender, EventArgs e)
         {
             GuiUpdater.SmoothLoadingForm(this);
+            GuiUpdater.LoadFont();
+
+            RichTextBoxInit();
 
             materialTabControl1.SelectedTab = tabPage7;
 
@@ -298,7 +302,7 @@ namespace ReceivingStation
         #region Обновление даты и времени при декодировании.
         private void UpdateDateTime(DateTime date)
         {
-            lineDate = date;
+            _lineDate = date;
         }
 
         #endregion
@@ -449,29 +453,57 @@ namespace ReceivingStation
         #region Обновление GUI.
         private void UpdateGui()
         {
-            // Дата / Время.
-            GuiUpdater.SetLabelText(lblLineDate, $"{lineDate.Day}/{lineDate.Month}/{lineDate.Year}");
-            GuiUpdater.SetLabelText(lblLineTime, $"{lineDate.Hour}:{lineDate.Minute}:{lineDate.Second}");
-            // ТД.
-            GuiUpdater.SetLabelText(lblTD1, $"{_td[0]} {_td[1]}");
-            GuiUpdater.SetLabelText(lblTD2, $"{_td[2]}");
-            GuiUpdater.SetLabelText(lblTD3, $"{_td[3]}");
-            // ОШВ.
-            GuiUpdater.SetLabelText(lblOSHV1, $"{_oshv[0]} {_oshv[1]}");
-            // БШВ.
-            GuiUpdater.SetLabelText(lblBSHV1, $"{_bshv[0]} {_bshv[1]}");
-            GuiUpdater.SetLabelText(lblBSHV2, $"{_bshv[2]} {_bshv[3]}");
-            GuiUpdater.SetLabelText(lblBSHV3, $"{_bshv[4]} {_bshv[5]}");
-            GuiUpdater.SetLabelText(lblBSHV4, $"{_bshv[6]} {_bshv[7]}");
-            GuiUpdater.SetLabelText(lblBSHV5, $"{_bshv[8]} {_bshv[9]}");
-            // ПЦДМ.
-            GuiUpdater.SetLabelText(lblPCDM1, $"{_pcdm[0]} {_pcdm[1]}");
-            GuiUpdater.SetLabelText(lblPCDM2, $"{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}");
-            GuiUpdater.SetLabelText(lblPCDM3, $"{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}");
-            GuiUpdater.SetLabelText(lblPCDM4, $"{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}");
+            // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
+            var mkoData = $"{_td[0]} {_td[1]}\n\n{_td[2]}\n\n{_td[3]}\n\n{_oshv[0]} {_oshv[1]}\n\n{_bshv[0]} {_bshv[1]}\n\n{_bshv[2]} {_bshv[3]}\n\n{_bshv[4]} {_bshv[5]}\n\n{_bshv[6]} {_bshv[7]}\n\n{_bshv[8]} {_bshv[9]}\n\n{_pcdm[0]} {_pcdm[1]}\n\n{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}\n\n{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}\n\n{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}";
+            var date = $"{_lineDate.Day}/{_lineDate.Month}/{_lineDate.Year}";
+            var time = $"{_lineDate.Hour.ToString("D2")}:{_lineDate.Minute.ToString("D2")}:{_lineDate.Second.ToString("D2")}";
+            var dateTime = $"\n{date}\n\n{time}";
+
+            rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
+            rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
+
             // Изображение.
-            GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels);
-            GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images);
+            _allChannelsPanels[5].Invoke(new Action(() => { GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels); }));
+            _allChannels[5].Invoke(new Action(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images); }));
+        }
+
+        #endregion
+
+        #region Инициализация кастомного richTextBox.
+        private void RichTextBoxInit()
+        {
+            GuiUpdater.AllocFont(GuiUpdater.font, rtbMko, 11);
+            GuiUpdater.AllocFont(GuiUpdater.font, rtbMkoData, 11);
+            GuiUpdater.AllocFont(GuiUpdater.font, rtbDateTimeTitle, 11);
+            GuiUpdater.AllocFont(GuiUpdater.font, rtbDateTime, 11);
+
+            var MkoTitle = "Время конца формирования ТД (БШВ)\n\n" +
+                "Первый год в текущем четырехлетии\n\n" +
+                "Номер текущих суток четырехлетия\n\n" +
+                "Оцифрованная бортовая шкала времени (БШВ)\n\n" +
+                "Время конца формирования ППО (БШВ)\n\n" +
+                "Параметры кватерниона L0\n\n" +
+                "Параметры кватерниона L1\n\n" +
+                "Параметры кватерниона L2\n\n" +
+                "Параметры кватерниона L3\n\n" +
+                "Время конца формирования ПЦДМ (БШВ)\n\n" +
+                "Положение КА по оси X в формате IEEE-754 двойной\n\n" +
+                "Положение КА по оси Y в формате IEEE-754 двойной\n\n" +
+                "Положение КА по оси Z в формате IEEE-754 двойной";
+            rtbMko.Text = MkoTitle;
+            rtbMko.BorderStyle = BorderStyle.None;
+
+            var mkoData = "0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0";
+            rtbMkoData.Text = mkoData;
+            rtbMkoData.BorderStyle = BorderStyle.None;
+
+            var dateTimeTitle = "\nДата\n\nВремя";
+            rtbDateTimeTitle.Text = dateTimeTitle;
+            rtbDateTimeTitle.BorderStyle = BorderStyle.None;
+
+            var dateTime = "\n0/0/0\n\n0:0:0";
+            rtbDateTime.Text = dateTime;
+            rtbDateTime.BorderStyle = BorderStyle.None;
         }
 
         #endregion

@@ -1,14 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using ReceivingStation.Properties;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ReceivingStation.Other
 {
     internal static class GuiUpdater
     {
-        public static void SetLabelText(Label label, string text)
+        public static Font font;
+        // Для получения шрифта из ресурсов.
+        [DllImport("gdi32.dll")]       
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbfont, uint cbfont, IntPtr pdv, [In] ref uint pcFonts);
+        private static FontFamily _ff;        
+        private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
+
+        public static void SetPropertyThreadSafe<TResult>(this Control @this, Expression<Func<TResult>> property, TResult value)
         {
-            label.Text = text;
+            var propertyInfo = (property.Body as MemberExpression).Member as PropertyInfo;
+
+            if (propertyInfo == null || !@this.GetType().IsSubclassOf(propertyInfo.ReflectedType) || @this.GetType().GetProperty(
+                propertyInfo.Name, propertyInfo.PropertyType) == null)
+            {
+                throw new ArgumentException("The lambda expression 'property' must reference a valid property on this Control.");
+            }
+
+            if (@this.InvokeRequired)
+            {
+                @this.Invoke(new SetPropertyThreadSafeDelegate<TResult>
+                (SetPropertyThreadSafe),
+                new object[] { @this, property, value });
+            }
+            else
+            {
+                @this.GetType().InvokeMember(
+                    propertyInfo.Name,
+                    BindingFlags.SetProperty,
+                    null,
+                    @this,
+                    new object[] { value });
+            }
         }
 
         public static void CreateNewFlps(FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels)
@@ -34,11 +69,11 @@ namespace ReceivingStation.Other
             {
                 Bitmap image = new Bitmap(images[i].Bitmap);
 
-                channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) });
+                channels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(Constants.WDT, Constants.HGT), BackgroundImage = image, Margin = new Padding(0) }); 
 
-                allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(allChannels[i].Width, Constants.HGT), BackgroundImage = image, BackgroundImageLayout = ImageLayout.Stretch, Margin = new Padding(0) });
+                allChannels[i].Controls.Add(new DoubleBufferedPanel { Size = new Size(allChannels[i].Width, Constants.HGT), BackgroundImage = image, BackgroundImageLayout = ImageLayout.Stretch, Margin = new Padding(0) }); 
 
-                listImagesForSave[i].Add(image);
+            listImagesForSave[i].Add(image);
             }
         }
 
@@ -87,6 +122,32 @@ namespace ReceivingStation.Other
             };
 
             return flp;
+        }
+
+        public static void AllocFont(Font f, Control c, float size)
+        {
+            FontStyle fontStyle = FontStyle.Regular;
+            c.Font = new Font(_ff, size, fontStyle);
+
+        }
+
+        public static void LoadFont()
+        {
+            byte[] fontArray = Resources.Roboto_Regular;
+            int dataLength = Resources.Roboto_Regular.Length;
+
+            IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
+            Marshal.Copy(fontArray, 0, ptrData, dataLength);
+
+            uint cFonts = 0;
+
+            AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
+
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddMemoryFont(ptrData, dataLength);
+            Marshal.FreeCoTaskMem(ptrData);
+            _ff = pfc.Families[0];
+            font = new Font(_ff, 15f, FontStyle.Bold);
         }
     }
 }
