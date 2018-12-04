@@ -65,6 +65,8 @@
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMko = new ReceivingStation.Other.DisabledRichTextBox();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tlp1 = new System.Windows.Forms.TableLayoutPanel();
@@ -90,15 +92,13 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
             this.label7 = new MaterialSkin.Controls.MaterialLabel();
             this.label8 = new MaterialSkin.Controls.MaterialLabel();
             this.label10 = new MaterialSkin.Controls.MaterialLabel();
             this.label9 = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMko = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
             this.statusStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -147,7 +147,8 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(159, 20);
+            this.slTime.Size = new System.Drawing.Size(679, 20);
+            this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.ToolTipText = "Дата/Время";
@@ -158,8 +159,7 @@
             this.slWorkingTimeOnboard.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.slWorkingTimeOnboard.Image = global::ReceivingStation.Properties.Resources.time_icon;
             this.slWorkingTimeOnboard.Name = "slWorkingTimeOnboard";
-            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(1208, 20);
-            this.slWorkingTimeOnboard.Spring = true;
+            this.slWorkingTimeOnboard.Size = new System.Drawing.Size(148, 20);
             this.slWorkingTimeOnboard.Text = "Время наработки";
             this.slWorkingTimeOnboard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slWorkingTimeOnboard.DoubleClick += new System.EventHandler(this.slWorkingTimeOnboard_DoubleClick);
@@ -171,7 +171,8 @@
             this.slMode.Image = global::ReceivingStation.Properties.Resources.mode_icon;
             this.slMode.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slMode.Name = "slMode";
-            this.slMode.Size = new System.Drawing.Size(172, 20);
+            this.slMode.Size = new System.Drawing.Size(681, 20);
+            this.slMode.Spring = true;
             this.slMode.Text = "Местное управление";
             this.slMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slMode.ToolTipText = "Режим управления";
@@ -536,6 +537,24 @@
             this.tabPage8.Text = "МКО";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoData.Location = new System.Drawing.Point(972, 31);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
+            this.rtbMkoData.TabIndex = 108;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMko
+            // 
+            this.rtbMko.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMko.Location = new System.Drawing.Point(385, 31);
+            this.rtbMko.Name = "rtbMko";
+            this.rtbMko.Size = new System.Drawing.Size(581, 475);
+            this.rtbMko.TabIndex = 107;
+            this.rtbMko.Text = "";
+            // 
             // materialTabSelector1
             // 
             this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
@@ -611,9 +630,9 @@
             // 
             this.tlpReceivingParameters.ColumnCount = 4;
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.09931F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.25173F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.64896F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 267F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.2093F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.72093F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 261F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -635,9 +654,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(126, 3);
+            this.panel7.Location = new System.Drawing.Point(128, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(109, 102);
+            this.panel7.Size = new System.Drawing.Size(110, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -693,9 +712,9 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(426, 3);
+            this.panel2.Location = new System.Drawing.Point(431, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(262, 102);
+            this.panel2.Size = new System.Drawing.Size(257, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -752,9 +771,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(241, 3);
+            this.panel3.Location = new System.Drawing.Point(244, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(179, 102);
+            this.panel3.Size = new System.Drawing.Size(181, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -814,7 +833,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(117, 102);
+            this.panel4.Size = new System.Drawing.Size(119, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialRadioButton2
@@ -902,6 +921,24 @@
             this.doubleBufferedPanel1.Size = new System.Drawing.Size(574, 102);
             this.doubleBufferedPanel1.TabIndex = 46;
             // 
+            // rtbDateTimeTitle
+            // 
+            this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rtbDateTimeTitle.Location = new System.Drawing.Point(400, 0);
+            this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
+            this.rtbDateTimeTitle.Size = new System.Drawing.Size(74, 102);
+            this.rtbDateTimeTitle.TabIndex = 50;
+            this.rtbDateTimeTitle.Text = "";
+            // 
+            // rtbDateTime
+            // 
+            this.rtbDateTime.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rtbDateTime.Location = new System.Drawing.Point(474, 0);
+            this.rtbDateTime.Name = "rtbDateTime";
+            this.rtbDateTime.Size = new System.Drawing.Size(100, 102);
+            this.rtbDateTime.TabIndex = 49;
+            this.rtbDateTime.Text = "";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -964,42 +1001,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
-            // 
-            // rtbMkoData
-            // 
-            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(972, 31);
-            this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
-            this.rtbMkoData.TabIndex = 108;
-            this.rtbMkoData.Text = "";
-            // 
-            // rtbMko
-            // 
-            this.rtbMko.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMko.Location = new System.Drawing.Point(385, 31);
-            this.rtbMko.Name = "rtbMko";
-            this.rtbMko.Size = new System.Drawing.Size(581, 475);
-            this.rtbMko.TabIndex = 107;
-            this.rtbMko.Text = "";
-            // 
-            // rtbDateTimeTitle
-            // 
-            this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTimeTitle.Location = new System.Drawing.Point(400, 0);
-            this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
-            this.rtbDateTimeTitle.Size = new System.Drawing.Size(74, 102);
-            this.rtbDateTimeTitle.TabIndex = 50;
-            this.rtbDateTimeTitle.Text = "";
-            // 
-            // rtbDateTime
-            // 
-            this.rtbDateTime.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTime.Location = new System.Drawing.Point(474, 0);
-            this.rtbDateTime.Name = "rtbDateTime";
-            this.rtbDateTime.Size = new System.Drawing.Size(100, 102);
-            this.rtbDateTime.TabIndex = 49;
-            this.rtbDateTime.Text = "";
             // 
             // FormReceive
             // 

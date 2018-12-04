@@ -2,7 +2,6 @@
 using System.IO;
 using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.Other;
 using System.Text;
@@ -20,17 +19,20 @@ namespace ReceivingStation
         public static TimeSpan MainPrdWorkingTime;
         public static TimeSpan ReservePrdWorkingTime;
         public static TimeSpan FullWorkingTime; // Общее время работы системы. (Не используем в релизе) 
-
+        
         public bool remoteModeFlag;
 
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
-
-        private Thread _serverThread;
+        private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
+        private bool _isReceivingStarting; // Для контроля времени наработки борта.
 
         private string _fileName;
-        private int _callingUpdateImageCounter;
-        private long _imageCounter;
-        private uint _frameCounter;
+              
+        private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateImages. Нужно для сохранения изображений на диск.
+        private long _imageCounter; // Счетчик сохранненых изображений.
+
+        // Поля, обновлняемые из потока.
+        private DateTime _lineDate; // Время пришедшей полосы.
         private string[] _td = new string[4];
         private string[] _oshv = new string[2];
         private string[] _bshv = new string[10];
@@ -44,14 +46,10 @@ namespace ReceivingStation
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6];
 
         private DateTime _startWorkingTime; // Время начала работы борта.
-        private DateTime _lineDate; 
-
-        private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
-
-        private bool _isReceivingStarting; // Для контроля времени наработки борта.
-
+                      
         // private Demodulating _receiver;
         private Server _server;
+        private Thread _serverThread;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -70,7 +68,7 @@ namespace ReceivingStation
             GuiUpdater.SmoothLoadingForm(this);
             GuiUpdater.LoadFont();
 
-            RichTextBoxInit();
+            GuiUpdater.RichTextBoxInit(rtbMko, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
 
             materialTabControl1.SelectedTab = tabPage7;
 
@@ -178,54 +176,9 @@ namespace ReceivingStation
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
         {
-            Parallel.For(0, _listImagesForSave.Length, SaveImage);
+            ImageSaver.SaveImage(_listImagesForSave, _fileName, _imageCounter);
             _imageCounter += 1;
         }
-
-        #region Смена режима управления.
-        private void ChangeMode(byte modeNumber)
-        {
-            if (modeNumber == 0)
-            {
-                // Дистанционное управление
-                tlp1.Enabled = false;
-                slMode.Text = "Дистанционное управление";
-                WriteToLogUserActions("Дистанционное управление");
-                remoteModeFlag = true;
-            }
-            else if (modeNumber == 1)
-            {
-                // Местное управление
-                tlp1.Enabled = true;
-                slMode.Text = "Местное управление";
-                WriteToLogUserActions("Местное управление");
-                remoteModeFlag = false;
-            }           
-        }
-
-        #endregion
-
-        #region Установка параметров записи потока в дистанционном режиме управления.
-        private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
-        {
-            _fcp = fcp;
-            _prd = prd;
-            _freq = freq;
-            _interliving = interliving;            
-        }
-
-        #endregion
-
-        #region Установка параметров записи потока в местном режиме управления.
-        private void SetReceiveParameters()
-        {
-            _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
-            _prd = Convert.ToByte(rbPRDMain.Checked ? 0x1 : 0x2);
-            _freq = Convert.ToByte(rbFreq1.Checked ? 0x1 : 0x2);
-            _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
-        }
-
-        #endregion
 
         #region Начать прием потока.
         public void StartStopReceiving()
@@ -259,8 +212,8 @@ namespace ReceivingStation
                 _imageCounter = 0;
                 _callingUpdateImageCounter = 0;
                 tlpReceivingParameters.Enabled = false;
-                WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
-                WriteToLogUserActions("Запись потока начата");
+                UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
+                UserLog.WriteToLogUserActions("Запись потока начата");
 
                 //_receiver = new Demodulating(_freq);
                 //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
@@ -270,7 +223,7 @@ namespace ReceivingStation
             {
                 StopReceiving();
             }
-                              
+
         }
 
         //public void Drawing()
@@ -281,7 +234,7 @@ namespace ReceivingStation
         //    _receiver.DSP_Process(this, demodulatedData);
         //    _decode.StartDecode(demodulatedData);           
         //}
-      
+
         #endregion
 
         #region Остановить прием потока.
@@ -294,12 +247,57 @@ namespace ReceivingStation
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
 
-            WriteToLogUserActions("Запись потока завершена");
+            UserLog.WriteToLogUserActions("Запись потока завершена");
         }
 
         #endregion
 
-        #region Обновление даты и времени при декодировании.
+        #region Смена режима управления.
+        private void ChangeMode(byte modeNumber)
+        {
+            if (modeNumber == 0)
+            {
+                // Дистанционное управление
+                tlp1.Enabled = false;
+                slMode.Text = "Дистанционное управление";
+                UserLog.WriteToLogUserActions("Дистанционное управление");
+                remoteModeFlag = true;
+            }
+            else if (modeNumber == 1)
+            {
+                // Местное управление
+                tlp1.Enabled = true;
+                slMode.Text = "Местное управление";
+                UserLog.WriteToLogUserActions("Местное управление");
+                remoteModeFlag = false;
+            }           
+        }
+
+        #endregion
+
+        #region Установка параметров записи потока в дистанционном режиме управления.
+        private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
+        {
+            _fcp = fcp;
+            _prd = prd;
+            _freq = freq;
+            _interliving = interliving;            
+        }
+
+        #endregion
+
+        #region Установка параметров записи потока в местном режиме управления.
+        private void SetReceiveParameters()
+        {
+            _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
+            _prd = Convert.ToByte(rbPRDMain.Checked ? 0x1 : 0x2);
+            _freq = Convert.ToByte(rbFreq1.Checked ? 0x1 : 0x2);
+            _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
+        }
+
+        #endregion
+
+        #region Обновление даты и времени.
         private void UpdateDateTime(DateTime date)
         {
             _lineDate = date;
@@ -307,8 +305,8 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление изображений при декодировании.
-        private void UpdateChannelsImages(DirectBitmap[] images)
+        #region Обновление изображений.
+        private void UpdateImages(DirectBitmap[] images)
         {
             _images = images;
 
@@ -324,7 +322,7 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление МКО при декодировании.
+        #region Обновление МКО.
 
         private void UpdateMko(string tdd, string oshvv, string bshvv, string pcdmm)
         {
@@ -336,13 +334,21 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Запись в лог файл действий пользователя.
-        private void WriteToLogUserActions(string logMessage)
+        #region Обновление GUI.
+        private void UpdateGui()
         {
-            using (StreamWriter sw = new StreamWriter("log.txt", true, Encoding.UTF8, 65536))
-            {
-                sw.WriteLine($"{DateTime.Now} - {logMessage}");
-            }
+            // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
+            var mkoData = $"{_td[0]} {_td[1]}\n\n{_td[2]}\n\n{_td[3]}\n\n{_oshv[0]} {_oshv[1]}\n\n{_bshv[0]} {_bshv[1]}\n\n{_bshv[2]} {_bshv[3]}\n\n{_bshv[4]} {_bshv[5]}\n\n{_bshv[6]} {_bshv[7]}\n\n{_bshv[8]} {_bshv[9]}\n\n{_pcdm[0]} {_pcdm[1]}\n\n{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}\n\n{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}\n\n{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}";
+            var date = $"{_lineDate.Day}.{_lineDate.Month}.{_lineDate.Year}";
+            var time = $"{_lineDate.Hour.ToString("D2")}:{_lineDate.Minute.ToString("D2")}:{_lineDate.Second.ToString("D2")}";
+            var dateTime = $"\n{date}\n\n{time}";
+
+            rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
+            rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
+
+            // Изображение.
+            _allChannelsPanels[5].Invoke(new Action(() => { GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels); }));
+            _allChannels[5].Invoke(new Action(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images); }));
         }
 
         #endregion
@@ -422,89 +428,6 @@ namespace ReceivingStation
         }
 
         #endregion
-
-        #endregion
-
-        #region Сохранение изображений.
-        private void SaveImage(int i)
-        {
-            List<Bitmap> listImages = new List<Bitmap>(_listImagesForSave[i]);
-            _listImagesForSave[i].Clear();
-
-            using (Bitmap bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
-            {
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    int yOffset = 0;
-
-                    for (int j = 0; j < listImages.Count; j++)
-                    {
-                        g.DrawImage(listImages[j], new Rectangle(0, yOffset, Constants.WDT, Constants.HGT));
-                        yOffset += Constants.HGT;
-                    }
-                }
-
-                //bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}_{_imageCounter}.bmp");
-            }
-        }
-
-        #endregion
-
-        #region Обновление GUI.
-        private void UpdateGui()
-        {
-            // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
-            var mkoData = $"{_td[0]} {_td[1]}\n\n{_td[2]}\n\n{_td[3]}\n\n{_oshv[0]} {_oshv[1]}\n\n{_bshv[0]} {_bshv[1]}\n\n{_bshv[2]} {_bshv[3]}\n\n{_bshv[4]} {_bshv[5]}\n\n{_bshv[6]} {_bshv[7]}\n\n{_bshv[8]} {_bshv[9]}\n\n{_pcdm[0]} {_pcdm[1]}\n\n{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}\n\n{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}\n\n{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}";
-            var date = $"{_lineDate.Day}/{_lineDate.Month}/{_lineDate.Year}";
-            var time = $"{_lineDate.Hour.ToString("D2")}:{_lineDate.Minute.ToString("D2")}:{_lineDate.Second.ToString("D2")}";
-            var dateTime = $"\n{date}\n\n{time}";
-
-            rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
-            rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
-
-            // Изображение.
-            _allChannelsPanels[5].Invoke(new Action(() => { GuiUpdater.CreateNewFlps(_channels, _allChannels, _channelsPanels, _allChannelsPanels); }));
-            _allChannels[5].Invoke(new Action(() => { GuiUpdater.AddImages(_channels, _allChannels, _listImagesForSave, _images); }));
-        }
-
-        #endregion
-
-        #region Инициализация кастомного richTextBox.
-        private void RichTextBoxInit()
-        {
-            GuiUpdater.AllocFont(GuiUpdater.font, rtbMko, 11);
-            GuiUpdater.AllocFont(GuiUpdater.font, rtbMkoData, 11);
-            GuiUpdater.AllocFont(GuiUpdater.font, rtbDateTimeTitle, 11);
-            GuiUpdater.AllocFont(GuiUpdater.font, rtbDateTime, 11);
-
-            var MkoTitle = "Время конца формирования ТД (БШВ)\n\n" +
-                "Первый год в текущем четырехлетии\n\n" +
-                "Номер текущих суток четырехлетия\n\n" +
-                "Оцифрованная бортовая шкала времени (БШВ)\n\n" +
-                "Время конца формирования ППО (БШВ)\n\n" +
-                "Параметры кватерниона L0\n\n" +
-                "Параметры кватерниона L1\n\n" +
-                "Параметры кватерниона L2\n\n" +
-                "Параметры кватерниона L3\n\n" +
-                "Время конца формирования ПЦДМ (БШВ)\n\n" +
-                "Положение КА по оси X в формате IEEE-754 двойной\n\n" +
-                "Положение КА по оси Y в формате IEEE-754 двойной\n\n" +
-                "Положение КА по оси Z в формате IEEE-754 двойной";
-            rtbMko.Text = MkoTitle;
-            rtbMko.BorderStyle = BorderStyle.None;
-
-            var mkoData = "0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0";
-            rtbMkoData.Text = mkoData;
-            rtbMkoData.BorderStyle = BorderStyle.None;
-
-            var dateTimeTitle = "\nДата\n\nВремя";
-            rtbDateTimeTitle.Text = dateTimeTitle;
-            rtbDateTimeTitle.BorderStyle = BorderStyle.None;
-
-            var dateTime = "\n0/0/0\n\n0:0:0";
-            rtbDateTime.Text = dateTime;
-            rtbDateTime.BorderStyle = BorderStyle.None;
-        }
 
         #endregion
     }

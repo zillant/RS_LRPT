@@ -11,12 +11,13 @@ using System.Windows.Forms;
 namespace ReceivingStation.Other
 {
     internal static class GuiUpdater
-    {
-        public static Font font;
+    {       
         // Для получения шрифта из ресурсов.
         [DllImport("gdi32.dll")]       
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbfont, uint cbfont, IntPtr pdv, [In] ref uint pcFonts);
-        private static FontFamily _ff;        
+        private static FontFamily _ff;
+        private static Font _font;
+
         private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
 
         public static void SetPropertyThreadSafe<TResult>(this Control @this, Expression<Func<TResult>> property, TResult value)
@@ -124,13 +125,16 @@ namespace ReceivingStation.Other
             return flp;
         }
 
+        #region Применение шрифта к контролу.
         public static void AllocFont(Font f, Control c, float size)
         {
             FontStyle fontStyle = FontStyle.Regular;
             c.Font = new Font(_ff, size, fontStyle);
-
         }
 
+        #endregion
+
+        #region Загрузка шрифта из ресурсов.
         public static void LoadFont()
         {
             byte[] fontArray = Resources.Roboto_Regular;
@@ -147,7 +151,48 @@ namespace ReceivingStation.Other
             pfc.AddMemoryFont(ptrData, dataLength);
             Marshal.FreeCoTaskMem(ptrData);
             _ff = pfc.Families[0];
-            font = new Font(_ff, 15f, FontStyle.Bold);
+            _font = new Font(_ff, 15f, FontStyle.Bold);
         }
+
+        #endregion
+
+        #region Инициализация кастомного richTextBox.
+        public static void RichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime)
+        {
+            AllocFont(_font, rtbMko, 11);
+            AllocFont(_font, rtbMkoData, 11);
+            AllocFont(_font, rtbDateTimeTitle, 11);
+            AllocFont(_font, rtbDateTime, 11);
+
+            var MkoTitle = "Время конца формирования ТД (БШВ)\n\n" +
+                "Первый год в текущем четырехлетии\n\n" +
+                "Номер текущих суток четырехлетия\n\n" +
+                "Оцифрованная бортовая шкала времени (БШВ)\n\n" +
+                "Время конца формирования ППО (БШВ)\n\n" +
+                "Параметры кватерниона L0\n\n" +
+                "Параметры кватерниона L1\n\n" +
+                "Параметры кватерниона L2\n\n" +
+                "Параметры кватерниона L3\n\n" +
+                "Время конца формирования ПЦДМ (БШВ)\n\n" +
+                "Положение КА по оси X в формате IEEE-754 двойной\n\n" +
+                "Положение КА по оси Y в формате IEEE-754 двойной\n\n" +
+                "Положение КА по оси Z в формате IEEE-754 двойной";
+            rtbMko.Text = MkoTitle;
+            rtbMko.BorderStyle = BorderStyle.None;
+
+            var mkoData = "0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0";
+            rtbMkoData.Text = mkoData;
+            rtbMkoData.BorderStyle = BorderStyle.None;
+
+            var dateTimeTitle = "\nДата\n\nВремя";
+            rtbDateTimeTitle.Text = dateTimeTitle;
+            rtbDateTimeTitle.BorderStyle = BorderStyle.None;
+
+            var dateTime = "\n0.0.0\n\n0:0:0";
+            rtbDateTime.Text = dateTime;
+            rtbDateTime.BorderStyle = BorderStyle.None;
+        }
+
+        #endregion
     }
 }
