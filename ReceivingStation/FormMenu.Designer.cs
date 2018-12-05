@@ -108,6 +108,7 @@
             this.btnSelfTest.TabIndex = 0;
             this.btnSelfTest.Text = "Самопроверка";
             this.btnSelfTest.UseVisualStyleBackColor = false;
+            this.btnSelfTest.Click += new System.EventHandler(this.btnSelfTest_Click);
             // 
             // materialDivider1
             // 

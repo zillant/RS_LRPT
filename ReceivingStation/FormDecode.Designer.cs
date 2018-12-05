@@ -167,7 +167,7 @@
             this.pnlControls.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.pnlControls.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pnlControls.Location = new System.Drawing.Point(0, 54);
+            this.pnlControls.Location = new System.Drawing.Point(0, 59);
             this.pnlControls.Name = "pnlControls";
             this.pnlControls.Size = new System.Drawing.Size(1556, 114);
             this.pnlControls.TabIndex = 23;
@@ -485,7 +485,7 @@
             this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
             this.materialTabSelector1.Depth = 0;
             this.materialTabSelector1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.materialTabSelector1.Location = new System.Drawing.Point(0, 168);
+            this.materialTabSelector1.Location = new System.Drawing.Point(0, 173);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
             this.materialTabSelector1.Size = new System.Drawing.Size(1556, 40);
@@ -504,11 +504,11 @@
             this.materialTabControl1.Controls.Add(this.tabPage1);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialTabControl1.Location = new System.Drawing.Point(0, 208);
+            this.materialTabControl1.Location = new System.Drawing.Point(0, 213);
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(1556, 562);
+            this.materialTabControl1.Size = new System.Drawing.Size(1556, 557);
             this.materialTabControl1.TabIndex = 24;
             // 
             // tabPage8
@@ -517,7 +517,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage8.Size = new System.Drawing.Size(1548, 531);
             this.tabPage8.TabIndex = 0;
             this.tabPage8.Text = "Канал 1";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -528,7 +528,7 @@
             this.pImage1.Location = new System.Drawing.Point(3, 3);
             this.pImage1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.pImage1.Name = "pImage1";
-            this.pImage1.Size = new System.Drawing.Size(1542, 530);
+            this.pImage1.Size = new System.Drawing.Size(1542, 525);
             this.pImage1.TabIndex = 3;
             // 
             // tabPage9
@@ -837,11 +837,11 @@
             this.materialDivider1.Dock = System.Windows.Forms.DockStyle.Top;
             this.materialDivider1.Enabled = false;
             this.materialDivider1.Location = new System.Drawing.Point(0, 0);
-            this.materialDivider1.MaximumSize = new System.Drawing.Size(1, 54);
-            this.materialDivider1.MinimumSize = new System.Drawing.Size(1, 54);
+            this.materialDivider1.MaximumSize = new System.Drawing.Size(1, 59);
+            this.materialDivider1.MinimumSize = new System.Drawing.Size(1, 59);
             this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDivider1.Name = "materialDivider1";
-            this.materialDivider1.Size = new System.Drawing.Size(1, 54);
+            this.materialDivider1.Size = new System.Drawing.Size(1, 59);
             this.materialDivider1.TabIndex = 26;
             this.materialDivider1.Text = "materialDivider1";
             // 
@@ -861,7 +861,7 @@
             this.Name = "FormDecode";
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Приемная станция";
+            this.Text = "Приемная станция: Декодирование";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormDecode_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDecode_FormClosed);
             this.Load += new System.EventHandler(this.FormDecode_Load);

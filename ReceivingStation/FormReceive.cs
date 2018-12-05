@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using MaterialSkin.Controls;
 using ReceivingStation.Properties;
+using ReceivingStation.Demodulator;
 
 namespace ReceivingStation
 {
@@ -47,9 +48,10 @@ namespace ReceivingStation
 
         private DateTime _startWorkingTime; // Время начала работы борта.
                       
-        // private Demodulating _receiver;
+        private Demodulating _receiver;
         private Server _server;
         private Thread _serverThread;
+        private Decode _decode;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -66,7 +68,6 @@ namespace ReceivingStation
         private void FormReceive_Load(object sender, EventArgs e)
         {
             GuiUpdater.SmoothLoadingForm(this);
-            GuiUpdater.LoadFont();
 
             GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
 
@@ -194,20 +195,28 @@ namespace ReceivingStation
                 }
 
                 // Очистка всего перед новым запуском.
-                //for (int i = 0; i < 6; i++)
-                //{
-                //    _allChannels[i].Controls.Clear();
-                //    _channels[i].Controls.Clear();
-                //    _listImagesForSave[i].Clear();
-                //    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
-                //    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                for (int i = 0; i < 6; i++)
+                {
+                    _allChannels[i].Controls.Clear();
+                    _channels[i].Controls.Clear();
+                    _listImagesForSave[i].Clear();
+                    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
 
-                //    foreach (FileInfo file in di.GetFiles())
-                //    {
-                //        file.Delete();
-                //    }
-                //}
-
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                }
+                var logfilename = "onlinelogs";
+                _decode = new Decode(this, logfilename)
+                {
+                    ThreadSafeUpdateDateTime = UpdateDateTime,
+                    ThreadSafeUpdateMko = UpdateMko,
+                    ThreadSafeUpdateImagesContent = UpdateImages,
+                    ThreadSafeUpdateGui = UpdateGuiDecodeData,
+                    ThreadSafeStopDecoding = StopReceiving
+                };
                 _startWorkingTime = DateTime.Now;
                 _imageCounter = 0;
                 _callingUpdateImageCounter = 0;
@@ -215,26 +224,20 @@ namespace ReceivingStation
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 UserLog.WriteToLogUserActions("Запись потока начата");
 
-                //_receiver = new Demodulating(_freq);
-                //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-                //Task.Run(() => Drawing());
+                _receiver = new Demodulating(this, this, _freq, _interliving, _decode);
+                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                _receiver.StartDecoding();
+
+                _receiver.RecordStart();
             }
             else
             {
-                StopReceiving();
+                 StopReceiving();
+                //_decode.DemodFinishDecode();
             }
 
         }
-
-        //public void Drawing()
-        //{
-        //    byte[] demodulatedData;
-        //    demodulatedData = new byte[16384 * 5];
-
-        //    _receiver.DSP_Process(this, demodulatedData);
-        //    _decode.StartDecode(demodulatedData);           
-        //}
-
+      
         #endregion
 
         #region Остановить прием потока.
@@ -243,11 +246,13 @@ namespace ReceivingStation
             _isReceivingStarting = false;
             btnStartRecieve.Text = "Начать";
             tlpReceivingParameters.Enabled = true;
-
+            _receiver.StopDecoding();
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
+            //_receiver = null;
+
         }
 
         #endregion
@@ -281,9 +286,26 @@ namespace ReceivingStation
             _fcp = fcp;
             _prd = prd;
             _freq = freq;
-            _interliving = interliving;            
+            _interliving = interliving;
+
+            SetRadioButtons(_fcp, rbFCPMain, rbFCPReserve);
+            SetRadioButtons(_prd, rbPRDMain, rbPRDReserve);
+            SetRadioButtons(_freq, rbFreq1, rbFreq2);
+            SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff);
         }
 
+        private void SetRadioButtons(byte param, RadioButton rb1, RadioButton rb2)
+        {
+            if (param == 0x1)
+            {
+                rb1.Checked = true;
+            }
+            else
+            {
+                rb2.Checked = true;
+            }
+        }
+        
         #endregion
 
         #region Установка параметров записи потока в местном режиме управления.
@@ -418,6 +440,6 @@ namespace ReceivingStation
 
         #endregion
 
-        #endregion
+        #endregion       
     }
 }

@@ -11,6 +11,7 @@ namespace ReceivingStation
         public FormMenu()
         {
             InitializeComponent();
+            GuiUpdater.LoadFont();
             GuiUpdater.SmoothLoadingForm(this);
         }
 
@@ -22,6 +23,17 @@ namespace ReceivingStation
             {
                 e.Cancel = true;
             }
+        }
+
+        private void btnSelfTest_Click(object sender, EventArgs e)
+        {
+            GuiUpdater.SmoothHidingForm(this);
+
+            var formSelfTest = new FormSelfTest();
+            formSelfTest.Show();
+
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
         }
 
         private void btnReceive_Click(object sender, EventArgs e)
@@ -45,6 +57,5 @@ namespace ReceivingStation
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
         }
-
     }
 }

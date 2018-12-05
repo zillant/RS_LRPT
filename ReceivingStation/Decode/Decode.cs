@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using MaterialSkin.Controls;
 using ReceivingStation.Other;
 using Color = System.Drawing.Color;
@@ -215,6 +214,18 @@ namespace ReceivingStation
             _sw.Close();
 
             _form.Invoke(new Action(() => { ThreadSafeStopDecoding(); }));
+        }
+
+
+        public void DemodFinishDecode()
+        {
+
+            _sw.WriteLine("-------------------------------------------------");
+            _sw.WriteLine("------------------------------------------");
+            _sw.WriteLine($"Всего найдено ошибок: {errs}");
+            _sw.Close();
+
+
         }
 
         #endregion

@@ -23,12 +23,10 @@ namespace ReceivingStation
 
         private void btnServerSettings_Click(object sender, EventArgs e)
         {
-            Close();
             using (FormServerSettings serverSettingsForm = new FormServerSettings())
             {               
                 serverSettingsForm.ShowDialog();
-            }
-           
+            }          
         }
 
         private void btnChangeLocalMode_Click(object sender, EventArgs e)
