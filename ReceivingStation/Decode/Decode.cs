@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MaterialSkin.Controls;
 using ReceivingStation.Other;
 using Color = System.Drawing.Color;
 
@@ -22,7 +21,6 @@ namespace ReceivingStation
         public delegate void StopDecodingDelegate();
         public StopDecodingDelegate ThreadSafeStopDecoding;
 
-        private MaterialForm _form;
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
@@ -89,7 +87,7 @@ namespace ReceivingStation
         private bool last_bit_in;
 
         #region Конструктор для открытого файла.
-        public Decode(FormDecode form, string fileName, bool reedSoloFlag, bool nrzFlag)
+        public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
         {
             _fileName = fileName;
             _isNrz = nrzFlag;
@@ -98,7 +96,6 @@ namespace ReceivingStation
             _reedSolo = new ReedSolo();
             _viterbi = new Viterbi();
             _jpeg = new Jpeg();
-            _form = form;
 
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
             _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
@@ -115,7 +112,7 @@ namespace ReceivingStation
         #endregion
 
         #region Конструктор для приемника.
-        public Decode(FormReceive form, string fileName)
+        public Decode(string fileName)
         {
             _isNrz = false;
             _isReedSolo = true;
@@ -123,7 +120,6 @@ namespace ReceivingStation
             _reedSolo = new ReedSolo();
             _viterbi = new Viterbi();
             _jpeg = new Jpeg();
-            _form = form;
 
             _decodeLogFileName = $"{fileName}_info.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
@@ -212,8 +208,8 @@ namespace ReceivingStation
             _sw.WriteLine("------------------------------------------");
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
-
-            _form.Invoke(new Action(() => { ThreadSafeStopDecoding(); }));
+            ThreadSafeStopDecoding();
+           // _form.Invoke(new Action(() => { ThreadSafeStopDecoding(); }));
         }
 
 

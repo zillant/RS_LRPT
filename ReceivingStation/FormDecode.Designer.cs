@@ -139,7 +139,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1472, 20);
+            this.slTime.Size = new System.Drawing.Size(1441, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -537,7 +537,7 @@
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage9.Size = new System.Drawing.Size(1548, 531);
             this.tabPage9.TabIndex = 1;
             this.tabPage9.Text = "Канал 2";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -547,7 +547,7 @@
             this.pImage2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pImage2.Location = new System.Drawing.Point(3, 3);
             this.pImage2.Name = "pImage2";
-            this.pImage2.Size = new System.Drawing.Size(1542, 530);
+            this.pImage2.Size = new System.Drawing.Size(1542, 525);
             this.pImage2.TabIndex = 4;
             // 
             // tabPage10
@@ -556,7 +556,7 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage10.Size = new System.Drawing.Size(1548, 531);
             this.tabPage10.TabIndex = 2;
             this.tabPage10.Text = "Канал 3";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -566,7 +566,7 @@
             this.pImage3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pImage3.Location = new System.Drawing.Point(3, 3);
             this.pImage3.Name = "pImage3";
-            this.pImage3.Size = new System.Drawing.Size(1542, 530);
+            this.pImage3.Size = new System.Drawing.Size(1542, 525);
             this.pImage3.TabIndex = 5;
             // 
             // tabPage11
@@ -575,7 +575,7 @@
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage11.Size = new System.Drawing.Size(1548, 531);
             this.tabPage11.TabIndex = 3;
             this.tabPage11.Text = "Канал 4";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -585,7 +585,7 @@
             this.pImage4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pImage4.Location = new System.Drawing.Point(3, 3);
             this.pImage4.Name = "pImage4";
-            this.pImage4.Size = new System.Drawing.Size(1542, 530);
+            this.pImage4.Size = new System.Drawing.Size(1542, 525);
             this.pImage4.TabIndex = 6;
             // 
             // tabPage12
@@ -594,7 +594,7 @@
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage12.Size = new System.Drawing.Size(1548, 531);
             this.tabPage12.TabIndex = 4;
             this.tabPage12.Text = "Канал 5";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -604,7 +604,7 @@
             this.pImage5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pImage5.Location = new System.Drawing.Point(3, 3);
             this.pImage5.Name = "pImage5";
-            this.pImage5.Size = new System.Drawing.Size(1542, 530);
+            this.pImage5.Size = new System.Drawing.Size(1542, 525);
             this.pImage5.TabIndex = 6;
             // 
             // tabPage13
@@ -613,7 +613,7 @@
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage13.Size = new System.Drawing.Size(1548, 531);
             this.tabPage13.TabIndex = 5;
             this.tabPage13.Text = "Канал 6";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -623,7 +623,7 @@
             this.pImage6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pImage6.Location = new System.Drawing.Point(3, 3);
             this.pImage6.Name = "pImage6";
-            this.pImage6.Size = new System.Drawing.Size(1542, 530);
+            this.pImage6.Size = new System.Drawing.Size(1542, 525);
             this.pImage6.TabIndex = 6;
             // 
             // tabPage14
@@ -632,7 +632,7 @@
             this.tabPage14.Location = new System.Drawing.Point(4, 22);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage14.Size = new System.Drawing.Size(1548, 531);
             this.tabPage14.TabIndex = 6;
             this.tabPage14.Text = "Все каналы";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -666,7 +666,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.263158F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.73684F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1542, 530);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1542, 525);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // materialLabel3
@@ -716,7 +716,7 @@
             this.pImage7.Location = new System.Drawing.Point(10, 30);
             this.pImage7.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.pImage7.Name = "pImage7";
-            this.pImage7.Size = new System.Drawing.Size(236, 497);
+            this.pImage7.Size = new System.Drawing.Size(236, 492);
             this.pImage7.TabIndex = 0;
             // 
             // materialLabel2
@@ -752,7 +752,7 @@
             this.pImage8.Location = new System.Drawing.Point(266, 30);
             this.pImage8.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.pImage8.Name = "pImage8";
-            this.pImage8.Size = new System.Drawing.Size(236, 497);
+            this.pImage8.Size = new System.Drawing.Size(236, 492);
             this.pImage8.TabIndex = 1;
             // 
             // materialLabel4
@@ -774,7 +774,7 @@
             this.pImage9.Location = new System.Drawing.Point(522, 30);
             this.pImage9.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.pImage9.Name = "pImage9";
-            this.pImage9.Size = new System.Drawing.Size(236, 497);
+            this.pImage9.Size = new System.Drawing.Size(236, 492);
             this.pImage9.TabIndex = 2;
             // 
             // pImage10
@@ -782,7 +782,7 @@
             this.pImage10.Location = new System.Drawing.Point(778, 30);
             this.pImage10.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.pImage10.Name = "pImage10";
-            this.pImage10.Size = new System.Drawing.Size(236, 497);
+            this.pImage10.Size = new System.Drawing.Size(236, 492);
             this.pImage10.TabIndex = 3;
             // 
             // pImage11
@@ -790,7 +790,7 @@
             this.pImage11.Location = new System.Drawing.Point(1034, 30);
             this.pImage11.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.pImage11.Name = "pImage11";
-            this.pImage11.Size = new System.Drawing.Size(236, 497);
+            this.pImage11.Size = new System.Drawing.Size(236, 492);
             this.pImage11.TabIndex = 4;
             // 
             // pImage12
@@ -798,7 +798,7 @@
             this.pImage12.Location = new System.Drawing.Point(1290, 30);
             this.pImage12.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.pImage12.Name = "pImage12";
-            this.pImage12.Size = new System.Drawing.Size(241, 497);
+            this.pImage12.Size = new System.Drawing.Size(241, 492);
             this.pImage12.TabIndex = 5;
             // 
             // tabPage1
@@ -807,7 +807,7 @@
             this.tabPage1.Controls.Add(this.rtbMkoTitle);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1548, 536);
+            this.tabPage1.Size = new System.Drawing.Size(1548, 531);
             this.tabPage1.TabIndex = 7;
             this.tabPage1.Text = "МКО";
             this.tabPage1.UseVisualStyleBackColor = true;

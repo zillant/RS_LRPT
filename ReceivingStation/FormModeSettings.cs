@@ -10,14 +10,11 @@ namespace ReceivingStation
         public delegate void ChangeModeDelegate(byte modeNumber);
         public ChangeModeDelegate ChangeMode;
 
-        private FormReceive _mainForm;
-
-        public FormModeSettings(FormReceive mainForm)
+        public FormModeSettings()
         {
             InitializeComponent();
-            _mainForm = mainForm;
 
-            lblConnection.Text = _mainForm.remoteModeFlag == false ? 
+            lblConnection.Text = Server.remoteModeFlag == false ? 
                 "Режим: Местное управление" : "Режим: Дистанционное управление";
         }
 
@@ -31,7 +28,7 @@ namespace ReceivingStation
 
         private void btnChangeLocalMode_Click(object sender, EventArgs e)
         {
-            if (_mainForm.remoteModeFlag == false)
+            if (Server.remoteModeFlag == false)
             {             
                 lblConnection.ForeColor = Color.FromArgb(222, 211, 47, 47); 
             }

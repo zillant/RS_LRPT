@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation
@@ -19,22 +20,21 @@ namespace ReceivingStation
 
         public bool stopThread;
            
-        private FormReceive _form;
+        public static bool remoteModeFlag;
        
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
         private const byte ParametersNotSetMessage = 0x2; // Не установлены параметры записи потока.
         private const byte LocalModeMessage = 0x3; // КПА находится в режиме местного управления.
         private const byte RemoteModeMessage = 0x4; // КПА находится в режиме дистанционного управления.
-        private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начата.
-        private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начата.
+        private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
+        private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
        
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
        
-        public Server(FormReceive form)
+        public Server()
         {
-            _form = form;
             stopThread = false;
         }
 
@@ -59,8 +59,8 @@ namespace ReceivingStation
                 while (stopThread == false)
                 {
                     // Перевод в местный режим управления.
-                    _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
-                    _form.remoteModeFlag = false;
+                    ThreadSafeChangeMode(1);
+                    remoteModeFlag = false;
                     client = null;
 
                     server.Start();
@@ -161,10 +161,10 @@ namespace ReceivingStation
             if (commandValue == 0x01)
             {
                 // Режим местного управления.
-                if (_form.remoteModeFlag)
+                if (remoteModeFlag)
                 {
-                    _form.remoteModeFlag = false;
-                    _form.Invoke(new Action(() => { ThreadSafeChangeMode(1); }));
+                    remoteModeFlag = false;
+                    ThreadSafeChangeMode(1);
                 }
                 else
                 {
@@ -175,10 +175,10 @@ namespace ReceivingStation
             else if (commandValue == 0xFF)
             {
                 // Режим дистанционного управления.
-                if (!_form.remoteModeFlag)
+                if (!remoteModeFlag)
                 {
-                    _form.remoteModeFlag = true;
-                    _form.Invoke(new Action(() => { ThreadSafeChangeMode(0); }));
+                    remoteModeFlag = true;
+                    ThreadSafeChangeMode(0); 
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace ReceivingStation
         #region Получить статус установки параметров приема потока.
         private byte SetReceiveParameters(byte[] command)
         {
-            if (_form.remoteModeFlag)
+            if (remoteModeFlag)
             {
                 // Проверяем содержимое команды после заголовка и до резервного байта.
                 for (int i = 1; i < 5; i++)
@@ -208,7 +208,7 @@ namespace ReceivingStation
                 }
 
                 _setParametersFlag = true;
-                _form.Invoke(new Action(() => { ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]); }));
+                ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);
 
                 return OkMessage;
             }
@@ -227,7 +227,7 @@ namespace ReceivingStation
                 if (_setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
-                    _form.Invoke(new Action(() => { ThreadSafeStartReceiving(); }));
+                    ThreadSafeStartReceiving();
                 }
                 else if (_receivingStartedFlag)
                 {
@@ -245,7 +245,7 @@ namespace ReceivingStation
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    _form.Invoke(new Action(() => { ThreadSafeStopReceiving(); }));
+                    ThreadSafeStopReceiving();
                 }
                 else
                 {

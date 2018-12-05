@@ -153,7 +153,7 @@ namespace ReceivingStation
                     _isDecodeStarting = true;
                     btnStartStopDecode.Text = "Остановить";
 
-                    _decode = new Decode(this, _fileName, reedSoloFlag, nrzFlag)
+                    _decode = new Decode(_fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateDateTime = UpdateDateTime,
                         ThreadSafeUpdateMko = UpdateMko,
@@ -204,13 +204,14 @@ namespace ReceivingStation
             bwImageSaver.RunWorkerAsync();
 
             _isDecodeStarting = false;
-            btnStartStopDecode.Text = "Начать";
+            btnStartStopDecode.SetPropertyThreadSafe(() => btnStartStopDecode.Text, "Начать");
 
-            tlpDecodingParameters.Enabled = true;
-
+            tlpDecodingParameters.SetPropertyThreadSafe(() => tlpDecodingParameters.Enabled, true);
+            
             DateTime worktimefinish = DateTime.Now;
             TimeSpan deltaWorkingTime = worktimefinish - _worktimestart;
-            slDecodeTime.Text = deltaWorkingTime.ToString();
+
+            Invoke(new Action(() => { slDecodeTime.Text = deltaWorkingTime.ToString(); }));
 
             UserLog.WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");
         }

@@ -131,7 +131,6 @@ namespace ReceivingStation
         static Decode _decode;
         static BeforeViterbiSync BVS;
 
-        static MaterialForm _form;
         static FormReceive _formrcv;
         static byte _FrequencyMode;
         static byte _Interliving;
@@ -147,10 +146,10 @@ namespace ReceivingStation
 
 
 
-        public Demodulating(MaterialForm form, FormReceive rcvform, byte freqmode, byte interliving, Decode decode)
+        public Demodulating(FormReceive rcvform, byte freqmode, byte interliving, Decode decode)
         {
             _FrequencyMode = freqmode;
-            _form = form;
+
             _formrcv = rcvform;
             _decode = decode;
 

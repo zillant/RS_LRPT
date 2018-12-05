@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using MaterialSkin.Controls;
 using ReceivingStation.Properties;
-using ReceivingStation.Demodulator;
 
 namespace ReceivingStation
 {
@@ -21,8 +20,6 @@ namespace ReceivingStation
         public static TimeSpan ReservePrdWorkingTime;
         public static TimeSpan FullWorkingTime; // Общее время работы системы. (Не используем в релизе) 
         
-        public bool remoteModeFlag;
-
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
         
@@ -73,7 +70,7 @@ namespace ReceivingStation
 
             materialTabControl1.SelectedTab = tabPage7;
 
-            remoteModeFlag = false;
+            Server.remoteModeFlag = false;
             _isReceivingStarting = false;
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
 
@@ -105,7 +102,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString();
             timer1.Start();
 
-            _server = new Server(this)
+            _server = new Server()
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
@@ -116,6 +113,7 @@ namespace ReceivingStation
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
         }
+
 
         private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -142,7 +140,7 @@ namespace ReceivingStation
 
         private void slMode_DoubleClick(object sender, EventArgs e)
         {
-            using (FormModeSettings modeSettingsForm = new FormModeSettings(this))
+            using (FormModeSettings modeSettingsForm = new FormModeSettings())
             {
                 modeSettingsForm.ChangeMode = ChangeMode;
                 modeSettingsForm.ShowDialog();
@@ -187,9 +185,9 @@ namespace ReceivingStation
             if (!_isReceivingStarting)
             {
                 _isReceivingStarting = true;
-                btnStartRecieve.Text = "Остановить";
+                btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
 
-                if (!remoteModeFlag)
+                if (!Server.remoteModeFlag)
                 {
                     SetReceiveParameters();
                 }
@@ -208,8 +206,10 @@ namespace ReceivingStation
                         file.Delete();
                     }
                 }
+
                 var logfilename = "onlinelogs";
-                _decode = new Decode(this, logfilename)
+
+                _decode = new Decode(logfilename)
                 {
                     ThreadSafeUpdateDateTime = UpdateDateTime,
                     ThreadSafeUpdateMko = UpdateMko,
@@ -217,23 +217,25 @@ namespace ReceivingStation
                     ThreadSafeUpdateGui = UpdateGuiDecodeData,
                     ThreadSafeStopDecoding = StopReceiving
                 };
+
                 _startWorkingTime = DateTime.Now;
                 _imageCounter = 0;
                 _callingUpdateImageCounter = 0;
-                tlpReceivingParameters.Enabled = false;
+
+                tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
+
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 UserLog.WriteToLogUserActions("Запись потока начата");
 
-                _receiver = new Demodulating(this, this, _freq, _interliving, _decode);
-                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-                _receiver.StartDecoding();
+                //_receiver = new Demodulating(this, _freq, _interliving, _decode);
+                //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                //_receiver.StartDecoding();
 
-                _receiver.RecordStart();
+                //_receiver.RecordStart();
             }
             else
             {
                  StopReceiving();
-                //_decode.DemodFinishDecode();
             }
 
         }
@@ -244,15 +246,17 @@ namespace ReceivingStation
         public void StopReceiving()
         {
             _isReceivingStarting = false;
-            btnStartRecieve.Text = "Начать";
-            tlpReceivingParameters.Enabled = true;
-            _receiver.StopDecoding();
+
+            btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
+
+            tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
+
+            //_receiver.StopDecoding();
+
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
-            //_receiver = null;
-
         }
 
         #endregion
@@ -263,18 +267,18 @@ namespace ReceivingStation
             if (modeNumber == 0)
             {
                 // Дистанционное управление
-                tlp1.Enabled = false;
-                slMode.Text = "Дистанционное управление";
+                tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, false);
+                Invoke(new Action(() => { slMode.Text = "Дистанционное управление"; }));               
                 UserLog.WriteToLogUserActions("Дистанционное управление");
-                remoteModeFlag = true;
+                Server.remoteModeFlag = true;
             }
             else if (modeNumber == 1)
             {
                 // Местное управление
-                tlp1.Enabled = true;
-                slMode.Text = "Местное управление";
+                tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, true);
+                Invoke(new Action(() => { slMode.Text = "Местное управление"; }));               
                 UserLog.WriteToLogUserActions("Местное управление");
-                remoteModeFlag = false;
+                Server.remoteModeFlag = false;
             }           
         }
 
@@ -288,10 +292,10 @@ namespace ReceivingStation
             _freq = freq;
             _interliving = interliving;
 
-            SetRadioButtons(_fcp, rbFCPMain, rbFCPReserve);
-            SetRadioButtons(_prd, rbPRDMain, rbPRDReserve);
-            SetRadioButtons(_freq, rbFreq1, rbFreq2);
-            SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff);
+            Invoke(new Action(() => { SetRadioButtons(_fcp, rbFCPMain, rbFCPReserve); }));
+            Invoke(new Action(() => { SetRadioButtons(_prd, rbPRDMain, rbPRDReserve); }));
+            Invoke(new Action(() => {SetRadioButtons(_freq, rbFreq1, rbFreq2); }));
+            Invoke(new Action(() => {SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff); }));
         }
 
         private void SetRadioButtons(byte param, RadioButton rb1, RadioButton rb2)
