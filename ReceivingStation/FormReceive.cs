@@ -29,14 +29,6 @@ namespace ReceivingStation
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateImages. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
 
-        // Поля, обновляемые из потока.
-        private DateTime _lineDate; // Время пришедшей полосы.
-        private string[] _td = new string[4]; // Данные ТД.
-        private string[] _oshv = new string[2]; // Данные ОШВ.
-        private string[] _bshv = new string[10]; // Данные БШВ.
-        private string[] _pcdm = new string[14]; // Данные ПЦДМ.
-        private DirectBitmap[] _images = new DirectBitmap[6]; // Полосы изображения для всех каналов.
-
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
         private Panel[] _channelsPanels = new Panel[6]; // Панели на которых находятся FLP для каждого канала.
         private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для каждого канала.
@@ -211,11 +203,7 @@ namespace ReceivingStation
 
                 _decode = new Decode(logfilename)
                 {
-                    ThreadSafeUpdateDateTime = UpdateDateTime,
-                    ThreadSafeUpdateMko = UpdateMko,
-                    ThreadSafeUpdateImagesContent = UpdateImages,
-                    ThreadSafeUpdateGui = UpdateGuiDecodeData,
-                    ThreadSafeStopDecoding = StopReceiving
+                    ThreadSafeUpdateGui = UpdateGuiDecodeData
                 };
 
                 _startWorkingTime = DateTime.Now;
@@ -227,11 +215,11 @@ namespace ReceivingStation
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 UserLog.WriteToLogUserActions("Запись потока начата");
 
-                //_receiver = new Demodulating(this, _freq, _interliving, _decode);
-                //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-                //_receiver.StartDecoding();
+                _receiver = new Demodulating(this, _freq, _interliving, _decode);
+                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                _receiver.StartDecoding();
 
-                //_receiver.RecordStart();
+                _receiver.RecordStart();
             }
             else
             {
@@ -251,7 +239,7 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-            //_receiver.StopDecoding();
+            _receiver.StopDecoding();
 
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
@@ -323,18 +311,10 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление даты и времени.
-        private void UpdateDateTime(DateTime date)
+        #region Обновление данных декодирования на GUI.
+        private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
         {
-            _lineDate = date;
-        }
-
-        #endregion
-
-        #region Обновление изображений.
-        private void UpdateImages(DirectBitmap[] images)
-        {
-            _images = images;
+            GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm, linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines);
 
             _callingUpdateImageCounter++;
 
@@ -344,26 +324,6 @@ namespace ReceivingStation
                 bwImageSaver.RunWorkerAsync();
                 _callingUpdateImageCounter = 0;
             }
-        }
-
-        #endregion
-
-        #region Обновление МКО.
-
-        private void UpdateMko(string tdd, string oshvv, string bshvv, string pcdmm)
-        {
-            _td = tdd.Split(' ');
-            _oshv = oshvv.Split(' ');
-            _bshv = bshvv.Split(' ');
-            _pcdm = pcdmm.Split(' ');
-        }
-
-        #endregion
-
-        #region Обновление данных декодирования на GUI.
-        private void UpdateGuiDecodeData()
-        {
-            GuiUpdater.UpdateGuiDecodeData(_td, _oshv, _bshv, _pcdm, _lineDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, _images);
         }
 
         #endregion

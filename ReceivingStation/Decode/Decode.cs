@@ -9,30 +9,22 @@ using Color = System.Drawing.Color;
 namespace ReceivingStation
 {
     class Decode
-    {       
-        public delegate void UpdateDateTimeDelegate(DateTime date);
-        public UpdateDateTimeDelegate ThreadSafeUpdateDateTime;
-        public delegate void UpdateMkoDelegate(string td, string oshv, string bshv, string pdcm);
-        public UpdateMkoDelegate ThreadSafeUpdateMko;
-        public delegate void UpdateImagesContentDelegate(DirectBitmap[] list);
-        public UpdateImagesContentDelegate ThreadSafeUpdateImagesContent;
-        public delegate void UpdateGuiDelegate();
+    {
+        public delegate void UpdateGuiDelegate(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines);
         public UpdateGuiDelegate ThreadSafeUpdateGui;
-        public delegate void StopDecodingDelegate();
-        public StopDecodingDelegate ThreadSafeStopDecoding;
+
+        public bool stopDecoding;
 
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
          
-        private DateTime currentLineDate;
-
-        private DirectBitmap[] _bmps = new DirectBitmap[6]; // Полосы изображений для каждого канала.
-
-        private string _td;
-        private string _oshv;
-        private string _bshv;
-        private string _pdcm;
+        private DateTime _linesDate;
+        private DirectBitmap[] _imagesLines = new DirectBitmap[6]; // Полосы изображений для каждого канала.
+        private string _linesTd;
+        private string _linesOshv;
+        private string _linesBshv;
+        private string _linesPcdm;
 
         private string _fileName; // Имя открытого файла.
         private FileStream _fs; // Содержимое открытого .dat файла.
@@ -101,9 +93,11 @@ namespace ReceivingStation
             _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
+            stopDecoding = false;
+
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);       
+                _imagesLines[i] = new DirectBitmap(Constants.WDT, Constants.HGT);       
             }
 
             Init();
@@ -126,7 +120,7 @@ namespace ReceivingStation
 
             for (int i = 0; i < 6; i++)
             {
-                _bmps[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
+                _imagesLines[i] = new DirectBitmap(Constants.WDT, Constants.HGT);
             }
 
             Init();
@@ -135,7 +129,7 @@ namespace ReceivingStation
         #endregion
 
         #region Начать декодирование для открытого файла.
-        public void StartDecode(CancellationToken token)
+        public void StartDecode()
         {
             int bytesCount;
 
@@ -166,8 +160,9 @@ namespace ReceivingStation
                     }
                 }
 
-            } while (!token.IsCancellationRequested);
+            } while (!stopDecoding);
 
+            UpdateDataGui();
             FinishDecode();
         }
 
@@ -200,28 +195,13 @@ namespace ReceivingStation
         #endregion
 
         #region Завершение декодирования.
+
         public void FinishDecode()
-        {    
-            UpdateDataGui();
-                   
-            _sw.WriteLine("-------------------------------------------------");
-            _sw.WriteLine("------------------------------------------");
-            _sw.WriteLine($"Всего найдено ошибок: {errs}");
-            _sw.Close();
-            ThreadSafeStopDecoding();
-           // _form.Invoke(new Action(() => { ThreadSafeStopDecoding(); }));
-        }
-
-
-        public void DemodFinishDecode()
         {
-
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
             _sw.Close();
-
-
         }
 
         #endregion
@@ -716,10 +696,10 @@ namespace ReceivingStation
 
                 UpdateDataGui();
 
-                Parallel.For(0, _bmps.Length, j =>
+                Parallel.For(0, _imagesLines.Length, j =>
                 {
-                    _bmps[j].Dispose();
-                    _bmps[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
+                    _imagesLines[j].Dispose();
+                    _imagesLines[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
 
                 });
 
@@ -821,7 +801,7 @@ namespace ReceivingStation
                     {
                         num = _jpeg.video_mass[k++];
                         color = (num << 16) | (num << 8) | num;
-                        _bmps[nc].SetPixel(x + j, Yt + i, Color.FromArgb(255, Color.FromArgb(color)));
+                        _imagesLines[nc].SetPixel(x + j, Yt + i, Color.FromArgb(255, Color.FromArgb(color)));
                     }
                 }
 
@@ -850,10 +830,10 @@ namespace ReceivingStation
 
             switch (header)
             {
-                case "#ТД: ": _td = _sb.ToString(); break;
-                case "#ОШВ: ": _oshv = _sb.ToString(); break;
-                case "#БШВ: ": _bshv = _sb.ToString(); break;
-                case "#ПДЦМ: ": _pdcm = _sb.ToString(); break;
+                case "#ТД: ": _linesTd = _sb.ToString(); break;
+                case "#ОШВ: ": _linesOshv = _sb.ToString(); break;
+                case "#БШВ: ": _linesBshv = _sb.ToString(); break;
+                case "#ПДЦМ: ": _linesPcdm = _sb.ToString(); break;
             }
 
             _sb.Insert(0, header);
@@ -866,12 +846,9 @@ namespace ReceivingStation
         #region Обновление данных и информации на форме.
         private void UpdateDataGui()
         {
-            if (_td != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
+            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
             {
-                ThreadSafeUpdateDateTime(currentLineDate);
-                ThreadSafeUpdateImagesContent(_bmps);
-                ThreadSafeUpdateMko(_td, _oshv, _bshv, _pdcm);
-                ThreadSafeUpdateGui();
+                ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
             }
         }
         #endregion
@@ -881,11 +858,11 @@ namespace ReceivingStation
         {
             if (_isNrz)
             {
-                currentLineDate = Constants.referenceDate + TimeSpan.FromDays(date - 1) + TimeSpan.FromMilliseconds(ms);
+                _linesDate = Constants.referenceDate + TimeSpan.FromDays(date - 1) + TimeSpan.FromMilliseconds(ms);
             }
             else
             {
-                currentLineDate = Constants.referenceDate + TimeSpan.FromMilliseconds(ms);
+                _linesDate = Constants.referenceDate + TimeSpan.FromMilliseconds(ms);
             }
         }
 

@@ -282,7 +282,7 @@ namespace ReceivingStation
             _FifoBuffer.Dispose();
             _FifoBuffer = null;
 
-            _decode.DemodFinishDecode();
+            _decode.FinishDecode();
 
         }
 

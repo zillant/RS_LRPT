@@ -125,13 +125,18 @@ namespace ReceivingStation.Other
         }
 
         #region Обновление данных декодирования на GUI.
-        public static void UpdateGuiDecodeData(string[] _td, string[] _oshv, string[] _bshv, string[] _pcdm, DateTime _lineDate,
-            DisabledRichTextBox rtbDateTime, DisabledRichTextBox rtbMkoData, FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels, List<Bitmap>[] listImagesForSave, DirectBitmap[] images)
+        public static void UpdateGuiDecodeData(string linesTd, string linesOshv, string linesBshv, string linesPcdm, DateTime linesDate,
+            DisabledRichTextBox rtbDateTime, DisabledRichTextBox rtbMkoData, FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels, List<Bitmap>[] listImagesForSave, DirectBitmap[] imagesLines)
         {
+            var td = linesTd.Split(' ');
+            var oshv = linesOshv.Split(' ');
+            var bshv = linesBshv.Split(' ');
+            var pcdm = linesPcdm.Split(' ');
+
             // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
-            var mkoData = $"{_td[0]} {_td[1]}\n\n{_td[2]}\n\n{_td[3]}\n\n{_oshv[0]} {_oshv[1]}\n\n{_bshv[0]} {_bshv[1]}\n\n{_bshv[2]} {_bshv[3]}\n\n{_bshv[4]} {_bshv[5]}\n\n{_bshv[6]} {_bshv[7]}\n\n{_bshv[8]} {_bshv[9]}\n\n{_pcdm[0]} {_pcdm[1]}\n\n{_pcdm[2]} {_pcdm[3]} {_pcdm[4]} {_pcdm[5]}\n\n{_pcdm[6]} {_pcdm[7]} {_pcdm[8]} {_pcdm[9]}\n\n{_pcdm[10]} {_pcdm[11]} {_pcdm[12]} {_pcdm[13]}";
-            var date = $"{_lineDate.Day}.{_lineDate.Month}.{_lineDate.Year}";
-            var time = $"{_lineDate.Hour.ToString("D2")}:{_lineDate.Minute.ToString("D2")}:{_lineDate.Second.ToString("D2")}";
+            var mkoData = $"{td[0]} {td[1]}\n\n{td[2]}\n\n{td[3]}\n\n{oshv[0]} {oshv[1]}\n\n{bshv[0]} {bshv[1]}\n\n{bshv[2]} {bshv[3]}\n\n{bshv[4]} {bshv[5]}\n\n{bshv[6]} {bshv[7]}\n\n{bshv[8]} {bshv[9]}\n\n{pcdm[0]} {pcdm[1]}\n\n{pcdm[2]} {pcdm[3]} {pcdm[4]} {pcdm[5]}\n\n{pcdm[6]} {pcdm[7]} {pcdm[8]} {pcdm[9]}\n\n{pcdm[10]} {pcdm[11]} {pcdm[12]} {pcdm[13]}";
+            var date = $"{linesDate.Day}.{linesDate.Month}.{linesDate.Year}";
+            var time = $"{linesDate.Hour.ToString("D2")}:{linesDate.Minute.ToString("D2")}:{linesDate.Second.ToString("D2")}";
             var dateTime = $"\n{date}\n\n{time}";
 
             rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
@@ -139,7 +144,7 @@ namespace ReceivingStation.Other
 
             // Изображение.
             allChannelsPanels[5].Invoke(new Action(() => { CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels); }));
-            allChannels[5].Invoke(new Action(() => { AddImages(channels, allChannels, listImagesForSave, images); }));
+            allChannels[5].Invoke(new Action(() => { AddImages(channels, allChannels, listImagesForSave, imagesLines); }));
         }
         #endregion
 
