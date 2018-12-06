@@ -19,7 +19,7 @@ namespace ReceivingStation
         private bool _isDecodeStarting;
         private bool _isFileOpened;
 
-        private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateImages. Нужно для сохранения изображений на диск.
+        private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
       
         private Decode _decode;
@@ -35,7 +35,6 @@ namespace ReceivingStation
         public FormDecode()
         {
             InitializeComponent();
-            DoubleBuffered = true;
         }
 
         private void FormDecode_Load(object sender, EventArgs e)

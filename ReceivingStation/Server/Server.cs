@@ -13,10 +13,8 @@ namespace ReceivingStation
         public ChangeModeDelegate ThreadSafeChangeMode;
         public delegate void SetParametersDelegate(byte fcp, byte prd, byte freq, byte interliving);
         public SetParametersDelegate ThreadSafeSetReceiveParameters;
-        public delegate void StartReceivingDelegate();
-        public StartReceivingDelegate ThreadSafeStartReceiving;
-        public delegate void StopReceivingDelegate();
-        public StopReceivingDelegate ThreadSafeStopReceiving;
+        public delegate void StartStopReceivingDelegate();
+        public StartStopReceivingDelegate ThreadSafeStartStopReceiving;
 
         public bool stopThread;
            
@@ -50,9 +48,14 @@ namespace ReceivingStation
             byte[] data = new byte[256];  // Буфер для получаемых команд.           
             byte[] result = new byte[256]; // Ответная квитанция на присланную команду.
 
+            List<string> ipList = new List<string>();
+            ipList.Add(Settings.Default.ipAddressIVK);
+            ipList.Add(Settings.Default.ipAddressLocal);
+
             try
             {
                 server = new TcpListener(IPAddress.Parse("0.0.0.0"), 11005);
+
                 _setParametersFlag = false;
                 _receivingStartedFlag = false;
 
@@ -66,11 +69,13 @@ namespace ReceivingStation
                     server.Start();
 
                     client = server.AcceptTcpClient();
-                    if (((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString() != Settings.Default.ipAddressIVK)
+
+                    if (!ipList.Contains(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()))
                     {
                         client.Close();
                         continue;
                     }
+
                     server.Stop(); // Больше не ждем подключений.  
                     stream = client.GetStream();
 
@@ -227,7 +232,7 @@ namespace ReceivingStation
                 if (_setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
-                    ThreadSafeStartReceiving();
+                    ThreadSafeStartStopReceiving();
                 }
                 else if (_receivingStartedFlag)
                 {
@@ -245,7 +250,7 @@ namespace ReceivingStation
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    ThreadSafeStopReceiving();
+                    ThreadSafeStartStopReceiving();
                 }
                 else
                 {

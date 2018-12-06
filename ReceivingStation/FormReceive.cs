@@ -26,7 +26,7 @@ namespace ReceivingStation
         private string _fileName;
         private bool _isReceivingStarting; 
 
-        private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateImages. Нужно для сохранения изображений на диск.
+        private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
 
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
@@ -51,7 +51,6 @@ namespace ReceivingStation
         public FormReceive()
         {
             InitializeComponent();
-            DoubleBuffered = true;
         }
 
         private void FormReceive_Load(object sender, EventArgs e)
@@ -98,14 +97,12 @@ namespace ReceivingStation
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
-                ThreadSafeStartReceiving = StartStopReceiving,
-                ThreadSafeStopReceiving = StopReceiving
+                ThreadSafeStartStopReceiving = StartStopReceiving
             };
 
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
         }
-
 
         private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -176,14 +173,15 @@ namespace ReceivingStation
         {
             if (!_isReceivingStarting)
             {
+                var logfilename = "onlinelogs";
+
+                _decode = new Decode(logfilename) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
+
                 _isReceivingStarting = true;
+
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
-
-                if (!Server.remoteModeFlag)
-                {
-                    SetReceiveParameters();
-                }
-
+                tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
+                
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
                 {
@@ -199,18 +197,14 @@ namespace ReceivingStation
                     }
                 }
 
-                var logfilename = "onlinelogs";
-
-                _decode = new Decode(logfilename)
+                if (!Server.remoteModeFlag)
                 {
-                    ThreadSafeUpdateGui = UpdateGuiDecodeData
-                };
-
+                    SetReceiveParameters();
+                }
+                             
                 _startWorkingTime = DateTime.Now;
                 _imageCounter = 0;
-                _callingUpdateImageCounter = 0;
-
-                tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
+                _callingUpdateImageCounter = 0;               
 
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 UserLog.WriteToLogUserActions("Запись потока начата");
@@ -256,17 +250,17 @@ namespace ReceivingStation
             {
                 // Дистанционное управление
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, false);
-                Invoke(new Action(() => { slMode.Text = "Дистанционное управление"; }));               
+                Invoke(new Action(() => { slMode.Text = "Дистанционное управление"; }));
+
                 UserLog.WriteToLogUserActions("Дистанционное управление");
-                Server.remoteModeFlag = true;
             }
             else if (modeNumber == 1)
             {
                 // Местное управление
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, true);
-                Invoke(new Action(() => { slMode.Text = "Местное управление"; }));               
+                Invoke(new Action(() => { slMode.Text = "Местное управление"; }));
+
                 UserLog.WriteToLogUserActions("Местное управление");
-                Server.remoteModeFlag = false;
             }           
         }
 

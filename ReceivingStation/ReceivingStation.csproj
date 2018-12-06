@@ -160,6 +160,7 @@
     <Compile Include="Other\UserLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\ClientForSelfTest.cs" />
     <Compile Include="Server\Server.cs" />
     <Compile Include="FormServerSettings.cs">
       <SubType>Form</SubType>

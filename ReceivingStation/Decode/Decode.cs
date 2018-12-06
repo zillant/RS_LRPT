@@ -195,7 +195,6 @@ namespace ReceivingStation
         #endregion
 
         #region Завершение декодирования.
-
         public void FinishDecode()
         {
             _sw.WriteLine("-------------------------------------------------");
