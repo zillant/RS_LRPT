@@ -38,13 +38,17 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rtbTestServer = new ReceivingStation.Other.DisabledRichTextBox();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.doubleBufferedPanel1.SuspendLayout();
+            this.doubleBufferedPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -100,16 +104,19 @@
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.2365F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.71208F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.tableLayoutPanel3.Controls.Add(this.panel6, 2, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel1, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel2, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 59);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1556, 114);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 597F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1556, 711);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
             // panel6
@@ -147,10 +154,22 @@
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
             // 
+            // doubleBufferedPanel1
+            // 
+            this.doubleBufferedPanel1.Controls.Add(this.materialRaisedButton1);
+            this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
+            this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
+            this.doubleBufferedPanel1.Size = new System.Drawing.Size(340, 108);
+            this.doubleBufferedPanel1.TabIndex = 46;
+            // 
             // materialRaisedButton1
             // 
+            this.materialRaisedButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(345, 179);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(9, 25);
             this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
@@ -160,11 +179,22 @@
             this.materialRaisedButton1.UseVisualStyleBackColor = true;
             this.materialRaisedButton1.Click += new System.EventHandler(this.materialRaisedButton1_Click);
             // 
+            // doubleBufferedPanel2
+            // 
+            this.doubleBufferedPanel2.Controls.Add(this.rtbTestServer);
+            this.doubleBufferedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.doubleBufferedPanel2.Location = new System.Drawing.Point(3, 117);
+            this.doubleBufferedPanel2.Name = "doubleBufferedPanel2";
+            this.doubleBufferedPanel2.Size = new System.Drawing.Size(340, 591);
+            this.doubleBufferedPanel2.TabIndex = 58;
+            // 
             // rtbTestServer
             // 
-            this.rtbTestServer.Location = new System.Drawing.Point(12, 179);
+            this.rtbTestServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
+            this.rtbTestServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbTestServer.Location = new System.Drawing.Point(9, 16);
             this.rtbTestServer.Name = "rtbTestServer";
-            this.rtbTestServer.Size = new System.Drawing.Size(318, 588);
+            this.rtbTestServer.Size = new System.Drawing.Size(318, 560);
             this.rtbTestServer.TabIndex = 57;
             this.rtbTestServer.Text = "";
             // 
@@ -173,8 +203,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1556, 795);
-            this.Controls.Add(this.rtbTestServer);
-            this.Controls.Add(this.materialRaisedButton1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.statusStrip1);
@@ -194,6 +222,8 @@
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.doubleBufferedPanel1.ResumeLayout(false);
+            this.doubleBufferedPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,5 +241,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
         private Other.DisabledRichTextBox rtbTestServer;
+        private Other.DoubleBufferedPanel doubleBufferedPanel1;
+        private Other.DoubleBufferedPanel doubleBufferedPanel2;
     }
 }
