@@ -19,6 +19,8 @@ namespace ReceivingStation
         private bool _isDecodeStarting;
         private bool _isFileOpened;
 
+        private bool _isDecodeTimeVisible; // Для скрытия времени декодирования.
+
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
       
@@ -47,6 +49,7 @@ namespace ReceivingStation
 
             _isDecodeStarting = false;
             _isFileOpened = false;
+            _isDecodeTimeVisible = false;
 
             _channelsPanels[0] = pImage1;
             _channelsPanels[1] = pImage2;
@@ -122,6 +125,26 @@ namespace ReceivingStation
         {
             ImageSaver.SaveImage(_listImagesForSave, _fileName, _imageCounter);
             _imageCounter += 1;
+        }
+
+        private void FormDecode_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Ctrl + L  
+            if (e.Control && e.KeyCode == Keys.L)
+            {
+                if (!_isDecodeTimeVisible)
+                {
+                    slDecodeTime.Visible = true;
+                    _isDecodeTimeVisible = true;
+                }
+                else
+                {
+                    slDecodeTime.Visible = false;
+                    _isDecodeTimeVisible = false;
+                }
+
+                e.SuppressKeyPress = true;
+            }
         }
 
         #region Начать декодирование.

@@ -139,7 +139,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1472, 20);
+            this.slTime.Size = new System.Drawing.Size(1539, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -154,6 +154,7 @@
             this.slDecodeTime.Text = "0:00:0";
             this.slDecodeTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.slDecodeTime.ToolTipText = "Время декодирования";
+            this.slDecodeTime.Visible = false;
             // 
             // timer1
             // 
@@ -441,9 +442,9 @@
             // rtbDateTimeTitle
             // 
             this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTimeTitle.Location = new System.Drawing.Point(400, 0);
+            this.rtbDateTimeTitle.Location = new System.Drawing.Point(374, 0);
             this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
-            this.rtbDateTimeTitle.Size = new System.Drawing.Size(74, 102);
+            this.rtbDateTimeTitle.Size = new System.Drawing.Size(100, 102);
             this.rtbDateTimeTitle.TabIndex = 46;
             this.rtbDateTimeTitle.Text = "";
             // 
@@ -856,6 +857,7 @@
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1556, 795);
             this.Name = "FormDecode";
@@ -865,6 +867,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormDecode_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDecode_FormClosed);
             this.Load += new System.EventHandler(this.FormDecode_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormDecode_KeyDown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlControls.ResumeLayout(false);

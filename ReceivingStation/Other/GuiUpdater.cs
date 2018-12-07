@@ -220,7 +220,7 @@ namespace ReceivingStation.Other
             rtbMkoData.Text = mkoData;
             rtbMkoData.BorderStyle = BorderStyle.None;
 
-            var dateTimeTitle = "\nДата\n\nВремя";
+            var dateTimeTitle = "\nМКО Дата:\n\nМКО Время:";
             rtbDateTimeTitle.Text = dateTimeTitle;
             rtbDateTimeTitle.BorderStyle = BorderStyle.None;
 

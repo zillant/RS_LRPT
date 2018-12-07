@@ -24,7 +24,8 @@ namespace ReceivingStation
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
         
         private string _fileName;
-        private bool _isReceivingStarting; 
+        private bool _isReceivingStarting;
+        private bool _isModulationPanelVisible; // Для скрытия панели модуляции.
 
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
@@ -63,7 +64,8 @@ namespace ReceivingStation
 
             Server.remoteModeFlag = false;
             _isReceivingStarting = false;
-            _counterForSaveWorkingTime = TimeForSaveWorkingTime;            
+            _counterForSaveWorkingTime = TimeForSaveWorkingTime;
+            _isModulationPanelVisible = false;
 
             OpenLogWorkingTimeFile();
 
@@ -399,6 +401,25 @@ namespace ReceivingStation
 
         #endregion
 
-        #endregion       
+        #endregion
+
+        private void FormReceive_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Ctrl + L  
+            if (e.Control && e.KeyCode == Keys.L)
+            {
+                if (!_isModulationPanelVisible)
+                {
+                    pModulation.Visible = true;
+                    _isModulationPanelVisible = true;
+                }
+                else
+                {
+                    pModulation.Visible = false;
+                    _isModulationPanelVisible = false;
+                }
+                e.SuppressKeyPress = true;
+            }
+        }
     }
 }
