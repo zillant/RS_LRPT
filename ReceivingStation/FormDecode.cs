@@ -175,7 +175,7 @@ namespace ReceivingStation
             }
             else
             {
-                lblFileName.ForeColor = Color.FromArgb(222, 211, 47, 47);
+                lblFileName.ForeColor = GuiUpdater.errorColor;
             }
         }
 

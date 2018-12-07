@@ -17,6 +17,7 @@ namespace ReceivingStation
         public StartStopReceivingDelegate ThreadSafeStartStopReceiving;
 
         public bool stopThread;
+        public bool isReceiveForm; // Флаг, запущена ли форма приема. нужно чтоб не привязывать делегаты к форме самотестирования.
            
         public static bool remoteModeFlag;
        
@@ -34,6 +35,7 @@ namespace ReceivingStation
         public Server()
         {
             stopThread = false;
+            isReceiveForm = false;
         }
 
         #region Запустить работу сервера.
@@ -62,7 +64,8 @@ namespace ReceivingStation
                 while (stopThread == false)
                 {
                     // Перевод в местный режим управления.
-                    ThreadSafeChangeMode(1);
+                    if (isReceiveForm)
+                        ThreadSafeChangeMode(1);
                     remoteModeFlag = false;
                     client = null;
 
@@ -169,7 +172,8 @@ namespace ReceivingStation
                 if (remoteModeFlag)
                 {
                     remoteModeFlag = false;
-                    ThreadSafeChangeMode(1);
+                    if (isReceiveForm)
+                        ThreadSafeChangeMode(1);
                 }
                 else
                 {
@@ -183,7 +187,8 @@ namespace ReceivingStation
                 if (!remoteModeFlag)
                 {
                     remoteModeFlag = true;
-                    ThreadSafeChangeMode(0); 
+                    if (isReceiveForm)
+                        ThreadSafeChangeMode(0); 
                 }
                 else
                 {
@@ -213,7 +218,8 @@ namespace ReceivingStation
                 }
 
                 _setParametersFlag = true;
-                ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);
+                if (isReceiveForm)
+                    ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);
 
                 return OkMessage;
             }
@@ -232,7 +238,8 @@ namespace ReceivingStation
                 if (_setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
-                    ThreadSafeStartStopReceiving();
+                    if (isReceiveForm)
+                        ThreadSafeStartStopReceiving();
                 }
                 else if (_receivingStartedFlag)
                 {
@@ -250,7 +257,8 @@ namespace ReceivingStation
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    ThreadSafeStartStopReceiving();
+                    if (isReceiveForm)
+                        ThreadSafeStartStopReceiving();
                 }
                 else
                 {

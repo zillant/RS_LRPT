@@ -139,7 +139,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1441, 20);
+            this.slTime.Size = new System.Drawing.Size(1472, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -252,18 +252,18 @@
             this.materialLabel7.Depth = 0;
             this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel7.Location = new System.Drawing.Point(3, 9);
+            this.materialLabel7.Location = new System.Drawing.Point(7, 9);
             this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel7.Name = "materialLabel7";
             this.materialLabel7.Size = new System.Drawing.Size(147, 19);
             this.materialLabel7.TabIndex = 37;
-            this.materialLabel7.Text = "NRZ (Метор 2.1/2.2)";
+            this.materialLabel7.Text = "NRZ";
             // 
             // rbNRZNo
             // 
             this.rbNRZNo.Depth = 0;
             this.rbNRZNo.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNRZNo.Location = new System.Drawing.Point(7, 65);
+            this.rbNRZNo.Location = new System.Drawing.Point(11, 65);
             this.rbNRZNo.Margin = new System.Windows.Forms.Padding(0);
             this.rbNRZNo.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbNRZNo.MouseState = MaterialSkin.MouseState.HOVER;
@@ -279,7 +279,7 @@
             this.rbNRZYes.Checked = true;
             this.rbNRZYes.Depth = 0;
             this.rbNRZYes.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbNRZYes.Location = new System.Drawing.Point(7, 35);
+            this.rbNRZYes.Location = new System.Drawing.Point(11, 35);
             this.rbNRZYes.Margin = new System.Windows.Forms.Padding(0);
             this.rbNRZYes.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbNRZYes.MouseState = MaterialSkin.MouseState.HOVER;

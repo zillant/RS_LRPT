@@ -63,7 +63,7 @@ namespace ReceivingStation
 
             Server.remoteModeFlag = false;
             _isReceivingStarting = false;
-            _counterForSaveWorkingTime = TimeForSaveWorkingTime;
+            _counterForSaveWorkingTime = TimeForSaveWorkingTime;            
 
             OpenLogWorkingTimeFile();
 
@@ -100,6 +100,7 @@ namespace ReceivingStation
                 ThreadSafeStartStopReceiving = StartStopReceiving
             };
 
+            _server.isReceiveForm = true;
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
         }

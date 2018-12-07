@@ -39,16 +39,7 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.lblRemoteMode = new MaterialSkin.Controls.MaterialLabel();
-            this.lblSetParameters = new MaterialSkin.Controls.MaterialLabel();
-            this.lblStartReceive = new MaterialSkin.Controls.MaterialLabel();
-            this.lblStopReceive = new MaterialSkin.Controls.MaterialLabel();
-            this.lblLocalMode = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
+            this.rtbTestServer = new ReceivingStation.Other.DisabledRichTextBox();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -159,172 +150,31 @@
             // materialRaisedButton1
             // 
             this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(39, 201);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(345, 179);
             this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
-            this.materialRaisedButton1.Size = new System.Drawing.Size(159, 57);
+            this.materialRaisedButton1.Size = new System.Drawing.Size(318, 57);
             this.materialRaisedButton1.TabIndex = 45;
             this.materialRaisedButton1.Text = "Начать локальный тест сервера";
             this.materialRaisedButton1.UseVisualStyleBackColor = true;
             this.materialRaisedButton1.Click += new System.EventHandler(this.materialRaisedButton1_Click);
             // 
-            // lblRemoteMode
+            // rtbTestServer
             // 
-            this.lblRemoteMode.AutoSize = true;
-            this.lblRemoteMode.BackColor = System.Drawing.SystemColors.Window;
-            this.lblRemoteMode.Depth = 0;
-            this.lblRemoteMode.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblRemoteMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblRemoteMode.Location = new System.Drawing.Point(337, 278);
-            this.lblRemoteMode.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblRemoteMode.Name = "lblRemoteMode";
-            this.lblRemoteMode.Size = new System.Drawing.Size(108, 19);
-            this.lblRemoteMode.TabIndex = 47;
-            this.lblRemoteMode.Text = "materialLabel1";
-            // 
-            // lblSetParameters
-            // 
-            this.lblSetParameters.AutoSize = true;
-            this.lblSetParameters.BackColor = System.Drawing.SystemColors.Window;
-            this.lblSetParameters.Depth = 0;
-            this.lblSetParameters.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblSetParameters.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSetParameters.Location = new System.Drawing.Point(337, 312);
-            this.lblSetParameters.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblSetParameters.Name = "lblSetParameters";
-            this.lblSetParameters.Size = new System.Drawing.Size(108, 19);
-            this.lblSetParameters.TabIndex = 48;
-            this.lblSetParameters.Text = "materialLabel2";
-            // 
-            // lblStartReceive
-            // 
-            this.lblStartReceive.AutoSize = true;
-            this.lblStartReceive.BackColor = System.Drawing.SystemColors.Window;
-            this.lblStartReceive.Depth = 0;
-            this.lblStartReceive.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblStartReceive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblStartReceive.Location = new System.Drawing.Point(337, 346);
-            this.lblStartReceive.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblStartReceive.Name = "lblStartReceive";
-            this.lblStartReceive.Size = new System.Drawing.Size(108, 19);
-            this.lblStartReceive.TabIndex = 49;
-            this.lblStartReceive.Text = "materialLabel3";
-            // 
-            // lblStopReceive
-            // 
-            this.lblStopReceive.AutoSize = true;
-            this.lblStopReceive.BackColor = System.Drawing.SystemColors.Window;
-            this.lblStopReceive.Depth = 0;
-            this.lblStopReceive.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblStopReceive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblStopReceive.Location = new System.Drawing.Point(337, 380);
-            this.lblStopReceive.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblStopReceive.Name = "lblStopReceive";
-            this.lblStopReceive.Size = new System.Drawing.Size(108, 19);
-            this.lblStopReceive.TabIndex = 50;
-            this.lblStopReceive.Text = "materialLabel4";
-            // 
-            // lblLocalMode
-            // 
-            this.lblLocalMode.AutoSize = true;
-            this.lblLocalMode.BackColor = System.Drawing.SystemColors.Window;
-            this.lblLocalMode.Depth = 0;
-            this.lblLocalMode.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblLocalMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblLocalMode.Location = new System.Drawing.Point(337, 415);
-            this.lblLocalMode.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblLocalMode.Name = "lblLocalMode";
-            this.lblLocalMode.Size = new System.Drawing.Size(108, 19);
-            this.lblLocalMode.TabIndex = 51;
-            this.lblLocalMode.Text = "materialLabel1";
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.SystemColors.Window;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(41, 415);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(238, 19);
-            this.materialLabel1.TabIndex = 56;
-            this.materialLabel1.Text = "Переход в местное управление:";
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.BackColor = System.Drawing.SystemColors.Window;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(41, 380);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(146, 19);
-            this.materialLabel2.TabIndex = 55;
-            this.materialLabel2.Text = "Остановить прием:";
-            // 
-            // materialLabel3
-            // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.BackColor = System.Drawing.SystemColors.Window;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(41, 346);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(112, 19);
-            this.materialLabel3.TabIndex = 54;
-            this.materialLabel3.Text = "Начать прием:";
-            // 
-            // materialLabel4
-            // 
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.BackColor = System.Drawing.SystemColors.Window;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(41, 312);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(210, 19);
-            this.materialLabel4.TabIndex = 53;
-            this.materialLabel4.Text = "Установленные параметры:";
-            // 
-            // materialLabel5
-            // 
-            this.materialLabel5.AutoSize = true;
-            this.materialLabel5.BackColor = System.Drawing.SystemColors.Window;
-            this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(41, 278);
-            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(290, 19);
-            this.materialLabel5.TabIndex = 52;
-            this.materialLabel5.Text = "Переход в дистанционное управление:";
+            this.rtbTestServer.Location = new System.Drawing.Point(12, 179);
+            this.rtbTestServer.Name = "rtbTestServer";
+            this.rtbTestServer.Size = new System.Drawing.Size(318, 588);
+            this.rtbTestServer.TabIndex = 57;
+            this.rtbTestServer.Text = "";
             // 
             // FormSelfTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1556, 795);
-            this.Controls.Add(this.materialLabel1);
+            this.Controls.Add(this.rtbTestServer);
             this.Controls.Add(this.materialRaisedButton1);
-            this.Controls.Add(this.materialLabel2);
-            this.Controls.Add(this.materialLabel3);
-            this.Controls.Add(this.materialLabel4);
-            this.Controls.Add(this.materialLabel5);
-            this.Controls.Add(this.lblLocalMode);
-            this.Controls.Add(this.lblStopReceive);
-            this.Controls.Add(this.lblStartReceive);
-            this.Controls.Add(this.lblSetParameters);
-            this.Controls.Add(this.lblRemoteMode);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.statusStrip1);
@@ -360,15 +210,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
-        private MaterialSkin.Controls.MaterialLabel lblRemoteMode;
-        private MaterialSkin.Controls.MaterialLabel lblSetParameters;
-        private MaterialSkin.Controls.MaterialLabel lblStartReceive;
-        private MaterialSkin.Controls.MaterialLabel lblStopReceive;
-        private MaterialSkin.Controls.MaterialLabel lblLocalMode;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
-        private MaterialSkin.Controls.MaterialLabel materialLabel5;
+        private Other.DisabledRichTextBox rtbTestServer;
     }
 }

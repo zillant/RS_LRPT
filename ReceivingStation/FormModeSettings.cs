@@ -1,4 +1,5 @@
 ﻿using MaterialSkin.Controls;
+using ReceivingStation.Other;
 using System;
 using System.Drawing;
 using System.Net;
@@ -30,7 +31,7 @@ namespace ReceivingStation
         {
             if (Server.remoteModeFlag == false)
             {             
-                lblConnection.ForeColor = Color.FromArgb(222, 211, 47, 47); 
+                lblConnection.ForeColor = GuiUpdater.errorColor; 
             }
             else
             {

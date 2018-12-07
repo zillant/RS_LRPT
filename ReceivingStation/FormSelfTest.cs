@@ -2,6 +2,7 @@
 using ReceivingStation.Other;
 using ReceivingStation.Properties;
 using System;
+using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,8 +12,6 @@ namespace ReceivingStation
 {
     public partial class FormSelfTest : MaterialForm
     {
-        private bool _isReceivingStarting;
-
         private Server _server;
         private Thread _serverThread;
         private ClientForSelfTest _client;
@@ -26,20 +25,14 @@ namespace ReceivingStation
         {
             GuiUpdater.SmoothLoadingForm(this);
 
-            Server.remoteModeFlag = false;
-            _isReceivingStarting = false;
+            GuiUpdater.AllocFont(GuiUpdater.font, rtbTestServer, 11);           
 
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             timer1.Start();
 
-            _client = new ClientForSelfTest();
+            _client = new ClientForSelfTest() { ThreadSafeWriteActions = WriteActions };
 
-            _server = new Server()
-            {
-                ThreadSafeChangeMode = ChangeMode,
-                ThreadSafeSetReceiveParameters = SetReceiveParameters,
-                ThreadSafeStartStopReceiving = StartStopReceiving
-            };
+            _server = new Server();
 
             _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();
@@ -70,51 +63,18 @@ namespace ReceivingStation
 
         private async void materialRaisedButton1_Click(object sender, EventArgs e)
         {
+            rtbTestServer.Clear();
             materialRaisedButton1.Enabled = false;
+            WriteActions($"Клиент подключен\n\n", Color.Black);
             await Task.Run(() => { _client.StartClient(); });
             materialRaisedButton1.Enabled = true;
+            WriteActions($"Тест завершен\n", Color.Black);
+            WriteActions($"Клиент отключен\n", Color.Black);
         }
 
-        #region Начать прием потока.
-        public void StartStopReceiving()
+        private void WriteActions(string msg, Color color)
         {
-            if (!_isReceivingStarting)
-            {
-                _isReceivingStarting = true;
-                lblStartReceive.SetPropertyThreadSafe(() => lblStartReceive.Text, "OK");
-            }
-            else
-            {
-                _isReceivingStarting = false;
-                lblStopReceive.SetPropertyThreadSafe(() => lblStopReceive.Text, "OK");
-            }          
+            rtbTestServer.Invoke(new Action(() => { rtbTestServer.AppendText(msg, color); }));
         }
-
-        #endregion
-
-        #region Смена режима управления.
-        private void ChangeMode(byte modeNumber)
-        {
-            if (modeNumber == 0)
-            {
-                // Дистанционное управление
-                lblRemoteMode.SetPropertyThreadSafe(() => lblRemoteMode.Text, "OK");
-            }
-            else if (modeNumber == 1)
-            {
-                // Местное управление
-                lblLocalMode.SetPropertyThreadSafe(() => lblLocalMode.Text, "OK");               
-            }
-        }
-
-        #endregion
-
-        #region Установка параметров записи потока в дистанционном режиме управления.
-        private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
-        {
-            lblSetParameters.SetPropertyThreadSafe(() => lblSetParameters.Text, $"ФЦП - {fcp}, ПРД - {prd}, Частота - {freq}, Интерливинг - {interliving} ");
-        }
-
-        #endregion
     }
 }

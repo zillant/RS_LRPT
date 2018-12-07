@@ -16,7 +16,10 @@ namespace ReceivingStation.Other
         [DllImport("gdi32.dll")]       
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbfont, uint cbfont, IntPtr pdv, [In] ref uint pcFonts);
         private static FontFamily _ff;
-        private static Font _font;
+        public static Font font;
+
+        public static Color errorColor = Color.FromArgb(222, 211, 47, 47);
+        public static Color okColor = Color.FromArgb(222, 46, 125, 50);
 
         private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
 
@@ -45,6 +48,16 @@ namespace ReceivingStation.Other
                     @this,
                     new object[] { value });
             }
+        }
+
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
         }
 
         public static void CreateNewFlps(FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels)
@@ -174,7 +187,7 @@ namespace ReceivingStation.Other
             pfc.AddMemoryFont(ptrData, dataLength);
             Marshal.FreeCoTaskMem(ptrData);
             _ff = pfc.Families[0];
-            _font = new Font(_ff, 15f, FontStyle.Bold);
+            font = new Font(_ff, 15f, FontStyle.Bold);
         }
 
         #endregion
@@ -182,10 +195,10 @@ namespace ReceivingStation.Other
         #region Инициализация кастомного richTextBox с данными декодирования.
         public static void DecodeRichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime)
         {
-            AllocFont(_font, rtbMko, 11);
-            AllocFont(_font, rtbMkoData, 11);
-            AllocFont(_font, rtbDateTimeTitle, 11);
-            AllocFont(_font, rtbDateTime, 11);
+            AllocFont(font, rtbMko, 11);
+            AllocFont(font, rtbMkoData, 11);
+            AllocFont(font, rtbDateTimeTitle, 11);
+            AllocFont(font, rtbDateTime, 11);
 
             var MkoTitle = "Время конца формирования ТД (БШВ)\n\n" +
                 "Первый год в текущем четырехлетии\n\n" +
