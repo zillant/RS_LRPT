@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
 
-namespace ReceivingStation
+namespace ReceivingStation.MessageBoxes
 {
     public partial class FormDialogMessageBox : MaterialForm
     {
@@ -17,10 +17,12 @@ namespace ReceivingStation
 
         public static DialogResult Show(string title, string text, Bitmap pictures)
         {
-            _formDialogMessageBox = new FormDialogMessageBox();
-            _formDialogMessageBox.Text = title;
-            _formDialogMessageBox.lblMessage.Text = text;
-            _formDialogMessageBox.pbPicture.Image = pictures;
+            _formDialogMessageBox = new FormDialogMessageBox
+            {
+                Text = title,
+                lblMessage = {Text = text},
+                pbPicture = {Image = pictures}
+            };
             _formDialogMessageBox.ShowDialog();
 
             return _result;

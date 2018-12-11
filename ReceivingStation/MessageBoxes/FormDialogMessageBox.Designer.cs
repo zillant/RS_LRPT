@@ -1,4 +1,4 @@
-﻿namespace ReceivingStation
+﻿namespace ReceivingStation.MessageBoxes
 {
     partial class FormDialogMessageBox
     {

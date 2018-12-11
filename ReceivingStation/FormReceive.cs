@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using MaterialSkin.Controls;
+using ReceivingStation.MessageBoxes;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation
