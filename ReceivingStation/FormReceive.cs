@@ -40,7 +40,7 @@ namespace ReceivingStation
         private DateTime _startWorkingTime; // Время начала работы борта.
                       
         private Demodulating _receiver;
-        private Server _server;
+        private Server.Server _server;
         private Thread _serverThread;
         private Decode _decode;
 
@@ -63,7 +63,7 @@ namespace ReceivingStation
 
             materialTabControl1.SelectedTab = tabPage7;
 
-            Server.remoteModeFlag = false;
+            Server.Server.RemoteModeFlag = false;
             _isReceivingStarting = false;
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             _isModulationPanelVisible = false;
@@ -96,12 +96,12 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             timer1.Start();
 
-            _server = new Server
+            _server = new Server.Server
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
                 ThreadSafeStartStopReceiving = StartStopReceiving,
-                isReceiveForm = true
+                IsUpdateFormNeed = true
             };
 
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
@@ -120,7 +120,7 @@ namespace ReceivingStation
 
         private void FormReceive_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _server.stopThread = true;
+            _server.StopThread = true;
             _serverThread.Join(100);
 
             Application.Exit();
@@ -220,7 +220,7 @@ namespace ReceivingStation
                     }
                 }
 
-                if (!Server.remoteModeFlag)
+                if (!Server.Server.RemoteModeFlag)
                 {
                     SetReceiveParameters();
                 }

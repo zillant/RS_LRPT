@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using ReceivingStation.Properties;
 
-namespace ReceivingStation
+namespace ReceivingStation.Server
 {
-    class Server
+    internal class Server
     {
         public delegate void ChangeModeDelegate(byte modeNumber);
         public ChangeModeDelegate ThreadSafeChangeMode;
@@ -16,10 +15,10 @@ namespace ReceivingStation
         public delegate void StartStopReceivingDelegate();
         public StartStopReceivingDelegate ThreadSafeStartStopReceiving;
 
-        public bool stopThread;
-        public bool isReceiveForm; // Флаг, запущена ли форма приема. нужно чтоб не привязывать делегаты к форме самотестирования.
+        public bool StopThread;
+        public bool IsUpdateFormNeed; // Флаг, нужно ли обновить данные на форме. нужно чтоб не привязывать делегаты к форме самотестирования.
            
-        public static bool remoteModeFlag;
+        public static bool RemoteModeFlag;
        
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
@@ -34,44 +33,35 @@ namespace ReceivingStation
        
         public Server()
         {
-            stopThread = false;
-            isReceiveForm = false;
+            StopThread = false;
+            IsUpdateFormNeed = false;
         }
 
         #region Запустить работу сервера.
 
         public void StartServer()
         {
-            TcpListener server;
-            TcpClient client;
-            NetworkStream stream;
-
-            int bytes; // Количество полученных байт.
             byte[] data = new byte[256];  // Буфер для получаемых команд.           
-            byte[] result = new byte[256]; // Ответная квитанция на присланную команду.
 
-            List<string> ipList = new List<string>();
-            ipList.Add(Settings.Default.ipAddressIVK);
-            ipList.Add(Settings.Default.ipAddressLocal);
+            List<string> ipList = new List<string> { Settings.Default.ipAddressIVK, Settings.Default.ipAddressLocal };
 
             try
             {
-                server = new TcpListener(IPAddress.Parse("0.0.0.0"), 11005);
+                var server = new TcpListener(IPAddress.Parse("0.0.0.0"), 11005);
 
                 _setParametersFlag = false;
                 _receivingStartedFlag = false;
 
-                while (stopThread == false)
+                while (StopThread == false)
                 {
                     // Перевод в местный режим управления.
-                    if (isReceiveForm)
+                    if (IsUpdateFormNeed)
                         ThreadSafeChangeMode(1);
-                    remoteModeFlag = false;
-                    client = null;
+                    RemoteModeFlag = false;
 
                     server.Start();
 
-                    client = server.AcceptTcpClient();
+                    var client = server.AcceptTcpClient();
 
                     if (!ipList.Contains(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()))
                     {
@@ -80,14 +70,14 @@ namespace ReceivingStation
                     }
 
                     server.Stop(); // Больше не ждем подключений.  
-                    stream = client.GetStream();
+                    var stream = client.GetStream();
 
                     try
                     {
                         while (true)
                         {
-                            bytes = stream.Read(data, 0 , data.Length);
-                            result = CheckReceivedData(data, bytes);
+                            var bytes = stream.Read(data, 0 , data.Length); // Количество полученных байт.
+                            var result = CheckReceivedData(data, bytes); // Ответная квитанция на присланную команду.
                             stream.Write(result, 0, result.Length);
                         }
                     }
@@ -131,33 +121,34 @@ namespace ReceivingStation
             }
 
             // Для команд смены режима управления, начать/остановить запись потока, получить статус синхронизации.
-            if (commandBytesQuantity == 3)
+            switch (commandBytesQuantity)
             {
-                // Перевод в дистанционный/местный режим управления.
-                if (command[1] == 0x1 || command[1] == 0xFF)
-                {
-                    commandStatus = GetChangeModeStatus(command[1]);
-                }
+                case 3:
+                    // Перевод в дистанционный/местный режим управления.
+                    if (command[1] == 0x1 || command[1] == 0xFF)
+                    {
+                        commandStatus = GetChangeModeStatus(command[1]);
+                    }
 
-                // Запустить/Остановить запись потока.
-                if (command[1] == 0xFC || command[1] == 0xFD)
-                {
-                    commandStatus = GetStartStopReceivingStatus(command[1]);
-                }
+                    // Запустить/Остановить запись потока.
+                    if (command[1] == 0xFC || command[1] == 0xFD)
+                    {
+                        commandStatus = GetStartStopReceivingStatus(command[1]);
+                    }
 
-                // Получить статус синхронизации.
-                if (command[1] == 0x03)
-                {
-                    commandStatus = GetSyncStatus();
-                }
+                    // Получить статус синхронизации.
+                    if (command[1] == 0x03)
+                    {
+                        commandStatus = GetSyncStatus();
+                    }
+
+                    break;
+                case 6:
+                    // Для команды установки параметров записи потока.
+                    commandStatus = SetReceiveParameters(command);
+                    break;
             }
-
-            // Для команды установки параметров записи потока.
-            if (commandBytesQuantity == 6)
-            {
-                commandStatus = SetReceiveParameters(command);               
-            }
-
+           
             return GetAnswer(command, commandStatus);
         }
 
@@ -169,10 +160,10 @@ namespace ReceivingStation
             if (commandValue == 0x01)
             {
                 // Режим местного управления.
-                if (remoteModeFlag)
+                if (RemoteModeFlag)
                 {
-                    remoteModeFlag = false;
-                    if (isReceiveForm)
+                    RemoteModeFlag = false;
+                    if (IsUpdateFormNeed)
                         ThreadSafeChangeMode(1);
                 }
                 else
@@ -184,10 +175,10 @@ namespace ReceivingStation
             else if (commandValue == 0xFF)
             {
                 // Режим дистанционного управления.
-                if (!remoteModeFlag)
+                if (!RemoteModeFlag)
                 {
-                    remoteModeFlag = true;
-                    if (isReceiveForm)
+                    RemoteModeFlag = true;
+                    if (IsUpdateFormNeed)
                         ThreadSafeChangeMode(0); 
                 }
                 else
@@ -204,7 +195,7 @@ namespace ReceivingStation
         #region Получить статус установки параметров приема потока.
         private byte SetReceiveParameters(byte[] command)
         {
-            if (remoteModeFlag)
+            if (RemoteModeFlag)
             {
                 // Проверяем содержимое команды после заголовка и до резервного байта.
                 for (int i = 1; i < 5; i++)
@@ -218,7 +209,7 @@ namespace ReceivingStation
                 }
 
                 _setParametersFlag = true;
-                if (isReceiveForm)
+                if (IsUpdateFormNeed)
                     ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);
 
                 return OkMessage;
@@ -238,7 +229,7 @@ namespace ReceivingStation
                 if (_setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
-                    if (isReceiveForm)
+                    if (IsUpdateFormNeed)
                         ThreadSafeStartStopReceiving();
                 }
                 else if (_receivingStartedFlag)
@@ -257,7 +248,7 @@ namespace ReceivingStation
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    if (isReceiveForm)
+                    if (IsUpdateFormNeed)
                         ThreadSafeStartStopReceiving();
                 }
                 else

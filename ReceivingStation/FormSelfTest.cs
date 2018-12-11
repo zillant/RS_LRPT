@@ -7,12 +7,13 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReceivingStation.Server;
 
 namespace ReceivingStation
 {
     public partial class FormSelfTest : MaterialForm
     {
-        private Server _server;
+        private Server.Server _server;
         private Thread _serverThread;
         private ClientForSelfTest _client;
 
@@ -32,7 +33,7 @@ namespace ReceivingStation
 
             _client = new ClientForSelfTest() { ThreadSafeWriteActions = WriteActions };
 
-            _server = new Server();
+            _server = new Server.Server();
 
             _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();
@@ -50,7 +51,7 @@ namespace ReceivingStation
 
         private void FormSelfTest_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _server.stopThread = true;
+            _server.StopThread = true;
             _serverThread.Join(100);
 
             Application.Exit();

@@ -13,7 +13,7 @@ namespace ReceivingStation
         {
             InitializeComponent();
 
-            lblConnection.Text = Server.remoteModeFlag == false ? 
+            lblConnection.Text = Server.Server.RemoteModeFlag == false ? 
                 "Режим: Местное управление" : "Режим: Дистанционное управление";
         }
 
@@ -27,7 +27,7 @@ namespace ReceivingStation
 
         private void btnChangeLocalMode_Click(object sender, EventArgs e)
         {
-            if (Server.remoteModeFlag == false)
+            if (Server.Server.RemoteModeFlag == false)
             {             
                 lblConnection.ForeColor = GuiUpdater.errorColor; 
             }

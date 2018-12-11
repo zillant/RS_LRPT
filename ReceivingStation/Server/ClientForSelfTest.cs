@@ -1,16 +1,16 @@
-﻿using ReceivingStation.Other;
-using ReceivingStation.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using ReceivingStation.Other;
+using ReceivingStation.Properties;
 
-namespace ReceivingStation
+namespace ReceivingStation.Server
 {
-    class ClientForSelfTest
+    internal class ClientForSelfTest
     {
         public delegate void WriteActionsDelegate(string msg, Color color);
         public WriteActionsDelegate ThreadSafeWriteActions;
@@ -23,22 +23,22 @@ namespace ReceivingStation
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
 
-        private readonly byte[] remoteModeMsg = new byte[] { 0x33, 0xFF, 0x34 };
-        private readonly byte[] localModeMsg = new byte[] { 0x33, 0x01, 0x03 };
-        private readonly byte[] setParametersMsg = new byte[] { 0x33, 0x02, 0x01, 0x02, 0x02, 0x55 };
-        private readonly byte[] startStreamRecordMsg = new byte[] { 0x33, 0xFC, 0x03 };
-        private readonly byte[] stopStreamRecordMsg = new byte[] { 0x33, 0xFD, 0x03 };
+        private readonly byte[] _remoteModeMsg = { 0x33, 0xFF, 0x34 };
+        private readonly byte[] _localModeMsg = { 0x33, 0x01, 0x03 };
+        private readonly byte[] _setParametersMsg = { 0x33, 0x02, 0x01, 0x02, 0x02, 0x55 };
+        private readonly byte[] _startStreamRecordMsg = { 0x33, 0xFC, 0x03 };
+        private readonly byte[] _stopStreamRecordMsg = { 0x33, 0xFD, 0x03 };
 
-        private List<byte[]> messages = new List<byte[]>();
-        private byte[] _bytes = new byte[1024];
+        private readonly List<byte[]> _messages = new List<byte[]>();
+        private readonly byte[] _bytes = new byte[1024];
 
         public ClientForSelfTest()
         {
-            messages.Add(remoteModeMsg);
-            messages.Add(setParametersMsg);
-            messages.Add(startStreamRecordMsg);
-            messages.Add(stopStreamRecordMsg);
-            messages.Add(localModeMsg);
+            _messages.Add(_remoteModeMsg);
+            _messages.Add(_setParametersMsg);
+            _messages.Add(_startStreamRecordMsg);
+            _messages.Add(_stopStreamRecordMsg);
+            _messages.Add(_localModeMsg);
         }
 
         public void StartClient()
@@ -54,11 +54,11 @@ namespace ReceivingStation
                 {
                     sender.Connect(remoteEP);
 
-                    Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+                    Console.WriteLine(@"Socket connected to {0}", sender.RemoteEndPoint);
 
                     for (int i = 0; i < 5; i++)
                     {
-                        SendReceiveMsg(messages[i], sender, i);
+                        SendReceiveMsg(_messages[i], sender, i);
                         Thread.Sleep(500);
                     }
 
@@ -68,15 +68,15 @@ namespace ReceivingStation
                 }
                 catch (ArgumentNullException ane)
                 {
-                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    Console.WriteLine(@"ArgumentNullException : {0}", ane);
                 }
                 catch (SocketException se)
                 {
-                    Console.WriteLine("SocketException : {0}", se.ToString());
+                    Console.WriteLine(@"SocketException : {0}", se);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                    Console.WriteLine(@"Unexpected exception : {0}", e);
                 }
 
             }
@@ -90,12 +90,11 @@ namespace ReceivingStation
         {
             switch (index)
             {
-                case 0: await Task.Run(() => { ThreadSafeWriteActions($"  Переход в дистанционное управление\n", Color.White); }); break;
-                case 1: await Task.Run(() => { ThreadSafeWriteActions($"  Установка параметров записи потока\n", Color.White); }); break;
-                case 2: await Task.Run(() => { ThreadSafeWriteActions($"  Запуск записи потока\n", Color.White); }); break;
-                case 3: await Task.Run(() => { ThreadSafeWriteActions($"  Остановка записи потока\n", Color.White); }); break;
-                case 4: await Task.Run(() => { ThreadSafeWriteActions($"  Переход в местное управление\n", Color.White); }); break;
-                default: break;
+                case 0: await Task.Run(() => { ThreadSafeWriteActions("  Переход в дистанционное управление\n", Color.White); }); break;
+                case 1: await Task.Run(() => { ThreadSafeWriteActions("  Установка параметров записи потока\n", Color.White); }); break;
+                case 2: await Task.Run(() => { ThreadSafeWriteActions("  Запуск записи потока\n", Color.White); }); break;
+                case 3: await Task.Run(() => { ThreadSafeWriteActions("  Остановка записи потока\n", Color.White); }); break;
+                case 4: await Task.Run(() => { ThreadSafeWriteActions("  Переход в местное управление\n", Color.White); }); break;
             }
 
             int bytesSent = sender.Send(msg);
@@ -107,27 +106,25 @@ namespace ReceivingStation
             switch (_bytes[bytesRec - 1])
             {
                 case OkMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  Команда выполнена\n\n", GuiUpdater.okColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Команда выполнена\n\n", GuiUpdater.okColor); });
                     break;
                 case InvalidCommandMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  Ошибочная команда\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Ошибочная команда\n\n", GuiUpdater.errorColor); });
                     break;
                 case ParametersNotSetMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  Не установлены параметры записи потока.\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Не установлены параметры записи потока.\n\n", GuiUpdater.errorColor); });
                     break;
                 case LocalModeMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  КПА находится в режиме местного управления\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме местного управления\n\n", GuiUpdater.errorColor); });
                     break;
                 case RemoteModeMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  КПА находится в режиме дистанционного управления\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме дистанционного управления\n\n", GuiUpdater.errorColor); });
                     break;
                 case ReceivingStartedMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  Прием потока уже начат\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока уже начат\n\n", GuiUpdater.errorColor); });
                     break;
                 case ReceivingNotStartedMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions($"  Прием потока еще не начат\n\n", GuiUpdater.errorColor); });
-                    break;
-                default:
+                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока еще не начат\n\n", GuiUpdater.errorColor); });
                     break;
             }
         }
