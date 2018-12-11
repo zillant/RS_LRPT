@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,11 +25,11 @@ namespace ReceivingStation
       
         private Decode _decode;
 
-        private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
-        private Panel[] _channelsPanels = new Panel[6]; // Панели на которых находятся FLP для каждого канала.
-        private FlowLayoutPanel[] _channels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для каждого канала.
-        private FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для всех каналов.
-        private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6]; // Список для хранения полосок изображения, нужно для сохранения.
+        private readonly Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
+        private readonly Panel[] _channelsPanels = new Panel[6]; // Панели на которых находятся FLP для каждого канала.
+        private readonly FlowLayoutPanel[] _channels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для каждого канала.
+        private readonly FlowLayoutPanel[] _allChannels = new FlowLayoutPanel[6]; // FLP для хранения полосок изображения для всех каналов.
+        private readonly List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6]; // Список для хранения полосок изображения, нужно для сохранения.
       
         private DateTime _worktimestart; // Сколько времени ушло на декодирование (потом удалить).
 
