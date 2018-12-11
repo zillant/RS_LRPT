@@ -27,7 +27,7 @@ namespace ReceivingStation
         {
             GuiUpdater.SmoothLoadingForm(this);
 
-            GuiUpdater.AllocFont(GuiUpdater.font, rtbTestServer, 11);           
+            GuiUpdater.AllocFont(GuiUpdater.Font, rtbTestServer, 11);           
 
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             timer1.Start();

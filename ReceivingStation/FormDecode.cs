@@ -198,7 +198,7 @@ namespace ReceivingStation
             }
             else
             {
-                lblFileName.ForeColor = GuiUpdater.errorColor;
+                lblFileName.ForeColor = GuiUpdater.ErrorColor;
             }
         }
 

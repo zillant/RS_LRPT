@@ -8,16 +8,16 @@ namespace ReceivingStation.Other
     internal static class ImageSaver
     {
         #region Сохранение изображений.
-        public static void SaveImage(List<Bitmap>[] _listImagesForSave, string _fileName, long _imageCounter)
+        public static void SaveImage(List<Bitmap>[] listImagesForSave, string fileName, long imageCounter)
         {
-            Parallel.For(0, _listImagesForSave.Length, i =>
+            Parallel.For(0, listImagesForSave.Length, i =>
             {
-                List<Bitmap> listImages = new List<Bitmap>(_listImagesForSave[i]);
-                _listImagesForSave[i].Clear();
+                List<Bitmap> listImages = new List<Bitmap>(listImagesForSave[i]);
+                listImagesForSave[i].Clear();
 
-                using (Bitmap bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
+                using (var bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
                 {
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    using (var g = Graphics.FromImage(bmp))
                     {
                         int yOffset = 0;
 
@@ -28,7 +28,7 @@ namespace ReceivingStation.Other
                         }
                     }
 
-                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}_{_imageCounter}.bmp");
+                    bmp.Save($"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(fileName)}_{i + 1}_{imageCounter}.bmp");
                 }
             });          
         }
@@ -36,11 +36,11 @@ namespace ReceivingStation.Other
         #endregion
 
         #region Создание полного изображения (Работает на маленьких изображениях, создать картинку 15ХХ х Over9000 конечно не получится).
-        public static void CreateFullImage(string _fileName)
+        public static void CreateFullImage(string fileName)
         {
             Parallel.For(0, 6, i =>
             {
-                DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_Channel_{i + 1}");
                 List<Bitmap> images = new List<Bitmap>();
 
                 foreach (FileInfo file in di.GetFiles())
@@ -48,9 +48,9 @@ namespace ReceivingStation.Other
                     images.Add(new Bitmap(file.FullName));
                 }
 
-                using (Bitmap bmp = new Bitmap(Constants.WDT, images.Count * 960))
+                using (var bmp = new Bitmap(Constants.WDT, images.Count * 960))
                 {
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    using (var g = Graphics.FromImage(bmp))
                     {
                         int yOffset = 0;
 
@@ -61,7 +61,7 @@ namespace ReceivingStation.Other
                         }
                     }
 
-                    bmp.Save($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_{i + 1}.bmp");
+                    bmp.Save($"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_{i + 1}.bmp");
                 }
             });
         }

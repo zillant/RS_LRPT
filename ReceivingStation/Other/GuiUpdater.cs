@@ -16,10 +16,10 @@ namespace ReceivingStation.Other
         [DllImport("gdi32.dll")]       
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbfont, uint cbfont, IntPtr pdv, [In] ref uint pcFonts);
         private static FontFamily _ff;
-        public static Font font;
+        public static Font Font;
 
-        public static Color errorColor = Color.FromArgb(222, 211, 47, 47);
-        public static Color okColor = Color.FromArgb(222, 46, 125, 50);
+        public static Color ErrorColor = Color.FromArgb(222, 211, 47, 47);
+        public static Color OkColor = Color.FromArgb(222, 46, 125, 50);
 
         private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
 
@@ -194,7 +194,7 @@ namespace ReceivingStation.Other
             pfc.AddMemoryFont(ptrData, dataLength);
             Marshal.FreeCoTaskMem(ptrData);
             _ff = pfc.Families[0];
-            font = new Font(_ff, 15f, FontStyle.Bold);
+            Font = new Font(_ff, 15f, FontStyle.Bold);
         }
 
         #endregion
@@ -202,10 +202,10 @@ namespace ReceivingStation.Other
         #region Инициализация кастомного richTextBox с данными декодирования.
         public static void DecodeRichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime)
         {
-            AllocFont(font, rtbMko, 11);
-            AllocFont(font, rtbMkoData, 11);
-            AllocFont(font, rtbDateTimeTitle, 11);
-            AllocFont(font, rtbDateTime, 11);
+            AllocFont(Font, rtbMko, 11);
+            AllocFont(Font, rtbMkoData, 11);
+            AllocFont(Font, rtbDateTimeTitle, 11);
+            AllocFont(Font, rtbDateTime, 11);
 
             var MkoTitle = "Время конца формирования ТД (БШВ)\n\n" +
                 "Первый год в текущем четырехлетии\n\n" +

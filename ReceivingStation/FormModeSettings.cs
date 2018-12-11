@@ -29,7 +29,7 @@ namespace ReceivingStation
         {
             if (Server.Server.RemoteModeFlag == false)
             {             
-                lblConnection.ForeColor = GuiUpdater.errorColor; 
+                lblConnection.ForeColor = GuiUpdater.ErrorColor; 
             }
             else
             {

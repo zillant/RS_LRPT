@@ -106,25 +106,25 @@ namespace ReceivingStation.Server
             switch (_bytes[bytesRec - 1])
             {
                 case OkMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Команда выполнена\n\n", GuiUpdater.okColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Команда выполнена\n\n", GuiUpdater.OkColor); });
                     break;
                 case InvalidCommandMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Ошибочная команда\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Ошибочная команда\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case ParametersNotSetMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Не установлены параметры записи потока.\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Не установлены параметры записи потока.\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case LocalModeMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме местного управления\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме местного управления\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case RemoteModeMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме дистанционного управления\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме дистанционного управления\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case ReceivingStartedMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока уже начат\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока уже начат\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case ReceivingNotStartedMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока еще не начат\n\n", GuiUpdater.errorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока еще не начат\n\n", GuiUpdater.ErrorColor); });
                     break;
             }
         }
