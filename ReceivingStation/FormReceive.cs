@@ -7,6 +7,7 @@ using ReceivingStation.Other;
 using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using MaterialSkin.Controls;
 using ReceivingStation.Properties;
 
@@ -95,14 +96,14 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString();
             timer1.Start();
 
-            _server = new Server()
+            _server = new Server
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
-                ThreadSafeStartStopReceiving = StartStopReceiving
+                ThreadSafeStartStopReceiving = StartStopReceiving,
+                isReceiveForm = true
             };
 
-            _server.isReceiveForm = true;
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
         }
@@ -123,6 +124,25 @@ namespace ReceivingStation
             _serverThread.Join(100);
 
             Application.Exit();
+        }
+
+        private void FormReceive_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Ctrl + L  
+            if (e.Control && e.KeyCode == Keys.L)
+            {
+                if (!_isModulationPanelVisible)
+                {
+                    pModulation.Visible = true;
+                    _isModulationPanelVisible = true;
+                }
+                else
+                {
+                    pModulation.Visible = false;
+                    _isModulationPanelVisible = false;
+                }
+                e.SuppressKeyPress = true;
+            }
         }
 
         private void btnStartRecieve_Click(object sender, EventArgs e)
@@ -149,7 +169,7 @@ namespace ReceivingStation
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            slTime.Text = DateTime.Now.ToString();
+            slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
             _counterForSaveWorkingTime -= 1;
            
@@ -176,9 +196,9 @@ namespace ReceivingStation
         {
             if (!_isReceivingStarting)
             {
-                var logfilename = "onlinelogs";
+                _fileName = "onlinelogs";
 
-                _decode = new Decode(logfilename) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
+                _decode = new Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
 
                 _isReceivingStarting = true;
 
@@ -212,11 +232,11 @@ namespace ReceivingStation
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 UserLog.WriteToLogUserActions("Запись потока начата");
 
-                _receiver = new Demodulating(this, _freq, _interliving, _decode);
-                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-                _receiver.StartDecoding();
+                //_receiver = new Demodulating(this, _freq, _interliving, _decode);
+                //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                //_receiver.StartDecoding();
 
-                _receiver.RecordStart();
+                //_receiver.RecordStart();
             }
             else
             {
@@ -236,7 +256,7 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-            _receiver.StopDecoding();
+            //_receiver.StopDecoding();
 
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
@@ -311,7 +331,18 @@ namespace ReceivingStation
         #region Обновление данных декодирования на GUI.
         private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
         {
-            GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm, linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines);
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
+                    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
+                    _listImagesForSave, imagesLines)));
+            }
+            else
+            {
+                GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
+                    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
+                    _listImagesForSave, imagesLines);
+            }
 
             _callingUpdateImageCounter++;
 
@@ -376,11 +407,13 @@ namespace ReceivingStation
         {
             using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8, 65536))
             {
-                sw.WriteLine(MainFcpWorkingTime);
-                sw.WriteLine(ReserveFcpWorkingTime);
-                sw.WriteLine(MainPrdWorkingTime);
-                sw.WriteLine(ReservePrdWorkingTime);
-                sw.WriteLine(FullWorkingTime);
+                // Первые 4 строчки в формате удобном для Е.В.
+                sw.WriteLine($"{MainFcpWorkingTime.Days}.{MainFcpWorkingTime.Hours}:{MainFcpWorkingTime.Minutes}:{MainFcpWorkingTime.Seconds}");
+                sw.WriteLine($"{ReserveFcpWorkingTime.Days}.{ReserveFcpWorkingTime.Hours}:{ReserveFcpWorkingTime.Minutes}:{ReserveFcpWorkingTime.Seconds}");
+                sw.WriteLine($"{MainPrdWorkingTime.Days}.{MainPrdWorkingTime.Hours}:{MainPrdWorkingTime.Minutes}:{MainPrdWorkingTime.Seconds}");
+                sw.WriteLine($"{ReservePrdWorkingTime.Days}.{ReservePrdWorkingTime.Hours}:{ReservePrdWorkingTime.Minutes}:{ReservePrdWorkingTime.Seconds}");
+
+                //sw.WriteLine(FullWorkingTime); // Полное время наработки. В релизе не используем. Считаю для себя.
             }
         }
 
@@ -391,35 +424,17 @@ namespace ReceivingStation
         {
             using (StreamReader sr = new StreamReader(fileName))
             {
-                MainFcpWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                ReserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                MainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                ReservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine());
-                FullWorkingTime = TimeSpan.Parse(sr.ReadLine());
+                MainFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                ReserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                MainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                ReservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+
+                //FullWorkingTime = TimeSpan.Parse(sr.ReadLine());
             }
         }
 
         #endregion
 
-        #endregion
-
-        private void FormReceive_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Ctrl + L  
-            if (e.Control && e.KeyCode == Keys.L)
-            {
-                if (!_isModulationPanelVisible)
-                {
-                    pModulation.Visible = true;
-                    _isModulationPanelVisible = true;
-                }
-                else
-                {
-                    pModulation.Visible = false;
-                    _isModulationPanelVisible = false;
-                }
-                e.SuppressKeyPress = true;
-            }
-        }
+        #endregion        
     }
 }

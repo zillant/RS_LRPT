@@ -149,15 +149,22 @@ namespace ReceivingStation.Other
             // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
             var mkoData = $"{td[0]} {td[1]}\n\n{td[2]}\n\n{td[3]}\n\n{oshv[0]} {oshv[1]}\n\n{bshv[0]} {bshv[1]}\n\n{bshv[2]} {bshv[3]}\n\n{bshv[4]} {bshv[5]}\n\n{bshv[6]} {bshv[7]}\n\n{bshv[8]} {bshv[9]}\n\n{pcdm[0]} {pcdm[1]}\n\n{pcdm[2]} {pcdm[3]} {pcdm[4]} {pcdm[5]}\n\n{pcdm[6]} {pcdm[7]} {pcdm[8]} {pcdm[9]}\n\n{pcdm[10]} {pcdm[11]} {pcdm[12]} {pcdm[13]}";
             var date = $"{linesDate.Day}.{linesDate.Month}.{linesDate.Year}";
-            var time = $"{linesDate.Hour.ToString("D2")}:{linesDate.Minute.ToString("D2")}:{linesDate.Second.ToString("D2")}";
+            var time = $"{linesDate.Hour:D2}:{linesDate.Minute:D2}:{linesDate.Second:D2}";
             var dateTime = $"\n{date}\n\n{time}";
 
-            rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
-            rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
+            rtbDateTime.Text = dateTime;
+            rtbMkoData.Text =  mkoData;
 
             // Изображение.
-            allChannelsPanels[5].Invoke(new Action(() => { CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels); }));
-            allChannels[5].Invoke(new Action(() => { AddImages(channels, allChannels, listImagesForSave, imagesLines); }));
+            CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels);
+            AddImages(channels, allChannels, listImagesForSave, imagesLines);
+
+
+            // rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
+            // rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
+
+            //allChannelsPanels[5].Invoke(new Action(() => CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels)));
+            //allChannels[5].Invoke(new Action(() => AddImages(channels, allChannels, listImagesForSave, imagesLines)));
         }
         #endregion
 
