@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace ReceivingStation.Other
 {
-    internal class DirectBitmap : IDisposable
+    class DirectBitmap : IDisposable
     {
         public Bitmap Bitmap { get; }
         public int[] Bits { get; }
