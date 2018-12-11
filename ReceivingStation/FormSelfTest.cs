@@ -65,11 +65,11 @@ namespace ReceivingStation
         {
             rtbTestServer.Clear();
             materialRaisedButton1.Enabled = false;
-            WriteActions($"  Клиент подключен\n\n", Color.White);
+            WriteActions("  Клиент подключен\n\n", Color.White);
             await Task.Run(() => { _client.StartClient(); });
             materialRaisedButton1.Enabled = true;
-            WriteActions($"  Тест завершен\n", Color.White);
-            WriteActions($"  Клиент отключен", Color.White);
+            WriteActions("  Тест завершен\n", Color.White);
+            WriteActions("  Клиент отключен", Color.White);
         }
 
         private void WriteActions(string msg, Color color)

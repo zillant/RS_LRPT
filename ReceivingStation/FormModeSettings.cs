@@ -1,8 +1,6 @@
 ﻿using MaterialSkin.Controls;
 using ReceivingStation.Other;
 using System;
-using System.Drawing;
-using System.Net;
 
 namespace ReceivingStation
 {

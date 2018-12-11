@@ -1,7 +1,6 @@
 ﻿using MaterialSkin.Controls;
 using ReceivingStation.Properties;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace ReceivingStation
@@ -21,9 +20,9 @@ namespace ReceivingStation
             DisplayWorkinTime(lblPRDReserve, FormReceive.ReservePrdWorkingTime);            
         }
 
-        private void DisplayWorkinTime(MaterialLabel label, TimeSpan workingTime)
+        private void DisplayWorkinTime(Control label, TimeSpan workingTime)
         {
-            label.Text = $"{(long)workingTime.TotalHours}";
+            label.Text = $@"{(long)workingTime.TotalHours}";
         }
 
         private void materialRaisedButton1_Click(object sender, EventArgs e)
