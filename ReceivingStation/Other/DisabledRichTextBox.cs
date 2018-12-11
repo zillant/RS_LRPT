@@ -1,6 +1,6 @@
 ﻿namespace ReceivingStation.Other
 {
-    class DisabledRichTextBox : System.Windows.Forms.RichTextBox
+    internal class DisabledRichTextBox : System.Windows.Forms.RichTextBox
     {
         private const int WM_SETFOCUS = 0x07;
         private const int WM_ENABLE = 0x0A;
