@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReceivingStation.Other
 {
-    internal static class UserLog
+    static class UserLog
     {
         #region Запись в лог файл действий пользователя.
         public static void WriteToLogUserActions(string logMessage)

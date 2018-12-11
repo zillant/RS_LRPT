@@ -10,7 +10,7 @@ using ReceivingStation.Properties;
 
 namespace ReceivingStation.Server
 {
-    internal class ClientForSelfTest
+    class ClientForSelfTest
     {
         public delegate void WriteActionsDelegate(string msg, Color color);
         public WriteActionsDelegate ThreadSafeWriteActions;
@@ -23,14 +23,14 @@ namespace ReceivingStation.Server
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
 
-        private readonly byte[] _remoteModeMsg = { 0x33, 0xFF, 0x34 };
-        private readonly byte[] _localModeMsg = { 0x33, 0x01, 0x03 };
-        private readonly byte[] _setParametersMsg = { 0x33, 0x02, 0x01, 0x02, 0x02, 0x55 };
-        private readonly byte[] _startStreamRecordMsg = { 0x33, 0xFC, 0x03 };
-        private readonly byte[] _stopStreamRecordMsg = { 0x33, 0xFD, 0x03 };
+        private byte[] _remoteModeMsg = { 0x33, 0xFF, 0x34 };
+        private byte[] _localModeMsg = { 0x33, 0x01, 0x03 };
+        private byte[] _setParametersMsg = { 0x33, 0x02, 0x01, 0x02, 0x02, 0x55 };
+        private byte[] _startStreamRecordMsg = { 0x33, 0xFC, 0x03 };
+        private byte[] _stopStreamRecordMsg = { 0x33, 0xFD, 0x03 };
 
-        private readonly List<byte[]> _messages = new List<byte[]>();
-        private readonly byte[] _bytes = new byte[1024];
+        private List<byte[]> _messages = new List<byte[]>();
+        private byte[] _bytes = new byte[1024];
 
         public ClientForSelfTest()
         {
@@ -98,7 +98,10 @@ namespace ReceivingStation.Server
             }
 
             int bytesSent = sender.Send(msg);
-            await Task.Run(() => { ThreadSafeWriteActions($"  Командное слово: {BitConverter.ToString(msg, 0, bytesSent)}\n", Color.White); });
+            await Task.Run(() =>
+            {
+                ThreadSafeWriteActions($"  Командное слово: {BitConverter.ToString(msg, 0, bytesSent)}\n", Color.White);
+            });
 
             int bytesRec = sender.Receive(_bytes);
             await Task.Run(() => { ThreadSafeWriteActions($"  Ответная квитанция: {BitConverter.ToString(_bytes, 0, bytesRec)}\n", Color.White); });

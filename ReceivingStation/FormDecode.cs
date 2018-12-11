@@ -24,7 +24,7 @@ namespace ReceivingStation
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
       
-        private Decode _decode;
+        private Decode.Decode _decode;
 
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
         private Panel[] _channelsPanels = new Panel[6]; // Панели на которых находятся FLP для каждого канала.
@@ -162,7 +162,7 @@ namespace ReceivingStation
                     _isDecodeStarting = true;
                     btnStartStopDecode.Text = "Остановить";
 
-                    _decode = new Decode(_fileName, reedSoloFlag, nrzFlag)
+                    _decode = new Decode.Decode(_fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateGui = UpdateGuiDecodeData
                     };
@@ -235,19 +235,9 @@ namespace ReceivingStation
         #region Обновление данных декодирования на GUI.
         private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
-                    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
-                    _listImagesForSave, imagesLines)));
-            }
-            else
-            {
-                GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
-                    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
-                    _listImagesForSave, imagesLines);
-            }
-
+            //GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
+            //    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
+            //    _listImagesForSave, imagesLines);
             _callingUpdateImageCounter++;
 
             // Набрал 480 строчек изображения (8 * 60).
@@ -255,6 +245,24 @@ namespace ReceivingStation
             {
                 bwImageSaver.RunWorkerAsync();
                 _callingUpdateImageCounter = 0;
+            }
+
+            try
+            {
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
+                        linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
+                        _listImagesForSave, imagesLines)));
+                }
+                else
+                {
+                    UpdateGuiDecodeData(linesDate, linesTd, linesOshv, linesBshv, linesPcdm, imagesLines);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Общий трай");
             }
         }
 

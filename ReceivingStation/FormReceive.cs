@@ -43,7 +43,7 @@ namespace ReceivingStation
         private Demodulating _receiver;
         private Server.Server _server;
         private Thread _serverThread;
-        private Decode _decode;
+        private Decode.Decode _decode;
 
         // Параметры приема битового потока.
         private byte _fcp;
@@ -199,7 +199,7 @@ namespace ReceivingStation
             {
                 _fileName = "onlinelogs";
 
-                _decode = new Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
+                _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
 
                 _isReceivingStarting = true;
 
@@ -271,12 +271,14 @@ namespace ReceivingStation
         private void ChangeMode(byte modeNumber)
         {
             if (modeNumber == 0)
-            {
+            {              
                 // Дистанционное управление
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, false);
                 Invoke(new Action(() => { slMode.Text = "Дистанционное управление"; }));
 
                 UserLog.WriteToLogUserActions("Дистанционное управление");
+
+
             }
             else if (modeNumber == 1)
             {
@@ -285,7 +287,7 @@ namespace ReceivingStation
                 Invoke(new Action(() => { slMode.Text = "Местное управление"; }));
 
                 UserLog.WriteToLogUserActions("Местное управление");
-            }           
+            }
         }
 
         #endregion

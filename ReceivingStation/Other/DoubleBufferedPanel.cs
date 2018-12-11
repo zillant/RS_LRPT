@@ -2,7 +2,7 @@
 
 namespace ReceivingStation.Other
 {
-    internal class DoubleBufferedPanel : Panel
+    class DoubleBufferedPanel : Panel
     {
         public DoubleBufferedPanel()
         {

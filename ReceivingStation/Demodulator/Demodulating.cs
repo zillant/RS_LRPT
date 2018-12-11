@@ -128,7 +128,7 @@ namespace ReceivingStation
         static string filename = (string)"";
 
         static StreamCorrection StreamCorrection;
-        static Decode _decode;
+        static Decode.Decode _decode;
         static BeforeViterbiSync BVS;
 
         static FormReceive _formrcv;
@@ -146,7 +146,7 @@ namespace ReceivingStation
 
 
 
-        public Demodulating(FormReceive rcvform, byte freqmode, byte interliving, Decode decode)
+        public Demodulating(FormReceive rcvform, byte freqmode, byte interliving, Decode.Decode decode)
         {
             _FrequencyMode = freqmode;
 

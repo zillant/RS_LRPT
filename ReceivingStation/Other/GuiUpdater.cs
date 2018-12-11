@@ -6,11 +6,13 @@ using System.Drawing.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReceivingStation.Decode;
 
 namespace ReceivingStation.Other
 {
-    internal static class GuiUpdater
+    static class GuiUpdater
     {       
         // Для получения шрифта из ресурсов.
         [DllImport("gdi32.dll")]       
@@ -60,19 +62,19 @@ namespace ReceivingStation.Other
             box.SelectionColor = box.ForeColor;
         }
 
-        public static void CreateNewFlps(FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels)
+        public static void CreateNewFlps(FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] pChannels, Panel[] pAllChannels)
         {
-            if (allChannels[0].Height >= allChannelsPanels[0].Height)
+            if (allChannels[0].Height >= pAllChannels[0].Height)
             {
                 for (int i = 0; i < 6; i++)
                 {
                     allChannels[i].Dispose();
                     allChannels[i] = GetFlp(new Size(242, 8));
-                    allChannelsPanels[i].Controls.Add(allChannels[i]);
+                    pAllChannels[i].Controls.Add(allChannels[i]);
 
                     channels[i].Dispose();
                     channels[i] = GetFlp(new Size(1556, 40));
-                    channelsPanels[i].Controls.Add(channels[i]);
+                    pChannels[i].Controls.Add(channels[i]);
                 }
             }
         }
@@ -152,18 +154,49 @@ namespace ReceivingStation.Other
             var time = $"{linesDate.Hour:D2}:{linesDate.Minute:D2}:{linesDate.Second:D2}";
             var dateTime = $"\n{date}\n\n{time}";
 
-            rtbDateTime.Text = dateTime;
-            rtbMkoData.Text =  mkoData;
+            try
+            {
+                rtbDateTime.Text = dateTime;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("трай на rtbDateTime");
+            }
+
+            try
+            {
+                rtbMkoData.Text = mkoData;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("трай на rtbMkoData");
+            }
+            
 
             // Изображение.
-            CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels);
-            AddImages(channels, allChannels, listImagesForSave, imagesLines);
+            try
+            {
+                CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("трай на создание флп");
+            }
 
+            try
+            {
+                AddImages(channels, allChannels, listImagesForSave, imagesLines);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("трай на эд ченелс");
+            }
+            
 
-            // rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
-            // rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
+            //rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
+            //rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
 
-            //allChannelsPanels[5].Invoke(new Action(() => CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels)));
+            //pAllChannels[5].Invoke(new Action(() => CreateNewFlps(channels, allChannels, pChannels, pAllChannels)));
             //allChannels[5].Invoke(new Action(() => AddImages(channels, allChannels, listImagesForSave, imagesLines)));
         }
         #endregion

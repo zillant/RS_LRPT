@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation.Server
 {
-    internal class Server
+    class Server
     {
         public delegate void ChangeModeDelegate(byte modeNumber);
         public ChangeModeDelegate ThreadSafeChangeMode;
@@ -164,7 +165,10 @@ namespace ReceivingStation.Server
                 {
                     RemoteModeFlag = false;
                     if (IsUpdateFormNeed)
+                    {
                         ThreadSafeChangeMode(1);
+                    }
+                       
                 }
                 else
                 {

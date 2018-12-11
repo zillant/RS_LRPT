@@ -23,7 +23,7 @@ namespace ReceivingStation
 
         private void DisplayWorkinTime(Control label, TimeSpan workingTime)
         {
-            label.Text = $@"{(long)workingTime.TotalHours}";
+            label.Text = $"{(long)workingTime.TotalHours}";
         }
 
         private void materialRaisedButton1_Click(object sender, EventArgs e)

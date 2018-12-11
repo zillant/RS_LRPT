@@ -2,10 +2,11 @@
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using ReceivingStation.Decode;
 
 namespace ReceivingStation.Other
 {
-    internal static class ImageSaver
+    static class ImageSaver
     {
         #region Сохранение изображений.
         public static void SaveImage(List<Bitmap>[] listImagesForSave, string fileName, long imageCounter)
