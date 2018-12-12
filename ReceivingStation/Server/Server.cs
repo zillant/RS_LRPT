@@ -18,9 +18,9 @@ namespace ReceivingStation.Server
 
         public bool StopThread;
         public bool IsUpdateFormNeed; // Флаг, нужно ли обновить данные на форме. нужно чтоб не привязывать делегаты к форме самотестирования.
-           
+
         public static bool RemoteModeFlag;
-       
+
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
         private const byte ParametersNotSetMessage = 0x2; // Не установлены параметры записи потока.
@@ -28,14 +28,18 @@ namespace ReceivingStation.Server
         private const byte RemoteModeMessage = 0x4; // КПА находится в режиме дистанционного управления.
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
-       
+        private const byte CommandNotComletedMessage = 0x7; // Прием потока еще не начат.
+
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
-       
+        private bool _isCommandReceived;
+        private NetworkStream _stream;
+
         public Server()
         {
             StopThread = false;
             IsUpdateFormNeed = false;
+            _isCommandReceived = false;
         }
 
         #region Запустить работу сервера.
@@ -71,21 +75,33 @@ namespace ReceivingStation.Server
                     }
 
                     server.Stop(); // Больше не ждем подключений.  
-                    var stream = client.GetStream();
+                    _stream = client.GetStream();
 
                     try
                     {
                         while (true)
                         {
-                            var bytes = stream.Read(data, 0 , data.Length); // Количество полученных байт.
-                            var result = Task.Run(() => CheckReceivedData(data, bytes)); // Ответная квитанция на присланную команду.)) 
-                            stream.Write(result.Result, 0, result.Result.Length);
+                            var bytes = _stream.Read(data, 0, data.Length); // Количество полученных байт.
+                            var command = new byte[bytes];
+                            Array.Copy(data, 0, command, 0, bytes); // Извлечение принятой команды.
+
+                            if (!_isCommandReceived && bytes > 0)
+                            {
+                                _isCommandReceived = true;
+                                Task.Run(() => CheckReceivedData(command)); // Ответная квитанция на присланную команду.))               
+                            }
+                            else
+                            {
+                                var commandNotComleted = GetAnswer(command, CommandNotComletedMessage);
+                                _stream.Write(commandNotComleted, 0, commandNotComleted.Length);
+                            }
+
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                        stream.Close();
+                        _stream.Close();
                         client.Close();
                     }
                 }
@@ -101,56 +117,51 @@ namespace ReceivingStation.Server
 
         #region Проверка принятой команды.
 
-        private byte[] CheckReceivedData(byte[] data, int commandBytesQuantity)
+        private void CheckReceivedData(byte[] command)
         {
-            byte[] command = new byte [commandBytesQuantity];
             byte commandHeader = 0x33;
             byte commandStatus = InvalidCommandMessage;
 
-            // Извлечение команды из массива data.
-            for (int i = 0; i < commandBytesQuantity; i++)
-            {
-                command[i] = data[i];
-            }
-        
+
             // Проверка заголовка команды.
             if (command[0] != commandHeader)
             {
                 commandStatus = InvalidCommandMessage;
-
-                return GetAnswer(command, commandStatus);
             }
-
-            // Для команд смены режима управления, начать/остановить запись потока, получить статус синхронизации.
-            switch (commandBytesQuantity)
+            else
             {
-                case 3:
-                    // Перевод в дистанционный/местный режим управления.
-                    if (command[1] == 0x1 || command[1] == 0xFF)
-                    {
-                        commandStatus = GetChangeModeStatus(command[1]);
-                    }
+                // Для команд смены режима управления, начать/остановить запись потока, получить статус синхронизации.
+                switch (command.Length)
+                {
+                    case 3:
+                        // Перевод в дистанционный/местный режим управления.
+                        if (command[1] == 0x1 || command[1] == 0xFF)
+                        {
+                            commandStatus = GetChangeModeStatus(command[1]);
+                        }
 
-                    // Запустить/Остановить запись потока.
-                    if (command[1] == 0xFC || command[1] == 0xFD)
-                    {
-                        commandStatus = GetStartStopReceivingStatus(command[1]);
-                    }
+                        // Запустить/Остановить запись потока.
+                        if (command[1] == 0xFC || command[1] == 0xFD)
+                        {
+                            commandStatus = GetStartStopReceivingStatus(command[1]);
+                        }
 
-                    // Получить статус синхронизации.
-                    if (command[1] == 0x03)
-                    {
-                        commandStatus = GetSyncStatus();
-                    }
+                        // Получить статус синхронизации.
+                        if (command[1] == 0x03)
+                        {
+                            commandStatus = GetSyncStatus();
+                        }
 
-                    break;
-                case 6:
-                    // Для команды установки параметров записи потока.
-                    commandStatus = SetReceiveParameters(command);
-                    break;
+                        break;
+                    case 6:
+                        // Для команды установки параметров записи потока.
+                        commandStatus = SetReceiveParameters(command);
+                        break;
+                }
             }
-           
-            return GetAnswer(command, commandStatus);
+
+            _stream.Write(GetAnswer(command, commandStatus), 0, GetAnswer(command, commandStatus).Length);
+            _isCommandReceived = false;
         }
 
         #endregion
@@ -168,7 +179,7 @@ namespace ReceivingStation.Server
                     {
                         ThreadSafeChangeMode(1);
                     }
-                       
+
                 }
                 else
                 {
@@ -183,7 +194,7 @@ namespace ReceivingStation.Server
                 {
                     RemoteModeFlag = true;
                     if (IsUpdateFormNeed)
-                        ThreadSafeChangeMode(0); 
+                        ThreadSafeChangeMode(0);
                 }
                 else
                 {
@@ -299,7 +310,7 @@ namespace ReceivingStation.Server
             }
 
             answer.Add(commandStatus);
-           
+
             return answer.ToArray();
         }
 

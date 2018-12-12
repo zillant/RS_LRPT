@@ -295,6 +295,7 @@ namespace ReceivingStation
         #region Установка параметров записи потока в дистанционном режиме управления.
         private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
         {
+            for(long i = 0; i < 10000000000; i++) { }
             _fcp = fcp;
             _prd = prd;
             _freq = freq;
