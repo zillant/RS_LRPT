@@ -88,7 +88,7 @@ namespace ReceivingStation.Server
                             if (!_isCommandReceived && bytes > 0)
                             {
                                 _isCommandReceived = true;
-                                Task.Run(() => CheckReceivedData(command)); // Ответная квитанция на присланную команду.))               
+                                Task.Run(() => CheckReceivedData(command)); // Ответная квитанция на присланную команду.          
                             }
                             else
                             {

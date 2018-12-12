@@ -1,6 +1,7 @@
 ﻿using MaterialSkin.Controls;
 using ReceivingStation.Other;
 using System;
+using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
@@ -13,8 +14,8 @@ namespace ReceivingStation
         {
             InitializeComponent();
 
-            lblConnection.Text = Server.Server.RemoteModeFlag == false ? 
-                "Режим: Местное управление" : "Режим: Дистанционное управление";
+            lblConnection.Text = Server.Server.RemoteModeFlag == false ?
+                $"Режим: {Resources.LocalControlString}" : $"Режим: {Resources.RemoteControlString}";
         }
 
         private void btnServerSettings_Click(object sender, EventArgs e)
@@ -33,6 +34,7 @@ namespace ReceivingStation
             }
             else
             {
+                Server.Server.RemoteModeFlag = false;
                 ChangeMode(1);
                 Close();
             }

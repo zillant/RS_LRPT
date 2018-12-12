@@ -101,12 +101,30 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Местное управление.
+        /// </summary>
+        internal static string LocalControlString {
+            get {
+                return ResourceManager.GetString("LocalControlString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap mode_icon {
             get {
                 object obj = ResourceManager.GetObject("mode_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Дистанционное управление.
+        /// </summary>
+        internal static string RemoteControlString {
+            get {
+                return ResourceManager.GetString("RemoteControlString", resourceCulture);
             }
         }
         

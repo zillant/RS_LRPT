@@ -2641,4 +2641,7 @@
         AAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAACAAwAAwAMAAOAHAAD4DwAA//8AAA==
 </value>
   </data>
+  <data name="RemoteControlString" xml:space="preserve">
+    <value>Дистанционное управление</value>
+  </data>
 </root>

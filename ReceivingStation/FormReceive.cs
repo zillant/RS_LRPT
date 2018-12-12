@@ -274,9 +274,9 @@ namespace ReceivingStation
             {              
                 // Дистанционное управление
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, false);
-                Invoke(new Action(() => { slMode.Text = "Дистанционное управление"; }));
+                Invoke(new Action(() => { slMode.Text = Resources.RemoteControlString; }));
 
-                UserLog.WriteToLogUserActions("Дистанционное управление");
+                UserLog.WriteToLogUserActions(Resources.RemoteControlString);
 
 
             }
@@ -284,9 +284,9 @@ namespace ReceivingStation
             {
                 // Местное управление
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, true);
-                Invoke(new Action(() => { slMode.Text = "Местное управление"; }));
+                Invoke(new Action(() => { slMode.Text = Resources.LocalControlString; }));
 
-                UserLog.WriteToLogUserActions("Местное управление");
+                UserLog.WriteToLogUserActions(Resources.LocalControlString);
             }
         }
 
@@ -295,7 +295,6 @@ namespace ReceivingStation
         #region Установка параметров записи потока в дистанционном режиме управления.
         private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
         {
-            for(long i = 0; i < 10000000000; i++) { }
             _fcp = fcp;
             _prd = prd;
             _freq = freq;
