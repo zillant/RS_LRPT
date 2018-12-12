@@ -32,14 +32,14 @@ namespace ReceivingStation.Server
 
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
-        private bool _isCommandReceived;
+        private bool _isCommandCompleted; // Проверка, выполнена ли принятая команда.
         private NetworkStream _stream;
 
         public Server()
         {
             StopThread = false;
             IsUpdateFormNeed = false;
-            _isCommandReceived = false;
+            _isCommandCompleted = false;
         }
 
         #region Запустить работу сервера.
@@ -85,9 +85,9 @@ namespace ReceivingStation.Server
                             var command = new byte[bytes];
                             Array.Copy(data, 0, command, 0, bytes); // Извлечение принятой команды.
 
-                            if (!_isCommandReceived && bytes > 0)
+                            if (!_isCommandCompleted && bytes > 0)
                             {
-                                _isCommandReceived = true;
+                                _isCommandCompleted = true;
                                 Task.Run(() => CheckReceivedData(command)); // Ответная квитанция на присланную команду.          
                             }
                             else
@@ -161,7 +161,7 @@ namespace ReceivingStation.Server
             }
 
             _stream.Write(GetAnswer(command, commandStatus), 0, GetAnswer(command, commandStatus).Length);
-            _isCommandReceived = false;
+            _isCommandCompleted = false;
         }
 
         #endregion
