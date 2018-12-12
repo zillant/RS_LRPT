@@ -88,7 +88,7 @@ namespace ReceivingStation.Server
                             if (!_isCommandCompleted && bytes > 0)
                             {
                                 _isCommandCompleted = true;
-                                Task.Run(() => CheckReceivedData(command)); // Ответная квитанция на присланную команду.          
+                                Task.Run(() => CheckReceivedCommand(command)); // Ответная квитанция на присланную команду.          
                             }
                             else
                             {
@@ -117,7 +117,7 @@ namespace ReceivingStation.Server
 
         #region Проверка принятой команды.
 
-        private void CheckReceivedData(byte[] command)
+        private void CheckReceivedCommand(byte[] command)
         {
             byte commandHeader = 0x33;
             byte commandStatus = InvalidCommandMessage;
