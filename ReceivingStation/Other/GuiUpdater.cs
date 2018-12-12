@@ -154,50 +154,10 @@ namespace ReceivingStation.Other
             var time = $"{linesDate.Hour:D2}:{linesDate.Minute:D2}:{linesDate.Second:D2}";
             var dateTime = $"\n{date}\n\n{time}";
 
-            try
-            {
-                rtbDateTime.Text = dateTime;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("трай на rtbDateTime");
-            }
-
-            try
-            {
-                rtbMkoData.Text = mkoData;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("трай на rtbMkoData");
-            }
-            
-
-            // Изображение.
-            try
-            {
-                CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("трай на создание флп");
-            }
-
-            try
-            {
-                AddImages(channels, allChannels, listImagesForSave, imagesLines);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("трай на эд ченелс");
-            }
-            
-
-            //rtbDateTime.SetPropertyThreadSafe(() => rtbDateTime.Text, dateTime);
-            //rtbMkoData.SetPropertyThreadSafe(() => rtbMkoData.Text, mkoData);
-
-            //pAllChannels[5].Invoke(new Action(() => CreateNewFlps(channels, allChannels, pChannels, pAllChannels)));
-            //allChannels[5].Invoke(new Action(() => AddImages(channels, allChannels, listImagesForSave, imagesLines)));
+            rtbDateTime.Text = dateTime;
+            rtbMkoData.Text = mkoData;
+            CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels);
+            AddImages(channels, allChannels, listImagesForSave, imagesLines);
         }
         #endregion
 

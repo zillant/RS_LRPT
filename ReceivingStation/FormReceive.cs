@@ -334,19 +334,6 @@ namespace ReceivingStation
         #region Обновление данных декодирования на GUI.
         private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
-                    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
-                    _listImagesForSave, imagesLines)));
-            }
-            else
-            {
-                GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm,
-                    linesDate, rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels,
-                    _listImagesForSave, imagesLines);
-            }
-
             _callingUpdateImageCounter++;
 
             // Набрал 480 строчек изображения (8 * 60).
@@ -354,6 +341,12 @@ namespace ReceivingStation
             {
                 bwImageSaver.RunWorkerAsync();
                 _callingUpdateImageCounter = 0;
+            }
+
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
+                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
             }
         }
 

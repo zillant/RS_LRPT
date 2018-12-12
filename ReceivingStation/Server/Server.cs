@@ -78,8 +78,8 @@ namespace ReceivingStation.Server
                         while (true)
                         {
                             var bytes = stream.Read(data, 0 , data.Length); // Количество полученных байт.
-                            var result = CheckReceivedData(data, bytes); // Ответная квитанция на присланную команду.
-                            stream.Write(result, 0, result.Length);
+                            var result = Task.Run(() => CheckReceivedData(data, bytes)); // Ответная квитанция на присланную команду.)) 
+                            stream.Write(result.Result, 0, result.Result.Length);
                         }
                     }
                     catch (Exception ex)
