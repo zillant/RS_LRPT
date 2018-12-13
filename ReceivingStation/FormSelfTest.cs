@@ -34,7 +34,7 @@ namespace ReceivingStation
 
             _client = new ClientForSelfTest() { ThreadSafeWriteActions = WriteActions };
 
-            _server = new Server.Server();
+            _server = new Server.Server(true);
 
             _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();

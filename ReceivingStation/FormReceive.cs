@@ -97,12 +97,11 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             timer1.Start();
 
-            _server = new Server.Server
+            _server = new Server.Server(false)
             {
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
                 ThreadSafeStartStopReceiving = StartStopReceiving,
-                IsUpdateFormNeed = true
             };
 
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};

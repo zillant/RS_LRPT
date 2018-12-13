@@ -17,8 +17,7 @@ namespace ReceivingStation.Server
         public StartStopReceivingDelegate ThreadSafeStartStopReceiving;
 
         public bool StopThread;
-        public bool IsUpdateFormNeed; // Флаг, нужно ли обновить данные на форме. нужно чтоб не привязывать делегаты к форме самотестирования.
-
+       
         public static bool RemoteModeFlag;
 
         private const byte OkMessage = 0x0; // Команда выполнена.
@@ -29,16 +28,19 @@ namespace ReceivingStation.Server
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
         private const byte CommandNotComletedMessage = 0x7; // Прием потока еще не начат.
+        private const byte CommandHeader = 0x33; // Заголовок полученной команды.
 
         private bool _setParametersFlag; // Установлены ли параметры приема.
         private bool _receivingStartedFlag; // Начат ли прием потока.
         private bool _isCommandCompleted; // Проверка, выполнена ли принятая команда.
         private NetworkStream _stream;
 
-        public Server()
+        private bool _isItSelfTest; // Флаг, является ли это процессом самотестирования. Нужно чтоб не привязывать делегаты к форме самотестирования.
+
+        public Server(bool isItSelfTest)
         {
             StopThread = false;
-            IsUpdateFormNeed = false;
+            _isItSelfTest = isItSelfTest;
             _isCommandCompleted = false;
         }
 
@@ -60,7 +62,7 @@ namespace ReceivingStation.Server
                 while (StopThread == false)
                 {
                     // Перевод в местный режим управления.
-                    if (IsUpdateFormNeed)
+                    if (!_isItSelfTest)
                         ThreadSafeChangeMode(1);
                     RemoteModeFlag = false;
 
@@ -119,12 +121,10 @@ namespace ReceivingStation.Server
 
         private void CheckReceivedCommand(byte[] command)
         {
-            byte commandHeader = 0x33;
             byte commandStatus = InvalidCommandMessage;
 
-
             // Проверка заголовка команды.
-            if (command[0] != commandHeader)
+            if (command[0] != CommandHeader)
             {
                 commandStatus = InvalidCommandMessage;
             }
@@ -175,7 +175,7 @@ namespace ReceivingStation.Server
                 if (RemoteModeFlag)
                 {
                     RemoteModeFlag = false;
-                    if (IsUpdateFormNeed)
+                    if (!_isItSelfTest)
                     {
                         ThreadSafeChangeMode(1);
                     }
@@ -193,7 +193,7 @@ namespace ReceivingStation.Server
                 if (!RemoteModeFlag)
                 {
                     RemoteModeFlag = true;
-                    if (IsUpdateFormNeed)
+                    if (!_isItSelfTest)
                         ThreadSafeChangeMode(0);
                 }
                 else
@@ -224,7 +224,7 @@ namespace ReceivingStation.Server
                 }
 
                 _setParametersFlag = true;
-                if (IsUpdateFormNeed)
+                if (!_isItSelfTest)
                     ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);
 
                 return OkMessage;
@@ -244,7 +244,7 @@ namespace ReceivingStation.Server
                 if (_setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
-                    if (IsUpdateFormNeed)
+                    if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
                 }
                 else if (_receivingStartedFlag)
@@ -263,7 +263,7 @@ namespace ReceivingStation.Server
                 if (_receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
-                    if (IsUpdateFormNeed)
+                    if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
                 }
                 else

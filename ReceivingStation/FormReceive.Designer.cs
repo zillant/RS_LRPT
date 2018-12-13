@@ -614,7 +614,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -637,9 +637,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(130, 3);
+            this.panel7.Location = new System.Drawing.Point(129, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(114, 102);
+            this.panel7.Size = new System.Drawing.Size(113, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -695,7 +695,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(435, 3);
+            this.panel2.Location = new System.Drawing.Point(433, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(119, 102);
             this.panel2.TabIndex = 42;
@@ -754,7 +754,7 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(250, 3);
+            this.panel3.Location = new System.Drawing.Point(248, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(179, 102);
             this.panel3.TabIndex = 43;
@@ -816,7 +816,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(121, 102);
+            this.panel4.Size = new System.Drawing.Size(120, 102);
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -871,9 +871,9 @@
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(560, 3);
+            this.pModulation.Location = new System.Drawing.Point(558, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(128, 102);
+            this.pModulation.Size = new System.Drawing.Size(130, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
