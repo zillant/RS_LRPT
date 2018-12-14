@@ -45,6 +45,7 @@ namespace ReceivingStation.Server
         public void StartClient(bool isSeqTestType)
         {
             Random rand = new Random();
+            List<byte> commandsNumbers = new List<byte> { 0, 1, 2, 3, 4 }; // Для того чтобы случайный перебор команд был не таким уж случайным.
 
             try
             {
@@ -68,8 +69,9 @@ namespace ReceivingStation.Server
                         }
                         else
                         {
-                            int temp = rand.Next(0, 5);
-                            SendReceiveMsg(_messages[temp], sender, temp);
+                            int temp = rand.Next(0, commandsNumbers.Count);
+                            SendReceiveMsg(_messages[commandsNumbers[temp]], sender, commandsNumbers[temp]);
+                            commandsNumbers.RemoveAt(temp);
                             Thread.Sleep(500);
                         }
                     }
