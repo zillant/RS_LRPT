@@ -70,5 +70,29 @@ namespace ReceivingStation.Properties {
                 this["ipAddressLocal"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Не проводилась")]
+        public string lastSelfTestDate {
+            get {
+                return ((string)(this["lastSelfTestDate"]));
+            }
+            set {
+                this["lastSelfTestDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Не проводилась")]
+        public string lastSelfTestServerDate {
+            get {
+                return ((string)(this["lastSelfTestServerDate"]));
+            }
+            set {
+                this["lastSelfTestServerDate"] = value;
+            }
+        }
     }
 }

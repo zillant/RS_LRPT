@@ -22,6 +22,7 @@ namespace ReceivingStation.Server
         private const byte RemoteModeMessage = 0x4; // КПА находится в режиме дистанционного управления.
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
+        private const byte CommandNotComletedMessage = 0x7; // Выполнение предыдущей команды не завершено.
 
         private byte[] _remoteModeMsg = { 0x33, 0xFF, 0x34 };
         private byte[] _localModeMsg = { 0x33, 0x01, 0x03 };
@@ -41,8 +42,10 @@ namespace ReceivingStation.Server
             _messages.Add(_localModeMsg);
         }
 
-        public void StartClient()
-        {           
+        public void StartClient(bool isSeqTestType)
+        {
+            Random rand = new Random();
+
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(Settings.Default.ipAddressLocal);
@@ -58,9 +61,19 @@ namespace ReceivingStation.Server
 
                     for (int i = 0; i < 5; i++)
                     {
-                        SendReceiveMsg(_messages[i], sender, i);
-                        Thread.Sleep(500);
+                        if (isSeqTestType)
+                        {
+                            SendReceiveMsg(_messages[i], sender, i);
+                            Thread.Sleep(500);
+                        }
+                        else
+                        {
+                            int temp = rand.Next(0, 5);
+                            SendReceiveMsg(_messages[temp], sender, temp);
+                            Thread.Sleep(500);
+                        }
                     }
+                    
 
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
@@ -109,25 +122,28 @@ namespace ReceivingStation.Server
             switch (_bytes[bytesRec - 1])
             {
                 case OkMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Команда выполнена\n\n", GuiUpdater.OkColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Успешное выполнение КМС\n\n", GuiUpdater.OkColor); });
                     break;
                 case InvalidCommandMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Ошибочная команда\n\n", GuiUpdater.ErrorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Ошибочное КМС\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case ParametersNotSetMessage:
                     await Task.Run(() => { ThreadSafeWriteActions("  Не установлены параметры записи потока.\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case LocalModeMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме местного управления\n\n", GuiUpdater.ErrorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме МУ\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case RemoteModeMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме дистанционного управления\n\n", GuiUpdater.ErrorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  КПА находится в режиме ДУ\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case ReceivingStartedMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока уже начат\n\n", GuiUpdater.ErrorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Запись потока уже начата\n\n", GuiUpdater.ErrorColor); });
                     break;
                 case ReceivingNotStartedMessage:
-                    await Task.Run(() => { ThreadSafeWriteActions("  Прием потока еще не начат\n\n", GuiUpdater.ErrorColor); });
+                    await Task.Run(() => { ThreadSafeWriteActions("  Запись потока еще не начата\n\n", GuiUpdater.ErrorColor); });
+                    break;
+                case CommandNotComletedMessage:
+                    await Task.Run(() => { ThreadSafeWriteActions("  Выполнение предыдущей команды не завершено\n\n", GuiUpdater.ErrorColor); });
                     break;
             }
         }

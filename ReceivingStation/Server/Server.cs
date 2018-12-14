@@ -27,7 +27,7 @@ namespace ReceivingStation.Server
         private const byte RemoteModeMessage = 0x4; // КПА находится в режиме дистанционного управления.
         private const byte ReceivingStartedMessage = 0x5; // Прием потока уже начат.
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
-        private const byte CommandNotComletedMessage = 0x7; // Прием потока еще не начат.
+        private const byte CommandNotComletedMessage = 0x7; // Выполнение предыдущей команды не завершено.
         private const byte CommandHeader = 0x33; // Заголовок полученной команды.
 
         private bool _setParametersFlag; // Установлены ли параметры приема.
@@ -61,9 +61,15 @@ namespace ReceivingStation.Server
 
                 while (StopThread == false)
                 {
-                    // Перевод в местный режим управления.
+                    // Перевод в местный режим управления.                 
                     if (!_isItSelfTest)
                         ThreadSafeChangeMode(1);
+                    else
+                    {
+                        _setParametersFlag = false;
+                        _receivingStartedFlag = false;
+                    }
+
                     RemoteModeFlag = false;
 
                     server.Start();
@@ -210,7 +216,7 @@ namespace ReceivingStation.Server
         #region Получить статус установки параметров приема потока.
         private byte SetReceiveParameters(byte[] command)
         {
-            if (RemoteModeFlag)
+            if (RemoteModeFlag && !_receivingStartedFlag)
             {
                 // Проверяем содержимое команды после заголовка и до резервного байта.
                 for (int i = 1; i < 5; i++)
@@ -224,13 +230,20 @@ namespace ReceivingStation.Server
                 }
 
                 _setParametersFlag = true;
-                if (!_isItSelfTest)
-                    ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);
 
-                return OkMessage;
+                if (!_isItSelfTest)
+                    ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);              
+            }
+            else if (!RemoteModeFlag)
+            {
+                return LocalModeMessage;
+            }
+            else if (_receivingStartedFlag)
+            {
+                return ReceivingStartedMessage;
             }
 
-            return LocalModeMessage;
+            return OkMessage;
         }
 
         #endregion
@@ -241,30 +254,39 @@ namespace ReceivingStation.Server
             if (command == 0xFC)
             {
                 // Начать запись потока.
-                if (_setParametersFlag && !_receivingStartedFlag)
+                if (RemoteModeFlag && _setParametersFlag && !_receivingStartedFlag)
                 {
                     _receivingStartedFlag = true;
+
                     if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
+                }
+                else if (!RemoteModeFlag)
+                {
+                    return LocalModeMessage;
+                }
+                else if (!_setParametersFlag)
+                {
+                    return ParametersNotSetMessage;
                 }
                 else if (_receivingStartedFlag)
                 {
                     return ReceivingStartedMessage;
-                }
-                else
-                {
-                    return ParametersNotSetMessage;
                 }
             }
 
             else if (command == 0xFD)
             {
                 // Остановить запись потока.
-                if (_receivingStartedFlag)
+                if (RemoteModeFlag && _receivingStartedFlag)
                 {
                     _receivingStartedFlag = false;
                     if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
+                }
+                else if (!RemoteModeFlag)
+                {
+                    return LocalModeMessage;
                 }
                 else
                 {

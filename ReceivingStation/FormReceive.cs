@@ -128,8 +128,8 @@ namespace ReceivingStation
 
         private void FormReceive_KeyDown(object sender, KeyEventArgs e)
         {
-            // Ctrl + L  
-            if (e.Control && e.KeyCode == Keys.L)
+            // Alt + L  
+            if (e.Alt && e.KeyCode == Keys.L)
             {
                 if (!_isModulationPanelVisible)
                 {

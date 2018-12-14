@@ -27,7 +27,9 @@ namespace ReceivingStation
         {
             GuiUpdater.SmoothLoadingForm(this);
 
-            GuiUpdater.AllocFont(GuiUpdater.Font, rtbTestServer, 11);           
+            GuiUpdater.AllocFont(GuiUpdater.Font, rtbTestServer, 11);
+
+            UpdateLastDates();
 
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             timer1.Start();
@@ -58,25 +60,64 @@ namespace ReceivingStation
             Application.Exit();
         }
 
+        private void FormSelfTest_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Alt + L  
+            if (e.Alt && e.KeyCode == Keys.L)
+            {
+                Settings.Default.lastSelfTestDate = "Не проводилась";
+                Settings.Default.lastSelfTestServerDate = "Не проводилась";
+                Settings.Default.Save();
+
+                UpdateLastDates();
+                e.SuppressKeyPress = true;
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
         }
 
-        private async void materialRaisedButton1_Click(object sender, EventArgs e)
+        private void btnSelfTesting_Click(object sender, EventArgs e)
         {
             rtbTestServer.Clear();
-            materialRaisedButton1.Enabled = false;
+            pSelfTestSettings.Enabled = false;
+            Settings.Default.lastSelfTestDate = DateTime.Now.ToString();
+            Settings.Default.Save();
+
+            // Действия... которых пока нет....
+
+            pSelfTestSettings.Enabled = true;
+            UpdateLastDates();
+        }
+
+        private async void btnSelfTestingServer_Click(object sender, EventArgs e)
+        {
+            rtbTestServer.Clear();
+            pSelfTestSettings.Enabled = false;
+            Settings.Default.lastSelfTestServerDate = DateTime.Now.ToString();
+            Settings.Default.Save();
+
             WriteActions("  Клиент подключен\n\n", Color.White);
-            await Task.Run(() => { _client.StartClient(); });
-            materialRaisedButton1.Enabled = true;
+            await Task.Run(() => { _client.StartClient(rbSequentialSending.Checked); });
+            btnSelfTestingServer.Enabled = true;
             WriteActions("  Тест завершен\n", Color.White);
             WriteActions("  Клиент отключен", Color.White);
+
+            pSelfTestSettings.Enabled = true;
+            UpdateLastDates();
         }
 
         private void WriteActions(string msg, Color color)
         {
             rtbTestServer.Invoke(new Action(() => { rtbTestServer.AppendText(msg, color); }));
+        }
+
+        private void UpdateLastDates()
+        {
+            lblSelfTestingDate.Text = Settings.Default.lastSelfTestDate;
+            lblSelfTestingServerDate.Text = Settings.Default.lastSelfTestServerDate;
         }
     }
 }

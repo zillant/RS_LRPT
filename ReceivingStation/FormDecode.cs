@@ -93,6 +93,26 @@ namespace ReceivingStation
             Application.Exit();
         }
 
+        private void FormDecode_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Alt + L  
+            if (e.Alt && e.KeyCode == Keys.L)
+            {
+                if (!_isDecodeTimeVisible)
+                {
+                    slDecodeTime.Visible = true;
+                    _isDecodeTimeVisible = true;
+                }
+                else
+                {
+                    slDecodeTime.Visible = false;
+                    _isDecodeTimeVisible = false;
+                }
+
+                e.SuppressKeyPress = true;
+            }
+        }
+
         private void btnStartStopDecode_Click(object sender, EventArgs e)
         {
             StartStopDecoding();
@@ -125,26 +145,6 @@ namespace ReceivingStation
         {
             ImageSaver.SaveImage(_listImagesForSave, _fileName, _imageCounter);
             _imageCounter += 1;
-        }
-
-        private void FormDecode_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Ctrl + L  
-            if (e.Control && e.KeyCode == Keys.L)
-            {
-                if (!_isDecodeTimeVisible)
-                {
-                    slDecodeTime.Visible = true;
-                    _isDecodeTimeVisible = true;
-                }
-                else
-                {
-                    slDecodeTime.Visible = false;
-                    _isDecodeTimeVisible = false;
-                }
-
-                e.SuppressKeyPress = true;
-            }
         }
 
         #region Начать декодирование.
