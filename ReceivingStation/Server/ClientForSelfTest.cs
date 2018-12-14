@@ -76,7 +76,6 @@ namespace ReceivingStation.Server
                         }
                     }
                     
-
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
 

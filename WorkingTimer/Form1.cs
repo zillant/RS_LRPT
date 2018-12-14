@@ -26,6 +26,8 @@ namespace WorkingTimer
         public bool _allowClosing; // Для закрытия приложения только через иконку в трее. 
                                    // На данный момент кнопка закрытия программы на форме (Х) убрана.
 
+        private Point _windowPosition; // Для перемещения формы.
+
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +36,9 @@ namespace WorkingTimer
             notifyIcon.ContextMenuStrip = contextMenuStrip1;
 
             InitTimerData();                          
-            _timerTimeSpan = Settings.Default.WorkingTime.Duration();                              
+            _timerTimeSpan = Settings.Default.WorkingTime.Duration();
+
+            Location = Settings.Default.WindowPosition;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -62,12 +66,43 @@ namespace WorkingTimer
             }
         }
 
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Visible)
+            if (!_allowClosing)
+            {
+                e.Cancel = true;                
                 Hide();
-            else
-                Show();
+            }
+        }
+
+        private void lblTitle_MouseDown(object sender, MouseEventArgs e)
+        {
+            Move1(e);
+        }
+
+        private void lblTitle_MouseMove(object sender, MouseEventArgs e)
+        {
+            Move2(e);
+        }
+
+        private void lblTime_MouseDown(object sender, MouseEventArgs e)
+        {
+            Move1(e);
+        }
+
+        private void lblTime_MouseMove(object sender, MouseEventArgs e)
+        {
+            Move2(e);
+        }
+
+        private void lblSecond_MouseDown(object sender, MouseEventArgs e)
+        {
+            Move1(e);
+        }
+
+        private void lblSecond_MouseMove(object sender, MouseEventArgs e)
+        {
+            Move2(e);
         }
 
         private void saveTimer_Tick(object sender, EventArgs e)
@@ -84,15 +119,20 @@ namespace WorkingTimer
                 CountWorkingTime();
                 InitTimerData();
             }
+
+            if (Location != Settings.Default.WindowPosition)
+            {
+                Settings.Default.WindowPosition = Location;
+                Settings.Default.Save();
+            }
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            if (!_allowClosing)
-            {
-                e.Cancel = true;                
+            if (Visible)
                 Hide();
-            }
+            else
+                Show();
         }
 
         private void tsmiExit_Click(object sender, EventArgs e)
@@ -149,6 +189,29 @@ namespace WorkingTimer
             FontStyle fontStyle = FontStyle.Regular;
             c.Font = new Font(_ff, size, fontStyle);
 
+        }
+
+        #endregion
+
+        #region Перемещение формы.
+        private void Move1(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                _windowPosition = MousePosition;
+            }
+        }
+
+        private void Move2(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                int posX = MousePosition.X - _windowPosition.X;
+                int posY = MousePosition.Y - _windowPosition.Y;
+                Point loc = new Point(Location.X + posX, Location.Y + posY);
+                Location = loc;
+                _windowPosition = MousePosition;
+            }
         }
 
         #endregion
