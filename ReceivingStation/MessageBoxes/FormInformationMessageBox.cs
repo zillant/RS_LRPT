@@ -1,4 +1,5 @@
 ﻿using MaterialSkin.Controls;
+using System.Drawing;
 
 namespace ReceivingStation.MessageBoxes
 {
@@ -11,12 +12,13 @@ namespace ReceivingStation.MessageBoxes
             InitializeComponent();
         }
 
-        public static void Show(string title, string text)
+        public static void Show(string title, string text, Bitmap image)
         {
             _formInformationMessageBox = new FormInformationMessageBox
             {
                 Text = title,
-                lblInfo = {Text = text}
+                lblInfo = { Text = text },
+                pbImage = { Image = image }
             };
             _formInformationMessageBox.ShowDialog();
         }

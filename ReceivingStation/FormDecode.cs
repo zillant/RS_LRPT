@@ -101,11 +101,13 @@ namespace ReceivingStation
                 if (!_isDecodeTimeVisible)
                 {
                     slDecodeTime.Visible = true;
+                    pRS.Visible = true;
                     _isDecodeTimeVisible = true;
                 }
                 else
                 {
                     slDecodeTime.Visible = false;
+                    pRS.Visible = false;
                     _isDecodeTimeVisible = false;
                 }
 
@@ -228,6 +230,8 @@ namespace ReceivingStation
             slDecodeTime.Text = deltaWorkingTime.ToString();
 
             UserLog.WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");
+
+            FormInformationMessageBox.Show("Сообщение", "Декодирование завершено", Resources.done_icon);
         }
 
         #endregion

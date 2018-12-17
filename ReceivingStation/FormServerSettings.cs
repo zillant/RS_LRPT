@@ -26,7 +26,7 @@ namespace ReceivingStation
                 Settings.Default.ipAddressIVK = GetIpAddress();
                 Settings.Default.Save();
 
-                FormInformationMessageBox.Show(caption, message);
+                FormInformationMessageBox.Show(caption, message, Resources.info_icon);
             }
 
             Close();

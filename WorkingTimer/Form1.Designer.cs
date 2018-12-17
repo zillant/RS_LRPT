@@ -38,6 +38,7 @@
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.lblSecond = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,13 +50,13 @@
             // 
             // lblTime
             // 
-            this.lblTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTime.AutoSize = true;
             this.lblTime.BackColor = System.Drawing.Color.Black;
             this.lblTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblTime.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 70F, System.Drawing.FontStyle.Bold);
             this.lblTime.ForeColor = System.Drawing.Color.Red;
-            this.lblTime.Location = new System.Drawing.Point(1, 37);
+            this.lblTime.Location = new System.Drawing.Point(0, 33);
             this.lblTime.MinimumSize = new System.Drawing.Size(300, 160);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(300, 160);
@@ -63,8 +64,6 @@
             this.lblTime.Text = "0:00";
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTime.UseCompatibleTextRendering = true;
-            this.lblTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblTime_MouseDown);
-            this.lblTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblTime_MouseMove);
             // 
             // label1
             // 
@@ -103,7 +102,7 @@
             this.lblSecond.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblSecond.Font = new System.Drawing.Font("Microsoft Sans Serif", 35F, System.Drawing.FontStyle.Bold);
             this.lblSecond.ForeColor = System.Drawing.Color.Red;
-            this.lblSecond.Location = new System.Drawing.Point(285, 79);
+            this.lblSecond.Location = new System.Drawing.Point(285, 72);
             this.lblSecond.MinimumSize = new System.Drawing.Size(94, 80);
             this.lblSecond.Name = "lblSecond";
             this.lblSecond.Size = new System.Drawing.Size(94, 80);
@@ -111,24 +110,31 @@
             this.lblSecond.Text = "0";
             this.lblSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblSecond.UseCompatibleTextRendering = true;
-            this.lblSecond.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblSecond_MouseDown);
-            this.lblSecond.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblSecond_MouseMove);
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.ForestGreen;
+            this.lblTitle.BackColor = System.Drawing.Color.Black;
+            this.lblTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(226, 31);
+            this.lblTitle.Size = new System.Drawing.Size(228, 33);
             this.lblTitle.TabIndex = 3;
             this.lblTitle.Text = "Наработка КПА";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblTitle_MouseDown);
             this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblTitle_MouseMove);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Location = new System.Drawing.Point(1, 30);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(226, 15);
+            this.panel1.TabIndex = 4;
             // 
             // Form1
             // 
@@ -137,12 +143,14 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(380, 200);
-            this.Controls.Add(this.lblTitle);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblSecond);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.lblTitle);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -168,6 +176,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.Label lblSecond;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

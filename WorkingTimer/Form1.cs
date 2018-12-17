@@ -35,7 +35,7 @@ namespace WorkingTimer
             ShowInTaskbar = false;
             notifyIcon.ContextMenuStrip = contextMenuStrip1;
 
-            InitTimerData();                          
+            InitTimerData();
             _timerTimeSpan = Settings.Default.WorkingTime.Duration();
 
             Location = Settings.Default.WindowPosition;
@@ -56,13 +56,16 @@ namespace WorkingTimer
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Alt && e.KeyCode == Keys.J)
-            {          
-                e.SuppressKeyPress = true;
+            if (e.Alt && e.KeyCode == Keys.L)
+            {                         
                 Settings.Default.Reset();
                 Settings.Default.Save();
-                _allowClosing = true;
-                Application.Restart();
+
+                _timerTimeSpan = Settings.Default.WorkingTime.Duration();
+                lblTime.Text = $"{(long)_timerTimeSpan.TotalHours}:{_timerTimeSpan.Minutes.ToString("D2")}";
+                lblSecond.Text = $"{_timerTimeSpan.Seconds}";
+
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -85,26 +88,6 @@ namespace WorkingTimer
             Move2(e);
         }
 
-        private void lblTime_MouseDown(object sender, MouseEventArgs e)
-        {
-            Move1(e);
-        }
-
-        private void lblTime_MouseMove(object sender, MouseEventArgs e)
-        {
-            Move2(e);
-        }
-
-        private void lblSecond_MouseDown(object sender, MouseEventArgs e)
-        {
-            Move1(e);
-        }
-
-        private void lblSecond_MouseMove(object sender, MouseEventArgs e)
-        {
-            Move2(e);
-        }
-
         private void saveTimer_Tick(object sender, EventArgs e)
         {
             lblTime.Text = $"{(long)_timerTimeSpan.TotalHours}:{_timerTimeSpan.Minutes.ToString("D2")}";
@@ -120,6 +103,7 @@ namespace WorkingTimer
                 InitTimerData();
             }
 
+            // Сохранение последней позиции виджета.
             if (Location != Settings.Default.WindowPosition)
             {
                 Settings.Default.WindowPosition = Location;

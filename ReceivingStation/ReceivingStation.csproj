@@ -254,5 +254,8 @@
   <ItemGroup>
     <None Include="Resources\rss_logo.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\done_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -30,8 +30,8 @@
         {
             this.lblInfo = new MaterialSkin.Controls.MaterialLabel();
             this.btnOk = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pbImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.SuspendLayout();
             // 
             // lblInfo
@@ -62,16 +62,15 @@
             this.btnOk.Text = "Ок";
             this.btnOk.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // pbImage
             // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.info_icon;
-            this.pictureBox1.Location = new System.Drawing.Point(9, 79);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 98);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
+            this.pbImage.BackColor = System.Drawing.SystemColors.Window;
+            this.pbImage.Location = new System.Drawing.Point(9, 79);
+            this.pbImage.Name = "pbImage";
+            this.pbImage.Size = new System.Drawing.Size(100, 98);
+            this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbImage.TabIndex = 8;
+            this.pbImage.TabStop = false;
             // 
             // FormInformationMessageBox
             // 
@@ -80,7 +79,7 @@
             this.AutoSize = true;
             this.CancelButton = this.btnOk;
             this.ClientSize = new System.Drawing.Size(311, 209);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbImage);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.btnOk);
             this.MaximizeBox = false;
@@ -90,7 +89,7 @@
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Заголовок";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -98,7 +97,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbImage;
         private MaterialSkin.Controls.MaterialLabel lblInfo;
         private MaterialSkin.Controls.MaterialRaisedButton btnOk;
     }
