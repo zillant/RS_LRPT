@@ -231,7 +231,7 @@ namespace ReceivingStation
 
             UserLog.WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");
 
-            FormInformationMessageBox.Show("Сообщение", "Декодирование завершено", Resources.done_icon);
+            FormInformationMessageBox.Show("Сообщение", "Декодирование завершено.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
         }
 
         #endregion

@@ -285,7 +285,7 @@ namespace ReceivingStation
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
 
-            FormInformationMessageBox.Show("Сообщение", "Прием потока завершен", Resources.done_icon);
+            FormInformationMessageBox.Show("Сообщение", "Прием потока завершен.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
         }
 
         #endregion
