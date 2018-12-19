@@ -51,6 +51,8 @@ namespace ReceivingStation
         private byte _freq;
         private byte _interliving;
 
+        public object SystemColor { get; private set; }
+
         public FormReceive()
         {
             InitializeComponent();
@@ -167,6 +169,26 @@ namespace ReceivingStation
             }
         }
 
+        private void slMode_MouseLeave(object sender, EventArgs e)
+        {
+            slMode.BackColor = SystemColors.Window;
+        }
+
+        private void slWorkingTimeOnboard_MouseLeave(object sender, EventArgs e)
+        {
+            slWorkingTimeOnboard.BackColor = SystemColors.Window;
+        }
+
+        private void slWorkingTimeOnboard_MouseMove(object sender, MouseEventArgs e)
+        {
+            slWorkingTimeOnboard.BackColor = SystemColors.ControlLight;
+        }
+
+        private void slMode_MouseMove(object sender, MouseEventArgs e)
+        {
+            slMode.BackColor = SystemColors.ControlLight;
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
@@ -262,6 +284,8 @@ namespace ReceivingStation
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
+
+            FormInformationMessageBox.Show("Сообщение", "Прием потока завершен", Resources.done_icon);
         }
 
         #endregion
@@ -430,6 +454,6 @@ namespace ReceivingStation
 
         #endregion
 
-        #endregion        
+        #endregion
     }
 }
