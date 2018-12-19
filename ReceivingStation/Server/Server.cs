@@ -50,7 +50,7 @@ namespace ReceivingStation.Server
         {
             byte[] data = new byte[256];  // Буфер для получаемых команд.           
 
-            List<string> ipList = new List<string> { Settings.Default.ipAddressIVK, Settings.Default.ipAddressLocal };
+            
 
             try
             {
@@ -75,6 +75,8 @@ namespace ReceivingStation.Server
                     server.Start();
 
                     var client = server.AcceptTcpClient();
+
+                    List<string> ipList = new List<string> { Settings.Default.ipAddressIVK, Settings.Default.ipAddressLocal };
 
                     if (!ipList.Contains(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()))
                     {

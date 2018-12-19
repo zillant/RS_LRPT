@@ -18,8 +18,8 @@ namespace ReceivingStation
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            string message = "Изменения вступят в силу после перезапуска программы.";
-            string caption = "Внимание";
+            string message = "Изменения сохранены.";
+            string caption = "Сообщение";
             
             if (GetIpAddress() != Settings.Default.ipAddressIVK)
             {

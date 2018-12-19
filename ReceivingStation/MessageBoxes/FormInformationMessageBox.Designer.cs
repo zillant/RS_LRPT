@@ -97,8 +97,9 @@
             this.llPath.AutoSize = true;
             this.llPath.BackColor = System.Drawing.SystemColors.Window;
             this.llPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.llPath.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.llPath.Location = new System.Drawing.Point(49, 0);
-            this.llPath.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.llPath.Margin = new System.Windows.Forms.Padding(0);
             this.llPath.Name = "llPath";
             this.llPath.Size = new System.Drawing.Size(48, 18);
             this.llPath.TabIndex = 10;
@@ -111,9 +112,10 @@
             this.flowLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.flowLayoutPanel1.Controls.Add(this.lblInfo2);
             this.flowLayoutPanel1.Controls.Add(this.llPath);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(115, 124);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(115, 121);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(154, 20);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(113, 20);
             this.flowLayoutPanel1.TabIndex = 11;
             // 
             // FormInformationMessageBox
