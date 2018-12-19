@@ -20,9 +20,6 @@ def transfer_rcv_data (transfer_data):
     data = sock.recv(1024)
     print(data)
 
-def transfer_rcv_data2 (transfer_data):
-    sock.send(transfer_data)
-
 while True:    
     transfer = int(input("Select number? "))
 
