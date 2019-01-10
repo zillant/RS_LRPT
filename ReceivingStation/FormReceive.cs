@@ -52,8 +52,6 @@ namespace ReceivingStation
         private byte _interliving;
         private byte _modulation;
 
-        public object SystemColor { get; private set; }
-
         public FormReceive()
         {
             InitializeComponent();
@@ -267,7 +265,6 @@ namespace ReceivingStation
             else
             {
                  StopReceiving();
-                _decode.FinishDecode();
             }
 
         }
@@ -283,7 +280,8 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-            //_receiver.StopDecoding();
+            _receiver.StopDecoding();
+            _decode.FinishDecode();
 
             CountWorkingTime();
             WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
