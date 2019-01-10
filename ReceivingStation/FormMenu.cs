@@ -14,6 +14,7 @@ namespace ReceivingStation
             InitializeComponent();
             GuiUpdater.LoadFont();
             GuiUpdater.SmoothLoadingForm(this);
+            FilesDirectory.CreateApplicationDirectory();
         }
 
         private void FormMenu_FormClosing(object sender, FormClosingEventArgs e)

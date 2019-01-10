@@ -20,7 +20,7 @@ namespace ReceivingStation
         public static TimeSpan ReserveFcpWorkingTime;
         public static TimeSpan MainPrdWorkingTime;
         public static TimeSpan ReservePrdWorkingTime;
-        public static TimeSpan FullWorkingTime; // Общее время работы системы. (Не используем в релизе) 
+        public static TimeSpan FullWorkingTime; // Общее время работы системы. (Не используем в релизе)        
         
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
@@ -200,7 +200,7 @@ namespace ReceivingStation
                 {
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
-                    WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+                    WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
@@ -217,7 +217,7 @@ namespace ReceivingStation
         {
             if (!_isReceivingStarting)
             {
-                _fileName = "onlinelogs";
+                _fileName = $"{FilesDirectory.GetCurrentSessionDirectory("onlinelogs")}\\onlinelogs";
 
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
 
@@ -256,11 +256,11 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
-                _receiver = new Demodulator.Demodulating(this, _freq, _interliving, _modulation, _decode);
-                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-                _receiver.StartDecoding();
+               // _receiver = new Demodulator.Demodulating(this, _freq, _interliving, _modulation, _decode);
+               // _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+               // _receiver.StartDecoding();
 
-                _receiver.RecordStart();
+               // _receiver.RecordStart();
             }
             else
             {
@@ -280,11 +280,11 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-            _receiver.StopDecoding();
+           // _receiver.StopDecoding();
             _decode.FinishDecode();
 
             CountWorkingTime();
-            WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+            WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
 
@@ -413,12 +413,12 @@ namespace ReceivingStation
         {
             try
             {
-                ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+                ReadFromLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
             }
             catch (Exception)
             {
-                WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
-                ReadFromLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+                WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
+                ReadFromLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
             }
         }
 

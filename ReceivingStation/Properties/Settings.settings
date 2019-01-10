@@ -8,9 +8,6 @@
     <Setting Name="WorkingTime" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:00:00</Value>
     </Setting>
-    <Setting Name="OnboardWorkingTimeFileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">working_time_onboard.txt</Value>
-    </Setting>
     <Setting Name="ipAddressLocal" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>

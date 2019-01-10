@@ -3,6 +3,7 @@ using ReceivingStation.Properties;
 using System;
 using System.Windows.Forms;
 using ReceivingStation.MessageBoxes;
+using ReceivingStation.Other;
 
 namespace ReceivingStation
 {
@@ -38,7 +39,7 @@ namespace ReceivingStation
                 FormReceive.ReservePrdWorkingTime = TimeSpan.Zero;
                 FormReceive.FullWorkingTime = TimeSpan.Zero;
 
-                FormReceive.WriteToLogWorkingTime(Settings.Default.OnboardWorkingTimeFileName);
+                FormReceive.WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
 
                 DisplayWorkinTime(lblFCPMain, FormReceive.MainFcpWorkingTime);
                 DisplayWorkinTime(lblFCPReserve, FormReceive.ReserveFcpWorkingTime);

@@ -9,7 +9,7 @@ namespace ReceivingStation.Other
         #region Запись в лог файл действий пользователя.
         public static void WriteToLogUserActions(string logMessage)
         {
-            using (var sw = new StreamWriter("log.txt", true, Encoding.UTF8, 65536))
+            using (var sw = new StreamWriter(FilesDirectory.UserLogFile, true, Encoding.UTF8, 65536))
             {
                 sw.WriteLine($"{DateTime.Now} - {logMessage}");
             }

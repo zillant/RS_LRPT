@@ -49,18 +49,6 @@ namespace ReceivingStation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("working_time_onboard.txt")]
-        public string OnboardWorkingTimeFileName {
-            get {
-                return ((string)(this["OnboardWorkingTimeFileName"]));
-            }
-            set {
-                this["OnboardWorkingTimeFileName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
         public string ipAddressLocal {
             get {

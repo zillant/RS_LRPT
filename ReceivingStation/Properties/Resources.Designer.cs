@@ -120,6 +120,24 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Logs.
+        /// </summary>
+        internal static string LogsDirName {
+            get {
+                return ResourceManager.GetString("LogsDirName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ReceivingStation.
+        /// </summary>
+        internal static string MainDirName {
+            get {
+                return ResourceManager.GetString("MainDirName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap mode_icon {
@@ -159,12 +177,39 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Sessions.
+        /// </summary>
+        internal static string SessionsDirName {
+            get {
+                return ResourceManager.GetString("SessionsDirName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap time_icon {
             get {
                 object obj = ResourceManager.GetObject("time_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на user_log.txt.
+        /// </summary>
+        internal static string UserLogFileName {
+            get {
+                return ResourceManager.GetString("UserLogFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на working_time_onboard_log.txt.
+        /// </summary>
+        internal static string WorkingTimeOnBoardFileName {
+            get {
+                return ResourceManager.GetString("WorkingTimeOnBoardFileName", resourceCulture);
             }
         }
     }
