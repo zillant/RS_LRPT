@@ -217,14 +217,41 @@ namespace ReceivingStation
         {
             if (!_isReceivingStarting)
             {
-                _fileName = $"{FilesDirectory.GetCurrentSessionDirectory("onlinelogs")}\\onlinelogs";
-
-                _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-
                 _isReceivingStarting = true;
+
+                if (!Server.Server.RemoteModeFlag)
+                {
+                    SetReceiveParameters();
+                }
 
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
                 tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
+
+                string fcps = "";
+                string prds = "";
+                string inters = "";
+                string freqs = "";
+
+                if (_fcp == 0x1) fcps = "O";
+                else if (_fcp == 0x2) fcps = "P";
+
+                if (_prd == 0x1) prds = "O";
+                else if (_prd == 0x2) prds = "P";
+
+                if (_freq == 0x1) freqs = "137.1";
+                else if (_freq == 0x2) freqs = "137.9";
+
+                if (_interliving == 0x1) inters = "с_инт";
+                else if (_interliving == 0x2) inters = "без_инт";
+
+
+                var timeString = DateTime.Now.ToString("HH-mm");
+                var  fileName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
+
+                _fileName = $"{FilesDirectory.GetCurrentSessionDirectory($"{fileName}")}\\{fileName}";
+
+                _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
+
                 
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
@@ -241,10 +268,7 @@ namespace ReceivingStation
                     }
                 }
 
-                if (!Server.Server.RemoteModeFlag)
-                {
-                    SetReceiveParameters();
-                }
+               
                              
                 _startWorkingTime = DateTime.Now;
                 _imageCounter = 0;
@@ -256,11 +280,11 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
-               // _receiver = new Demodulator.Demodulating(this, _freq, _interliving, _modulation, _decode);
-               // _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-               // _receiver.StartDecoding();
+                _receiver = new Demodulator.Demodulating(this, _freq, _interliving, _modulation, _decode);
+                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                _receiver.StartDecoding();
 
-               // _receiver.RecordStart();
+                _receiver.RecordStart();
             }
             else
             {
@@ -280,7 +304,7 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-           // _receiver.StopDecoding();
+            _receiver.StopDecoding();
             _decode.FinishDecode();
 
             CountWorkingTime();

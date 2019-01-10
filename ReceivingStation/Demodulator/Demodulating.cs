@@ -266,8 +266,8 @@ namespace ReceivingStation.Demodulator
             var timeString = DateTime.Now.ToString("HH-mm-ss");
 
             filename = "_LRPT_.s";
-            _rawWriter = new Demodulator.FileWriter(filename);
-            _rawWriter.Open();
+            //_rawWriter = new Demodulator.FileWriter(filename);
+            //_rawWriter.Open();
 
             _outputIsStarted = true;
 
@@ -306,7 +306,7 @@ namespace ReceivingStation.Demodulator
             _FifoBuffer = null;
 
             FirstRead = false;
-            _rawWriter.Close();
+            //_rawWriter.Close();
             _outputBuffer = null;
             _recordBuffer.Dispose();
             _recordBuffer = null;
@@ -683,7 +683,7 @@ namespace ReceivingStation.Demodulator
                             //PLLReset();
                             count = 0;
                             StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
-                            _rawWriter.Write(_outputBuffer, _outputBuffer.Length);
+                           // _rawWriter.Write(_outputBuffer, _outputBuffer.Length);
                         }
                         PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
 
@@ -699,7 +699,7 @@ namespace ReceivingStation.Demodulator
                         _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
                         _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
-                        _rawWriter.Write(_outputBuffer, _outputBuffer.Length);
+                        //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
                         PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
                     }
                     //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
@@ -749,7 +749,7 @@ namespace ReceivingStation.Demodulator
                                 count = 0;
                                 StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
                                 StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
-                                _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+                                //_rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
                             }
                             mode = BVS.mode;
                             PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
@@ -762,7 +762,7 @@ namespace ReceivingStation.Demodulator
                             _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
-                            _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+                            //_rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
                             //BVS.PacketCorrect_int(_outputBuffer_wInt, mode);
                             PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
                             mode = BVS.mode;
