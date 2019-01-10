@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Platform.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ReceivingStation
+namespace ReceivingStation.Demodulator
 {
     public unsafe partial class StreamCorrection
     {
@@ -290,6 +283,47 @@ namespace ReceivingStation
             Array.Copy(outarray, array, array.Length);
             datfile.Write(outarray, 0, outarray.Length);
         }
+
+        public void fromAmplitudesToBits_int(byte[] indata, byte[] array)
+        {
+            sbyte[] data = new sbyte[indata.Length];
+            byte[] outarray = new byte[indata.Length / 8];
+            //byte[] array = new byte[indata.Length / 8];
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = (sbyte)indata[i];
+            }
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] > 0) data[i] = 0;
+                if (data[i] < 0) data[i] = 1;
+            }
+
+            var m = 0;
+            int count = 0;
+            bytedata = 0;
+            for (int i = 0; i < data.Length; i++) // преобразуем биты в байты
+            {
+
+                bytedata = bytedata << 1;
+                bytedata += data[i];
+                count = count + 1;
+                if (count == 8)
+                {
+                    outarray[m] = (byte)bytedata;
+                    m++;
+                    count = 0;
+                    bytedata = 0;
+                }
+
+            }
+
+            Array.Copy(outarray, array, array.Length);
+            datfile.Write(outarray, 0, outarray.Length);
+        }
+
         public void StopCorrect()
         {
             datfile.Close();

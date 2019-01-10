@@ -168,12 +168,17 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Начать декодирование для приемника.
-        public void StartDecode(byte[] data)
+        public void StartDecode(byte[] data, bool NRZ, bool _isInterliving)
         {
-            Array.Copy(data, in_buf, data.Length);
 
+            if (_isInterliving) Constants.DL_IN_BUF = 32000;
+            else Constants.DL_IN_BUF = 4096;
+
+            in_buf = new byte[Constants.DL_IN_BUF];
+            Array.Copy(data, in_buf, data.Length);
+            _isNrz = NRZ;
             beg_mark_uw = Test_uw();
-            _isInterliving = beg_mark_uw != -1;
+            //_isInterliving = beg_mark_uw != -1;
 
             if (_isInterliving)
             {
@@ -188,7 +193,7 @@ namespace ReceivingStation.Decode
                     ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
                     Find_tk_in();
                 }
-            }             
+            }
         }
 
         #endregion

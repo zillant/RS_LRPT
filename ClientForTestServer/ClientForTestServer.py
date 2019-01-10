@@ -1,5 +1,5 @@
 import socket
-import threading as mp
+import threading as th
 
 sock = socket.socket()
 sock.connect(('127.0.0.1', 11005))
@@ -43,8 +43,8 @@ while True:
         transfer_rcv_data(b"\x33\xFD\x03")
     elif transfer == 7:
         # Отсылка одновременно двух сообщений, для проверки кода ошибки "Пред. команда еще не выполнена." (Нужно поставить задержку в выполнении команды применения настроек)
-        m1 = mp.Thread(target=transfer_rcv_data, args=(b"\x33\x02\x01\x02\x02\x55",))
-        m2 = mp.Thread(target=transfer_rcv_data, args=(b"\x33\xFC\x03",))
+        m1 = th.Thread(target=transfer_rcv_data, args=(b"\x33\x02\x01\x02\x02\x55",))
+        m2 = th.Thread(target=transfer_rcv_data, args=(b"\x33\xFC\x03",))
         m1.start()
         m2.start()
         m1.join()

@@ -4,8 +4,9 @@ using SDRSharp.RTLSDR;
 using SDRSharp.Radio;
 using System.Threading;
 using MaterialSkin.Controls;
+using System.IO;
 
-namespace ReceivingStation
+namespace ReceivingStation.Demodulator
 {
     delegate void TimeHandler();
     unsafe class Demodulating
@@ -17,6 +18,7 @@ namespace ReceivingStation
         const int BL = 401;// Matlabs FIR Order
         const double SampleRate_FIR = 1024000;
         const int _symbolRate = 72000;
+        const int _symbolRateINT = 80000;
         const uint _Frequency = 137883170;
         const uint _SampleRate = 1024000;
         uint Frequency;
@@ -61,6 +63,8 @@ namespace ReceivingStation
         static Complex _prevBuffer;
         static UnsafeBuffer _recordBuffer;
         static unsafe Complex* _recordBufferPtr;
+        static UnsafeBuffer _recordBufferInt;
+        static unsafe Complex* _recordBufferIntPtr;
         static UnsafeBuffer _PacketsBuffer;
         static unsafe Complex* _PacketsBufferPtr;
         static UnsafeBuffer ElementBuffer;
@@ -71,6 +75,7 @@ namespace ReceivingStation
 
 
         static byte[] _outputBuffer;
+        static byte[] _outputBuffer_wInt;
         static float _writeLength;
 
         static bool _needPLLConfigure;
@@ -123,7 +128,8 @@ namespace ReceivingStation
         static Complex _lastData;
 
         private const float ByteToMb = 1f / 1024f / 1024f;
-        private const int BufferSizeToRecord = 16384; // 
+        private const int BufferSizeToRecord = 16384; // без интерливинга
+        private const int BufferSizeToRecord_withInt = 128000 ; // без интерливинга, длина одной посылки 40 * 2
 
         static string filename = (string)"";
 
@@ -133,9 +139,12 @@ namespace ReceivingStation
 
         static FormReceive _formrcv;
         static byte _FrequencyMode;
-        static byte _Interliving;
+        static bool _Interliving;
+        static byte _Modulation;
         static byte[] _correctedarray;
         static byte[] arrayToDecode;
+        static byte[] _correctedarray_Int;
+        static byte[] arrayToDecode_Int;
         static byte[] PacketsArray;
 
         static bool PSPFinded;
@@ -144,32 +153,51 @@ namespace ReceivingStation
         static bool FirstRead;
         private int bytedata;
 
+        static bool NRZ;
+        static bool _qpskModulation;
+        static bool _oqpskModulation;
 
 
-        public Demodulating(FormReceive rcvform, byte freqmode, byte interliving, Decode.Decode decode)
+        public Demodulating(FormReceive rcvform, byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
         {
             _FrequencyMode = freqmode;
-
             _formrcv = rcvform;
+            _Modulation = modulation;
             _decode = decode;
 
-            var logfilename = "onlinelogs";
+            if (interliving == 0x1) _Interliving = true;
+            if (interliving == 0x2) _Interliving = false;
+            
+            //var logfilename = "onlinelogs";
             StreamCorrection = new StreamCorrection(0x2);
             BVS = new BeforeViterbiSync();
+
+            if (_Modulation == 0x1)
+            {
+                _qpskModulation = true;
+                _oqpskModulation = false;
+            }
+            else if (_Modulation == 0x2)
+            {
+                _oqpskModulation = true;
+                _qpskModulation = false;
+            }
         }
+
+  
 
         public void Dongle_Configuration(uint SampleRate)// Настройка свистка    
         {
             if (_FrequencyMode == 0x1) Frequency = 137080000;
-            if (_FrequencyMode == 0x2) Frequency = 137883170;
+            if (_FrequencyMode == 0x2) Frequency = 137889042;
 
             IO.Open();
             IO.Device.Start();
             IO.Device.SamplesAvailable += Samples_Available;
             IO.Device.Frequency = Frequency;
             IO.Device.UseRtlAGC = true;
-            IO.Device.UseTunerAGC = true;
-            // IO.Device.Gain = IO.Device.SupportedGains[4];
+            IO.Device.UseTunerAGC = false;
+            IO.Device.Gain = IO.Device.SupportedGains[28];
             IO.Device.Samplerate = SampleRate;
 
         }
@@ -237,19 +265,19 @@ namespace ReceivingStation
             var dateString = DateTime.Now.ToString("yyyy_MM_dd");
             var timeString = DateTime.Now.ToString("HH-mm-ss");
 
-            filename = string.Format("{0}_LRPT_{1}", dateString, timeString) + ".s";
+            filename = "_LRPT_.s";
             _rawWriter = new Demodulator.FileWriter(filename);
             _rawWriter.Open();
 
             _outputIsStarted = true;
 
         }
-
+        #region Stop Demodulating and Decoding
         public void StopDecoding()
         {
             _processIsStarted = false;
-            //IO.Device.Stop();
-           // IO.Close();
+            IO.Device.Stop();
+            IO.Close();
 
             if (_workerThread != null)
             {
@@ -264,17 +292,12 @@ namespace ReceivingStation
 
             if (_outputThread != null)
             {
-                // _outputThread.Join();
+                //_outputThread.Join();
                 _outputThread = null;
             }
             StreamCorrection.StopCorrect();
-            _recordBuffer.Dispose();
-            _recordBuffer = null;
-            _recordBufferPtr = null;
-            _outputBuffer = null;
-            _recording = false;
-            StreamCorrection = null;
-            
+          
+
             if (IO.Device == null) _formrcv.Invoke(new Action(() => { _formrcv.DongOnlbl.Text = "Приемник выключен"; }));
             _formrcv.Invoke(new Action(() => { _formrcv.DemOnlbl.Text = "Демодулятор выключен"; }));
             _formrcv.Invoke(new Action(() => { _formrcv.LockOnlbl.Text = ""; }));
@@ -282,15 +305,26 @@ namespace ReceivingStation
             _FifoBuffer.Dispose();
             _FifoBuffer = null;
 
-            _decode.FinishDecode();
+            FirstRead = false;
+            _rawWriter.Close();
+            _outputBuffer = null;
+            _recordBuffer.Dispose();
+            _recordBuffer = null;
+            _recordBufferPtr = null;
 
+            _recording = false;
+            StreamCorrection = null;
         }
+        #endregion
 
-        public void PLLReset()
+        #region Demodulating
+        public static void PLLReset()
         {
             _carrierPhase = 0;
             _carrierFrequencyRadian = 0;
             _carrierPhaseErrorAvg = TwoPi;
+            _needPLLConfigure = true;
+            _carrierPhaseLocked = false;
         }
         static unsafe void BufferProcess()
         {
@@ -304,9 +338,11 @@ namespace ReceivingStation
             var phaseError = 0.0f;
             var syncVal = 0.0f;
             var indexout = 0;
+            var symbolRate = 0;
             var resultDisplay = (Complex)0;
             var data = new Complex();
 
+           
             while (_processIsStarted)
             {
                 //Если входной буфер пуст отдыхаем
@@ -315,6 +351,8 @@ namespace ReceivingStation
                     Thread.Sleep(10);
                     continue;
                 }
+                if (_Interliving) symbolRate = _symbolRateINT;
+                else if (!_Interliving) symbolRate = _symbolRate;
 
                 //Проверяем наличие рабочего буфера и создаем при необходимости
                 if (_buffer == null || _SampleRate != samplerateIn)
@@ -323,7 +361,7 @@ namespace ReceivingStation
 
                     interpolation = 1;
 
-                    while (samplerateIn * interpolation < _symbolRate * 4)
+                    while (samplerateIn * interpolation < symbolRate * 4)
                     {
                         interpolation = 2;
                     }
@@ -343,15 +381,15 @@ namespace ReceivingStation
                     _syncBuffer = UnsafeBuffer.Create(length, sizeof(float));
                     _syncBufferPtr = (float*)_syncBuffer;
 
-                    _filterLength = Math.Max((int)(_SampleRate / _symbolRate) | 1, 5);
+                    _filterLength = Math.Max((int)(_SampleRate / symbolRate) | 1, 5);
 
-                    var coeff = FilterBuilder.MakeSinc(_SampleRate, _symbolRate, _filterLength);
+                    var coeff = FilterBuilder.MakeSinc(_SampleRate, symbolRate, _filterLength);
                     _syncFirFilter = new FirFilter(coeff);
 
-                    coeff = FilterBuilder.MakeSinc(_SampleRate, _symbolRate, _filterLength);
+                    coeff = FilterBuilder.MakeSinc(_SampleRate, symbolRate, _filterLength);
                     _LowPassFirFilter = new IQFirFilter(coeff, false, 1);//// TRUE OR FALSE?????
 
-                    _syncFilter->Init(IirFilterType.BandPass, _symbolRate, _SampleRate, 2000);
+                    _syncFilter->Init(IirFilterType.BandPass, symbolRate, _SampleRate, 2000);
 
                     _phaseErrorCoeff = 10.0f / (float)samplerate;
                     _oneMinusPhaseErrCoeff = 1.0f - _phaseErrorCoeff;
@@ -438,7 +476,7 @@ namespace ReceivingStation
                 {
                     _needPLLConfigure = false;
                     _norm = (float)(TwoPi / samplerate);
-                    SearchPhaseBandwidth = 500.0f;// PLL Bandwith
+                    SearchPhaseBandwidth = 400.0f;// PLL Bandwith
                     _minCarrierFrequencyRadian = -10000 * _norm;
                     _maxCarrierFrequencyRadian = 10000 * _norm;
 
@@ -519,12 +557,32 @@ namespace ReceivingStation
                     //resampler
                     data = _bufferPtr[i];
 
-                    if (_syncBufferPtr[i] == -1)
+                    if (_qpskModulation)
                     {
-                        _bufferPtr[indexout] = _lastData;
-                        resultDisplay = _lastData;
-                        indexout++;
+                        if (_syncBufferPtr[i] == -1)
+                        {
+                            _bufferPtr[indexout] = _lastData;
+                            resultDisplay = _lastData;
+                            indexout++;
+                        }
+
                     }
+
+                    else if (_oqpskModulation)
+                    {
+                        if (_syncBufferPtr[i] == 1)
+                        {
+                            _bufferPtr[indexout].Real = data.Real;//_lastData.Real;
+                            resultDisplay.Real = data.Real;//_lastData.Real;
+                        }
+                        if (_syncBufferPtr[i] == -1)
+                        {
+                            _bufferPtr[indexout].Imag = data.Imag;//_lastData.Imag;
+                            resultDisplay.Imag = data.Imag;// _lastData.Imag;
+                            indexout++;
+                        }
+                    }
+
                     _lastData = data;
                 }
 
@@ -544,6 +602,8 @@ namespace ReceivingStation
 
             }
         }
+        #endregion
+
         public void RecordStart()
         {
             FirstRead = false;
@@ -558,8 +618,12 @@ namespace ReceivingStation
             ElementBufferPtr = (Complex*)ElementBuffer;
 
             _outputBuffer = new byte[BufferSizeToRecord * 2];
+            _outputBuffer_wInt = new byte[BufferSizeToRecord_withInt * 2];
             _correctedarray = new byte[32768 / 8];
-            arrayToDecode = new byte[32768];
+            //arrayToDecode = new byte[32768];
+
+            _correctedarray_Int = new byte[_outputBuffer_wInt.Length / 8];
+            arrayToDecode_Int = new byte[2048];
 
             var Element = new byte[2];
             var count = 0;
@@ -578,68 +642,146 @@ namespace ReceivingStation
         static void RecordingThread()
         {
             _recording = true;
-            _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
-            _recordBufferPtr = (Complex*)_recordBuffer;
 
-            _outputBuffer = new byte[BufferSizeToRecord * 2];
-            _correctedarray = new byte[BufferSizeToRecord / 4];
             var PartialPacketLength = 32768;
             var Element = new byte[2];
             var count = 0;
-            while (_outputIsStarted)
+            var countD = 0;
+
+            #region Without Interliving
+            if (!_Interliving)
             {
-                if (_FifoBuffer == null || _FifoBuffer.Length < BufferSizeToRecord)
+                _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
+                _recordBufferPtr = (Complex*)_recordBuffer;
+                while (_outputIsStarted)
                 {
-                    Thread.Sleep(10);
-                    continue;
-                }
-                if (!FirstRead)
-                {
-                    _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
-                    ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
-                    PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
-                    FirstRead = true;
-                }
+                    if (_FifoBuffer == null || _FifoBuffer.Length < BufferSizeToRecord)
+                    {
+                        Thread.Sleep(10);
+                        continue;
+                    }
+                    if (!FirstRead)
+                    {
+                        _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
+                        ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
+                        PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
+                        FirstRead = true;
+                    }
 
-                if (FirstRead && !PSPFinded)
-                {
-                    _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
-                    ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
-                    _outputBuffer = Delete(_outputBuffer, 0);
-                    _outputBuffer = Delete(_outputBuffer, 0);
-                    _outputBuffer = AddElement(_outputBuffer, Element[0]);
-                    _outputBuffer = AddElement(_outputBuffer, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
-                    PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
-                }
+                    if (FirstRead && !PSPFinded && _outputBuffer != null)
+                    {
+                        _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Поиск синхромаркера"; }));
+                        _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
+                        ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
+                        _outputBuffer = Delete(_outputBuffer, 0);
+                        _outputBuffer = Delete(_outputBuffer, 0);
+                        _outputBuffer = AddElement(_outputBuffer, Element[0]);
+                        _outputBuffer = AddElement(_outputBuffer, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
+                        count++;
+                        if (count > 16383)
+                        {
+                            //PLLReset();
+                            count = 0;
+                            StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
+                            _rawWriter.Write(_outputBuffer, _outputBuffer.Length);
+                        }
+                        PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
 
-                if (FirstRead && PSPFinded)
-                {
-                    StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
-                    _decode.StartDecode(_correctedarray);
-                    Console.WriteLine("Finded");
-                    _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
-                    _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
-                    ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
+
+                    }
+
+                    if (FirstRead && PSPFinded && _outputBuffer != null)
+                    {
+                        NRZ = BVS.NRZ;
+                        StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
+                        _decode.StartDecode(_correctedarray, true,_Interliving);
+                        Console.WriteLine("Finded");
+                        _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
+                        _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
+                        ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
+                        _rawWriter.Write(_outputBuffer, _outputBuffer.Length);
+                        PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
+                    }
                     //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
-                    PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
+
+
+                }
+            }
+            #endregion
+
+            #region With Interliving
+            if (_Interliving)
+            {
+                _recordBufferInt = UnsafeBuffer.Create(BufferSizeToRecord_withInt, sizeof(Complex));
+                _recordBufferIntPtr = (Complex*)_recordBufferInt;
+
+                while (_outputIsStarted)
+                {
+                    if (_carrierPhaseLocked)
+                    {
+                        if (_FifoBuffer == null || _FifoBuffer.Length < BufferSizeToRecord_withInt)
+                        {
+                            Thread.Sleep(5);
+                            continue;
+                        }
+                        if (!FirstRead)
+                        {
+                            _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
+                            ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
+                            PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
+                            FirstRead = true;
+                        }
+
+                        if (FirstRead && !PSPFinded && _outputBuffer != null)
+                        {
+                            _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Поиск синхромаркера"; }));
+                            _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
+                            ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
+                            _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
+                            _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
+                            _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[0]);
+                            _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
+                            count++;
+                            if (count > 640)
+                            {
+                                //PLLReset();
+                                FirstRead = false;
+                                count = 0;
+                                StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
+                                StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
+                                _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+                            }
+                            mode = BVS.mode;
+                            PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
+                        }
+
+                        if (FirstRead && PSPFinded && _outputBuffer != null) // как пришло, накапливаем к 400 пакетов, в correctedarray 4 пакета
+                        {
+                            StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
+                            _decode.StartDecode(_correctedarray_Int, true, _Interliving);
+                            _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
+                            _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
+                            ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
+                            _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+                            //BVS.PacketCorrect_int(_outputBuffer_wInt, mode);
+                            PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
+                            mode = BVS.mode;
+                        }
+                    }
+                    //_FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
+                    //ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
+                    //_rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
                 }
 
-                if (FirstRead && !PSPFinded)
-                {
-                    _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
-                    ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
-                    _outputBuffer = Delete(_outputBuffer, 0);
-                    _outputBuffer = Delete(_outputBuffer, 0);
-                    _outputBuffer = AddElement(_outputBuffer, Element[0]);
-                    _outputBuffer = AddElement(_outputBuffer, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
-                    PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
-                }
 
 
             }
+            #endregion
 
 
         }
+
+       
 
 
 
@@ -696,7 +838,7 @@ namespace ReceivingStation
 
         public void fromAmplitudesToBits(byte[] indata, byte[] outarray)
         {
-
+            System.IO.BinaryWriter datfile = new BinaryWriter(File.Open(@"AfterSync_HEX.dat", FileMode.OpenOrCreate));
             sbyte[] data = new sbyte[indata.Length];
 
             for (int i = 0; i < data.Length; i++)
@@ -725,6 +867,8 @@ namespace ReceivingStation
                 }
 
             }
+            datfile.Write(outarray, 0, outarray.Length);
+            datfile.Close();
         }
     }
 }

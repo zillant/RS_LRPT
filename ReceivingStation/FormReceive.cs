@@ -39,8 +39,8 @@ namespace ReceivingStation
         private List<Bitmap>[] _listImagesForSave = new List<Bitmap>[6]; // Список для хранения полосок изображения, нужно для сохранения.
 
         private DateTime _startWorkingTime; // Время начала работы борта.
-                      
-        private Demodulating _receiver;
+
+        private Demodulator.Demodulating _receiver;
         private Server.Server _server;
         private Thread _serverThread;
         private Decode.Decode _decode;
@@ -50,6 +50,7 @@ namespace ReceivingStation
         private byte _prd;
         private byte _freq;
         private byte _interliving;
+        private byte _modulation;
 
         public object SystemColor { get; private set; }
 
@@ -254,15 +255,19 @@ namespace ReceivingStation
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 UserLog.WriteToLogUserActions("Запись потока начата");
 
-                //_receiver = new Demodulating(this, _freq, _interliving, _decode);
-                //_receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
-                //_receiver.StartDecoding();
+                if (rbOqpsk.Checked) _modulation = 0x2;
+                if (rbQpsk.Checked) _modulation = 0x1;
 
-                //_receiver.RecordStart();
+                _receiver = new Demodulator.Demodulating(this, _freq, _interliving, _modulation, _decode);
+                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                _receiver.StartDecoding();
+
+                _receiver.RecordStart();
             }
             else
             {
                  StopReceiving();
+                _decode.FinishDecode();
             }
 
         }
