@@ -111,6 +111,15 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на 127.0.0.1.
+        /// </summary>
+        internal static string ipAddressLocal {
+            get {
+                return ResourceManager.GetString("ipAddressLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Местное управление.
         /// </summary>
         internal static string LocalControlString {

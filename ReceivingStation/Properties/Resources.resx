@@ -166,4 +166,7 @@
   <data name="WorkingTimeOnBoardFileName" xml:space="preserve">
     <value>working_time_onboard_log.txt</value>
   </data>
+  <data name="ipAddressLocal" xml:space="preserve">
+    <value>127.0.0.1</value>
+  </data>
 </root>

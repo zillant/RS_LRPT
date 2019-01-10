@@ -49,18 +49,6 @@ namespace ReceivingStation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
-        public string ipAddressLocal {
-            get {
-                return ((string)(this["ipAddressLocal"]));
-            }
-            set {
-                this["ipAddressLocal"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Не проводилась")]
         public string lastSelfTestDate {
             get {

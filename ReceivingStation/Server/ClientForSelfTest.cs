@@ -49,7 +49,7 @@ namespace ReceivingStation.Server
 
             try
             {
-                IPAddress ipAddress = IPAddress.Parse(Settings.Default.ipAddressLocal);
+                IPAddress ipAddress = IPAddress.Parse(Resources.ipAddressLocal);
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11005);
 
                 Socket sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

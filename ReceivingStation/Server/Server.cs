@@ -76,7 +76,7 @@ namespace ReceivingStation.Server
 
                     var client = server.AcceptTcpClient();
 
-                    List<string> ipList = new List<string> { Settings.Default.ipAddressIVK, Settings.Default.ipAddressLocal };
+                    List<string> ipList = new List<string> { Settings.Default.ipAddressIVK, Resources.ipAddressLocal };
 
                     if (!ipList.Contains(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString()))
                     {
