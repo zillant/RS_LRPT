@@ -36,6 +36,7 @@ namespace ReceivingStation
 
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
+            UserLog.WriteToLogUserActions("Преход в режим самопроверки");
         }
 
         private void btnReceive_Click(object sender, EventArgs e)
@@ -47,6 +48,7 @@ namespace ReceivingStation
 
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
+            UserLog.WriteToLogUserActions("Преход в режим приема");
         }
 
         private void btnDecode_Click(object sender, EventArgs e)
@@ -58,6 +60,7 @@ namespace ReceivingStation
 
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
+            UserLog.WriteToLogUserActions("Преход в режим декодирования");
         }
     }
 }

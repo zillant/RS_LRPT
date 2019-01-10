@@ -99,11 +99,13 @@ namespace ReceivingStation
             Settings.Default.lastSelfTestServerDate = DateTime.Now.ToString();
             Settings.Default.Save();
 
+            UserLog.WriteToLogUserActions("Начата самопроверка сервера");
             WriteActions("  Клиент подключен\n\n", Color.White);
             await Task.Run(() => { _client.StartClient(rbSequentialSending.Checked); });
             btnSelfTestingServer.Enabled = true;
             WriteActions("  Тест завершен\n", Color.White);
             WriteActions("  Клиент отключен", Color.White);
+            UserLog.WriteToLogUserActions("Самопроверка сервера завершена");
 
             pSelfTestSettings.Enabled = true;
             UpdateLastDates();
