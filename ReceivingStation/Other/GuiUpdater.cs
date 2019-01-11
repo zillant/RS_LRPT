@@ -161,6 +161,13 @@ namespace ReceivingStation.Other
         }
         #endregion
 
+        #region Обновление данных демодулирования на GUI.
+        public static void UpdateGuiDemodData (bool _carrierPhaseLocked, bool PSPFinded)
+        {
+           
+        }
+        #endregion
+
         #region Применение шрифта к контролу.
         public static void AllocFont(Font f, Control c, float size)
         {

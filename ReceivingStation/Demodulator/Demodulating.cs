@@ -8,10 +8,10 @@ using System.IO;
 
 namespace ReceivingStation.Demodulator
 {
-    delegate void TimeHandler();
     unsafe class Demodulating
     {
-        static event TimeHandler onTime;
+        public delegate  void UpdateGuiDelegate(bool __carrierPhaseLocked, bool PSPFinded);
+        public  UpdateGuiDelegate ThreadSafeUpdateGui;
 
         const int Gain = 14; // Усиление свистка 15дБ
         const int TotalSamples = 10000;
@@ -36,12 +36,6 @@ namespace ReceivingStation.Demodulator
         static int Samples = 0;
         static int _lostBuffers;
         static RtlSdrIO IO = new RtlSdrIO();
-
-        static List<float> _DataI = new List<float>();
-        static List<float> _DataQ = new List<float>();
-        static List<float> DataI_FIR = new List<float>();
-        static List<float> DataQ_FIR = new List<float>();
-
 
         static IQFirFilter _LowPassFirFilter;
         static FirFilter _syncFirFilter;
@@ -160,10 +154,6 @@ namespace ReceivingStation.Demodulator
 
         public Demodulating(FormReceive rcvform, string filename, byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
         {
-            string fcps = "";
-            string prds = "";
-            string inters = "";
-            string freqs = "";
             _FrequencyMode = freqmode;
             _formrcv = rcvform;
             _Modulation = modulation;
@@ -198,7 +188,9 @@ namespace ReceivingStation.Demodulator
             }
         }
 
-  
+
+
+
 
         public void Dongle_Configuration(uint SampleRate)// Настройка свистка    
         {
@@ -273,8 +265,8 @@ namespace ReceivingStation.Demodulator
             _workerThread.Name = "PSK demodulator";
             _workerThread.Priority = ThreadPriority.Highest;
             _workerThread.Start();
-            if (IO.Device != null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник настроен"; }));
-            _formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор запущен"; }));
+            //if (IO.Device != null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник настроен"; }));
+            //_formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор запущен"; }));
 
             var dateString = DateTime.Now.ToString("yyyy_MM_dd");
             var timeString = DateTime.Now.ToString("HH-mm-ss");
@@ -490,14 +482,12 @@ namespace ReceivingStation.Demodulator
                 {
                     _needPLLConfigure = false;
                     _norm = (float)(TwoPi / samplerate);
-                    SearchPhaseBandwidth = 400.0f;// PLL Bandwith
+                    SearchPhaseBandwidth = 500.0f;// PLL Bandwith
                     _minCarrierFrequencyRadian = -10000 * _norm;
                     _maxCarrierFrequencyRadian = 10000 * _norm;
 
                     _carrierPhaseStep = SearchPhaseBandwidth * _norm;
                     _carrierFrequencyStep = (_carrierPhaseStep * _carrierPhaseStep);
-
-
                 }
 
                 for (var i = 0; i < length; i++)
@@ -531,8 +521,8 @@ namespace ReceivingStation.Demodulator
 
                 if (_carrierPhaseLocked)
                 {
-                    _formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = "Захват"; }));
-                    // Console.WriteLine("Locked!");
+                    //_formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = "Захват"; }));
+                    //Console.WriteLine("Locked!");
                     _LockView = true;
                     _View = true;
 
@@ -540,7 +530,7 @@ namespace ReceivingStation.Demodulator
 
                 if (!_carrierPhaseLocked && _LockView) //если созвездие было захвачено и рассыпалось
                 {
-                    _formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = "Захват потерян"; }));
+                    //_formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = "Захват потерян"; }));
                     _LockView = false;
                 }
 
@@ -650,6 +640,7 @@ namespace ReceivingStation.Demodulator
             _outputThread.Priority = ThreadPriority.Lowest;
             _outputThread.Name = "QPSKOutputThread";
             _outputThread.Start();
+         
         }
 
 
@@ -684,7 +675,7 @@ namespace ReceivingStation.Demodulator
 
                     if (FirstRead && !PSPFinded && _outputBuffer != null)
                     {
-                        _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
+                        //_formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
                         _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                         ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
                         _outputBuffer = Delete(_outputBuffer, 0);
@@ -710,15 +701,14 @@ namespace ReceivingStation.Demodulator
                         StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
                         _decode.StartDecode(_correctedarray, true,_Interliving);
                         Console.WriteLine("Finded");
-                        _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
+                       // _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
                         _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
                         //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
                         PSPFinded = BVS.PSPSearch(_outputBuffer, mode);
                     }
                     //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
-
-
+                    
                 }
             }
             #endregion
@@ -748,7 +738,7 @@ namespace ReceivingStation.Demodulator
 
                         if (FirstRead && !PSPFinded && _outputBuffer != null)
                         {
-                            _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
+                           // _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
                             _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                             ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
                             _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
@@ -773,7 +763,8 @@ namespace ReceivingStation.Demodulator
                         {
                             StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
                             _decode.StartDecode(_correctedarray_Int, true, _Interliving);
-                            _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
+                            // _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
+                            //Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
                            // _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
@@ -785,22 +776,26 @@ namespace ReceivingStation.Demodulator
                     //_FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                     //ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
                     //_rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+
+                    //UpdateDataGui();
                 }
 
 
-
+             
             }
             #endregion
 
-
         }
 
-       static bool PSPSync()
+        public bool[] UpdateDataGui()
         {
-            return PSPFinded;
+            bool[] flags = new bool[2];
+
+            flags[0] = PSPFinded;
+            flags[1] = _carrierPhaseLocked;
+
+            return flags;
         }
-
-
 
 
         static void ConvertComplexToByte(byte[] dest, Complex* source, int sourceLength)

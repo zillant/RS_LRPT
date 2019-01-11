@@ -52,6 +52,9 @@ namespace ReceivingStation
         private byte _interliving;
         private byte _modulation;
 
+        
+        private bool[] flags = new bool[2]; // массив состояний демодулятора flag[0] = синхронизация фазы синхропосылки; flag[1] = захват петли ФАПЧ
+
         public FormReceive()
         {
             InitializeComponent();
@@ -198,7 +201,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
             _counterForSaveWorkingTime -= 1;
-           
+
             if (_counterForSaveWorkingTime == 0)
             {
                 if (_isReceivingStarting)
@@ -208,7 +211,15 @@ namespace ReceivingStation
                     WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
+
             }
+            
+            if (_isReceivingStarting)
+            {
+                flags = _receiver.UpdateDataGui();
+                lblUpdate(flags);
+            }
+
         }
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
@@ -285,10 +296,12 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
-                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
+                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode) { ThreadSafeUpdateGui = UpdateGuiDemodData };
                 _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
                 _receiver.StartDecoding();
                 _receiver.RecordStart();
+                lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
+                lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
             }
             else
             {
@@ -305,6 +318,10 @@ namespace ReceivingStation
             _isReceivingStarting = false;
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
+            lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
+            lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
+            lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "");
+            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
@@ -403,8 +420,30 @@ namespace ReceivingStation
                     rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
             }
         }
+        #endregion
+        #region Обновление данных демодуляции на GUI.
+        private void UpdateGuiDemodData(bool _carrirerPhaseLocked, bool PSPFinded)
+        {
+
+            if (InvokeRequired)
+            {
+                //Invoke(new Action(() => lblUpdate(_carrirerPhaseLocked, PSPFinded)));
+            }
+        }
 
         #endregion
+
+        private void lblUpdate(bool[] flags)
+        {
+            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено"); 
+            else
+            {
+                lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захват...");
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+            }
+            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден"); 
+            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера..."); 
+        }
 
         #region Расчет времени наработки.
         private void CountWorkingTime()

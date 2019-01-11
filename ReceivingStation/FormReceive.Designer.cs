@@ -616,7 +616,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 151F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -639,9 +639,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(124, 3);
+            this.panel7.Location = new System.Drawing.Point(117, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(109, 102);
+            this.panel7.Size = new System.Drawing.Size(101, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -697,7 +697,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(416, 3);
+            this.panel2.Location = new System.Drawing.Point(390, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(119, 102);
             this.panel2.TabIndex = 42;
@@ -756,9 +756,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(239, 3);
+            this.panel3.Location = new System.Drawing.Point(224, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(171, 102);
+            this.panel3.Size = new System.Drawing.Size(160, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -818,7 +818,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(115, 102);
+            this.panel4.Size = new System.Drawing.Size(108, 102);
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -927,16 +927,15 @@
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(541, 3);
+            this.pModulation.Location = new System.Drawing.Point(515, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(147, 102);
+            this.pModulation.Size = new System.Drawing.Size(173, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
             // rbQpsk
             // 
             this.rbQpsk.AutoSize = true;
-            this.rbQpsk.Checked = true;
             this.rbQpsk.Depth = 0;
             this.rbQpsk.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbQpsk.Location = new System.Drawing.Point(8, 62);
@@ -947,13 +946,13 @@
             this.rbQpsk.Ripple = true;
             this.rbQpsk.Size = new System.Drawing.Size(64, 30);
             this.rbQpsk.TabIndex = 48;
-            this.rbQpsk.TabStop = true;
             this.rbQpsk.Text = "QPSK";
             this.rbQpsk.UseVisualStyleBackColor = true;
             // 
             // rbOqpsk
             // 
             this.rbOqpsk.AutoSize = true;
+            this.rbOqpsk.Checked = true;
             this.rbOqpsk.Depth = 0;
             this.rbOqpsk.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbOqpsk.Location = new System.Drawing.Point(8, 30);
@@ -964,6 +963,7 @@
             this.rbOqpsk.Ripple = true;
             this.rbOqpsk.Size = new System.Drawing.Size(74, 30);
             this.rbOqpsk.TabIndex = 47;
+            this.rbOqpsk.TabStop = true;
             this.rbOqpsk.Text = "OQPSK";
             this.rbOqpsk.UseVisualStyleBackColor = true;
             // 
