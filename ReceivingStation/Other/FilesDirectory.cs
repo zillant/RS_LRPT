@@ -6,44 +6,41 @@ namespace ReceivingStation.Other
 {
     static class FilesDirectory
     {
-        public static string UserLogFile { get; } = $"{LogsDirectory}\\{Resources.UserLogFileName}";
+        private static string _myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private static string _mainDirectory = _myDocuments + Resources.MainDirName;
+        private static string _logsDirectory  = _mainDirectory + Resources.LogsDirName;
+        private static string _sessionsDirectory = _mainDirectory + Resources.SessionsDirName;
+        private static string _dateDirectory = $"{_sessionsDirectory}{DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}";
 
-        public static string WorkingTimeOnBoardFile { get; } = $"{LogsDirectory}\\{Resources.WorkingTimeOnBoardFileName}";
+        public static string UserLogFile { get; } = _logsDirectory + Resources.UserLogFileName;
+        public static string WorkingTimeOnBoardFile { get; } = _logsDirectory + Resources.WorkingTimeOnBoardFileName;
 
-        static string MainDirectory { get; } = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\{Resources.MainDirName}";
-
-        static string LogsDirectory { get; } = $"{MainDirectory}\\{Resources.LogsDirName}";
-
-        static string SessionsDirectory { get; } = $"{MainDirectory}\\{Resources.SessionsDirName}";
-
-        static string DateDirectory { get; } = $"{SessionsDirectory}\\{DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}";
-   
         public static void CreateApplicationDirectory()
         {
-            if (Directory.Exists(MainDirectory) == false)
+            if (Directory.Exists(_mainDirectory) == false)
             {
-                Directory.CreateDirectory(MainDirectory);
+                Directory.CreateDirectory(_mainDirectory);
             }
 
-            if (Directory.Exists(LogsDirectory) == false)
+            if (Directory.Exists(_logsDirectory) == false)
             {
-                Directory.CreateDirectory(LogsDirectory);
+                Directory.CreateDirectory(_logsDirectory);
             }
 
-            if (Directory.Exists(SessionsDirectory) == false)
+            if (Directory.Exists(_sessionsDirectory) == false)
             {
-                Directory.CreateDirectory(SessionsDirectory);
+                Directory.CreateDirectory(_sessionsDirectory);
             }
         }
 
         public static string GetCurrentSessionDirectory(string sessionName)
         {
-            if (Directory.Exists($"{DateDirectory}") == false)
+            if (Directory.Exists($"{_dateDirectory}") == false)
             {
-                Directory.CreateDirectory($"{DateDirectory}");
+                Directory.CreateDirectory($"{_dateDirectory}");
             }
 
-            string sessionDirectory = $"{DateDirectory}\\{sessionName}";
+            string sessionDirectory = $"{_dateDirectory}\\{sessionName}";
 
             if (Directory.Exists(sessionDirectory) == false)
             {

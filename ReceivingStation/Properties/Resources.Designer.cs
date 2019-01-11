@@ -129,7 +129,7 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Logs.
+        ///   Ищет локализованную строку, похожую на Logs\\.
         /// </summary>
         internal static string LogsDirName {
             get {
@@ -138,7 +138,7 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ReceivingStation.
+        ///   Ищет локализованную строку, похожую на \\ReceivingStation\\.
         /// </summary>
         internal static string MainDirName {
             get {
@@ -186,7 +186,7 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Sessions.
+        ///   Ищет локализованную строку, похожую на Sessions\\.
         /// </summary>
         internal static string SessionsDirName {
             get {
