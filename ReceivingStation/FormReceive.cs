@@ -59,6 +59,11 @@ namespace ReceivingStation
 
         private void FormReceive_Load(object sender, EventArgs e)
         {
+            lblDemOn.Text = "";
+            lblDongOn.Text = "";
+            lblLockOn.Text = "";
+            lblSignDetect.Text = "";
+
             GuiUpdater.SmoothLoadingForm(this);
 
             GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime);
@@ -217,12 +222,14 @@ namespace ReceivingStation
         {
             if (!_isReceivingStarting)
             {
-                _isReceivingStarting = true;
+                
 
                 if (!Server.Server.RemoteModeFlag)
                 {
                     SetReceiveParameters();
                 }
+
+                _isReceivingStarting = true;
 
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
                 tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
@@ -252,7 +259,7 @@ namespace ReceivingStation
 
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
 
-                
+            
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
                 {
@@ -268,8 +275,6 @@ namespace ReceivingStation
                     }
                 }
 
-               
-                             
                 _startWorkingTime = DateTime.Now;
                 _imageCounter = 0;
                 _callingUpdateImageCounter = 0;               
@@ -280,10 +285,9 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
-                _receiver = new Demodulator.Demodulating(this, _freq, _interliving, _modulation, _decode);
+                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
                 _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
                 _receiver.StartDecoding();
-
                 _receiver.RecordStart();
             }
             else

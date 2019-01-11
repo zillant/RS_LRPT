@@ -147,7 +147,7 @@ namespace ReceivingStation.Demodulator
         static byte[] arrayToDecode_Int;
         static byte[] PacketsArray;
 
-        static bool PSPFinded;
+        public static bool PSPFinded;
         static int mode = 0;
 
         static bool FirstRead;
@@ -158,18 +158,32 @@ namespace ReceivingStation.Demodulator
         static bool _oqpskModulation;
 
 
-        public Demodulating(FormReceive rcvform, byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
+        public Demodulating(FormReceive rcvform, string filename, byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
         {
+            string fcps = "";
+            string prds = "";
+            string inters = "";
+            string freqs = "";
             _FrequencyMode = freqmode;
             _formrcv = rcvform;
             _Modulation = modulation;
             _decode = decode;
 
-            if (interliving == 0x1) _Interliving = true;
-            if (interliving == 0x2) _Interliving = false;
+            if (interliving == 0x1)
+            {
+                _Interliving = true;
+             }
+            if (interliving == 0x2)
+            {
+                _Interliving = false;
+            }
+
             
+            var recordingfilename = $"{filename}.dat";
+            
+
             //var logfilename = "onlinelogs";
-            StreamCorrection = new StreamCorrection(0x2);
+            StreamCorrection = new StreamCorrection(0x2, recordingfilename);
             BVS = new BeforeViterbiSync();
 
             if (_Modulation == 0x1)
@@ -259,8 +273,8 @@ namespace ReceivingStation.Demodulator
             _workerThread.Name = "PSK demodulator";
             _workerThread.Priority = ThreadPriority.Highest;
             _workerThread.Start();
-            if (IO.Device != null) _formrcv.Invoke(new Action(() => { _formrcv.DongOnlbl.Text = "Приемник настроен"; }));
-            _formrcv.Invoke(new Action(() => { _formrcv.DemOnlbl.Text = "Демодулятор запущен"; }));
+            if (IO.Device != null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник настроен"; }));
+            _formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор запущен"; }));
 
             var dateString = DateTime.Now.ToString("yyyy_MM_dd");
             var timeString = DateTime.Now.ToString("HH-mm-ss");
@@ -298,9 +312,9 @@ namespace ReceivingStation.Demodulator
             StreamCorrection.StopCorrect();
           
 
-            if (IO.Device == null) _formrcv.Invoke(new Action(() => { _formrcv.DongOnlbl.Text = "Приемник выключен"; }));
-            _formrcv.Invoke(new Action(() => { _formrcv.DemOnlbl.Text = "Демодулятор выключен"; }));
-            _formrcv.Invoke(new Action(() => { _formrcv.LockOnlbl.Text = ""; }));
+            if (IO.Device == null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник выключен"; }));
+            _formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор выключен"; }));
+            _formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = ""; }));
             _buffer = null;
             _FifoBuffer.Dispose();
             _FifoBuffer = null;
@@ -517,7 +531,7 @@ namespace ReceivingStation.Demodulator
 
                 if (_carrierPhaseLocked)
                 {
-                    _formrcv.Invoke(new Action(() => { _formrcv.LockOnlbl.Text = "Захват"; }));
+                    _formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = "Захват"; }));
                     // Console.WriteLine("Locked!");
                     _LockView = true;
                     _View = true;
@@ -526,7 +540,7 @@ namespace ReceivingStation.Demodulator
 
                 if (!_carrierPhaseLocked && _LockView) //если созвездие было захвачено и рассыпалось
                 {
-                    _formrcv.Invoke(new Action(() => { _formrcv.LockOnlbl.Text = "Захват потерян"; }));
+                    _formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = "Захват потерян"; }));
                     _LockView = false;
                 }
 
@@ -670,7 +684,7 @@ namespace ReceivingStation.Demodulator
 
                     if (FirstRead && !PSPFinded && _outputBuffer != null)
                     {
-                        _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Поиск синхромаркера"; }));
+                        _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
                         _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                         ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
                         _outputBuffer = Delete(_outputBuffer, 0);
@@ -696,7 +710,7 @@ namespace ReceivingStation.Demodulator
                         StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
                         _decode.StartDecode(_correctedarray, true,_Interliving);
                         Console.WriteLine("Finded");
-                        _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
+                        _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
                         _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
                         //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
@@ -734,7 +748,7 @@ namespace ReceivingStation.Demodulator
 
                         if (FirstRead && !PSPFinded && _outputBuffer != null)
                         {
-                            _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Поиск синхромаркера"; }));
+                            _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
                             _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                             ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
                             _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
@@ -759,10 +773,10 @@ namespace ReceivingStation.Demodulator
                         {
                             StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
                             _decode.StartDecode(_correctedarray_Int, true, _Interliving);
-                            _formrcv.Invoke(new Action(() => { _formrcv.SignDetectlbl.Text = "Синхромаркер найден"; }));
+                            _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
-                            //_rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+                           // _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
                             //BVS.PacketCorrect_int(_outputBuffer_wInt, mode);
                             PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
                             mode = BVS.mode;
@@ -781,7 +795,10 @@ namespace ReceivingStation.Demodulator
 
         }
 
-       
+       static bool PSPSync()
+        {
+            return PSPFinded;
+        }
 
 
 

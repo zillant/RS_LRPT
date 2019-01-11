@@ -16,11 +16,11 @@ namespace ReceivingStation.Demodulator
         private bool _Interliving;
 
         #region Конструктор
-        public StreamCorrection(byte interliving)
+        public StreamCorrection(byte interliving, string filename)
         {
             if (interliving == 0x1) _Interliving = true;
             if (interliving == 0x2) _Interliving = false;
-            datfile = new BinaryWriter(File.Create(@"AfterSync_HEX.dat"));
+            datfile = new BinaryWriter(File.Create(filename));
         }
         #endregion
         public void StreamCorrect(string filenameFromRecordingThread)
