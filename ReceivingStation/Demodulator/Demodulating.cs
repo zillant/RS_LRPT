@@ -10,9 +10,6 @@ namespace ReceivingStation.Demodulator
 {
     unsafe class Demodulating
     {
-        public delegate  void UpdateGuiDelegate(bool __carrierPhaseLocked, bool PSPFinded);
-        public  UpdateGuiDelegate ThreadSafeUpdateGui;
-
         const int Gain = 14; // Усиление свистка 15дБ
         const int TotalSamples = 10000;
         const int BL = 401;// Matlabs FIR Order
@@ -188,8 +185,7 @@ namespace ReceivingStation.Demodulator
             }
         }
 
-
-
+        
 
 
         public void Dongle_Configuration(uint SampleRate)// Настройка свистка    
@@ -265,9 +261,7 @@ namespace ReceivingStation.Demodulator
             _workerThread.Name = "PSK demodulator";
             _workerThread.Priority = ThreadPriority.Highest;
             _workerThread.Start();
-            //if (IO.Device != null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник настроен"; }));
-            //_formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор запущен"; }));
-
+        
             var dateString = DateTime.Now.ToString("yyyy_MM_dd");
             var timeString = DateTime.Now.ToString("HH-mm-ss");
 
@@ -675,7 +669,6 @@ namespace ReceivingStation.Demodulator
 
                     if (FirstRead && !PSPFinded && _outputBuffer != null)
                     {
-                        //_formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
                         _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                         ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
                         _outputBuffer = Delete(_outputBuffer, 0);
@@ -701,7 +694,6 @@ namespace ReceivingStation.Demodulator
                         StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
                         _decode.StartDecode(_correctedarray, true,_Interliving);
                         Console.WriteLine("Finded");
-                       // _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
                         _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
                         //_rawWriter.Write(_outputBuffer, _outputBuffer.Length);
@@ -738,7 +730,6 @@ namespace ReceivingStation.Demodulator
 
                         if (FirstRead && !PSPFinded && _outputBuffer != null)
                         {
-                           // _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Поиск синхромаркера"; }));
                             _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                             ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
                             _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
@@ -753,7 +744,6 @@ namespace ReceivingStation.Demodulator
                                 count = 0;
                                 StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
                                 StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
-                                //_rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
                             }
                             mode = BVS.mode;
                             PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, mode);
@@ -763,8 +753,6 @@ namespace ReceivingStation.Demodulator
                         {
                             StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
                             _decode.StartDecode(_correctedarray_Int, true, _Interliving);
-                            // _formrcv.Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
-                            //Invoke(new Action(() => { _formrcv.lblSignDetect.Text = "Синхромаркер найден"; }));
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
                            // _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);

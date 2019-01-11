@@ -52,7 +52,6 @@ namespace ReceivingStation
         private byte _interliving;
         private byte _modulation;
 
-        
         private bool[] flags = new bool[2]; // массив состояний демодулятора flag[0] = синхронизация фазы синхропосылки; flag[1] = захват петли ФАПЧ
 
         public FormReceive()
@@ -217,7 +216,7 @@ namespace ReceivingStation
             if (_isReceivingStarting)
             {
                 flags = _receiver.UpdateDataGui();
-                lblUpdate(flags);
+                UpdateGuiDemodulationData(flags);
             }
 
         }
@@ -232,8 +231,7 @@ namespace ReceivingStation
         public void StartStopReceiving()
         {
             if (!_isReceivingStarting)
-            {
-                
+            {               
 
                 if (!Server.Server.RemoteModeFlag)
                 {
@@ -263,7 +261,7 @@ namespace ReceivingStation
                 else if (_interliving == 0x2) inters = "без_инт";
 
 
-                var timeString = DateTime.Now.ToString("HH-mm");
+                var timeString = DateTime.Now.ToString("HH-mm-ss");
                 var  fileName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
 
                 _fileName = $"{FilesDirectory.GetCurrentSessionDirectory($"{fileName}")}\\{fileName}";
@@ -277,8 +275,8 @@ namespace ReceivingStation
                     _allChannels[i].Controls.Clear();
                     _channels[i].Controls.Clear();
                     _listImagesForSave[i].Clear();
-                    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
-                    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileName(_fileName)}_Channel_{i + 1}");
+                    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileName(_fileName)}_Channel_{i + 1}");
 
                     foreach (FileInfo file in di.GetFiles())
                     {
@@ -296,10 +294,11 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
-                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode) { ThreadSafeUpdateGui = UpdateGuiDemodData };
+                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
                 _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
                 _receiver.StartDecoding();
                 _receiver.RecordStart();
+
                 lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
                 lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
             }
@@ -421,29 +420,21 @@ namespace ReceivingStation
             }
         }
         #endregion
+
         #region Обновление данных демодуляции на GUI.
-        private void UpdateGuiDemodData(bool _carrirerPhaseLocked, bool PSPFinded)
+        private void UpdateGuiDemodulationData(bool[] flags)
         {
-
-            if (InvokeRequired)
-            {
-                //Invoke(new Action(() => lblUpdate(_carrirerPhaseLocked, PSPFinded)));
-            }
-        }
-
-        #endregion
-
-        private void lblUpdate(bool[] flags)
-        {
-            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено"); 
+            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");
             else
             {
                 lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захват...");
                 lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
             }
-            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден"); 
-            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера..."); 
+            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден");
+            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера...");
         }
+
+        #endregion
 
         #region Расчет времени наработки.
         private void CountWorkingTime()
