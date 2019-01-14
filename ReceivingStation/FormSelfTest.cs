@@ -27,7 +27,7 @@ namespace ReceivingStation
         {
             GuiUpdater.SmoothLoadingForm(this);
 
-            GuiUpdater.AllocFont(GuiUpdater.Font, rtbTestServer, 11);
+            RobotoFont.AllocFont(rtbTestServer, 11);
 
             UpdateLastDates();
 

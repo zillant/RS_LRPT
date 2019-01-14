@@ -155,9 +155,10 @@
     <Compile Include="Other\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Other\FilesDirectory.cs" />
+    <Compile Include="Other\ApplicationDirectory.cs" />
     <Compile Include="Other\GuiUpdater.cs" />
     <Compile Include="Other\ImageSaver.cs" />
+    <Compile Include="Other\RobotoFont.cs" />
     <Compile Include="Other\UserLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

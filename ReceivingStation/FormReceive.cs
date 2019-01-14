@@ -207,7 +207,7 @@ namespace ReceivingStation
                 {
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
-                    WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
+                    WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
 
@@ -262,9 +262,9 @@ namespace ReceivingStation
 
 
                 var timeString = DateTime.Now.ToString("HH-mm-ss");
-                var  fileName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
+                var sessionName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
 
-                _fileName = $"{FilesDirectory.GetCurrentSessionDirectory($"{fileName}")}\\{fileName}";
+                _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}";
 
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
 
@@ -328,7 +328,7 @@ namespace ReceivingStation
             _decode.FinishDecode();
 
             CountWorkingTime();
-            WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
+            WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
 
@@ -471,12 +471,12 @@ namespace ReceivingStation
         {
             try
             {
-                ReadFromLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
+                ReadFromLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
             }
             catch (Exception)
             {
-                WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
-                ReadFromLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
+                WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
+                ReadFromLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
             }
         }
 

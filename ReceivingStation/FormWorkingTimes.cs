@@ -39,7 +39,7 @@ namespace ReceivingStation
                 FormReceive.ReservePrdWorkingTime = TimeSpan.Zero;
                 FormReceive.FullWorkingTime = TimeSpan.Zero;
 
-                FormReceive.WriteToLogWorkingTime(FilesDirectory.WorkingTimeOnBoardFile);
+                FormReceive.WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
 
                 DisplayWorkinTime(lblFCPMain, FormReceive.MainFcpWorkingTime);
                 DisplayWorkinTime(lblFCPReserve, FormReceive.ReserveFcpWorkingTime);

@@ -1,6 +1,5 @@
 ﻿using MaterialSkin.Controls;
 using ReceivingStation.Other;
-using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -31,7 +30,7 @@ namespace ReceivingStation.MessageBoxes
 
             _catalogPath = catalogPath;
 
-            GuiUpdater.AllocFont(GuiUpdater.Font, _formInformationMessageBox.llPath, 11);
+            RobotoFont.AllocFont(_formInformationMessageBox.llPath, 11);
             _formInformationMessageBox.llPath.LinkClicked += LinkClicked;
 
             _formInformationMessageBox.ShowDialog();

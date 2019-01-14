@@ -12,9 +12,9 @@ namespace ReceivingStation
         public FormMenu()
         {
             InitializeComponent();
-            GuiUpdater.LoadFont();
+            RobotoFont.LoadFont();
             GuiUpdater.SmoothLoadingForm(this);
-            FilesDirectory.CreateApplicationDirectory();
+            ApplicationDirectory.CreateApplicationDirectory();
         }
 
         private void FormMenu_FormClosing(object sender, FormClosingEventArgs e)
