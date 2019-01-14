@@ -55,6 +55,8 @@ namespace ReceivingStation.Other
         /// <remarks>
         /// Отличается от стандартного AppendText тем, что позволяет поменять цвет текста.
         /// </remarks>
+        /// <param name="text">Текст.</param> 
+        /// <param name="color">Цвет.</param> 
         public static void AppendText(this RichTextBox box, string text, Color color)
         {
             box.SelectionStart = box.TextLength;
