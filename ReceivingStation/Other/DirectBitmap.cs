@@ -5,6 +5,12 @@ using System.Runtime.InteropServices;
 
 namespace ReceivingStation.Other
 {
+    /// <summary>
+    /// Класс для работы с изображением.
+    /// </summary>
+    /// <remarks>
+    /// Намного быстрее стандартного Bitmap.
+    /// </remarks>
     class DirectBitmap : IDisposable
     {
         public Bitmap Bitmap { get; }
