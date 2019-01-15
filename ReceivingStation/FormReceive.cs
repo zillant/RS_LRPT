@@ -26,7 +26,6 @@ namespace ReceivingStation
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
         
         private string _fileName;
-        private bool _isReceivingStarting;
         private bool _isModulationPanelVisible; // Для скрытия панели модуляции.
 
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
@@ -72,8 +71,6 @@ namespace ReceivingStation
 
             materialTabControl1.SelectedTab = tabPage7;
 
-            Server.Server.RemoteModeFlag = false;
-            _isReceivingStarting = false;
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             _isModulationPanelVisible = false;
 
@@ -103,17 +100,21 @@ namespace ReceivingStation
             }
 
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            timer1.Start();
 
             _server = new Server.Server(false)
             {
+                ReceivingStartedFlag = false,
                 ThreadSafeChangeMode = ChangeMode,
                 ThreadSafeSetReceiveParameters = SetReceiveParameters,
                 ThreadSafeStartStopReceiving = StartStopReceiving,
+                ThreadSafeGetSyncsStates = GetSyncsStates,
             };
+            Server.Server.RemoteModeFlag = false;
 
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
+
+            timer1.Start();
         }
 
         private void FormReceive_FormClosing(object sender, FormClosingEventArgs e)
@@ -154,7 +155,7 @@ namespace ReceivingStation
         }
 
         private void btnStartRecieve_Click(object sender, EventArgs e)
-        {           
+        {
             StartStopReceiving();
         }
 
@@ -203,22 +204,20 @@ namespace ReceivingStation
 
             if (_counterForSaveWorkingTime == 0)
             {
-                if (_isReceivingStarting)
+                if (_server.ReceivingStartedFlag)
                 {
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
                     WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
-
             }
-            
-            if (_isReceivingStarting)
+
+            if (_server.ReceivingStartedFlag && _receiver != null)
             {
                 flags = _receiver.UpdateDataGui();
                 UpdateGuiDemodulationData(flags);
             }
-
         }
 
         private void bwImageSaver_DoWork(object sender, DoWorkEventArgs e)
@@ -230,16 +229,14 @@ namespace ReceivingStation
         #region Начать прием потока.
         public void StartStopReceiving()
         {
-            if (!_isReceivingStarting)
+            if (!_server.ReceivingStartedFlag)
             {               
-
                 if (!Server.Server.RemoteModeFlag)
                 {
-                    SetReceiveParameters();
+                    SetReceiveParameters();                   
                 }
 
-                _isReceivingStarting = true;
-
+                _server.ReceivingStartedFlag = true;
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
                 tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
 
@@ -260,15 +257,13 @@ namespace ReceivingStation
                 if (_interliving == 0x1) inters = "с_инт";
                 else if (_interliving == 0x2) inters = "без_инт";
 
-
                 var timeString = DateTime.Now.ToString("HH-mm-ss");
                 var sessionName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
 
                 _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}";
 
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-
-            
+           
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
                 {
@@ -289,13 +284,13 @@ namespace ReceivingStation
                 _callingUpdateImageCounter = 0;               
 
                 UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
-                UserLog.WriteToLogUserActions("Запись потока начата");
+                UserLog.WriteToLogUserActions("Запись потока начата");                
 
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
                 _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
-                _receiver.Dongle_Configuration(1024000);// инициализируем свисток, в нем отсчеты записываются в поток
+                _receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
                 _receiver.StartDecoding();
                 _receiver.RecordStart();
 
@@ -314,7 +309,7 @@ namespace ReceivingStation
         #region Остановить прием потока.
         public void StopReceiving()
         {
-            _isReceivingStarting = false;
+            _server.ReceivingStartedFlag = false;
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
             lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
@@ -332,7 +327,11 @@ namespace ReceivingStation
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
 
-            FormInformationMessageBox.Show("Сообщение", "Прием потока завершен.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
+            // Чтобы при удаленной работе не выскакивало информационное окно.
+            if (!Server.Server.RemoteModeFlag)
+            {
+                FormInformationMessageBox.Show("Сообщение", "Прием потока завершен.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
+            }           
         }
 
         #endregion
@@ -516,5 +515,14 @@ namespace ReceivingStation
         #endregion
 
         #endregion
+
+        public bool[] GetSyncsStates()
+        {
+            bool[] syncsStatesValues = new bool[2];
+            syncsStatesValues[0] = flags[0];
+            syncsStatesValues[1] = _interliving == 0x1 ? true : false;
+
+            return syncsStatesValues;
+        }
     }
 }

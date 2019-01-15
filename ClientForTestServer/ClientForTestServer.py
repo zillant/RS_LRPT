@@ -12,7 +12,8 @@ print("""
 5 - Start stream record (0x33 0xFC 0x03)
 6 - Stop stream record (0x33 0xFD 0x03)
 7 - Check is main program busy
-8 - disconect
+8 - Get syncs states
+9 - disconect
 """)
 
 def transfer_rcv_data (transfer_data):
@@ -34,7 +35,7 @@ while True:
         transfer_rcv_data(b"\x33\x01\x03\x01\x01\x35")
     elif transfer == 4:
         # Параметры приема битового потока
-        transfer_rcv_data(b"\x33\x02\x01\x02\x02\x55")
+        transfer_rcv_data(b"\x33\x02\x01\x02\x01\x55")
     elif transfer == 5:
         # Начать запись
         transfer_rcv_data(b"\x33\xFC\x03")
@@ -50,6 +51,9 @@ while True:
         m1.join()
         m2.join()
     elif transfer == 8:
+        # Проверить синхронизацию.
+        transfer_rcv_data(b"\x33\x03\x03")
+    elif transfer == 9:
         break
 
 sock.close()

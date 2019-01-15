@@ -13,12 +13,15 @@ namespace ReceivingStation.Server
         public ChangeModeDelegate ThreadSafeChangeMode;
         public delegate void SetParametersDelegate(byte fcp, byte prd, byte freq, byte interliving);
         public SetParametersDelegate ThreadSafeSetReceiveParameters;
+        public delegate bool[] GetSyncsStatesDelegate();
+        public GetSyncsStatesDelegate ThreadSafeGetSyncsStates;
         public delegate void StartStopReceivingDelegate();
         public StartStopReceivingDelegate ThreadSafeStartStopReceiving;
 
         public bool StopThread;
-       
-        public static bool RemoteModeFlag;
+
+        public static bool RemoteModeFlag { get; set; }
+        public bool ReceivingStartedFlag { get; set; } // Начат ли прием потока.
 
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
@@ -30,8 +33,7 @@ namespace ReceivingStation.Server
         private const byte CommandNotComletedMessage = 0x7; // Выполнение предыдущей команды не завершено.
         private const byte CommandHeader = 0x33; // Заголовок полученной команды.
 
-        private bool _setParametersFlag; // Установлены ли параметры приема.
-        private bool _receivingStartedFlag; // Начат ли прием потока.
+        private bool _setParametersFlag; // Установлены ли параметры приема.       
         private bool _isCommandCompleted; // Проверка, выполнена ли принятая команда.
         private NetworkStream _stream;
 
@@ -48,16 +50,14 @@ namespace ReceivingStation.Server
 
         public void StartServer()
         {
-            byte[] data = new byte[256];  // Буфер для получаемых команд.           
-
-            
+            byte[] data = new byte[256];  // Буфер для получаемых команд.                    
 
             try
             {
                 var server = new TcpListener(IPAddress.Parse("0.0.0.0"), 11005);
 
                 _setParametersFlag = false;
-                _receivingStartedFlag = false;
+                ReceivingStartedFlag = false;
 
                 while (StopThread == false)
                 {
@@ -67,7 +67,7 @@ namespace ReceivingStation.Server
                     else
                     {
                         _setParametersFlag = false;
-                        _receivingStartedFlag = false;
+                        ReceivingStartedFlag = false;
                     }
 
                     RemoteModeFlag = false;
@@ -218,7 +218,7 @@ namespace ReceivingStation.Server
         #region Получить статус установки параметров приема потока.
         private byte SetReceiveParameters(byte[] command)
         {
-            if (RemoteModeFlag && !_receivingStartedFlag)
+            if (RemoteModeFlag && !ReceivingStartedFlag)
             {
                 // Проверяем содержимое команды после заголовка и до резервного байта.
                 for (int i = 1; i < 5; i++)
@@ -240,7 +240,7 @@ namespace ReceivingStation.Server
             {
                 return LocalModeMessage;
             }
-            else if (_receivingStartedFlag)
+            else if (ReceivingStartedFlag)
             {
                 return ReceivingStartedMessage;
             }
@@ -256,10 +256,8 @@ namespace ReceivingStation.Server
             if (command == 0xFC)
             {
                 // Начать запись потока.
-                if (RemoteModeFlag && _setParametersFlag && !_receivingStartedFlag)
+                if (RemoteModeFlag && _setParametersFlag && !ReceivingStartedFlag)
                 {
-                    _receivingStartedFlag = true;
-
                     if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
                 }
@@ -271,7 +269,7 @@ namespace ReceivingStation.Server
                 {
                     return ParametersNotSetMessage;
                 }
-                else if (_receivingStartedFlag)
+                else if (ReceivingStartedFlag)
                 {
                     return ReceivingStartedMessage;
                 }
@@ -280,9 +278,8 @@ namespace ReceivingStation.Server
             else if (command == 0xFD)
             {
                 // Остановить запись потока.
-                if (RemoteModeFlag && _receivingStartedFlag)
+                if (RemoteModeFlag && ReceivingStartedFlag)
                 {
-                    _receivingStartedFlag = false;
                     if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
                 }
@@ -304,12 +301,16 @@ namespace ReceivingStation.Server
         #region Получить статус синхронизации.
         private byte GetSyncStatus()
         {
-            if (_receivingStartedFlag)
+            if (!RemoteModeFlag)
             {
-                return OkMessage;
+                return LocalModeMessage;
+            }
+            else if (!ReceivingStartedFlag)
+            {
+                return ReceivingNotStartedMessage;
             }
 
-            return ReceivingNotStartedMessage;
+            return OkMessage;
         }
 
         #endregion
@@ -325,8 +326,11 @@ namespace ReceivingStation.Server
             // Если запрос статуса синхронизации.
             if (command[1] == 0x03)
             {
-                answer = GetSyncStatusFromThread();
-                answer.Insert(0, 0x33);
+                bool[] syncsStatesValues = ThreadSafeGetSyncsStates();
+
+                answer.AddRange(command);
+                answer.Insert(2, commandStatus == OkMessage ? syncsStatesValues[0] ? (byte)0x00 : (byte)0xFF : (byte)0xFF);
+                answer.Insert(3, commandStatus == OkMessage ? syncsStatesValues[1] ? (byte)0x00 : (byte)0xFF : (byte)0xFF);
             }
             else
             {
@@ -339,14 +343,5 @@ namespace ReceivingStation.Server
         }
 
         #endregion
-
-        private List<byte> GetSyncStatusFromThread()
-        {
-            // Создать метод в Form1 который отдает значения синхронизации. 
-            // Ильшату из своего потока обновлять не только лейбл но и эти значения.
-
-            // Или забирать у Ильшата геттер этих переменных и вывести сюда.
-            throw new NotImplementedException();
-        }
     }
 }
