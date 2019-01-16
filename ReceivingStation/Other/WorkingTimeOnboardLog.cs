@@ -10,26 +10,6 @@ namespace ReceivingStation.Other
     static class WorkingTimeOnboardLog
     {
         /// <summary>
-        /// Открытие файла времени наработки.
-        /// </summary>
-        /// <remarks>
-        /// Попытка считать значения времени наработки каждого полукомплекта.
-        /// Если файл нет, создает новый с нулевыми значениями.
-        /// </remarks>
-        public static void ReadValues(TimeSpan mainFcpWorkingTime, TimeSpan reserveFcpWorkingTime, TimeSpan mainPrdWorkingTime, TimeSpan reservePrdWorkingTime)
-        {
-            try
-            {
-                Read();
-            }
-            catch (Exception)
-            {
-                Write(mainFcpWorkingTime, reserveFcpWorkingTime, mainPrdWorkingTime, reservePrdWorkingTime);
-                Read();
-            }
-        }
-
-        /// <summary>
         /// Запись в файл времени наработки.
         /// </summary>
         /// <param name="mainFcpWorkingTime">Время наработки основного ФЦП.</param> 
@@ -54,17 +34,18 @@ namespace ReceivingStation.Other
         /// <summary>
         /// Чтение значений из файла времени наработки.
         /// </summary> 
-        /// <remarks>
-        /// Не передаю ссылки на переменные, потому что это не работает. Ссылкам значения не присваиваются, хз почему.
-        /// </remarks>
-        private static void Read()
+        /// <param name="mainFcpWorkingTime">Время наработки основного ФЦП.</param> 
+        /// <param name="reserveFcpWorkingTime">Время наработки резервного ФЦП.</param> 
+        /// <param name="mainPrdWorkingTime">Время наработки основного ПРД.</param> 
+        /// <param name="reservePrdWorkingTime">Время наработки резервного ПРД.</param> 
+        public static void Read(out TimeSpan mainFcpWorkingTime, out TimeSpan reserveFcpWorkingTime, out TimeSpan mainPrdWorkingTime, out TimeSpan reservePrdWorkingTime)
         {
             using (StreamReader sr = new StreamReader(ApplicationDirectory.WorkingTimeOnBoardFile))
             {
-                FormReceive.MainFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-                FormReceive.ReserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-                FormReceive.MainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-                FormReceive.ReservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                mainFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                reserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                mainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
+                reservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
             }
         }
     }

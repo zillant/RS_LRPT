@@ -72,8 +72,20 @@ namespace ReceivingStation
 
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             _isModulationPanelVisible = false;
+            
+            try
+            {
+                WorkingTimeOnboardLog.Read(out MainFcpWorkingTime, out ReserveFcpWorkingTime, out MainPrdWorkingTime, out ReservePrdWorkingTime);
+            }
+            catch (Exception)
+            {
+                WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
+            }
 
-            WorkingTimeOnboardLog.ReadValues(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
+            Console.WriteLine(MainFcpWorkingTime.ToString());
+            Console.WriteLine(ReserveFcpWorkingTime.ToString());
+            Console.WriteLine(MainPrdWorkingTime.ToString());
+            Console.WriteLine(ReservePrdWorkingTime.ToString());
 
             _channelsPanels[0] = pImage1;
             _channelsPanels[1] = pImage2;
