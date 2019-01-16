@@ -10,11 +10,15 @@ using ReceivingStation.Properties;
 
 namespace ReceivingStation.Server
 {
+    /// <summary>
+    /// Класс сокет клиента, для тестирования серверно части приложения.
+    /// </summary>
     class ClientForSelfTest
     {
         public delegate void WriteActionsDelegate(string msg, Color color);
         public WriteActionsDelegate ThreadSafeWriteActions;
 
+        // Коды ошибок.
         private const byte OkMessage = 0x0; // Команда выполнена.
         private const byte InvalidCommandMessage = 0x1; // Ошибочная команда.
         private const byte ParametersNotSetMessage = 0x2; // Не установлены параметры записи потока.
@@ -24,11 +28,12 @@ namespace ReceivingStation.Server
         private const byte ReceivingNotStartedMessage = 0x6; // Прием потока еще не начат.
         private const byte CommandNotComletedMessage = 0x7; // Выполнение предыдущей команды не завершено.
 
-        private byte[] _remoteModeMsg = { 0x33, 0xFF, 0x34 };
-        private byte[] _localModeMsg = { 0x33, 0x01, 0x03 };
-        private byte[] _setParametersMsg = { 0x33, 0x02, 0x01, 0x02, 0x02, 0x55 };
-        private byte[] _startStreamRecordMsg = { 0x33, 0xFC, 0x03 };
-        private byte[] _stopStreamRecordMsg = { 0x33, 0xFD, 0x03 };
+        // Управляющие команды.
+        private byte[] _remoteModeMsg = { 0x33, 0xFF, 0x34 }; // Переход в режим ДУ.
+        private byte[] _localModeMsg = { 0x33, 0x01, 0x03 }; // Переход в режим МУ.
+        private byte[] _setParametersMsg = { 0x33, 0x02, 0x01, 0x02, 0x02, 0x55 }; // Установить параметры приема.
+        private byte[] _startStreamRecordMsg = { 0x33, 0xFC, 0x03 }; // Начать запись приема.
+        private byte[] _stopStreamRecordMsg = { 0x33, 0xFD, 0x03 }; // Остановить запись приема.
 
         private List<byte[]> _messages = new List<byte[]>();
         private byte[] _bytes = new byte[1024];
@@ -42,10 +47,17 @@ namespace ReceivingStation.Server
             _messages.Add(_localModeMsg);
         }
 
+        /// <summary>
+        /// Запустить работу клиента.
+        /// </summary>
+        /// <remarks>
+        /// Соединяется с сервером, в установленном порядке посылает команды серверу.
+        /// </remarks>
+        /// <param name="isSeqTestType">Отправить команды последовательно?</param>
         public void StartClient(bool isSeqTestType)
         {
             Random rand = new Random();
-            List<byte> commandsNumbers = new List<byte> { 0, 1, 2, 3, 4 }; // Для того чтобы случайный перебор команд был не таким уж случайным.
+            List<byte> commandsNumbers = new List<byte> { 0, 1, 2, 3, 4 }; // Чтобы случайный перебор команд был не таким уж случайным.
 
             try
             {
@@ -100,6 +112,17 @@ namespace ReceivingStation.Server
             }
         }
 
+        /// <summary>
+        /// Взаимодействие с сервером.
+        /// </summary>
+        /// <remarks>
+        /// Основная логика работы клиента с сервером.
+        /// Отправляет сообщения на основную форму, посылает и принимает сообщения от сервера. 
+        /// Индекс команды нужен для сопоставления с описанием команды и отправки его на форму.
+        /// </remarks>
+        /// <param name="msg">Сообщение для сервера.</param>
+        /// <param name="sender">Объект клиента.</param>
+        /// <param name="index">Индекс команды.</param>
         private async void SendReceiveMsg(byte[] msg, Socket sender, int index)
         {
             switch (index)

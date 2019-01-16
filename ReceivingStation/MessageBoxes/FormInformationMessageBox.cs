@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace ReceivingStation.MessageBoxes
 {
+    /// <summary>
+    /// MessageBox для информационных сообщений.
+    /// </summary>
     public partial class FormInformationMessageBox : MaterialForm
     {
         private static FormInformationMessageBox _formInformationMessageBox;
@@ -17,6 +20,15 @@ namespace ReceivingStation.MessageBoxes
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Показать диалоговое окно.
+        /// </summary>
+        /// <param name="title">Заголовок окна.</param> 
+        /// <param name="text">Содержимое текста сообщения.</param> 
+        /// <param name="image">Изображение.</param> 
+        /// <param name="text2">Содержимое текста сообщения (вторая строчка. необязательно).</param> 
+        /// <param name="linkName">Содержимое текста ссылки (необязательно).</param> 
+        /// <param name="catalogPath">Путь к каталогу текущего сеанса (необязательно).</param> 
         public static void Show(string title, string text, Bitmap image, string text2="", string linkName="", string catalogPath="")
         {         
             _formInformationMessageBox = new FormInformationMessageBox
@@ -36,6 +48,12 @@ namespace ReceivingStation.MessageBoxes
             _formInformationMessageBox.ShowDialog();
         }
 
+        /// <summary>
+        /// Нажатие на ссылку.
+        /// </summary>
+        /// <remarks>
+        /// Открывает каталог текущего сеанса.
+        /// </remarks>
         private static void LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("explorer.exe", " /open, " + Path.GetDirectoryName(_catalogPath)));
