@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation.Server
-{
+{   
+    /// <summary>
+    /// Класс сокет сервера, для дистанционной работы с ИВК.
+    /// </summary>
     class Server
     {
         public delegate void ChangeModeDelegate(byte modeNumber);
@@ -46,8 +49,13 @@ namespace ReceivingStation.Server
             _isCommandCompleted = false;
         }
 
-        #region Запустить работу сервера.
-
+        /// <summary>
+        /// Запустить работу сервера.
+        /// </summary>
+        /// <remarks>
+        /// Ожидает подключения клиента. Сверяет IP клиента со списком разрешенных IP.
+        /// Принимает сообщения от клиента и отвечает ему.
+        /// </remarks>
         public void StartServer()
         {
             byte[] data = new byte[256];  // Буфер для получаемых команд.                    
@@ -123,10 +131,10 @@ namespace ReceivingStation.Server
             }
         }
 
-        #endregion
-
-        #region Проверка принятой команды.
-
+        /// <summary>
+        /// Проверка принятой команды.
+        /// </summary>
+        /// <param name="command">Принятая команда.</param>
         private void CheckReceivedCommand(byte[] command)
         {
             byte commandStatus = InvalidCommandMessage;
@@ -172,9 +180,13 @@ namespace ReceivingStation.Server
             _isCommandCompleted = false;
         }
 
-        #endregion
-
-        #region Получить статус переключения на удаленный или местный режим управления.
+        /// <summary>
+        /// Получить статус переключения на удаленный или местный режим управления.
+        /// </summary>
+        /// <param name="commandValue">Код команды.</param>
+        /// <returns>
+        /// Результат смены режима управления (Код ошибки).
+        /// </returns>
         private byte GetChangeModeStatus(byte commandValue)
         {
             if (commandValue == 0x01)
@@ -213,9 +225,13 @@ namespace ReceivingStation.Server
             return OkMessage;
         }
 
-        #endregion
-
-        #region Получить статус установки параметров приема потока.
+        /// <summary>
+        /// Получить статус установки параметров приема потока.
+        /// </summary>
+        /// <param name="command">Принятая команда.</param>
+        /// <returns>
+        /// Результат установки параметров (Код ошибки).
+        /// </returns>
         private byte SetReceiveParameters(byte[] command)
         {
             if (RemoteModeFlag && !ReceivingStartedFlag)
@@ -248,12 +264,16 @@ namespace ReceivingStation.Server
             return OkMessage;
         }
 
-        #endregion
-
-        #region Получить статус Начала/Остановки приема потока.
-        private byte GetStartStopReceivingStatus(byte command)
+        /// <summary>
+        /// Получить статус Начала/Остановки приема потока.
+        /// </summary>
+        /// <param name="commandValue">Код команды.</param>
+        /// <returns>
+        /// Результат Начала/Остановки приема потока (Код ошибки).
+        /// </returns>
+        private byte GetStartStopReceivingStatus(byte commandValue)
         {
-            if (command == 0xFC)
+            if (commandValue == 0xFC)
             {
                 // Начать запись потока.
                 if (RemoteModeFlag && _setParametersFlag && !ReceivingStartedFlag)
@@ -275,7 +295,7 @@ namespace ReceivingStation.Server
                 }
             }
 
-            else if (command == 0xFD)
+            else if (commandValue == 0xFD)
             {
                 // Остановить запись потока.
                 if (RemoteModeFlag && ReceivingStartedFlag)
@@ -296,9 +316,12 @@ namespace ReceivingStation.Server
             return OkMessage;
         }
 
-        #endregion
-
-        #region Получить статус синхронизации.
+        /// <summary>
+        /// Получить статус синхронизации.
+        /// </summary>
+        /// <returns>
+        /// Результат запроса статуса синхронизации (Код ошибки).
+        /// </returns>
         private byte GetSyncStatus()
         {
             if (!RemoteModeFlag)
@@ -313,14 +336,20 @@ namespace ReceivingStation.Server
             return OkMessage;
         }
 
-        #endregion
-
-        #region Формирование ответной квитанции.
+        /// <summary>
+        /// Формирование ответной квитанции.
+        /// </summary>
+        /// <remarks>
+        /// Структура квитанции - Значения указанные в командном сообщении,
+        /// резервный байт (беру из командного сообщения), код ошибки (статус выполнения команды).
+        /// </remarks>
+        /// <param name="command">Принятая команда.</param>
+        /// <param name="commandStatus">Статус выполнения принятой команды.</param>
+        /// <returns>
+        /// Ответ на принятую команду.
+        /// </returns>
         private byte[] GetAnswer(byte[] command, byte commandStatus)
         {
-            // Структура квитанции - Значения указанные в командном сообщении,
-            // резервный байт (беру из командного сообщения), код ошибки (статус выполнения команды).
-
             List<byte> answer = new List<byte>();
 
             // Если запрос статуса синхронизации.
@@ -341,7 +370,5 @@ namespace ReceivingStation.Server
 
             return answer.ToArray();
         }
-
-        #endregion
     }
 }
