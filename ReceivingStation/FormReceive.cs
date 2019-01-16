@@ -82,11 +82,6 @@ namespace ReceivingStation
                 WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
             }
 
-            Console.WriteLine(MainFcpWorkingTime.ToString());
-            Console.WriteLine(ReserveFcpWorkingTime.ToString());
-            Console.WriteLine(MainPrdWorkingTime.ToString());
-            Console.WriteLine(ReservePrdWorkingTime.ToString());
-
             _channelsPanels[0] = pImage1;
             _channelsPanels[1] = pImage2;
             _channelsPanels[2] = pImage3;
