@@ -11,7 +11,7 @@ using ReceivingStation.Properties;
 namespace ReceivingStation.Server
 {
     /// <summary>
-    /// Класс сокет клиента, для тестирования серверно части приложения.
+    /// Класс сокет клиента, для тестирования серверной части приложения в режиме "Самопроверка".
     /// </summary>
     class ClientForSelfTest
     {
