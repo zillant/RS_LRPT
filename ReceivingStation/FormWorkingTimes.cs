@@ -19,7 +19,7 @@ namespace ReceivingStation
             DisplayWorkinTime(lblFCPMain, FormReceive.MainFcpWorkingTime);
             DisplayWorkinTime(lblFCPReserve, FormReceive.ReserveFcpWorkingTime);
             DisplayWorkinTime(lblPRDMain, FormReceive.MainPrdWorkingTime);
-            DisplayWorkinTime(lblPRDReserve, FormReceive.ReservePrdWorkingTime);            
+            DisplayWorkinTime(lblPRDReserve, FormReceive.ReservePrdWorkingTime);
         }
 
         private void DisplayWorkinTime(Control label, TimeSpan workingTime)
@@ -39,7 +39,7 @@ namespace ReceivingStation
                 FormReceive.ReservePrdWorkingTime = TimeSpan.Zero;
                 FormReceive.FullWorkingTime = TimeSpan.Zero;
 
-                FormReceive.WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
+                WorkingTimeOnboardLog.Write(FormReceive.MainFcpWorkingTime, FormReceive.ReserveFcpWorkingTime, FormReceive.MainPrdWorkingTime, FormReceive.ReservePrdWorkingTime);
 
                 DisplayWorkinTime(lblFCPMain, FormReceive.MainFcpWorkingTime);
                 DisplayWorkinTime(lblFCPReserve, FormReceive.ReserveFcpWorkingTime);

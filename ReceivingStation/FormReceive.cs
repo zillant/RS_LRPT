@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using ReceivingStation.Other;
-using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -74,7 +73,7 @@ namespace ReceivingStation
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             _isModulationPanelVisible = false;
 
-            OpenLogWorkingTimeFile();
+            WorkingTimeOnboardLog.ReadValues(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
 
             _channelsPanels[0] = pImage1;
             _channelsPanels[1] = pImage2;
@@ -208,7 +207,7 @@ namespace ReceivingStation
                 {
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
-                    WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
+                    WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
@@ -262,7 +261,7 @@ namespace ReceivingStation
 
                 _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}";
 
-                _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
+                // _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
            
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
@@ -289,10 +288,10 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
-                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
-                _receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
-                _receiver.StartDecoding();
-                _receiver.RecordStart();
+                //_receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
+                //_receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
+                //_receiver.StartDecoding();
+                //_receiver.RecordStart();
 
                 lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
                 lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
@@ -319,11 +318,11 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-            _receiver.StopDecoding();
-            _decode.FinishDecode();
+           // _receiver.StopDecoding();
+           // _decode.FinishDecode();
 
             CountWorkingTime();
-            WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
+            WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
 
             UserLog.WriteToLogUserActions("Запись потока завершена");
 
@@ -460,59 +459,6 @@ namespace ReceivingStation
                 ReservePrdWorkingTime += deltaWorkingTime;
             }
         }
-
-        #endregion
-
-        #region Работа с файлом времени наработки.
-
-        #region Открытие файла времени наработки.
-        private void OpenLogWorkingTimeFile()
-        {
-            try
-            {
-                ReadFromLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
-            }
-            catch (Exception)
-            {
-                WriteToLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
-                ReadFromLogWorkingTime(ApplicationDirectory.WorkingTimeOnBoardFile);
-            }
-        }
-
-        #endregion
-
-        #region Запись в файл времени наработки.
-        public static void WriteToLogWorkingTime(string fileName)
-        {
-            using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8, 65536))
-            {
-                // Первые 4 строчки в формате удобном для Е.В.
-                sw.WriteLine($"{MainFcpWorkingTime.Days}.{MainFcpWorkingTime.Hours}:{MainFcpWorkingTime.Minutes}:{MainFcpWorkingTime.Seconds}");
-                sw.WriteLine($"{ReserveFcpWorkingTime.Days}.{ReserveFcpWorkingTime.Hours}:{ReserveFcpWorkingTime.Minutes}:{ReserveFcpWorkingTime.Seconds}");
-                sw.WriteLine($"{MainPrdWorkingTime.Days}.{MainPrdWorkingTime.Hours}:{MainPrdWorkingTime.Minutes}:{MainPrdWorkingTime.Seconds}");
-                sw.WriteLine($"{ReservePrdWorkingTime.Days}.{ReservePrdWorkingTime.Hours}:{ReservePrdWorkingTime.Minutes}:{ReservePrdWorkingTime.Seconds}");
-
-                //sw.WriteLine(FullWorkingTime); // Полное время наработки. В релизе не используем. Считаю для себя.
-            }
-        }
-
-        #endregion
-
-        #region Чтение из файла времени наработки.
-        private void ReadFromLogWorkingTime(string fileName)
-        {
-            using (StreamReader sr = new StreamReader(fileName))
-            {
-                MainFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-                ReserveFcpWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-                MainPrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-                ReservePrdWorkingTime = TimeSpan.Parse(sr.ReadLine() ?? "0.0:0:0");
-
-                //FullWorkingTime = TimeSpan.Parse(sr.ReadLine());
-            }
-        }
-
-        #endregion
 
         #endregion
 
