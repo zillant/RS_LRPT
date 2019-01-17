@@ -149,7 +149,16 @@ namespace ReceivingStation
             _imageCounter += 1;
         }
 
-        #region Начать декодирование.
+        #region Начать/Остановить декодирование файла.
+
+        /// <summary>
+        /// Начать/Остановить декодирование файла.
+        /// </summary> 
+        /// <remarks>
+        /// Создает декодер текущего сеанса.
+        /// Очищает контролы от предыдущего сеанса.
+        /// Проверяет выбран ли файл для декодирования.  
+        /// </remarks>
         private async void StartStopDecoding()
         {
             if (_isFileOpened)
@@ -204,17 +213,23 @@ namespace ReceivingStation
             }
         }
 
-        #endregion
-
-        #region Принудительная остановка декодирования.
+        /// <summary>
+        /// Принудительная остановка декодирования.
+        /// </summary>
+        /// <remarks>
+        /// Нажатие на кнопку "Остановить".
+        /// </remarks>
         private void ForcedStopDecoding()
         {
             _decode.stopDecoding = true;
         }
 
-        #endregion
-
-        #region Остановка декодирования.
+        /// <summary>
+        /// Остановка декодирования.
+        /// </summary> 
+        /// <remarks>
+        /// Логика остановки декодирования файла.
+        /// </remarks>
         private void StopDecoding()
         {
             bwImageSaver.RunWorkerAsync();
@@ -236,7 +251,19 @@ namespace ReceivingStation
 
         #endregion
 
-        #region Обновление данных декодирования на GUI.
+        /// <summary>
+        /// Обновление данных декодирования на GUI.
+        /// </summary>
+        /// <remarks>
+        /// Связан с делегатом ThreadSafeUpdateGui в потоке декодирования.
+        /// Каждые 60 вызовов этой функции вызывается сохранение полученных изображений.
+        /// </remarks>
+        /// <param name="linesDate">Значения Даты и времени полученной полосы.</param>
+        /// <param name="linesTd">Значения ТД полученной полосы.</param>
+        /// <param name="linesOshv">Значения ОШВ полученной полосы.</param>
+        /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
+        /// <param name="linesPcdm">Значения ПЦДМ полученной полосы.</param>
+        /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param>
         private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
         {
             _callingUpdateImageCounter++;
@@ -254,7 +281,5 @@ namespace ReceivingStation
                     rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
             }
         }
-
-        #endregion
     }
 }
