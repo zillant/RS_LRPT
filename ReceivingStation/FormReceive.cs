@@ -289,6 +289,7 @@ namespace ReceivingStation
         /// <remarks>
         /// Создает имя, приемник и декодер текущего сеанса.
         /// Очищает контролы от предыдущего сеанса.
+        /// Связан с делегатом ThreadSafeStartStopReceiving в потоке сервера.  
         /// </remarks>
         public void StartStopReceiving()
         {
@@ -459,6 +460,9 @@ namespace ReceivingStation
         /// <summary>
         /// Получение статусов синхронизации для ИВК в режиме ДУ.
         /// </summary>
+        /// <remarks>
+        /// Связан с делегатом ThreadSafeGetSyncsStates в потоке сервера.      
+        /// </remarks>
         public bool[] GetSyncsStates()
         {
             bool[] syncsStatesValues = new bool[2];
