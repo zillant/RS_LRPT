@@ -280,6 +280,8 @@ namespace ReceivingStation.Server
                 {
                     if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
+                    else
+                        ReceivingStartedFlag = true;
                 }
                 else if (!RemoteModeFlag)
                 {
@@ -302,6 +304,8 @@ namespace ReceivingStation.Server
                 {
                     if (!_isItSelfTest)
                         ThreadSafeStartStopReceiving();
+                    else
+                        ReceivingStartedFlag = false;
                 }
                 else if (!RemoteModeFlag)
                 {
