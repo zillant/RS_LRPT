@@ -72,15 +72,8 @@ namespace ReceivingStation
 
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             _isModulationPanelVisible = false;
-            
-            try
-            {
-                WorkingTimeOnboardLog.Read(out MainFcpWorkingTime, out ReserveFcpWorkingTime, out MainPrdWorkingTime, out ReservePrdWorkingTime);
-            }
-            catch (Exception)
-            {
-                WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
-            }
+           
+            LogFiles.ReadWorkingTimeValues(out MainFcpWorkingTime, out ReserveFcpWorkingTime, out MainPrdWorkingTime, out ReservePrdWorkingTime);
 
             _channelsPanels[0] = pImage1;
             _channelsPanels[1] = pImage2;
@@ -214,7 +207,7 @@ namespace ReceivingStation
                 {
                     CountWorkingTime();
                     _startWorkingTime = DateTime.Now;
-                    WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
+                    LogFiles.WriteWorkingTimeValues(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
                 }
                 _counterForSaveWorkingTime = TimeForSaveWorkingTime;
             }
@@ -232,7 +225,71 @@ namespace ReceivingStation
             _imageCounter += 1;
         }
 
-        #region Начать прием потока.
+        #region Установка параметров записи потока.
+
+        /// <summary>
+        /// Установка параметров записи потока в местном режиме управления.
+        /// </summary>
+        private void SetReceiveParameters()
+        {
+            _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
+            _prd = Convert.ToByte(rbPRDMain.Checked ? 0x1 : 0x2);
+            _freq = Convert.ToByte(rbFreq1.Checked ? 0x1 : 0x2);
+            _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
+        }
+
+        /// <summary>
+        /// Установка параметров записи потока в дистанционном режиме управления.
+        /// </summary>
+        /// <remarks>
+        /// Связан с делегатом ThreadSafeSetReceiveParameters в потоке сервера.      
+        /// </remarks>
+        /// <param name="fcp">Значение ФЦП.</param>
+        /// <param name="prd">Значение ПРД.</param>
+        /// <param name="freq">Значение несущей частоты.</param>
+        /// <param name="interliving">Значение интеливинга.</param>
+        private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
+        {
+            _fcp = fcp;
+            _prd = prd;
+            _freq = freq;
+            _interliving = interliving;
+
+            Invoke(new Action(() => { SetRadioButtons(_fcp, rbFCPMain, rbFCPReserve); }));
+            Invoke(new Action(() => { SetRadioButtons(_prd, rbPRDMain, rbPRDReserve); }));
+            Invoke(new Action(() => { SetRadioButtons(_freq, rbFreq1, rbFreq2); }));
+            Invoke(new Action(() => { SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff); }));
+        }
+
+        /// <summary>
+        /// Смена состояний RadioButton для установка параметров записи потока в дистанционном режиме управления.
+        /// </summary>
+        /// <param name="param">Параметр.</param>
+        /// <param name="rb1">Первый RadioButton параметра.</param>
+        /// <param name="rb2">Второй RadioButton параметра.</param>
+        private void SetRadioButtons(byte param, RadioButton rb1, RadioButton rb2)
+        {
+            if (param == 0x1)
+            {
+                rb1.Checked = true;
+            }
+            else
+            {
+                rb2.Checked = true;
+            }
+        }
+
+        #endregion
+
+        #region Начать/Остановить прием потока.
+
+        /// <summary>
+        /// Начать/Остановить прием потока.
+        /// </summary> 
+        /// <remarks>
+        /// Создает имя, приемник и декодер текущего сеанса.
+        /// Очищает контролы от предыдущего сеанса.
+        /// </remarks>
         public void StartStopReceiving()
         {
             if (!_server.ReceivingStartedFlag)
@@ -265,11 +322,8 @@ namespace ReceivingStation
 
                 var timeString = DateTime.Now.ToString("HH-mm-ss");
                 var sessionName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
-
                 _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}";
-
-                // _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-           
+          
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
                 {
@@ -289,12 +343,13 @@ namespace ReceivingStation
                 _imageCounter = 0;
                 _callingUpdateImageCounter = 0;               
 
-                UserLog.WriteToLogUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
-                UserLog.WriteToLogUserActions("Запись потока начата");                
+                LogFiles.WriteUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
+                LogFiles.WriteUserActions("Запись потока начата");                
 
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
+                // _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
                 //_receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
                 //_receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
                 //_receiver.StartDecoding();
@@ -309,13 +364,18 @@ namespace ReceivingStation
             }
 
         }
-      
-        #endregion
 
-        #region Остановить прием потока.
-        public void StopReceiving()
+        /// <summary>
+        /// Остановить прием потока.
+        /// </summary> 
+        /// <remarks>
+        /// Логика остановки приема потока.
+        /// </remarks>
+        private void StopReceiving()
         {
             _server.ReceivingStartedFlag = false;
+            // _receiver.StopDecoding();
+            // _decode.FinishDecode();
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
             lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
@@ -325,24 +385,27 @@ namespace ReceivingStation
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
-           // _receiver.StopDecoding();
-           // _decode.FinishDecode();
-
             CountWorkingTime();
-            WorkingTimeOnboardLog.Write(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
-
-            UserLog.WriteToLogUserActions("Запись потока завершена");
+            LogFiles.WriteWorkingTimeValues(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
+            LogFiles.WriteUserActions("Запись потока завершена");
 
             // Чтобы при удаленной работе не выскакивало информационное окно.
             if (!Server.Server.RemoteModeFlag)
             {
                 FormInformationMessageBox.Show("Сообщение", "Прием потока завершен.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
-            }           
+            }
         }
 
         #endregion
 
-        #region Смена режима управления.
+        /// <summary>
+        /// Смена режима управления.
+        /// </summary>
+        /// <remarks>
+        /// Нужно для работы с ИВК.
+        /// Связан с делегатом ThreadSafeChangeMode в потоке сервера.      
+        /// </remarks>
+        /// <param name="modeNumber">Номер режима управления. 0 - ДУ, 1 - МУ.</param>
         private void ChangeMode(byte modeNumber)
         {
             if (modeNumber == 0)
@@ -351,7 +414,7 @@ namespace ReceivingStation
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, false);
                 Invoke(new Action(() => { slMode.Text = Resources.RemoteControlString; }));
 
-                UserLog.WriteToLogUserActions(Resources.RemoteControlString);
+                LogFiles.WriteUserActions(Resources.RemoteControlString);
 
 
             }
@@ -361,92 +424,18 @@ namespace ReceivingStation
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, true);
                 Invoke(new Action(() => { slMode.Text = Resources.LocalControlString; }));
 
-                UserLog.WriteToLogUserActions(Resources.LocalControlString);
+                LogFiles.WriteUserActions(Resources.LocalControlString);
             }
         }
 
-        #endregion
-
-        #region Установка параметров записи потока в дистанционном режиме управления.
-        private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
-        {
-            _fcp = fcp;
-            _prd = prd;
-            _freq = freq;
-            _interliving = interliving;
-
-            Invoke(new Action(() => { SetRadioButtons(_fcp, rbFCPMain, rbFCPReserve); }));
-            Invoke(new Action(() => { SetRadioButtons(_prd, rbPRDMain, rbPRDReserve); }));
-            Invoke(new Action(() => {SetRadioButtons(_freq, rbFreq1, rbFreq2); }));
-            Invoke(new Action(() => {SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff); }));
-        }
-
-        private void SetRadioButtons(byte param, RadioButton rb1, RadioButton rb2)
-        {
-            if (param == 0x1)
-            {
-                rb1.Checked = true;
-            }
-            else
-            {
-                rb2.Checked = true;
-            }
-        }
-        
-        #endregion
-
-        #region Установка параметров записи потока в местном режиме управления.
-        private void SetReceiveParameters()
-        {
-            _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
-            _prd = Convert.ToByte(rbPRDMain.Checked ? 0x1 : 0x2);
-            _freq = Convert.ToByte(rbFreq1.Checked ? 0x1 : 0x2);
-            _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
-        }
-
-        #endregion
-
-        #region Обновление данных декодирования на GUI.
-        private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
-        {
-            _callingUpdateImageCounter++;
-
-            // Набрал 480 строчек изображения (8 * 60).
-            if (_callingUpdateImageCounter == 60)
-            {
-                bwImageSaver.RunWorkerAsync();
-                _callingUpdateImageCounter = 0;
-            }
-
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
-                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
-            }
-        }
-        #endregion
-
-        #region Обновление данных демодуляции на GUI.
-        private void UpdateGuiDemodulationData(bool[] flags)
-        {
-            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");
-            else
-            {
-                lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захват...");
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
-            }
-            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден");
-            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера...");
-        }
-
-        #endregion
-
-        #region Расчет времени наработки.
+        /// <summary>
+        /// Расчет времени наработки каждого полукомплекта.
+        /// </summary>
         private void CountWorkingTime()
         {
             DateTime finishWorkingTime = DateTime.Now;
             TimeSpan deltaWorkingTime = finishWorkingTime - _startWorkingTime;
-            FullWorkingTime += deltaWorkingTime;
+            FullWorkingTime += deltaWorkingTime; // Общее время наработки (не используется).
 
             if (rbFCPMain.Checked)
             {
@@ -467,8 +456,9 @@ namespace ReceivingStation
             }
         }
 
-        #endregion
-
+        /// <summary>
+        /// Получение статусов синхронизации для ИВК в режиме ДУ.
+        /// </summary>
         public bool[] GetSyncsStates()
         {
             bool[] syncsStatesValues = new bool[2];
@@ -477,5 +467,55 @@ namespace ReceivingStation
 
             return syncsStatesValues;
         }
+
+        #region Обновление GUI.
+
+        /// <summary>
+        /// Обновление данных декодирования на GUI.
+        /// </summary>
+        /// <remarks>
+        /// Связан с делегатом ThreadSafeUpdateGui в потоке декодирования.
+        /// Каждые 60 вызовов этой функции вызывается сохранение полученных изображений.
+        /// </remarks>
+        /// <param name="linesDate">Значения Даты и времени полученной полосы.</param>
+        /// <param name="linesTd">Значения ТД полученной полосы.</param>
+        /// <param name="linesOshv">Значения ОШВ полученной полосы.</param>
+        /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
+        /// <param name="linesPcdm">Значения ПЦДМ полученной полосы.</param>
+        /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param>
+        private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
+        {
+            _callingUpdateImageCounter++;
+
+            // Набрал 480 строчек изображения (8 * 60).
+            if (_callingUpdateImageCounter == 60)
+            {
+                bwImageSaver.RunWorkerAsync();
+                _callingUpdateImageCounter = 0;
+            }
+
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
+                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
+            }
+        }
+
+        /// <summary>
+        /// Обновление данных демодуляции на GUI.
+        /// </summary>
+        private void UpdateGuiDemodulationData(bool[] flags)
+        {
+            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");
+            else
+            {
+                lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захват...");
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+            }
+            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден");
+            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера...");
+        }
+
+        #endregion
     }
 }

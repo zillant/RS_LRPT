@@ -35,6 +35,8 @@ namespace ReceivingStation.MessageBoxes
         /// </returns>
         public static DialogResult Show(string title, string text, Bitmap image)
         {
+            _result = DialogResult.No;
+
             _formDialogMessageBox = new FormDialogMessageBox
             {
                 Text = title,

@@ -187,7 +187,7 @@ namespace ReceivingStation
                     tlpDecodingParameters.Enabled = false;
 
                     _worktimestart = DateTime.Now;
-                    UserLog.WriteToLogUserActions($"Начата расшифровка файла - {_fileName}");
+                    LogFiles.WriteUserActions($"Начата расшифровка файла - {_fileName}");
 
                     await Task.Run(() => _decode.StartDecode());
                     StopDecoding();
@@ -229,7 +229,7 @@ namespace ReceivingStation
 
             slDecodeTime.Text = deltaWorkingTime.ToString();
 
-            UserLog.WriteToLogUserActions($"Завершена расшифровка файла - {_fileName}");
+            LogFiles.WriteUserActions($"Завершена расшифровка файла - {_fileName}");
 
             FormInformationMessageBox.Show("Сообщение", "Декодирование завершено.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
         }
