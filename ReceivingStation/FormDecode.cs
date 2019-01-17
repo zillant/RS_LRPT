@@ -13,6 +13,9 @@ using ReceivingStation.MessageBoxes;
 
 namespace ReceivingStation
 {
+    /// <summary>
+    /// Класс формы режима "Декодирование".
+    /// </summary>
     public partial class FormDecode : MaterialForm
     {
         private string _fileName;

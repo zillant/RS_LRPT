@@ -13,6 +13,9 @@ using ReceivingStation.Properties;
 
 namespace ReceivingStation
 {
+    /// <summary>
+    /// Класс формы режима "Прием".
+    /// </summary>
     public partial class FormReceive : MaterialForm
     {       
         public static TimeSpan MainFcpWorkingTime;
