@@ -331,8 +331,7 @@ namespace ReceivingStation.Decode
 
                         if (fl_fool_buf)
                         {
-                            pos = (ind_fr * 73728 + ind_small * 73728 + ind_small + ind_big * 36) %
-                                  Constants.DL_INTRL_BUF;
+                            pos = (ind_fr * 73728 + ind_small * 73728 + ind_small + ind_big * 36) % Constants.DL_INTRL_BUF;
                             bits_buf[ind_out_intrl++] = interl_buf[pos];
 
                             //Меняем индексы
