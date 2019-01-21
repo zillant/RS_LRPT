@@ -90,7 +90,6 @@
   <ItemGroup>
     <Compile Include="Decode\Constants.cs" />
     <Compile Include="Decode\Decode.cs" />
-    <Compile Include="Decode\SelfTestDecode.cs" />
     <Compile Include="Demodulator\BeforeViterbiSync.cs" />
     <Compile Include="Demodulator\Demodulating.cs" />
     <Compile Include="Demodulator\FIFO_Stream.cs" />
