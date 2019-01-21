@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.MessageBoxes;
 using ReceivingStation.Server;
-using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
@@ -18,6 +17,8 @@ namespace ReceivingStation
         private Server.Server _server;
         private Thread _serverThread;
         private ClientForSelfTest _client;
+
+        private int _errorsCount; // Для подсчета ошибок самопроверки и выдачи результата.
 
         public FormSelfTest()
         {
@@ -28,7 +29,7 @@ namespace ReceivingStation
         {
             GuiUpdater.SmoothLoadingForm(this);
 
-            RobotoFont.AllocFont(rtbTestServer, 11);
+            RobotoFont.AllocFont(rtbSelfTest, 11);
 
             UpdateLastDates();
 
@@ -82,15 +83,30 @@ namespace ReceivingStation
 
         private void btnSelfTesting_Click(object sender, EventArgs e)
         {
-            rtbTestServer.Clear();
+            rtbSelfTest.Clear();
             pSelfTestSettings.Enabled = false;
             Settings.Default.lastSelfTestDate = DateTime.Now.ToString();
             Settings.Default.Save();
 
-            // Действия... которых пока нет....
+            LogFiles.WriteUserActions("Начата самопроверка");
+            WriteActions("  Начата самопроверка\n\n", Color.White);
 
-            Decode.Decode _decode = new Decode.Decode(_fileName, false, false);
-            _decode.StartDecode();
+            // Тут создаем приемник и старт декод вызываем там. параметры конструктора декода не нужны. 
+            // Пока просто тест с готовым файлом.
+            Decode.Decode _decode = new Decode.Decode(_fileName, false) { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
+            _decode.StartDecode(true); 
+
+            if (_errorsCount < 10)
+            {
+                WriteActions("  Кол-во ошибок в пределах нормы\n\n", GuiUpdater.OkColor);
+            }
+            else
+            {
+                WriteActions("  Слишком много ошибок\n\n", GuiUpdater.ErrorColor);
+            }
+
+            WriteActions("  Самопроверка завершена", Color.White);
+            LogFiles.WriteUserActions("Самопроверка завершена");
 
             pSelfTestSettings.Enabled = true;
             UpdateLastDates();
@@ -98,7 +114,7 @@ namespace ReceivingStation
 
         private async void btnSelfTestingServer_Click(object sender, EventArgs e)
         {
-            rtbTestServer.Clear();
+            rtbSelfTest.Clear();
             pSelfTestSettings.Enabled = false;
             Settings.Default.lastSelfTestServerDate = DateTime.Now.ToString();
             Settings.Default.Save();
@@ -117,7 +133,7 @@ namespace ReceivingStation
 
         private void WriteActions(string msg, Color color)
         {
-            rtbTestServer.Invoke(new Action(() => { rtbTestServer.AppendText(msg, color); }));
+            rtbSelfTest.Invoke(new Action(() => { rtbSelfTest.AppendText(msg, color); }));
         }
 
         private void UpdateLastDates()
@@ -126,6 +142,14 @@ namespace ReceivingStation
             lblSelfTestingServerDate.Text = Settings.Default.lastSelfTestServerDate;
         }
 
+        private void UpdateSelfTestData(uint tkCount, int errorsCount)
+        {
+            _errorsCount = errorsCount;
+
+            rtbSelfTest.Text = "";
+            WriteActions("  Начата самопроверка\n\n", Color.White);       
+            WriteActions($"  Кол-во кадров: {tkCount}\n  Кол-во ошибок: {_errorsCount}\n\n", Color.White);            
+        }
 
         private string _fileName;
         private void button1_Click(object sender, EventArgs e)

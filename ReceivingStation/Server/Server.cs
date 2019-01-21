@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using ReceivingStation.Properties;
 
 namespace ReceivingStation.Server
-{   
+{
     /// <summary>
     /// Класс сокет сервера, для дистанционной работы с ИВК.
+    /// Используется в режимах "Самопроверка" и "Прием"
     /// </summary>
     class Server
     {
@@ -40,7 +41,7 @@ namespace ReceivingStation.Server
         private bool _isCommandCompleted; // Проверка, выполнена ли принятая команда.
         private NetworkStream _stream;
 
-        private bool _isItSelfTest; // Флаг, является ли это процессом самотестирования. Нужно чтоб не привязывать делегаты к форме самотестирования.
+        private bool _isItSelfTest; // Флаг, является ли это процессом самопроверки. Нужно чтоб не привязывать делегаты к форме самопроверки.
 
         public Server(bool isItSelfTest)
         {

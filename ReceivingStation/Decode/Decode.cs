@@ -7,14 +7,20 @@ using Color = System.Drawing.Color;
 
 namespace ReceivingStation.Decode
 {
+    /// <summary>
+    /// Класс основной логики декодирования принимаемого или записанного в файл потока.
+    /// Используется в режимах "Самопроверка", "Прием" и "Декодирование".
+    /// </summary>
     class Decode
     {
         public delegate void UpdateGuiDelegate(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines);
-        public UpdateGuiDelegate ThreadSafeUpdateGui;
+        public UpdateGuiDelegate ThreadSafeUpdateGui; // Для остальных режимов. Передаем на форму данные МКО и полосу изображения.
+        public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsCount); 
+        public UpdateSelfTestDataDelegate ThreadSafeUpdateSelfTestData; // Для режима самопроверки. Передаем кол-во принятых кадров и кол-во ошибок.
 
         public bool stopDecoding;
 
-        private bool _isSelfTest; // Флаг режима самопроверки.
+        private bool _isItSelfTest; // Флаг, является ли это процессом самопроверки.
 
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
@@ -70,16 +76,24 @@ namespace ReceivingStation.Decode
         private int apid; // Запоминаем последний апид.
         private int errs; // Накапливаем ошибки здесь.
 
-        private bool _isReedSolo; // Состояние checkBox "Рида-Соломона".
+        private bool _isReedSolo; // Требуется ли декодирование Рида-Соломона.
         private byte Q_Value; // Фактор качества.
         private int dl_jpeg_in; //Длина данных jpeg.
         private int Xt, Yt;    //Индекс полосы при выводе.    
 
         // Для НРЗ.
-        private bool _isNrz; // Состояние checkBox "НРЗ".
+        private bool _isNrz; // Есть ли NRZ.
         private bool last_bit_in;
 
-        #region Конструктор для самопроверки.
+        #region Режим "Самопроверка".
+
+        /// <summary>
+        /// Конструктор для самопроверки.
+        /// </summary>
+        /// <remarks>
+        /// Логика декодирования будет взята из режима "Прием".
+        /// </remarks>
+        /// <param name="fileName">Имя файла.</param>
         public Decode(string fileName, bool nrzFlag)
         {
             _fileName = fileName;
@@ -88,52 +102,63 @@ namespace ReceivingStation.Decode
             _viterbi = new Viterbi();
 
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
-            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
             stopDecoding = false;
-
+            _isItSelfTest = true;
 
             Init();
         }
 
-        #endregion
-
-
-        #region Конструктор для открытого файла.
-        public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
+        /// <summary>
+        /// Начать декодирование для самопроверки.
+        /// </summary>   
+        public void StartDecode(bool t)
         {
-            _fileName = fileName;
-            _isNrz = nrzFlag;
-            _isReedSolo = reedSoloFlag;
+            int bytesCount;
 
-            _reedSolo = new ReedSolo();
-            _viterbi = new Viterbi();
-            _jpeg = new Jpeg();
-
-            _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
-            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
-
-            stopDecoding = false;
-            _isSelfTest = false;
-
-            for (int i = 0; i < 6; i++)
+            do
             {
-                _imagesLines[i] = new DirectBitmap(Constants.WDT, Constants.HGT);       
-            }
+                bytesCount = _fs.Read(in_buf, 0, Constants.DL_IN_BUF);
 
-            Init();
+                if (bytesCount < 2048)
+                {
+                    break;
+                }
+
+                beg_mark_uw = Test_uw();
+                _isInterliving = beg_mark_uw != -1;
+
+                if (_isInterliving)
+                {
+                    beg_mark_uw = Test_uw();
+                    Deinterl(); //деинтерливинг
+                }
+                else
+                {
+                    for (int i = 0; i < bytesCount; i += 2048)
+                    {
+                        To_bits(i);
+                        ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
+                        Find_tk_in();
+                    }
+                }
+
+            } while (!stopDecoding);
+
         }
 
         #endregion
 
-        #region Конструктор для приемника.
+        #region Режим "Прием".
+
+        /// <summary>
+        /// Конструктор для приемника.
+        /// </summary>
+        /// <param name="fileName">Имя файла для записи.</param>
         public Decode(string fileName)
         {
-            _isNrz = false;
             _isReedSolo = true;
-            _isSelfTest = false;
+            _isItSelfTest = false;
 
             _reedSolo = new ReedSolo();
             _viterbi = new Viterbi();
@@ -150,9 +175,79 @@ namespace ReceivingStation.Decode
             Init();
         }
 
+        /// <summary>
+        /// Начать декодирование для приемника.
+        /// </summary> 
+        /// <param name="data">Принятые данные.</param>
+        /// <param name="nrz">Есть ли NRZ.</param>
+        /// <param name="_isInterliving">Есть ли интерливинг.</param>
+        public void StartDecode(byte[] data, bool nrz, bool _isInterliving)
+        {
+            if (_isInterliving) Constants.DL_IN_BUF = 32000;
+            else Constants.DL_IN_BUF = 4096;
+
+            in_buf = new byte[Constants.DL_IN_BUF];
+            Array.Copy(data, in_buf, data.Length);
+
+            _isNrz = nrz;
+
+            //beg_mark_uw = Test_uw();
+            //_isInterliving = beg_mark_uw != -1;
+
+            if (_isInterliving)
+            {
+                //beg_mark_uw = Test_uw();
+                Deinterl(); //деинтерливинг
+            }
+            else
+            {
+                for (int i = 0; i < Constants.DL_IN_BUF; i += 2048)
+                {
+                    To_bits(i);
+                    ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
+                    Find_tk_in();
+                }
+            }
+        }
+
         #endregion
 
-        #region Начать декодирование для открытого файла.
+        #region Режим "Декодирование".
+
+        /// <summary>
+        /// Конструктор для открытого файла.
+        /// </summary>
+        /// <param name="fileName">Имя файла.</param>
+        /// <param name="reedSoloFlag">Требуется ли декодирование Рида-Соломона.</param>
+        /// <param name="nrzFlag">Есть ли NRZ.</param>
+        public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
+        {
+            _fileName = fileName;
+            _isNrz = nrzFlag;
+            _isReedSolo = reedSoloFlag;
+
+            _reedSolo = new ReedSolo();
+            _viterbi = new Viterbi();
+            _jpeg = new Jpeg();
+
+            _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
+            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+
+            stopDecoding = false;
+            _isItSelfTest = false;
+
+            for (int i = 0; i < 6; i++)
+            {
+                _imagesLines[i] = new DirectBitmap(Constants.WDT, Constants.HGT);       
+            }
+
+            Init();
+        }
+
+        /// <summary>
+        /// Начать декодирование для открытого файла.
+        /// </summary>   
         public void StartDecode()
         {
             int bytesCount;
@@ -186,39 +281,8 @@ namespace ReceivingStation.Decode
 
             } while (!stopDecoding);
 
-          //  UpdateDataGui();
-          //  FinishDecode();
-        }
-
-        #endregion
-
-        #region Начать декодирование для приемника.
-        public void StartDecode(byte[] data, bool NRZ, bool _isInterliving)
-        {
-
-            if (_isInterliving) Constants.DL_IN_BUF = 32000;
-            else Constants.DL_IN_BUF = 4096;
-
-            in_buf = new byte[Constants.DL_IN_BUF];
-            Array.Copy(data, in_buf, data.Length);
-            _isNrz = NRZ;
-            beg_mark_uw = Test_uw();
-            //_isInterliving = beg_mark_uw != -1;
-
-            if (_isInterliving)
-            {
-                beg_mark_uw = Test_uw();
-                Deinterl(); //деинтерливинг
-            }
-            else
-            {
-                for (int i = 0; i < Constants.DL_IN_BUF; i += 2048)
-                {
-                    To_bits(i);
-                    ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
-                    Find_tk_in();
-                }
-            }
+            UpdateDataGui();
+            FinishDecode();
         }
 
         #endregion
@@ -421,6 +485,183 @@ namespace ReceivingStation.Decode
 
         #endregion
 
+        #region Индекс поиска нового начала заголовка.
+        private int Find_new_beg_zag(int k)
+        {
+            int i, j, n, kol;
+            bool[] buf = new bool[32];
+
+            if (!Convert.ToBoolean(k))
+            {
+                return 0;
+            }
+
+            //Формируем полученную последовательность
+            for (i = 0; i < k; i++)
+            {
+                buf[i] = Convert.ToBoolean(Constants.zag_tk_bit[i]);
+            }
+
+            buf[i] = !Convert.ToBoolean(Constants.zag_tk_bit[i]);    //след. бит
+
+            kol = k + 1;
+
+            for (i = k; i >= 0; i--)
+            {
+                n = 0;
+
+                for (j = i; j < kol; j++)
+                {
+                    if (Convert.ToBoolean(Constants.zag_tk_bit[n]) != buf[j])
+                    {
+                        return (kol - i - 1);
+                    }
+
+                    n++;
+                }
+            }
+
+            return 0;
+        }
+
+        #endregion
+
+        #region Разбор парциального кадра.
+        private void Razbor_parc()
+        {
+            int mc, i;
+            int data;
+            long tm;
+            float dt;
+
+            if (dl_jpeg_in < 0 || ind_bt_in <= 20)
+            {
+                ind_bt_in = 0;
+                dl_jpeg_in = -1;
+
+                return;
+            }
+
+            WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, " ПП: ", 0, 20, 1);
+
+            apid = ((_jpeg.jpeg_buf_in[0] & 0x07) << 8) | _jpeg.jpeg_buf_in[1];
+            if (apid < Constants.APID_1 || apid > Constants.APID_c)
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка АПИД");
+
+                ind_bt_in = 0;
+                dl_jpeg_in = -1;
+
+                return;
+            }
+
+            data = ((_jpeg.jpeg_buf_in[2] & 0x3f) << 8) | _jpeg.jpeg_buf_in[3]; //счетчик пакетов
+
+            i = last_count_pac == 0x3fff ? 0 : last_count_pac + 1; //набрали максимум
+
+            if (last_count_pac >= 0 && data != i)
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка счетчика пакетов");
+            }
+
+            last_count_pac = data;
+
+            //если служебный пакет
+            if (apid == Constants.APID_c)
+            {
+                // МКО.
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 25, 1);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
+
+                UpdateDataGui();
+
+                Parallel.For(0, _imagesLines.Length, j =>
+                {
+                    _imagesLines[j].Dispose();
+                    _imagesLines[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
+
+                });
+
+                PreparePicture();
+
+                ind_bt_in = 0;
+                dl_jpeg_in = -1;
+
+                return;
+            }
+
+            //Время
+            //Считаем миллисек.
+            tm = (_jpeg.jpeg_buf_in[8] << 24) | (_jpeg.jpeg_buf_in[9] << 16) | (_jpeg.jpeg_buf_in[10] << 8) | _jpeg.jpeg_buf_in[11];
+            mc = (_jpeg.jpeg_buf_in[12] << 8) | _jpeg.jpeg_buf_in[13];   //микросек.
+
+            Xt = _jpeg.jpeg_buf_in[14];           //Номер MCU
+            if (Xt > Constants.MAX_MSU)
+            {
+                Xt = Constants.MAX_MSU;
+                errs++;
+            }
+
+            if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
+            {
+                _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
+                _sw.WriteLine($"Миллисекунды: {tm}");
+                _sw.WriteLine($"Микросекунды: {mc}");
+                _sw.WriteLine("-----------------------------------------------------------------------");
+
+                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
+
+                if (Convert.ToBoolean(tm_last))
+                {
+                    dt = (tm - tm_last) / 1000f; //разница в секундах
+                    _sw.WriteLine($"Разница: {dt}");
+
+                    if (dt < 1.2 || dt > 1.25)
+                    {
+                        _sw.WriteLine("??????????????????????????????????????????????");
+                        errs++;
+                    }
+                }
+
+                _sw.WriteLine("-----------------------------------------------------------------------");
+                tm_last = tm;
+            }
+
+
+            if (Convert.ToBoolean(_jpeg.jpeg_buf_in[15]) || Convert.ToBoolean(_jpeg.jpeg_buf_in[16]))
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка заголовка скана");
+            }
+
+            if (_jpeg.jpeg_buf_in[17] != 0xff || _jpeg.jpeg_buf_in[18] != 0xf0)
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка заголовка сегмента");
+            }
+
+            Q_Value = _jpeg.jpeg_buf_in[19];
+
+            if (Q_Value > Constants.MAX_Q)
+            {
+                Q_Value = 75;
+                errs++;
+            }
+
+            kol_pix = _jpeg.DeCompress(Xt, dl_jpeg_in, Q_Value);
+
+            PreparePicture();
+            ind_bt_in = 0;
+            dl_jpeg_in = -1;
+        }
+
+        #endregion
+
         #region Разбирает кадр после Витерби и NRZ.
         private void Find_tk_in()
         {
@@ -486,7 +727,7 @@ namespace ReceivingStation.Decode
                             }
                         }
                     }
-                    else            //набор кадра
+                    else  //набор кадра
                     {
                         if (bit)
                         {
@@ -495,22 +736,25 @@ namespace ReceivingStation.Decode
 
                         mask_out_tk = Convert.ToByte(mask_out_tk >> 1);
 
-                        if (!Convert.ToBoolean(mask_out_tk))      //набрали байт
+                        if (!Convert.ToBoolean(mask_out_tk)) //набрали байт
                         {
                             mask_out_tk = 0x80;
                             ind_tk_in++;
 
                             if (ind_tk_in == 1020)      //набрали кадр
-                            {
-                                if (_isSelfTest)
+                            {                               
+                                if (_isItSelfTest)
                                 {
+                                    // Режим самопроверки.
                                     Console.Write(BitConverter.ToString(tk_in));
                                     Console.WriteLine();
                                     Console.WriteLine();
                                     Console.WriteLine();
-                                }
+                                    UpdateSelfTestData();
+                                }                               
                                 else
                                 {
+                                    // Остальные режимы.
                                     Get_dat_tk();
                                 }
                                 
@@ -529,48 +773,7 @@ namespace ReceivingStation.Decode
             }
         }
 
-        #endregion
-
-        #region Индекс поиска нового начала заголовка.
-        private int Find_new_beg_zag(int k)
-        {
-            int i, j, n, kol;
-            bool[] buf = new bool[32];
-
-            if (!Convert.ToBoolean(k))
-            {
-                return 0;
-            }
-
-            //Формируем полученную последовательность
-            for (i = 0; i < k; i++)
-            {
-                buf[i] = Convert.ToBoolean(Constants.zag_tk_bit[i]);
-            }
-
-            buf[i] = !Convert.ToBoolean(Constants.zag_tk_bit[i]);    //след. бит
-
-            kol = k + 1;
-
-            for (i = k; i >= 0; i--)
-            {
-                n = 0;
-
-                for (j = i; j < kol; j++)
-                {
-                    if (Convert.ToBoolean(Constants.zag_tk_bit[n]) != buf[j])
-                    {
-                        return (kol - i - 1);
-                    }
-                    
-                    n++;
-                }
-            }
-
-            return 0;
-        }
-
-        #endregion
+        #endregion   
 
         #region Расшифровка ТК.
         private void Get_dat_tk()
@@ -680,142 +883,6 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Разбор парциального кадра.
-        private void Razbor_parc()
-        {
-            int mc, i;
-            int data;
-            long tm;            
-            float dt;
-
-            if (dl_jpeg_in < 0 || ind_bt_in <= 20)
-            {
-                ind_bt_in = 0;
-                dl_jpeg_in = -1;
-
-                return;
-            }
-
-            WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, " ПП: ", 0, 20, 1);
-
-            apid = ((_jpeg.jpeg_buf_in[0] & 0x07) << 8) | _jpeg.jpeg_buf_in[1];
-            if (apid < Constants.APID_1 || apid > Constants.APID_c)
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка АПИД");
-
-                ind_bt_in = 0;
-                dl_jpeg_in = -1;
-
-                return;
-            }
-
-            data = ((_jpeg.jpeg_buf_in[2] & 0x3f) << 8) | _jpeg.jpeg_buf_in[3]; //счетчик пакетов
-
-            i = last_count_pac == 0x3fff ? 0 : last_count_pac + 1; //набрали максимум
-
-            if (last_count_pac >= 0 && data != i)
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка счетчика пакетов");
-            }
-
-            last_count_pac = data;
-
-            //если служебный пакет
-            if (apid == Constants.APID_c)
-            {
-                // МКО.
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 25, 1);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
-
-                UpdateDataGui();
-
-                Parallel.For(0, _imagesLines.Length, j =>
-                {
-                    _imagesLines[j].Dispose();
-                    _imagesLines[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
-
-                });
-
-                PreparePicture();
-
-                ind_bt_in = 0;
-                dl_jpeg_in = -1;
-
-                return;
-            }
-
-            //Время
-            //Считаем миллисек.
-            tm = (_jpeg.jpeg_buf_in[8] << 24) | (_jpeg.jpeg_buf_in[9] << 16) | (_jpeg.jpeg_buf_in[10] << 8) | _jpeg.jpeg_buf_in[11];
-            mc = (_jpeg.jpeg_buf_in[12] << 8) | _jpeg.jpeg_buf_in[13];   //микросек.
-
-            Xt = _jpeg.jpeg_buf_in[14];           //Номер MCU
-            if (Xt > Constants.MAX_MSU)
-            {
-                Xt = Constants.MAX_MSU;
-                errs++;
-            }
-
-            if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
-            {         
-                _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
-                _sw.WriteLine($"Миллисекунды: {tm}");                
-                _sw.WriteLine($"Микросекунды: {mc}");
-                _sw.WriteLine("-----------------------------------------------------------------------");
-
-                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
-
-                if (Convert.ToBoolean(tm_last))
-                {
-                    dt = (tm - tm_last) / 1000f; //разница в секундах
-                    _sw.WriteLine($"Разница: {dt}");
-
-                    if (dt < 1.2 || dt > 1.25)
-                    {
-                        _sw.WriteLine("??????????????????????????????????????????????");
-                        errs++;
-                    }
-                }
-
-                _sw.WriteLine("-----------------------------------------------------------------------");
-                tm_last = tm;
-            }
-
-
-            if (Convert.ToBoolean(_jpeg.jpeg_buf_in[15]) || Convert.ToBoolean(_jpeg.jpeg_buf_in[16]))
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка заголовка скана");
-            }
-
-            if (_jpeg.jpeg_buf_in[17] != 0xff || _jpeg.jpeg_buf_in[18] != 0xf0)
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка заголовка сегмента");
-            }
-
-            Q_Value = _jpeg.jpeg_buf_in[19];
-
-            if (Q_Value > Constants.MAX_Q)
-            {
-                Q_Value = 75;
-                errs++;
-            }
-
-            kol_pix = _jpeg.DeCompress(Xt, dl_jpeg_in, Q_Value);
-
-            PreparePicture();
-            ind_bt_in = 0;
-            dl_jpeg_in = -1;
-        }
-
-        #endregion
-
         #region Формирование изображения.
         private void PreparePicture()
         {
@@ -881,16 +948,6 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Обновление данных и информации на форме.
-        private void UpdateDataGui()
-        {
-            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
-            {
-                ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
-            }
-        }
-        #endregion
-
         #region Формирование даты и времени.
         private void GetDateTime(int date, long ms)
         {
@@ -904,6 +961,26 @@ namespace ReceivingStation.Decode
             }
         }
 
+        #endregion
+
+        #region Обновление данных и информации на форме.
+        private void UpdateDataGui()
+        {
+            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
+            {
+                ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
+            }
+        }
+        #endregion
+
+        #region Обновление данных самопроверки.
+        private void UpdateSelfTestData()
+        {
+            Kol_tk++;
+            errs++;
+
+            ThreadSafeUpdateSelfTestData(Kol_tk, errs);
+        }
         #endregion
     }
 }

@@ -37,6 +37,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pSelfTestSettings = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbRandomSending = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbSequentialSending = new MaterialSkin.Controls.MaterialRadioButton();
@@ -51,14 +52,13 @@
             this.rbFreq2 = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbFreq1 = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblFreq = new MaterialSkin.Controls.MaterialLabel();
-            this.rtbTestServer = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbSelfTest = new ReceivingStation.Other.DisabledRichTextBox();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.lblSelfTestingServerDate = new MaterialSkin.Controls.MaterialLabel();
             this.lblSelfTestingDate = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.doubleBufferedPanel2.SuspendLayout();
@@ -127,7 +127,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.69145F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel2, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.rtbTestServer, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.rtbSelfTest, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.pictureBox1, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -162,6 +162,16 @@
             this.pSelfTestSettings.Name = "pSelfTestSettings";
             this.pSelfTestSettings.Size = new System.Drawing.Size(204, 566);
             this.pSelfTestSettings.TabIndex = 62;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 283);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 62;
+            this.button1.Text = "открыть";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -366,18 +376,18 @@
             this.lblFreq.TabIndex = 38;
             this.lblFreq.Text = "Несущая частота (МГц)";
             // 
-            // rtbTestServer
+            // rtbSelfTest
             // 
-            this.rtbTestServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
-            this.rtbTestServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tableLayoutPanel3.SetColumnSpan(this.rtbTestServer, 2);
-            this.rtbTestServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbTestServer.Location = new System.Drawing.Point(216, 117);
-            this.rtbTestServer.Margin = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            this.rtbTestServer.Name = "rtbTestServer";
-            this.rtbTestServer.Size = new System.Drawing.Size(384, 563);
-            this.rtbTestServer.TabIndex = 57;
-            this.rtbTestServer.Text = "";
+            this.rtbSelfTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
+            this.rtbSelfTest.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tableLayoutPanel3.SetColumnSpan(this.rtbSelfTest, 2);
+            this.rtbSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbSelfTest.Location = new System.Drawing.Point(216, 117);
+            this.rtbSelfTest.Margin = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            this.rtbSelfTest.Name = "rtbSelfTest";
+            this.rtbSelfTest.Size = new System.Drawing.Size(384, 563);
+            this.rtbSelfTest.TabIndex = 57;
+            this.rtbSelfTest.Text = "";
             // 
             // doubleBufferedPanel1
             // 
@@ -456,16 +466,6 @@
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(13, 283);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 62;
-            this.button1.Text = "открыть";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // FormSelfTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -513,7 +513,7 @@
         private MaterialSkin.Controls.MaterialDivider materialDivider1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private MaterialSkin.Controls.MaterialRaisedButton btnSelfTestingServer;
-        private Other.DisabledRichTextBox rtbTestServer;
+        private Other.DisabledRichTextBox rtbSelfTest;
         private Other.DoubleBufferedPanel doubleBufferedPanel2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel3;
