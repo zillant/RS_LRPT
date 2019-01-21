@@ -58,6 +58,7 @@
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.doubleBufferedPanel2.SuspendLayout();
@@ -150,6 +151,7 @@
             // 
             // pSelfTestSettings
             // 
+            this.pSelfTestSettings.Controls.Add(this.button1);
             this.pSelfTestSettings.Controls.Add(this.panel1);
             this.pSelfTestSettings.Controls.Add(this.btnSelfTestingServer);
             this.pSelfTestSettings.Controls.Add(this.btnSelfTesting);
@@ -454,6 +456,16 @@
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 283);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 62;
+            this.button1.Text = "открыть";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FormSelfTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -523,5 +535,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel lblSelfTestingServerDate;
         private MaterialSkin.Controls.MaterialLabel lblSelfTestingDate;
+        private System.Windows.Forms.Button button1;
     }
 }

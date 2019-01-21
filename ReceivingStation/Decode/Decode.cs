@@ -14,6 +14,8 @@ namespace ReceivingStation.Decode
 
         public bool stopDecoding;
 
+        private bool _isSelfTest; // Флаг режима самопроверки.
+
         private ReedSolo _reedSolo;
         private Viterbi _viterbi;
         private Jpeg _jpeg;
@@ -77,6 +79,27 @@ namespace ReceivingStation.Decode
         private bool _isNrz; // Состояние checkBox "НРЗ".
         private bool last_bit_in;
 
+        #region Конструктор для самопроверки.
+        public Decode(string fileName, bool nrzFlag)
+        {
+            _fileName = fileName;
+            _isNrz = nrzFlag;
+
+            _viterbi = new Viterbi();
+
+            _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
+            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+
+            stopDecoding = false;
+
+
+            Init();
+        }
+
+        #endregion
+
+
         #region Конструктор для открытого файла.
         public Decode(string fileName, bool reedSoloFlag, bool nrzFlag)
         {
@@ -93,6 +116,7 @@ namespace ReceivingStation.Decode
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
             stopDecoding = false;
+            _isSelfTest = false;
 
             for (int i = 0; i < 6; i++)
             {
@@ -109,6 +133,7 @@ namespace ReceivingStation.Decode
         {
             _isNrz = false;
             _isReedSolo = true;
+            _isSelfTest = false;
 
             _reedSolo = new ReedSolo();
             _viterbi = new Viterbi();
@@ -161,8 +186,8 @@ namespace ReceivingStation.Decode
 
             } while (!stopDecoding);
 
-            UpdateDataGui();
-            FinishDecode();
+          //  UpdateDataGui();
+          //  FinishDecode();
         }
 
         #endregion
@@ -477,7 +502,18 @@ namespace ReceivingStation.Decode
 
                             if (ind_tk_in == 1020)      //набрали кадр
                             {
-                                Get_dat_tk();
+                                if (_isSelfTest)
+                                {
+                                    Console.Write(BitConverter.ToString(tk_in));
+                                    Console.WriteLine();
+                                    Console.WriteLine();
+                                    Console.WriteLine();
+                                }
+                                else
+                                {
+                                    Get_dat_tk();
+                                }
+                                
 
                                 ind_tk_in = 0;
                                 Ind_mar_tk_bit = 0;

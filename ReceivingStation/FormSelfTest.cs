@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.MessageBoxes;
 using ReceivingStation.Server;
+using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
@@ -88,6 +89,9 @@ namespace ReceivingStation
 
             // Действия... которых пока нет....
 
+            Decode.Decode _decode = new Decode.Decode(_fileName, false, false);
+            _decode.StartDecode();
+
             pSelfTestSettings.Enabled = true;
             UpdateLastDates();
         }
@@ -120,6 +124,23 @@ namespace ReceivingStation
         {
             lblSelfTestingDate.Text = Settings.Default.lastSelfTestDate;
             lblSelfTestingServerDate.Text = Settings.Default.lastSelfTestServerDate;
+        }
+
+
+        private string _fileName;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                openFileDialog1.Title = "Выбор файла телеметрии";
+                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
+                openFileDialog1.FilterIndex = 1;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    _fileName = openFileDialog1.FileName;
+                }
+            }
         }
     }
 }
