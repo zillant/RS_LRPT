@@ -15,7 +15,7 @@ namespace ReceivingStation.Decode
     {
         public delegate void UpdateGuiDelegate(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines);
         public UpdateGuiDelegate ThreadSafeUpdateGui; // Для остальных режимов. Передаем на форму данные МКО и полосу изображения.
-        public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsCount); 
+        public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsTkCount); 
         public UpdateSelfTestDataDelegate ThreadSafeUpdateSelfTestData; // Для режима самопроверки. Передаем кол-во принятых кадров и кол-во ошибок.
 
         public bool stopDecoding;
@@ -145,6 +145,56 @@ namespace ReceivingStation.Decode
 
             } while (!stopDecoding);
 
+        }
+
+        /// <summary>
+        /// Обновление данных самопроверки на форме.
+        /// </summary>   
+        private void UpdateSelfTestData()
+        {
+            bool isTkError;
+
+            Kol_tk++;
+
+            for (int i = 0; i < tk_in.Length; i += 255)
+            {
+                isTkError = CheckData(i);
+
+                if (isTkError)
+                {
+                    errs++;
+                    break;
+                }
+            }       
+
+            ThreadSafeUpdateSelfTestData(Kol_tk, errs);
+        }
+
+        /// <summary>
+        /// Побайтная проверка принятого ТК на ошибки.
+        /// </summary>   
+        /// <param name="beginInd">Начальный индекс байта массива ТК.</param>
+        /// <returns>Найдена ли ошибка в байте ТК.</returns>
+        private bool CheckData(int beginInd)
+        {
+            int errors = 0;
+            int index = beginInd;
+            int endIndex = beginInd + 255;
+
+            for (int j = 0; index < endIndex; index++, j++)
+            {
+                if (tk_in[index] != Constants.tkTemplateForSelfTest[j])
+                {
+                    errors++;
+                }
+
+                if (errors > 15)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         #endregion
@@ -746,10 +796,6 @@ namespace ReceivingStation.Decode
                                 if (_isItSelfTest)
                                 {
                                     // Режим самопроверки.
-                                    Console.Write(BitConverter.ToString(tk_in));
-                                    Console.WriteLine();
-                                    Console.WriteLine();
-                                    Console.WriteLine();
                                     UpdateSelfTestData();
                                 }                               
                                 else
@@ -970,16 +1016,6 @@ namespace ReceivingStation.Decode
             {
                 ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
             }
-        }
-        #endregion
-
-        #region Обновление данных самопроверки.
-        private void UpdateSelfTestData()
-        {
-            Kol_tk++;
-            errs++;
-
-            ThreadSafeUpdateSelfTestData(Kol_tk, errs);
         }
         #endregion
     }

@@ -18,7 +18,7 @@ namespace ReceivingStation
         private Thread _serverThread;
         private ClientForSelfTest _client;
 
-        private int _errorsCount; // Для подсчета ошибок самопроверки и выдачи результата.
+        private int _errorsTkCount; // Для подсчета ТК с ошибками превышающими 15 на 1 байт ТК.
 
         public FormSelfTest()
         {
@@ -81,7 +81,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
         }
 
-        private void btnSelfTesting_Click(object sender, EventArgs e)
+        private async void btnSelfTesting_Click(object sender, EventArgs e)
         {
             rtbSelfTest.Clear();
             pSelfTestSettings.Enabled = false;
@@ -94,15 +94,15 @@ namespace ReceivingStation
             // Тут создаем приемник и старт декод вызываем там. параметры конструктора декода не нужны. 
             // Пока просто тест с готовым файлом.
             Decode.Decode _decode = new Decode.Decode(_fileName, false) { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
-            _decode.StartDecode(true); 
+            await Task.Run(() => _decode.StartDecode(true)); 
 
-            if (_errorsCount < 10)
+            if (_errorsTkCount > 0)
             {
-                WriteActions("  Кол-во ошибок в пределах нормы\n\n", GuiUpdater.OkColor);
+                WriteActions("  Самопроверка прошла с ошибоками\n\n", GuiUpdater.ErrorColor);             
             }
             else
             {
-                WriteActions("  Слишком много ошибок\n\n", GuiUpdater.ErrorColor);
+                WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
             }
 
             WriteActions("  Самопроверка завершена", Color.White);
@@ -142,13 +142,14 @@ namespace ReceivingStation
             lblSelfTestingServerDate.Text = Settings.Default.lastSelfTestServerDate;
         }
 
-        private void UpdateSelfTestData(uint tkCount, int errorsCount)
+        private void UpdateSelfTestData(uint tkCount, int errorsTkCount)
         {
-            _errorsCount = errorsCount;
+            _errorsTkCount = errorsTkCount;
 
-            rtbSelfTest.Text = "";
-            WriteActions("  Начата самопроверка\n\n", Color.White);       
-            WriteActions($"  Кол-во кадров: {tkCount}\n  Кол-во ошибок: {_errorsCount}\n\n", Color.White);            
+            if (InvokeRequired)
+            {
+               Invoke(new Action(() => rtbSelfTest.Text = $"  Начата самопроверка\n\n  Кол-во кадров: {tkCount}\n  Кол-во кадров с ошибками: {_errorsTkCount}\n\n"));
+            }
         }
 
         private string _fileName;
