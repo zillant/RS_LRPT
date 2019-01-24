@@ -145,49 +145,70 @@ namespace ReceivingStation.Decode
 
             } while (!stopDecoding);
 
+            ThreadSafeUpdateSelfTestData(Kol_tk, errs);
+
         }
 
         /// <summary>
         /// Обновление данных самопроверки на форме.
-        /// </summary>   
+        /// </summary>  
+        /// <remarks>
+        /// Проверка принятого ТК на ошибки и отправка данных на форму самопроверки.
+        /// </remarks>
         private void UpdateSelfTestData()
         {
-            bool isTkError;
+            bool isTkError = false;
 
             Kol_tk++;
 
-            for (int i = 0; i < tk_in.Length; i += 255)
+            isTkError = CheckData();
+
+            if (isTkError)
             {
-                isTkError = CheckData(i);
+                errs++;
+            }
 
-                if (isTkError)
-                {
-                    errs++;
-                    break;
-                }
-            }       
-
-            ThreadSafeUpdateSelfTestData(Kol_tk, errs);
+            if (Kol_tk % 20 == 0)
+            {
+                ThreadSafeUpdateSelfTestData(Kol_tk, errs);
+            }          
         }
 
         /// <summary>
-        /// Побайтная проверка принятого ТК на ошибки.
+        /// Побитовая проверка принятого ТК на ошибки.
         /// </summary>   
+        /// <remarks>
+        /// При нахождении более 15 ошибок прерывает цикл.
+        /// </remarks>
         /// <param name="beginInd">Начальный индекс байта массива ТК.</param>
         /// <returns>Найдена ли ошибка в байте ТК.</returns>
-        private bool CheckData(int beginInd)
+        private bool CheckData()
         {
             int errors = 0;
-            int index = beginInd;
-            int endIndex = beginInd + 255;
 
-            for (int j = 0; index < endIndex; index++, j++)
+            for (int i = 0, j = 0; i < tk_in.Length; i++, j++)
             {
-                if (tk_in[index] != Constants.tkTemplateForSelfTest[j])
+                if (j == 255)
                 {
-                    errors++;
+                    j = 0;
                 }
 
+                var res = tk_in[i] ^ Constants.tkTemplateForSelfTest[j];
+
+                if (res != 0)
+                {
+                    for (int bitNum = 0; bitNum < 8; bitNum++)
+                    {
+                        if ((res & 1) == 1)
+                        {
+                            errors++;
+                        }
+
+                        res = res >> 1;
+                    }
+                }
+               
+                // Слишком много ошибок в ТК.
                 if (errors > 15)
                 {
                     return true;
