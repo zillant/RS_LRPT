@@ -96,9 +96,9 @@ namespace ReceivingStation.Decode
         /// <param name="fileName">Имя файла.</param>
         public Decode()
         {
-            _viterbi = new Viterbi();
-
             _isItSelfTest = true;
+
+            _viterbi = new Viterbi();
 
             Init();
         }

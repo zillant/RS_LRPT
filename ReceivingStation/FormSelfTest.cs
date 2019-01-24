@@ -95,8 +95,8 @@ namespace ReceivingStation
             // Пока просто тест с готовым файлом.
             Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
             
-            // Вызвать в приемнике.
-            // await Task.Run(() => _decode.StartDecode(true)); 
+            // Вызвать в приемнике. задать нужную сигнатуру в классе дкодера или использовать готовую из режима "Прием".
+            // await Task.Run(() => _decode.StartDecode()); 
 
             if (_errorsTkCount > 0)
             {
