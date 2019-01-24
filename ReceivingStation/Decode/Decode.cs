@@ -94,16 +94,10 @@ namespace ReceivingStation.Decode
         /// Логика декодирования будет взята из режима "Прием".
         /// </remarks>
         /// <param name="fileName">Имя файла.</param>
-        public Decode(string fileName, bool nrzFlag)
+        public Decode()
         {
-            _fileName = fileName;
-            _isNrz = nrzFlag;
-
             _viterbi = new Viterbi();
 
-            _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
-
-            stopDecoding = false;
             _isItSelfTest = true;
 
             Init();

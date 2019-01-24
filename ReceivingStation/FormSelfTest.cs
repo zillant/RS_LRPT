@@ -93,8 +93,10 @@ namespace ReceivingStation
 
             // Тут создаем приемник и старт декод вызываем там. параметры конструктора декода не нужны. 
             // Пока просто тест с готовым файлом.
-            Decode.Decode _decode = new Decode.Decode(_fileName, false) { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
-            await Task.Run(() => _decode.StartDecode(true)); 
+            Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
+            
+            // Вызвать в приемнике.
+            // await Task.Run(() => _decode.StartDecode(true)); 
 
             if (_errorsTkCount > 0)
             {
@@ -149,22 +151,6 @@ namespace ReceivingStation
             if (InvokeRequired)
             {
                Invoke(new Action(() => rtbSelfTest.Text = $"  Начата самопроверка\n\n  Кол-во кадров: {tkCount}\n  Кол-во кадров с ошибками: {_errorsTkCount}\n\n"));
-            }
-        }
-
-        private string _fileName;
-        private void button1_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
-            {
-                openFileDialog1.Title = "Выбор файла телеметрии";
-                openFileDialog1.Filter = "Telemetry files (*.dat)|*.dat";
-                openFileDialog1.FilterIndex = 1;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    _fileName = openFileDialog1.FileName;
-                }
             }
         }
     }

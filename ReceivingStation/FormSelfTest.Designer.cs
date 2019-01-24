@@ -37,7 +37,6 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pSelfTestSettings = new ReceivingStation.Other.DoubleBufferedPanel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbRandomSending = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbSequentialSending = new MaterialSkin.Controls.MaterialRadioButton();
@@ -151,7 +150,6 @@
             // 
             // pSelfTestSettings
             // 
-            this.pSelfTestSettings.Controls.Add(this.button1);
             this.pSelfTestSettings.Controls.Add(this.panel1);
             this.pSelfTestSettings.Controls.Add(this.btnSelfTestingServer);
             this.pSelfTestSettings.Controls.Add(this.btnSelfTesting);
@@ -162,16 +160,6 @@
             this.pSelfTestSettings.Name = "pSelfTestSettings";
             this.pSelfTestSettings.Size = new System.Drawing.Size(204, 566);
             this.pSelfTestSettings.TabIndex = 62;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(13, 283);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 62;
-            this.button1.Text = "открыть";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -535,6 +523,5 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel lblSelfTestingServerDate;
         private MaterialSkin.Controls.MaterialLabel lblSelfTestingDate;
-        private System.Windows.Forms.Button button1;
     }
 }
