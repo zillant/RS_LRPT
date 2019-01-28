@@ -106,42 +106,34 @@ namespace ReceivingStation.Decode
         /// <summary>
         /// Начать декодирование для самопроверки.
         /// </summary>   
-        public void StartDecode(bool t)
-        {
-            int bytesCount;
+        //public void StartDecode(byte[] data, bool nrz, bool _isInterliving)
+        //{
+        //    if (_isInterliving) Constants.DL_IN_BUF = 32000;
+        //    else Constants.DL_IN_BUF = 4096;
 
-            do
-            {
-                bytesCount = _fs.Read(in_buf, 0, Constants.DL_IN_BUF);
+        //    in_buf = new byte[Constants.DL_IN_BUF];
+        //    Array.Copy(data, in_buf, data.Length);
 
-                if (bytesCount < 2048)
-                {
-                    break;
-                }
+        //    _isNrz = nrz;
 
-                beg_mark_uw = Test_uw();
-                _isInterliving = beg_mark_uw != -1;
+        //    //beg_mark_uw = Test_uw();
+        //    //_isInterliving = beg_mark_uw != -1;
 
-                if (_isInterliving)
-                {
-                    beg_mark_uw = Test_uw();
-                    Deinterl(); //деинтерливинг
-                }
-                else
-                {
-                    for (int i = 0; i < bytesCount; i += 2048)
-                    {
-                        To_bits(i);
-                        ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
-                        Find_tk_in();
-                    }
-                }
-
-            } while (!stopDecoding);
-
-            ThreadSafeUpdateSelfTestData(Kol_tk, errs);
-
-        }
+        //    if (_isInterliving)
+        //    {
+        //        //beg_mark_uw = Test_uw();
+        //        Deinterl(); //деинтерливинг
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < Constants.DL_IN_BUF; i += 2048)
+        //        {
+        //            To_bits(i);
+        //            ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
+        //            Find_tk_in();
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Обновление данных самопроверки на форме.
@@ -261,7 +253,7 @@ namespace ReceivingStation.Decode
 
             if (_isInterliving)
             {
-                //beg_mark_uw = Test_uw();
+                beg_mark_uw = Test_uw();
                 Deinterl(); //деинтерливинг
             }
             else

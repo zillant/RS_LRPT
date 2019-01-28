@@ -86,12 +86,7 @@ namespace ReceivingStation.Demodulator
         static float _phaseErrorCoeff;
         static int _watchDogCounter;
         static int _carrierShift;
-
-
-        static UnsafeBuffer _bufferAfterLowPass;//after matched
-        static Complex* _bufferPtrAfterLowPass;
-
-
+    
         static SamplesAvailableEventArgs _inputbuffer = new SamplesAvailableEventArgs();
 
         static float _agcGain;
@@ -170,7 +165,7 @@ namespace ReceivingStation.Demodulator
             
 
             //var logfilename = "onlinelogs";
-            StreamCorrection = new StreamCorrection(0x2, recordingfilename);
+            StreamCorrection = new StreamCorrection(interliving, recordingfilename);
             BVS = new BeforeViterbiSync();
 
             if (_Modulation == 0x1)
@@ -185,13 +180,43 @@ namespace ReceivingStation.Demodulator
             }
         }
 
-        
+        public Demodulating(byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
+        {
+            _FrequencyMode = freqmode;
+            _Modulation = modulation;
+            _decode = decode;
+
+            if (interliving == 0x1)
+            {
+                _Interliving = true;
+            }
+            if (interliving == 0x2)
+            {
+                _Interliving = false;
+            }
+            
+            StreamCorrection = new StreamCorrection(interliving);
+            BVS = new BeforeViterbiSync();
+
+            if (_Modulation == 0x1)
+            {
+                _qpskModulation = true;
+                _oqpskModulation = false;
+            }
+            else if (_Modulation == 0x2)
+            {
+                _oqpskModulation = true;
+                _qpskModulation = false;
+            }
+        }
+
+
 
 
         public void Dongle_Configuration(uint SampleRate)// Настройка свистка    
         {
             if (_FrequencyMode == 0x1) Frequency = 137080000;
-            if (_FrequencyMode == 0x2) Frequency = 137889042;
+            if (_FrequencyMode == 0x2) Frequency = 137881000;
 
             IO.Open();
             IO.Device.Start();
@@ -297,10 +322,9 @@ namespace ReceivingStation.Demodulator
             }
             StreamCorrection.StopCorrect();
           
-
-            if (IO.Device == null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник выключен"; }));
-            _formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор выключен"; }));
-            _formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = ""; }));
+            //if (IO.Device == null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник выключен"; }));
+            //_formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор выключен"; }));
+            //_formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = ""; }));
             _buffer = null;
             _FifoBuffer.Dispose();
             _FifoBuffer = null;
@@ -642,10 +666,8 @@ namespace ReceivingStation.Demodulator
         {
             _recording = true;
 
-            var PartialPacketLength = 32768;
             var Element = new byte[2];
             var count = 0;
-            var countD = 0;
 
             #region Without Interliving
             if (!_Interliving)
