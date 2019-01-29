@@ -5,6 +5,7 @@ using SDRSharp.Radio;
 using System.Threading;
 using MaterialSkin.Controls;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace ReceivingStation.Demodulator
 {
@@ -79,7 +80,7 @@ namespace ReceivingStation.Demodulator
         static float _norm;
         static float _carrierFrequencyStep;
         static bool _carrierPhaseLocked;
-        static bool _LockView;
+        public static bool _LockView;
         static float _carrierPhaseErrorAvg;
         static float SearchPhaseBandwidth;
         static float _oneMinusPhaseErrCoeff;
@@ -142,7 +143,7 @@ namespace ReceivingStation.Demodulator
         static bool NRZ;
         static bool _qpskModulation;
         static bool _oqpskModulation;
-
+        static bool _isSelfTest;
 
         public Demodulating(FormReceive rcvform, string filename, byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
         {
@@ -180,7 +181,7 @@ namespace ReceivingStation.Demodulator
             }
         }
 
-        public Demodulating(byte freqmode, byte interliving, byte modulation, Decode.Decode decode)
+        public Demodulating(byte freqmode, byte interliving, byte modulation, Decode.Decode decode) // конструктор для самопроверки
         {
             _FrequencyMode = freqmode;
             _Modulation = modulation;
@@ -301,6 +302,7 @@ namespace ReceivingStation.Demodulator
         public void StopDecoding()
         {
             _processIsStarted = false;
+            _outputIsStarted = false;
             IO.Device.Stop();
             IO.Close();
 
@@ -325,11 +327,9 @@ namespace ReceivingStation.Demodulator
             //if (IO.Device == null) _formrcv.Invoke(new Action(() => { _formrcv.lblDongOn.Text = "Приемник выключен"; }));
             //_formrcv.Invoke(new Action(() => { _formrcv.lblDemOn.Text = "Демодулятор выключен"; }));
             //_formrcv.Invoke(new Action(() => { _formrcv.lblLockOn.Text = ""; }));
-            _buffer = null;
-            _FifoBuffer.Dispose();
-            _FifoBuffer = null;
-
-            FirstRead = false;
+           
+            
+            PSPFinded = false;
             //_rawWriter.Close();
             _outputBuffer = null;
             _recordBuffer.Dispose();
@@ -338,6 +338,9 @@ namespace ReceivingStation.Demodulator
 
             _recording = false;
             StreamCorrection = null;
+            _buffer = null;
+            _FifoBuffer.Dispose();
+            _FifoBuffer = null;
         }
         #endregion
 
@@ -626,12 +629,13 @@ namespace ReceivingStation.Demodulator
         }
         #endregion
 
-        public void RecordStart()
+        public void RecordStart(bool isSelfTest)
         {
             FirstRead = false;
             _recording = true;
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
+            _isSelfTest = isSelfTest;
 
             _PacketsBuffer = UnsafeBuffer.Create(16384, sizeof(Complex));
             _PacketsBufferPtr = (Complex*)_PacketsBuffer;
@@ -678,7 +682,7 @@ namespace ReceivingStation.Demodulator
                 {
                     if (_FifoBuffer == null || _FifoBuffer.Length < BufferSizeToRecord)
                     {
-                        Thread.Sleep(10);
+                        Thread.Sleep(5);
                         continue;
                     }
                     if (!FirstRead)
@@ -714,7 +718,8 @@ namespace ReceivingStation.Demodulator
                     {
                         NRZ = BVS.NRZ;
                         StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
-                        _decode.StartDecode(_correctedarray, true,_Interliving);
+                        if (!_isSelfTest) _decode.StartDecode(_correctedarray, true,_Interliving);
+                        else _decode.SFStartDecode(_correctedarray, true, _Interliving);
                         Console.WriteLine("Finded");
                         _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
@@ -774,7 +779,8 @@ namespace ReceivingStation.Demodulator
                         if (FirstRead && PSPFinded && _outputBuffer != null) // как пришло, накапливаем к 400 пакетов, в correctedarray 4 пакета
                         {
                             StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
-                            _decode.StartDecode(_correctedarray_Int, true, _Interliving);
+                            if (!_isSelfTest) _decode.StartDecode(_correctedarray_Int, true, _Interliving); // режим штатной работы
+                            else _decode.SFStartDecode(_correctedarray_Int, true, _Interliving);// режим самопроверки
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
                            // _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);

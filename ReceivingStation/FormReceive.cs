@@ -353,11 +353,14 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
+                var isSelfTest = false;
+
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
                 _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
+                
                 _receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
                 _receiver.StartDecoding();
-                _receiver.RecordStart();
+                _receiver.RecordStart(isSelfTest);
 
                 lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
                 lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
@@ -378,8 +381,8 @@ namespace ReceivingStation
         private void StopReceiving()
         {
             _server.ReceivingStartedFlag = false;
-            // _receiver.StopDecoding();
-            // _decode.FinishDecode();
+            _receiver.StopDecoding();
+            _decode.FinishDecode();
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
             lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");

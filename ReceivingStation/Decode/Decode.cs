@@ -106,34 +106,34 @@ namespace ReceivingStation.Decode
         /// <summary>
         /// Начать декодирование для самопроверки.
         /// </summary>   
-        //public void StartDecode(byte[] data, bool nrz, bool _isInterliving)
-        //{
-        //    if (_isInterliving) Constants.DL_IN_BUF = 32000;
-        //    else Constants.DL_IN_BUF = 4096;
+        public void SFStartDecode(byte[] data, bool nrz, bool _isInterliving)
+        {
+            if (_isInterliving) Constants.DL_IN_BUF = 32000;
+            else Constants.DL_IN_BUF = 4096;
 
-        //    in_buf = new byte[Constants.DL_IN_BUF];
-        //    Array.Copy(data, in_buf, data.Length);
+            in_buf = new byte[Constants.DL_IN_BUF];
+            Array.Copy(data, in_buf, data.Length);
 
-        //    _isNrz = nrz;
+            _isNrz = nrz;
 
-        //    //beg_mark_uw = Test_uw();
-        //    //_isInterliving = beg_mark_uw != -1;
+            beg_mark_uw = Test_uw();
+            _isInterliving = beg_mark_uw != -1;
 
-        //    if (_isInterliving)
-        //    {
-        //        //beg_mark_uw = Test_uw();
-        //        Deinterl(); //деинтерливинг
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < Constants.DL_IN_BUF; i += 2048)
-        //        {
-        //            To_bits(i);
-        //            ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
-        //            Find_tk_in();
-        //        }
-        //    }
-        //}
+            if (_isInterliving)
+            {
+                beg_mark_uw = Test_uw();
+                Deinterl(); //деинтерливинг
+            }
+            else
+            {
+                for (int i = 0; i < Constants.DL_IN_BUF; i += 2048)
+                {
+                    To_bits(i);
+                    ind_vit = _viterbi.DecodeViterbi(bits_buf, vit_buf);
+                    Find_tk_in();
+                }
+            }
+        }
 
         /// <summary>
         /// Обновление данных самопроверки на форме.
@@ -248,7 +248,7 @@ namespace ReceivingStation.Decode
 
             _isNrz = nrz;
 
-            //beg_mark_uw = Test_uw();
+            beg_mark_uw = Test_uw();
             //_isInterliving = beg_mark_uw != -1;
 
             if (_isInterliving)
@@ -468,7 +468,6 @@ namespace ReceivingStation.Decode
                     {
                         bit = Convert.ToBoolean(tek_bt & tek_mask);
                         interl_buf[ind_in_intrl++] = bit; // Набираем буфер.
-
                         if (ind_in_intrl == Constants.DL_INTRL_BUF) // Набрали буфер.
                         {
                             ind_in_intrl = 0;

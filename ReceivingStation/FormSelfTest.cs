@@ -18,7 +18,18 @@ namespace ReceivingStation
         private Thread _serverThread;
         private ClientForSelfTest _client;
 
+        private Demodulator.Demodulating _receiver;
+        private byte _freq;
+        private byte _interliving;
+        private byte _modulation;
+
         private int _errorsTkCount; // Для подсчета ТК с ошибками превышающими 15 на 1 байт ТК.
+
+        bool[] flags = new bool[2];
+        bool lockedlost = false;
+        bool locked = false;
+       
+        private Thread _updateLock;
 
         public FormSelfTest()
         {
@@ -42,6 +53,7 @@ namespace ReceivingStation
 
             _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();
+
         }
 
         private void FormSelfTest_FormClosing(object sender, FormClosingEventArgs e)
@@ -79,39 +91,81 @@ namespace ReceivingStation
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+            if (_receiver != null)   flags = _receiver.UpdateDataGui();
         }
 
-        private async void btnSelfTesting_Click(object sender, EventArgs e)
+        private void btnSelfTesting_Click(object sender, EventArgs e)
         {
             rtbSelfTest.Clear();
             pSelfTestSettings.Enabled = false;
             Settings.Default.lastSelfTestDate = DateTime.Now.ToString();
             Settings.Default.Save();
 
+
             LogFiles.WriteUserActions("Начата самопроверка");
             WriteActions("  Начата самопроверка\n\n", Color.White);
 
+            if (rbFreq1.Checked) _freq = 0x1;
+            else if (rbFreq2.Checked) _freq = 0x2;
+            if (rbInterlivingReceiveOn.Checked) _interliving = 0x1;
+            else if (rbInterlivingReceiveOff.Checked) _interliving = 0x2;
+            UpdateLastDates();
+            _modulation = 0x1; // QPSK mod ON
+            //_modulation = 0x2; // OQPSK mod off
+
             // Тут создаем приемник и старт декод вызываем там. параметры конструктора декода не нужны. 
             // Пока просто тест с готовым файлом.
+            var isSelfTest = true;
             Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
-            
-            // Вызвать в приемнике. задать нужную сигнатуру в классе дкодера или использовать готовую из режима "Прием".
-            // await Task.Run(() => _decode.StartDecode()); 
-
-            if (_errorsTkCount > 0)
-            {
-                WriteActions("  Самопроверка прошла с ошибоками\n\n", GuiUpdater.ErrorColor);             
-            }
-            else
-            {
-                WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
-            }
-
-            WriteActions("  Самопроверка завершена", Color.White);
-            LogFiles.WriteUserActions("Самопроверка завершена");
+            if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
+            _receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
+            _receiver.StartDecoding();
+            _receiver.RecordStart(isSelfTest);
 
             pSelfTestSettings.Enabled = true;
-            UpdateLastDates();
+
+            // Вызвать в приемнике. задать нужную сигнатуру в классе дкодера или использовать готовую из режима "Прием".
+            // await Task.Run(() => _decode.StartDecode()); 
+            // PSP Finded
+            //Task.Run(() => UpdateLock());
+            _updateLock = new Thread(UpdateLock);
+            _updateLock.Start();
+        }
+       
+        private void UpdateLock()
+        {
+            while (true)
+            {
+                flags = _receiver.UpdateDataGui();
+                if (flags[1]) locked = true;
+                if (locked && !flags[1]) lockedlost = true;
+
+                if (lockedlost)
+                {
+                    if (_errorsTkCount > 0)
+                    {
+                        WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else
+                    {
+                        WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
+                    }
+
+                    WriteActions("  Самопроверка завершена", Color.White);
+                    LogFiles.WriteUserActions("Самопроверка завершена");
+
+                    if (_receiver != null)
+                    {
+                        _receiver.StopDecoding();
+                        _receiver = null;
+                    }
+                    lockedlost = false;
+                    locked = false;
+                    
+                    return;
+
+                }
+            }
         }
 
         private async void btnSelfTestingServer_Click(object sender, EventArgs e)

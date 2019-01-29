@@ -9,6 +9,7 @@ namespace ReceivingStation.Demodulator
         BinaryWriter datfile;
         private int bytedata;
         private bool _Interliving;
+        private bool _isSelfTest;
 
         #region Конструктор
         public StreamCorrection(byte interliving, string filename)
@@ -16,6 +17,7 @@ namespace ReceivingStation.Demodulator
             if (interliving == 0x1) _Interliving = true;
             if (interliving == 0x2) _Interliving = false;
             datfile = new BinaryWriter(File.Create(filename));
+            _isSelfTest = false;
         }
         #endregion
 
@@ -23,6 +25,7 @@ namespace ReceivingStation.Demodulator
         {
             if (interliving == 0x1) _Interliving = true;
             if (interliving == 0x2) _Interliving = false;
+            _isSelfTest = true;
         }
         //public void StreamCorrect(string filenameFromRecordingThread)
         //{
@@ -282,7 +285,7 @@ namespace ReceivingStation.Demodulator
             }
 
             Array.Copy(outarray, array, array.Length);
-            datfile.Write(outarray, 0, outarray.Length);
+            if  (!_isSelfTest) datfile.Write(outarray, 0, outarray.Length);
         }
 
         public void fromAmplitudesToBits_int(byte[] indata, byte[] array)
@@ -322,12 +325,12 @@ namespace ReceivingStation.Demodulator
             }
 
             Array.Copy(outarray, array, array.Length);
-            datfile.Write(outarray, 0, outarray.Length);
+            if (!_isSelfTest) datfile.Write(outarray, 0, outarray.Length);
         }
 
         public void StopCorrect()
         {
-            datfile.Close();
+            if (!_isSelfTest) datfile.Close();
         }
     }
 }
