@@ -634,7 +634,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 146F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -659,7 +659,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(126, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(111, 102);
+            this.panel7.Size = new System.Drawing.Size(110, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -715,7 +715,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(423, 3);
+            this.panel2.Location = new System.Drawing.Point(422, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(117, 102);
             this.panel2.TabIndex = 42;
@@ -774,7 +774,7 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(243, 3);
+            this.panel3.Location = new System.Drawing.Point(242, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(174, 102);
             this.panel3.TabIndex = 43;
@@ -891,9 +891,9 @@
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(546, 3);
+            this.pModulation.Location = new System.Drawing.Point(545, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(142, 102);
+            this.pModulation.Size = new System.Drawing.Size(143, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 

@@ -127,8 +127,8 @@
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.30855F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.69145F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.43697F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.56303F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel2, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.rtbSelfTest, 1, 1);
@@ -150,7 +150,7 @@
             this.doubleBufferedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel2.Location = new System.Drawing.Point(3, 117);
             this.doubleBufferedPanel2.Name = "doubleBufferedPanel2";
-            this.doubleBufferedPanel2.Size = new System.Drawing.Size(200, 566);
+            this.doubleBufferedPanel2.Size = new System.Drawing.Size(196, 566);
             this.doubleBufferedPanel2.TabIndex = 58;
             // 
             // pSelfTestSettings
@@ -164,7 +164,7 @@
             this.pSelfTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pSelfTestSettings.Location = new System.Drawing.Point(0, 0);
             this.pSelfTestSettings.Name = "pSelfTestSettings";
-            this.pSelfTestSettings.Size = new System.Drawing.Size(200, 566);
+            this.pSelfTestSettings.Size = new System.Drawing.Size(196, 566);
             this.pSelfTestSettings.TabIndex = 62;
             // 
             // pModulation
@@ -291,7 +291,7 @@
             this.btnSelfTestingServer.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSelfTestingServer.Name = "btnSelfTestingServer";
             this.btnSelfTestingServer.Primary = true;
-            this.btnSelfTestingServer.Size = new System.Drawing.Size(187, 67);
+            this.btnSelfTestingServer.Size = new System.Drawing.Size(188, 67);
             this.btnSelfTestingServer.TabIndex = 45;
             this.btnSelfTestingServer.Text = "Начать  самопроверку сервера";
             this.btnSelfTestingServer.UseVisualStyleBackColor = true;
@@ -307,7 +307,7 @@
             this.btnSelfTesting.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSelfTesting.Name = "btnSelfTesting";
             this.btnSelfTesting.Primary = true;
-            this.btnSelfTesting.Size = new System.Drawing.Size(187, 67);
+            this.btnSelfTesting.Size = new System.Drawing.Size(188, 67);
             this.btnSelfTesting.TabIndex = 45;
             this.btnSelfTesting.Text = "Начать самопроверку ";
             this.btnSelfTesting.UseVisualStyleBackColor = true;
@@ -433,10 +433,10 @@
             this.rtbSelfTest.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel3.SetColumnSpan(this.rtbSelfTest, 2);
             this.rtbSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbSelfTest.Location = new System.Drawing.Point(212, 117);
+            this.rtbSelfTest.Location = new System.Drawing.Point(208, 117);
             this.rtbSelfTest.Margin = new System.Windows.Forms.Padding(6, 3, 6, 6);
             this.rtbSelfTest.Name = "rtbSelfTest";
-            this.rtbSelfTest.Size = new System.Drawing.Size(388, 563);
+            this.rtbSelfTest.Size = new System.Drawing.Size(392, 563);
             this.rtbSelfTest.TabIndex = 57;
             this.rtbSelfTest.Text = "";
             // 
