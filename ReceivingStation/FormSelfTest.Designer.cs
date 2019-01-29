@@ -129,7 +129,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.30855F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.69145F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel2, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.rtbSelfTest, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel1, 0, 0);
@@ -162,7 +162,7 @@
             this.doubleBufferedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel2.Location = new System.Drawing.Point(3, 117);
             this.doubleBufferedPanel2.Name = "doubleBufferedPanel2";
-            this.doubleBufferedPanel2.Size = new System.Drawing.Size(201, 566);
+            this.doubleBufferedPanel2.Size = new System.Drawing.Size(200, 566);
             this.doubleBufferedPanel2.TabIndex = 58;
             // 
             // pSelfTestSettings
@@ -176,7 +176,7 @@
             this.pSelfTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pSelfTestSettings.Location = new System.Drawing.Point(0, 0);
             this.pSelfTestSettings.Name = "pSelfTestSettings";
-            this.pSelfTestSettings.Size = new System.Drawing.Size(201, 566);
+            this.pSelfTestSettings.Size = new System.Drawing.Size(200, 566);
             this.pSelfTestSettings.TabIndex = 62;
             // 
             // pModulation
@@ -184,7 +184,7 @@
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
-            this.pModulation.Location = new System.Drawing.Point(3, 274);
+            this.pModulation.Location = new System.Drawing.Point(3, 271);
             this.pModulation.Name = "pModulation";
             this.pModulation.Size = new System.Drawing.Size(188, 63);
             this.pModulation.TabIndex = 62;
@@ -303,7 +303,7 @@
             this.btnSelfTestingServer.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSelfTestingServer.Name = "btnSelfTestingServer";
             this.btnSelfTestingServer.Primary = true;
-            this.btnSelfTestingServer.Size = new System.Drawing.Size(188, 67);
+            this.btnSelfTestingServer.Size = new System.Drawing.Size(187, 67);
             this.btnSelfTestingServer.TabIndex = 45;
             this.btnSelfTestingServer.Text = "Начать  самопроверку сервера";
             this.btnSelfTestingServer.UseVisualStyleBackColor = true;
@@ -315,11 +315,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelfTesting.Depth = 0;
-            this.btnSelfTesting.Location = new System.Drawing.Point(3, 201);
+            this.btnSelfTesting.Location = new System.Drawing.Point(3, 199);
             this.btnSelfTesting.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSelfTesting.Name = "btnSelfTesting";
             this.btnSelfTesting.Primary = true;
-            this.btnSelfTesting.Size = new System.Drawing.Size(188, 67);
+            this.btnSelfTesting.Size = new System.Drawing.Size(187, 67);
             this.btnSelfTesting.TabIndex = 45;
             this.btnSelfTesting.Text = "Начать самопроверку ";
             this.btnSelfTesting.UseVisualStyleBackColor = true;
@@ -331,7 +331,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
-            this.panel2.Location = new System.Drawing.Point(3, 102);
+            this.panel2.Location = new System.Drawing.Point(3, 100);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(188, 93);
             this.panel2.TabIndex = 59;
@@ -388,7 +388,7 @@
             this.panel3.Controls.Add(this.rbFreq2);
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
-            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Location = new System.Drawing.Point(3, 1);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(188, 93);
             this.panel3.TabIndex = 60;
@@ -414,7 +414,7 @@
             this.rbFreq1.AutoSize = true;
             this.rbFreq1.Checked = true;
             this.rbFreq1.Depth = 0;
-            this.rbFreq1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.rbFreq1.Font = new System.Drawing.Font("Roboto", 10F);
             this.rbFreq1.Location = new System.Drawing.Point(7, 30);
             this.rbFreq1.Margin = new System.Windows.Forms.Padding(0);
             this.rbFreq1.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -445,10 +445,10 @@
             this.rtbSelfTest.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel3.SetColumnSpan(this.rtbSelfTest, 2);
             this.rtbSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbSelfTest.Location = new System.Drawing.Point(213, 117);
+            this.rtbSelfTest.Location = new System.Drawing.Point(212, 117);
             this.rtbSelfTest.Margin = new System.Windows.Forms.Padding(6, 3, 6, 6);
             this.rtbSelfTest.Name = "rtbSelfTest";
-            this.rtbSelfTest.Size = new System.Drawing.Size(387, 563);
+            this.rtbSelfTest.Size = new System.Drawing.Size(388, 563);
             this.rtbSelfTest.TabIndex = 57;
             this.rtbSelfTest.Text = "";
             // 
@@ -462,7 +462,7 @@
             this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
             this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
-            this.doubleBufferedPanel1.Size = new System.Drawing.Size(472, 108);
+            this.doubleBufferedPanel1.Size = new System.Drawing.Size(470, 108);
             this.doubleBufferedPanel1.TabIndex = 59;
             // 
             // lblSelfTestingServerDate
