@@ -35,7 +35,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pSelfTestSettings = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
@@ -62,9 +61,9 @@
             this.lblSelfTestingDate = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.doubleBufferedPanel2.SuspendLayout();
             this.pSelfTestSettings.SuspendLayout();
             this.pModulation.SuspendLayout();
@@ -72,6 +71,7 @@
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.doubleBufferedPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -143,18 +143,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(606, 686);
             this.tableLayoutPanel3.TabIndex = 46;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(492, 6);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 42;
-            this.pictureBox1.TabStop = false;
             // 
             // doubleBufferedPanel2
             // 
@@ -517,6 +505,18 @@
             this.materialLabel2.TabIndex = 0;
             this.materialLabel2.Text = "Дата последней самопроверки:";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(492, 6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 6, 6, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
             // FormSelfTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -540,7 +540,6 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.doubleBufferedPanel2.ResumeLayout(false);
             this.pSelfTestSettings.ResumeLayout(false);
             this.pModulation.ResumeLayout(false);
@@ -553,6 +552,7 @@
             this.panel3.PerformLayout();
             this.doubleBufferedPanel1.ResumeLayout(false);
             this.doubleBufferedPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
