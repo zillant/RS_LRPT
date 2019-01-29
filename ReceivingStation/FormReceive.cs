@@ -28,7 +28,6 @@ namespace ReceivingStation
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
         
         private string _fileName;
-        private bool _isModulationPanelVisible; // Для скрытия панели модуляции.
 
         private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
         private long _imageCounter; // Счетчик сохранненых изображений.
@@ -74,7 +73,6 @@ namespace ReceivingStation
             materialTabControl1.SelectedTab = tabPage7;
 
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
-            _isModulationPanelVisible = false;
            
             LogFiles.ReadWorkingTimeValues(out MainFcpWorkingTime, out ReserveFcpWorkingTime, out MainPrdWorkingTime, out ReservePrdWorkingTime);
 
@@ -142,15 +140,13 @@ namespace ReceivingStation
             // Alt + L  
             if (e.Alt && e.KeyCode == Keys.L)
             {
-                if (!_isModulationPanelVisible)
+                if (pModulation.Visible)
                 {
-                    pModulation.Visible = true;
-                    _isModulationPanelVisible = true;
+                    pModulation.Visible = false;
                 }
                 else
                 {
-                    pModulation.Visible = false;
-                    _isModulationPanelVisible = false;
+                    pModulation.Visible = true;
                 }
                 e.SuppressKeyPress = true;
             }

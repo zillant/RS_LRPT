@@ -43,7 +43,7 @@
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.rbRSYes = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbRSNo = new MaterialSkin.Controls.MaterialRadioButton();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pNRZ = new System.Windows.Forms.Panel();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             this.rbNRZYes = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbNRZNo = new MaterialSkin.Controls.MaterialRadioButton();
@@ -97,7 +97,7 @@
             this.panel5.SuspendLayout();
             this.tlpDecodingParameters.SuspendLayout();
             this.pRS.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.pNRZ.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -225,7 +225,7 @@
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.9683F));
             this.tlpDecodingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.44092F));
             this.tlpDecodingParameters.Controls.Add(this.pRS, 2, 0);
-            this.tlpDecodingParameters.Controls.Add(this.panel3, 1, 0);
+            this.tlpDecodingParameters.Controls.Add(this.pNRZ, 1, 0);
             this.tlpDecodingParameters.Controls.Add(this.panel4, 0, 0);
             this.tlpDecodingParameters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpDecodingParameters.Location = new System.Drawing.Point(3, 3);
@@ -293,17 +293,18 @@
             this.rbRSNo.Text = "Нет";
             this.rbRSNo.UseVisualStyleBackColor = true;
             // 
-            // panel3
+            // pNRZ
             // 
-            this.panel3.BackColor = System.Drawing.SystemColors.Window;
-            this.panel3.Controls.Add(this.materialLabel7);
-            this.panel3.Controls.Add(this.rbNRZYes);
-            this.panel3.Controls.Add(this.rbNRZNo);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(250, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(84, 102);
-            this.panel3.TabIndex = 43;
+            this.pNRZ.BackColor = System.Drawing.SystemColors.Window;
+            this.pNRZ.Controls.Add(this.materialLabel7);
+            this.pNRZ.Controls.Add(this.rbNRZYes);
+            this.pNRZ.Controls.Add(this.rbNRZNo);
+            this.pNRZ.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pNRZ.Location = new System.Drawing.Point(250, 3);
+            this.pNRZ.Name = "pNRZ";
+            this.pNRZ.Size = new System.Drawing.Size(84, 102);
+            this.pNRZ.TabIndex = 43;
+            this.pNRZ.Visible = false;
             // 
             // materialLabel7
             // 
@@ -877,7 +878,7 @@
             this.panel5.ResumeLayout(false);
             this.tlpDecodingParameters.ResumeLayout(false);
             this.pRS.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
+            this.pNRZ.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -920,7 +921,7 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel10;
         private System.Windows.Forms.Panel pRS;
         private MaterialSkin.Controls.MaterialRaisedButton btnOpenFile;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel pNRZ;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel6;

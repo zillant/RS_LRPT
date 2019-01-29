@@ -76,14 +76,29 @@ namespace ReceivingStation
 
         private void FormSelfTest_KeyDown(object sender, KeyEventArgs e)
         {
-            // Alt + L  
-            if (e.Alt && e.KeyCode == Keys.L)
+            // Alt + P  
+            if (e.Alt && e.KeyCode == Keys.P)
             {
                 Settings.Default.lastSelfTestDate = "Не проводилась";
                 Settings.Default.lastSelfTestServerDate = "Не проводилась";
                 Settings.Default.Save();
 
                 UpdateLastDates();
+                e.SuppressKeyPress = true;
+            }
+
+            // Alt + L
+            if (e.Alt && e.KeyCode == Keys.L)
+            {
+                if (pModulation.Visible)
+                {
+                    pModulation.Visible = false;
+                }
+                else
+                {
+                    pModulation.Visible = true;
+                }
+                
                 e.SuppressKeyPress = true;
             }
         }
@@ -100,7 +115,7 @@ namespace ReceivingStation
             pSelfTestSettings.Enabled = false;
             Settings.Default.lastSelfTestDate = DateTime.Now.ToString();
             Settings.Default.Save();
-
+            UpdateLastDates();
 
             LogFiles.WriteUserActions("Начата самопроверка");
             WriteActions("  Начата самопроверка\n\n", Color.White);
@@ -109,12 +124,10 @@ namespace ReceivingStation
             else if (rbFreq2.Checked) _freq = 0x2;
             if (rbInterlivingReceiveOn.Checked) _interliving = 0x1;
             else if (rbInterlivingReceiveOff.Checked) _interliving = 0x2;
-            UpdateLastDates();
-            _modulation = 0x1; // QPSK mod ON
-            //_modulation = 0x2; // OQPSK mod off
 
-            // Тут создаем приемник и старт декод вызываем там. параметры конструктора декода не нужны. 
-            // Пока просто тест с готовым файлом.
+            if (rbQpsk.Checked) _modulation = 0x1; // QPSK mod ON
+            else _modulation = 0x2; // OQPSK mod off
+
             var isSelfTest = true;
             Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
             if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
@@ -124,10 +137,6 @@ namespace ReceivingStation
 
             pSelfTestSettings.Enabled = true;
 
-            // Вызвать в приемнике. задать нужную сигнатуру в классе дкодера или использовать готовую из режима "Прием".
-            // await Task.Run(() => _decode.StartDecode()); 
-            // PSP Finded
-            //Task.Run(() => UpdateLock());
             _updateLock = new Thread(UpdateLock);
             _updateLock.Start();
         }
@@ -163,7 +172,6 @@ namespace ReceivingStation
                     locked = false;
                     
                     return;
-
                 }
             }
         }

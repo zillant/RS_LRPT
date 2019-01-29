@@ -105,12 +105,14 @@ namespace ReceivingStation
                 {
                     slDecodeTime.Visible = true;
                     pRS.Visible = true;
+                    pNRZ.Visible = true;
                     _isDecodeTimeVisible = true;
                 }
                 else
                 {
                     slDecodeTime.Visible = false;
                     pRS.Visible = false;
+                    pNRZ.Visible = false;
                     _isDecodeTimeVisible = false;
                 }
 

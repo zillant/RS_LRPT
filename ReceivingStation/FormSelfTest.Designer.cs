@@ -35,8 +35,13 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pSelfTestSettings = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.rbQpsk = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbOqpsk = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbRandomSending = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbSequentialSending = new MaterialSkin.Controls.MaterialRadioButton();
@@ -57,16 +62,16 @@
             this.lblSelfTestingDate = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.doubleBufferedPanel2.SuspendLayout();
             this.pSelfTestSettings.SuspendLayout();
+            this.pModulation.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.doubleBufferedPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -124,7 +129,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.30855F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.69145F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel2, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.rtbSelfTest, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.doubleBufferedPanel1, 0, 0);
@@ -139,17 +144,30 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(606, 686);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(492, 6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 6, 6, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
             // doubleBufferedPanel2
             // 
             this.doubleBufferedPanel2.Controls.Add(this.pSelfTestSettings);
             this.doubleBufferedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel2.Location = new System.Drawing.Point(3, 117);
             this.doubleBufferedPanel2.Name = "doubleBufferedPanel2";
-            this.doubleBufferedPanel2.Size = new System.Drawing.Size(204, 566);
+            this.doubleBufferedPanel2.Size = new System.Drawing.Size(201, 566);
             this.doubleBufferedPanel2.TabIndex = 58;
             // 
             // pSelfTestSettings
             // 
+            this.pSelfTestSettings.Controls.Add(this.pModulation);
             this.pSelfTestSettings.Controls.Add(this.panel1);
             this.pSelfTestSettings.Controls.Add(this.btnSelfTestingServer);
             this.pSelfTestSettings.Controls.Add(this.btnSelfTesting);
@@ -158,8 +176,65 @@
             this.pSelfTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pSelfTestSettings.Location = new System.Drawing.Point(0, 0);
             this.pSelfTestSettings.Name = "pSelfTestSettings";
-            this.pSelfTestSettings.Size = new System.Drawing.Size(204, 566);
+            this.pSelfTestSettings.Size = new System.Drawing.Size(201, 566);
             this.pSelfTestSettings.TabIndex = 62;
+            // 
+            // pModulation
+            // 
+            this.pModulation.Controls.Add(this.rbQpsk);
+            this.pModulation.Controls.Add(this.rbOqpsk);
+            this.pModulation.Controls.Add(this.materialLabel7);
+            this.pModulation.Location = new System.Drawing.Point(3, 274);
+            this.pModulation.Name = "pModulation";
+            this.pModulation.Size = new System.Drawing.Size(188, 63);
+            this.pModulation.TabIndex = 62;
+            this.pModulation.Visible = false;
+            // 
+            // rbQpsk
+            // 
+            this.rbQpsk.AutoSize = true;
+            this.rbQpsk.Depth = 0;
+            this.rbQpsk.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbQpsk.Location = new System.Drawing.Point(100, 30);
+            this.rbQpsk.Margin = new System.Windows.Forms.Padding(0);
+            this.rbQpsk.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbQpsk.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbQpsk.Name = "rbQpsk";
+            this.rbQpsk.Ripple = true;
+            this.rbQpsk.Size = new System.Drawing.Size(64, 30);
+            this.rbQpsk.TabIndex = 48;
+            this.rbQpsk.Text = "QPSK";
+            this.rbQpsk.UseVisualStyleBackColor = true;
+            // 
+            // rbOqpsk
+            // 
+            this.rbOqpsk.AutoSize = true;
+            this.rbOqpsk.Checked = true;
+            this.rbOqpsk.Depth = 0;
+            this.rbOqpsk.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbOqpsk.Location = new System.Drawing.Point(8, 30);
+            this.rbOqpsk.Margin = new System.Windows.Forms.Padding(0);
+            this.rbOqpsk.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbOqpsk.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbOqpsk.Name = "rbOqpsk";
+            this.rbOqpsk.Ripple = true;
+            this.rbOqpsk.Size = new System.Drawing.Size(74, 30);
+            this.rbOqpsk.TabIndex = 47;
+            this.rbOqpsk.TabStop = true;
+            this.rbOqpsk.Text = "OQPSK";
+            this.rbOqpsk.UseVisualStyleBackColor = true;
+            // 
+            // materialLabel7
+            // 
+            this.materialLabel7.Depth = 0;
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel7.Location = new System.Drawing.Point(3, 6);
+            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(94, 19);
+            this.materialLabel7.TabIndex = 46;
+            this.materialLabel7.Text = "Модуляция";
             // 
             // panel1
             // 
@@ -167,7 +242,7 @@
             this.panel1.Controls.Add(this.rbRandomSending);
             this.panel1.Controls.Add(this.rbSequentialSending);
             this.panel1.Controls.Add(this.materialLabel1);
-            this.panel1.Location = new System.Drawing.Point(3, 332);
+            this.panel1.Location = new System.Drawing.Point(3, 350);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(188, 93);
             this.panel1.TabIndex = 61;
@@ -224,7 +299,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelfTestingServer.Depth = 0;
-            this.btnSelfTestingServer.Location = new System.Drawing.Point(3, 431);
+            this.btnSelfTestingServer.Location = new System.Drawing.Point(3, 449);
             this.btnSelfTestingServer.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSelfTestingServer.Name = "btnSelfTestingServer";
             this.btnSelfTestingServer.Primary = true;
@@ -240,7 +315,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelfTesting.Depth = 0;
-            this.btnSelfTesting.Location = new System.Drawing.Point(3, 198);
+            this.btnSelfTesting.Location = new System.Drawing.Point(3, 201);
             this.btnSelfTesting.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSelfTesting.Name = "btnSelfTesting";
             this.btnSelfTesting.Primary = true;
@@ -256,7 +331,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
-            this.panel2.Location = new System.Drawing.Point(3, 99);
+            this.panel2.Location = new System.Drawing.Point(3, 102);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(188, 93);
             this.panel2.TabIndex = 59;
@@ -313,7 +388,7 @@
             this.panel3.Controls.Add(this.rbFreq2);
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
-            this.panel3.Location = new System.Drawing.Point(3, 0);
+            this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(188, 93);
             this.panel3.TabIndex = 60;
@@ -339,7 +414,7 @@
             this.rbFreq1.AutoSize = true;
             this.rbFreq1.Checked = true;
             this.rbFreq1.Depth = 0;
-            this.rbFreq1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFreq1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbFreq1.Location = new System.Drawing.Point(7, 30);
             this.rbFreq1.Margin = new System.Windows.Forms.Padding(0);
             this.rbFreq1.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -370,10 +445,10 @@
             this.rtbSelfTest.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tableLayoutPanel3.SetColumnSpan(this.rtbSelfTest, 2);
             this.rtbSelfTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbSelfTest.Location = new System.Drawing.Point(216, 117);
+            this.rtbSelfTest.Location = new System.Drawing.Point(213, 117);
             this.rtbSelfTest.Margin = new System.Windows.Forms.Padding(6, 3, 6, 6);
             this.rtbSelfTest.Name = "rtbSelfTest";
-            this.rtbSelfTest.Size = new System.Drawing.Size(384, 563);
+            this.rtbSelfTest.Size = new System.Drawing.Size(387, 563);
             this.rtbSelfTest.TabIndex = 57;
             this.rtbSelfTest.Text = "";
             // 
@@ -387,7 +462,7 @@
             this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
             this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
-            this.doubleBufferedPanel1.Size = new System.Drawing.Size(480, 108);
+            this.doubleBufferedPanel1.Size = new System.Drawing.Size(472, 108);
             this.doubleBufferedPanel1.TabIndex = 59;
             // 
             // lblSelfTestingServerDate
@@ -442,18 +517,6 @@
             this.materialLabel2.TabIndex = 0;
             this.materialLabel2.Text = "Дата последней самопроверки:";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(492, 6);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 42;
-            this.pictureBox1.TabStop = false;
-            // 
             // FormSelfTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -477,8 +540,11 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.doubleBufferedPanel2.ResumeLayout(false);
             this.pSelfTestSettings.ResumeLayout(false);
+            this.pModulation.ResumeLayout(false);
+            this.pModulation.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -487,7 +553,6 @@
             this.panel3.PerformLayout();
             this.doubleBufferedPanel1.ResumeLayout(false);
             this.doubleBufferedPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -523,5 +588,9 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel lblSelfTestingServerDate;
         private MaterialSkin.Controls.MaterialLabel lblSelfTestingDate;
+        private Other.DoubleBufferedPanel pModulation;
+        private MaterialSkin.Controls.MaterialRadioButton rbQpsk;
+        private MaterialSkin.Controls.MaterialRadioButton rbOqpsk;
+        private MaterialSkin.Controls.MaterialLabel materialLabel7;
     }
 }
