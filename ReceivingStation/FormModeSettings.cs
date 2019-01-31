@@ -14,8 +14,7 @@ namespace ReceivingStation
         {
             InitializeComponent();
 
-            lblConnection.Text = Server.Server.RemoteModeFlag == false ?
-                $"Режим: {Resources.LocalControlString}" : $"Режим: {Resources.RemoteControlString}";
+            CheckMode();           
         }
 
         private void btnServerSettings_Click(object sender, EventArgs e)
@@ -36,9 +35,22 @@ namespace ReceivingStation
             {
                 Server.Server.RemoteModeFlag = false;
                 ChangeMode(1);
-                Close();
+                CheckMode();
             }
+        }
 
+        private void CheckMode()
+        {
+            if(Server.Server.RemoteModeFlag)
+            {
+                btnServerSettings.SetPropertyThreadSafe(() => btnServerSettings.Enabled, false);
+                lblConnection.Text = $"Режим: {Resources.RemoteControlString}";
+            }
+            else
+            {
+                btnServerSettings.SetPropertyThreadSafe(() => btnServerSettings.Enabled, true);
+                lblConnection.Text = $"Режим: {Resources.LocalControlString}";
+            }
         }
     }
 }

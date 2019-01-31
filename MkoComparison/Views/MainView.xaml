@@ -17,7 +17,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
-        Title="MkoComparison" Height="550" Width="450" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" >
+        Title="MkoComparison" Height="650" Width="450" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" >
 
     <Window.DataContext>
         <vm:MainViewModel />
