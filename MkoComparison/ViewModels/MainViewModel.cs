@@ -11,25 +11,61 @@ namespace MkoComparison.ViewModels
     {
         public MainViewModel()
         {
-
+            OriginalFileName = "Не выбран";
+            ReceivedFileName = "Не выбран";
         }
 
-        public RelayCommand OpenFileCommand
+        private string _originalFileName;
+        public string OriginalFileName
+        {
+            get => _originalFileName;
+            set
+            {
+                _originalFileName = value;
+                RaisePropertyChanged(nameof(OriginalFileName));
+            }
+        }
+
+        private string _receivedFileName;
+        public string ReceivedFileName
+        {
+            get => _receivedFileName;
+            set
+            {
+                _receivedFileName = value;
+                RaisePropertyChanged(nameof(ReceivedFileName));
+            }
+        }
+
+        public RelayCommand<int> OpenFileCommand
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<int>((e) =>
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    OpenFileDialog openFileDialog = new OpenFileDialog
+                    {
+                        Title = "Выбор файла",
+                        FilterIndex = 1
+                    };
 
-                    openFileDialog.Title = "Выбор файла";
-                    openFileDialog.Filter = "Files (*.dat)|*.dat";
-                    openFileDialog.FilterIndex = 1;
+                    switch (e)
+                    {
+                        case 0: openFileDialog.Filter = "Mko files (*.mko)|*.mko"; break;
+                        case 1: openFileDialog.Filter = "Txt files (*.txt)|*.txt"; break;
+                        default: break;
+                    }
+                    
                     bool? dialogOK = openFileDialog.ShowDialog();
 
                     if (dialogOK == true)
                     {
-
+                        switch (e)
+                        {
+                            case 0: OriginalFileName = openFileDialog.SafeFileName; break;
+                            case 1: ReceivedFileName = openFileDialog.SafeFileName; break;
+                            default: break;
+                        }
                     }
                 });
             }
