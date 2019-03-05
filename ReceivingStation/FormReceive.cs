@@ -322,7 +322,7 @@ namespace ReceivingStation
 
                 var timeString = DateTime.Now.ToString("HH-mm-ss");
                 var sessionName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
-                _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}";
+                _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}.dat";
           
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
@@ -330,8 +330,9 @@ namespace ReceivingStation
                     _allChannels[i].Controls.Clear();
                     _channels[i].Controls.Clear();
                     _listImagesForSave[i].Clear();
-                    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileName(_fileName)}_Channel_{i + 1}");
-                    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileName(_fileName)}_Channel_{i + 1}");
+
+                    Directory.CreateDirectory($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
+                    DirectoryInfo di = new DirectoryInfo($"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Channel_{i + 1}");
 
                     foreach (FileInfo file in di.GetFiles())
                     {
@@ -376,9 +377,21 @@ namespace ReceivingStation
         /// </remarks>
         private void StopReceiving()
         {
+            _decode.UpdateDataGui();
+            _decode.FinishDecode();
+
             _server.ReceivingStartedFlag = false;
             _receiver.StopDecoding();
-            _decode.FinishDecode();
+
+            try
+            {
+                bwImageSaver.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
             lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
@@ -493,8 +506,8 @@ namespace ReceivingStation
         {
             _callingUpdateImageCounter++;
 
-            // Набрал 480 строчек изображения (8 * 60).
-            if (_callingUpdateImageCounter == 60)
+            // Набрал 1920 строчек изображения (8 * 240).
+            if (_callingUpdateImageCounter == 240)
             {
                 bwImageSaver.RunWorkerAsync();
                 _callingUpdateImageCounter = 0;

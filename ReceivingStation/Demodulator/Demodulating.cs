@@ -161,8 +161,8 @@ namespace ReceivingStation.Demodulator
                 _Interliving = false;
             }
 
-            
-            var recordingfilename = $"{filename}.dat";
+           
+            var recordingfilename = filename;
             
 
             //var logfilename = "onlinelogs";

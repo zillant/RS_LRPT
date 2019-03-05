@@ -221,7 +221,7 @@ namespace ReceivingStation.Decode
             _viterbi = new Viterbi();
             _jpeg = new Jpeg();
 
-            _decodeLogFileName = $"{fileName}_info.txt";
+            _decodeLogFileName = $"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_info.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
             for (int i = 0; i < 6; i++)
@@ -353,6 +353,16 @@ namespace ReceivingStation.Decode
             _sw.Close();
         }
 
+        #endregion
+
+        #region Обновление данных и информации на форме.
+        public void UpdateDataGui()
+        {
+            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
+            {
+                ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
+            }
+        }
         #endregion
 
         #region Инициализация переменных.
@@ -1013,16 +1023,6 @@ namespace ReceivingStation.Decode
             }
         }
 
-        #endregion
-
-        #region Обновление данных и информации на форме.
-        private void UpdateDataGui()
-        {
-            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
-            {
-                ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
-            }
-        }
         #endregion
     }
 }

@@ -273,8 +273,8 @@ namespace ReceivingStation
         {
             _callingUpdateImageCounter++;
 
-            // Набрал 480 строчек изображения (8 * 60).
-            if (_callingUpdateImageCounter == 60)
+            // Набрал 1920 строчек изображения (8 * 240).
+            if (_callingUpdateImageCounter == 240)
             {
                 bwImageSaver.RunWorkerAsync();
                 _callingUpdateImageCounter = 0;
