@@ -638,7 +638,7 @@ namespace ReceivingStation.Decode
             if (apid == Constants.APID_c)
             {
                 // МКО.
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 25, 1);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 27, 1);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
