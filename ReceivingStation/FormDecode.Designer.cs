@@ -90,6 +90,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
             this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.statusStrip1.SuspendLayout();
             this.pnlControls.SuspendLayout();
@@ -113,6 +116,7 @@
             this.tabPage14.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -505,6 +509,7 @@
             this.materialTabControl1.Controls.Add(this.tabPage13);
             this.materialTabControl1.Controls.Add(this.tabPage14);
             this.materialTabControl1.Controls.Add(this.tabPage1);
+            this.materialTabControl1.Controls.Add(this.tabPage2);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialTabControl1.Location = new System.Drawing.Point(0, 213);
@@ -818,7 +823,7 @@
             // rtbMkoData
             // 
             this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(1029, 33);
+            this.rtbMkoData.Location = new System.Drawing.Point(972, 31);
             this.rtbMkoData.Name = "rtbMkoData";
             this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
             this.rtbMkoData.TabIndex = 106;
@@ -827,11 +832,40 @@
             // rtbMkoTitle
             // 
             this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
+            this.rtbMkoTitle.Location = new System.Drawing.Point(385, 31);
             this.rtbMkoTitle.Name = "rtbMkoTitle";
             this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
             this.rtbMkoTitle.TabIndex = 105;
             this.rtbMkoTitle.Text = "";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.rtbServiceData);
+            this.tabPage2.Controls.Add(this.rtbServiceTitle);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(1548, 531);
+            this.tabPage2.TabIndex = 8;
+            this.tabPage2.Text = "Служебная информация";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // rtbServiceData
+            // 
+            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceData.Location = new System.Drawing.Point(972, 31);
+            this.rtbServiceData.Name = "rtbServiceData";
+            this.rtbServiceData.Size = new System.Drawing.Size(191, 475);
+            this.rtbServiceData.TabIndex = 108;
+            this.rtbServiceData.Text = "";
+            // 
+            // rtbServiceTitle
+            // 
+            this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceTitle.Location = new System.Drawing.Point(385, 31);
+            this.rtbServiceTitle.Name = "rtbServiceTitle";
+            this.rtbServiceTitle.Size = new System.Drawing.Size(581, 475);
+            this.rtbServiceTitle.TabIndex = 107;
+            this.rtbServiceTitle.Text = "";
             // 
             // materialDivider1
             // 
@@ -896,6 +930,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -963,6 +998,9 @@
         private System.Windows.Forms.Panel pImage10;
         private System.Windows.Forms.Panel pImage11;
         private System.Windows.Forms.Panel pImage12;
+        private System.Windows.Forms.TabPage tabPage2;
+        private Other.DisabledRichTextBox rtbServiceData;
+        private Other.DisabledRichTextBox rtbServiceTitle;
     }
 }
 

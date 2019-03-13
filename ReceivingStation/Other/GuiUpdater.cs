@@ -119,12 +119,15 @@ namespace ReceivingStation.Other
         /// <param name="rtbMkoData">RichTextBox для данных МКО.</param> 
         /// <param name="rtbDateTimeTitle">RichTextBox для заголовков даты и времени из МКО.</param>
         /// <param name="rtbDateTime">RichTextBox для даты и времени из МКО.</param>
-        public static void DecodeRichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime)
+        public static void DecodeRichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime,
+            DisabledRichTextBox rtbServiceTitle, DisabledRichTextBox rtbServiceData)
         {
             RobotoFont.AllocFont(rtbMko, 11);
             RobotoFont.AllocFont(rtbMkoData, 11);
             RobotoFont.AllocFont(rtbDateTimeTitle, 11);
             RobotoFont.AllocFont(rtbDateTime, 11);
+            RobotoFont.AllocFont(rtbServiceTitle, 11);
+            RobotoFont.AllocFont(rtbServiceData, 11);
 
             var MkoTitle = "Время конца формирования ТД (БШВ)\n\n" +
                 "Первый год в текущем четырехлетии\n\n" +
@@ -153,6 +156,9 @@ namespace ReceivingStation.Other
             var dateTime = "\n0.0.0\n\n0:0:0";
             rtbDateTime.Text = dateTime;
             rtbDateTime.BorderStyle = BorderStyle.None;
+
+            rtbServiceTitle.BorderStyle = BorderStyle.None;
+            rtbServiceData.BorderStyle = BorderStyle.None;
         }
 
         #region Обновление данных декодирования на GUI.
