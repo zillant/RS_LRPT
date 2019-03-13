@@ -159,7 +159,7 @@ namespace ReceivingStation.Other
             rtbDateTime.Text = dateTime;
             rtbDateTime.BorderStyle = BorderStyle.None;
 
-            var serviceTitle = "Псевдослучайная последовательность ПСП-64\n\n" +
+            var serviceTitle = "Время включения прибора ФЦП\n\n" +
                 "Текущее бортовое время КА\n\n" +
                 "Задержка начала сканирования строки по отношению к секундной метке\n\n" +
                 "Порядковый номер комплекта прибора ЭА240(МСУ - МР)";
