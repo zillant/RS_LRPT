@@ -546,7 +546,7 @@
             // rtbMkoData
             // 
             this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(972, 31);
+            this.rtbMkoData.Location = new System.Drawing.Point(1029, 33);
             this.rtbMkoData.Name = "rtbMkoData";
             this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
             this.rtbMkoData.TabIndex = 108;
@@ -555,7 +555,7 @@
             // rtbMkoTitle
             // 
             this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(385, 31);
+            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
             this.rtbMkoTitle.Name = "rtbMkoTitle";
             this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
             this.rtbMkoTitle.TabIndex = 107;
@@ -575,7 +575,7 @@
             // rtbServiceData
             // 
             this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceData.Location = new System.Drawing.Point(972, 31);
+            this.rtbServiceData.Location = new System.Drawing.Point(1029, 33);
             this.rtbServiceData.Name = "rtbServiceData";
             this.rtbServiceData.Size = new System.Drawing.Size(191, 475);
             this.rtbServiceData.TabIndex = 110;
@@ -584,7 +584,7 @@
             // rtbServiceTitle
             // 
             this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceTitle.Location = new System.Drawing.Point(385, 31);
+            this.rtbServiceTitle.Location = new System.Drawing.Point(442, 33);
             this.rtbServiceTitle.Name = "rtbServiceTitle";
             this.rtbServiceTitle.Size = new System.Drawing.Size(581, 475);
             this.rtbServiceTitle.TabIndex = 109;
@@ -668,7 +668,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 155F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -691,9 +691,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(124, 3);
+            this.panel7.Location = new System.Drawing.Point(135, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(108, 102);
+            this.panel7.Size = new System.Drawing.Size(118, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -749,7 +749,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(415, 3);
+            this.panel2.Location = new System.Drawing.Point(452, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(117, 102);
             this.panel2.TabIndex = 42;
@@ -808,9 +808,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(238, 3);
+            this.panel3.Location = new System.Drawing.Point(259, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(171, 102);
+            this.panel3.Size = new System.Drawing.Size(187, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -855,7 +855,7 @@
             this.lblFreq.Location = new System.Drawing.Point(3, 6);
             this.lblFreq.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblFreq.Name = "lblFreq";
-            this.lblFreq.Size = new System.Drawing.Size(178, 19);
+            this.lblFreq.Size = new System.Drawing.Size(183, 19);
             this.lblFreq.TabIndex = 38;
             this.lblFreq.Text = "Несущая частота (МГц)";
             // 
@@ -870,7 +870,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(115, 102);
+            this.panel4.Size = new System.Drawing.Size(126, 102);
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -925,9 +925,9 @@
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(538, 3);
+            this.pModulation.Location = new System.Drawing.Point(575, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(150, 102);
+            this.pModulation.Size = new System.Drawing.Size(113, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 

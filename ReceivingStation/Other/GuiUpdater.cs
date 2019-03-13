@@ -106,7 +106,7 @@ namespace ReceivingStation.Other
 
             timer.Interval = 10;
             timer.Start();
-        }     
+        }
 
         /// <summary>
         /// Инициализация кастомных RichTextBox с данными декодирования.
@@ -119,6 +119,8 @@ namespace ReceivingStation.Other
         /// <param name="rtbMkoData">RichTextBox для данных МКО.</param> 
         /// <param name="rtbDateTimeTitle">RichTextBox для заголовков даты и времени из МКО.</param>
         /// <param name="rtbDateTime">RichTextBox для даты и времени из МКО.</param>
+        /// <param name="rtbServiceTitle">RichTextBox для заголовков служебной информации.</param>
+        /// <param name="rtbServiceData">RichTextBox для данных служебной информации.</param>
         public static void DecodeRichTextBoxInit(DisabledRichTextBox rtbMko, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbDateTimeTitle, DisabledRichTextBox rtbDateTime,
             DisabledRichTextBox rtbServiceTitle, DisabledRichTextBox rtbServiceData)
         {
@@ -157,7 +159,15 @@ namespace ReceivingStation.Other
             rtbDateTime.Text = dateTime;
             rtbDateTime.BorderStyle = BorderStyle.None;
 
+            var serviceTitle = "Псевдослучайная последовательность ПСП-64\n\n" +
+                "Текущее бортовое время КА\n\n" +
+                "Задержка начала сканирования строки по отношению к секундной метке\n\n" +
+                "Порядковый номер комплекта прибора ЭА240(МСУ - МР)";
+            rtbServiceTitle.Text = serviceTitle;
             rtbServiceTitle.BorderStyle = BorderStyle.None;
+
+            var serviceData = "0\n\n0\n\n0\n\n0";
+            rtbServiceData.Text = serviceData;
             rtbServiceData.BorderStyle = BorderStyle.None;
         }
 
@@ -166,6 +176,7 @@ namespace ReceivingStation.Other
         /// <summary>
         /// Обновление данных декодирования на GUI.
         /// </summary>
+        /// <param name="linesService">Значения служебной информации полученной полосы.</param> 
         /// <param name="linesTd">Значения ТД полученной полосы.</param> 
         /// <param name="linesOshv">Значения ОШВ полученной полосы.</param> 
         /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
@@ -179,13 +190,15 @@ namespace ReceivingStation.Other
         /// <param name="allChannelsPanels">Набор контейнеров на которых находятся FlowLayoutPanel для каналов на вкладке "Все каналы".</param>
         /// <param name="listImagesForSave">Список хранящий изображения по каждому каналу.</param> 
         /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param> 
-        public static void UpdateGuiDecodeData(string linesTd, string linesOshv, string linesBshv, string linesPcdm, DateTime linesDate,
-            DisabledRichTextBox rtbDateTime, DisabledRichTextBox rtbMkoData, FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels, List<Bitmap>[] listImagesForSave, DirectBitmap[] imagesLines)
+        /// <param name="rtbServiceData">RichTextBox для данных служебной информации.</param>
+        public static void UpdateGuiDecodeData(string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DateTime linesDate,
+            DisabledRichTextBox rtbDateTime, DisabledRichTextBox rtbMkoData, FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels, List<Bitmap>[] listImagesForSave, DirectBitmap[] imagesLines, DisabledRichTextBox rtbServiceData)
         {
             var td = linesTd.Split(' ');
             var oshv = linesOshv.Split(' ');
             var bshv = linesBshv.Split(' ');
             var pcdm = linesPcdm.Split(' ');
+            var service = linesService.Split(' ');
 
             // Собираем данные в richTextBox. Стремновато, но так быстрее. Если использовать 15 лейблов, то время декодирования увеличится где то на 20%.
             var mkoData = $"{td[0]} {td[1]}\n\n{td[2]}\n\n{td[3]}\n\n{oshv[0]} {oshv[1]}\n\n{bshv[0]} {bshv[1]}\n\n{bshv[2]} {bshv[3]}\n\n{bshv[4]} {bshv[5]}\n\n{bshv[6]} {bshv[7]}\n\n{bshv[8]} {bshv[9]}\n\n{pcdm[0]} {pcdm[1]}\n\n{pcdm[2]} {pcdm[3]} {pcdm[4]} {pcdm[5]}\n\n{pcdm[6]} {pcdm[7]} {pcdm[8]} {pcdm[9]}\n\n{pcdm[10]} {pcdm[11]} {pcdm[12]} {pcdm[13]}";
@@ -193,8 +206,12 @@ namespace ReceivingStation.Other
             var time = $"{linesDate.Hour:D2}:{linesDate.Minute:D2}:{linesDate.Second:D2}";
             var dateTime = $"\n{date}\n\n{time}";
 
+            var serviceData = $"{service[0]} {service[1]} {service[2]} {service[3]} {service[4]} {service[5]} {service[6]} {service[7]}\n\n{service[8]} {service[9]} {service[10]}\n\n{service[11]}\n\n{service[12]}";
+
             rtbDateTime.Text = dateTime;
             rtbMkoData.Text = mkoData;
+            rtbServiceData.Text = serviceData;
+
             CreateNewFlps(channels, allChannels, channelsPanels, allChannelsPanels);
             AddImages(channels, allChannels, listImagesForSave, imagesLines);
         }

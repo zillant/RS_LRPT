@@ -13,7 +13,7 @@ namespace ReceivingStation.Decode
     /// </summary>
     class Decode
     {
-        public delegate void UpdateGuiDelegate(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines);
+        public delegate void UpdateGuiDelegate(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines);
         public UpdateGuiDelegate ThreadSafeUpdateGui; // Для остальных режимов. Передаем на форму данные МКО и полосу изображения.
         public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsTkCount); 
         public UpdateSelfTestDataDelegate ThreadSafeUpdateSelfTestData; // Для режима самопроверки. Передаем кол-во принятых кадров и кол-во ошибок.
@@ -28,6 +28,8 @@ namespace ReceivingStation.Decode
          
         private DateTime _linesDate;
         private DirectBitmap[] _imagesLines = new DirectBitmap[6]; // Полосы изображений для каждого канала.
+
+        private string _linesService;
         private string _linesTd;
         private string _linesOshv;
         private string _linesBshv;
@@ -360,7 +362,7 @@ namespace ReceivingStation.Decode
         {
             if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
             {
-                ThreadSafeUpdateGui(_linesDate, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
+                ThreadSafeUpdateGui(_linesDate, _linesService, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
             }
         }
         #endregion
@@ -997,6 +999,7 @@ namespace ReceivingStation.Decode
 
             switch (header)
             {
+                case "Служебная сканера: ": _linesService = _sb.ToString(); break;
                 case "#ТД: ": _linesTd = _sb.ToString(); break;
                 case "#ОШВ: ": _linesOshv = _sb.ToString(); break;
                 case "#БШВ: ": _linesBshv = _sb.ToString(); break;

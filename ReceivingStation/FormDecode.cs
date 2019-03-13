@@ -269,7 +269,7 @@ namespace ReceivingStation
         /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
         /// <param name="linesPcdm">Значения ПЦДМ полученной полосы.</param>
         /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param>
-        private void UpdateGuiDecodeData(DateTime linesDate, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
+        private void UpdateGuiDecodeData(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
         {
             _callingUpdateImageCounter++;
 
@@ -282,8 +282,8 @@ namespace ReceivingStation
 
             if (InvokeRequired)
             {
-                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
-                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
+                Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesService, linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
+                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines, rtbServiceData)));
             }
         }
     }

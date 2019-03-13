@@ -823,7 +823,7 @@
             // rtbMkoData
             // 
             this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(972, 31);
+            this.rtbMkoData.Location = new System.Drawing.Point(1029, 33);
             this.rtbMkoData.Name = "rtbMkoData";
             this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
             this.rtbMkoData.TabIndex = 106;
@@ -832,7 +832,7 @@
             // rtbMkoTitle
             // 
             this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(385, 31);
+            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
             this.rtbMkoTitle.Name = "rtbMkoTitle";
             this.rtbMkoTitle.Size = new System.Drawing.Size(581, 475);
             this.rtbMkoTitle.TabIndex = 105;
@@ -852,7 +852,7 @@
             // rtbServiceData
             // 
             this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceData.Location = new System.Drawing.Point(972, 31);
+            this.rtbServiceData.Location = new System.Drawing.Point(1029, 33);
             this.rtbServiceData.Name = "rtbServiceData";
             this.rtbServiceData.Size = new System.Drawing.Size(191, 475);
             this.rtbServiceData.TabIndex = 108;
@@ -861,7 +861,7 @@
             // rtbServiceTitle
             // 
             this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceTitle.Location = new System.Drawing.Point(385, 31);
+            this.rtbServiceTitle.Location = new System.Drawing.Point(442, 33);
             this.rtbServiceTitle.Name = "rtbServiceTitle";
             this.rtbServiceTitle.Size = new System.Drawing.Size(581, 475);
             this.rtbServiceTitle.TabIndex = 107;
