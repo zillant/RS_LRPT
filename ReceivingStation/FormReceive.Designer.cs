@@ -668,7 +668,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
@@ -693,7 +693,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(134, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(118, 102);
+            this.panel7.Size = new System.Drawing.Size(117, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -749,7 +749,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(450, 3);
+            this.panel2.Location = new System.Drawing.Point(448, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(120, 102);
             this.panel2.TabIndex = 42;
@@ -808,9 +808,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(258, 3);
+            this.panel3.Location = new System.Drawing.Point(257, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(186, 102);
+            this.panel3.Size = new System.Drawing.Size(185, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -855,7 +855,7 @@
             this.lblFreq.Location = new System.Drawing.Point(3, 6);
             this.lblFreq.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblFreq.Name = "lblFreq";
-            this.lblFreq.Size = new System.Drawing.Size(183, 19);
+            this.lblFreq.Size = new System.Drawing.Size(174, 19);
             this.lblFreq.TabIndex = 38;
             this.lblFreq.Text = "Несущая частота (МГц)";
             // 
@@ -925,9 +925,9 @@
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(576, 3);
+            this.pModulation.Location = new System.Drawing.Point(574, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(112, 102);
+            this.pModulation.Size = new System.Drawing.Size(114, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
