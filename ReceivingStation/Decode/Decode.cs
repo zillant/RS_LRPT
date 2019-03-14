@@ -13,7 +13,7 @@ namespace ReceivingStation.Decode
     /// </summary>
     class Decode
     {
-        public delegate void UpdateGuiDelegate(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines);
+        public delegate void UpdateGuiDelegate(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines, int delegateCallCounter);
         public UpdateGuiDelegate ThreadSafeUpdateGui; // Для остальных режимов. Передаем на форму данные МКО и полосу изображения.
         public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsTkCount); 
         public UpdateSelfTestDataDelegate ThreadSafeUpdateSelfTestData; // Для режима самопроверки. Передаем кол-во принятых кадров и кол-во ошибок.
@@ -34,6 +34,9 @@ namespace ReceivingStation.Decode
         private string _linesOshv;
         private string _linesBshv;
         private string _linesPcdm;
+
+        private int _delegateCallCounter; // Счетчик вызова делегата. Нужен для синхронизации сброса накопленного изображения с созданием нового лог файла.
+        private long _logFilesNameCounter;
 
         private string _fileName; // Имя открытого файла.
         private FileStream _fs; // Содержимое открытого .dat файла.
@@ -216,6 +219,7 @@ namespace ReceivingStation.Decode
         /// <param name="fileName">Имя файла для записи.</param>
         public Decode(string fileName)
         {
+            _fileName = fileName;
             _isReedSolo = true;
             _isItSelfTest = false;
 
@@ -223,7 +227,10 @@ namespace ReceivingStation.Decode
             _viterbi = new Viterbi();
             _jpeg = new Jpeg();
 
-            _decodeLogFileName = $"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_info.txt";
+            _delegateCallCounter = 0;
+            _logFilesNameCounter = 0;
+
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info_{_logFilesNameCounter}.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
             for (int i = 0; i < 6; i++)
@@ -289,8 +296,11 @@ namespace ReceivingStation.Decode
             _viterbi = new Viterbi();
             _jpeg = new Jpeg();
 
+            _delegateCallCounter = 0;
+            _logFilesNameCounter = 0;
+
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info.txt";
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info_{_logFilesNameCounter}.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
 
             stopDecoding = false;
@@ -362,7 +372,7 @@ namespace ReceivingStation.Decode
         {
             if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
             {
-                ThreadSafeUpdateGui(_linesDate, _linesService, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines);
+                ThreadSafeUpdateGui(_linesDate, _linesService, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines, _delegateCallCounter);
             }
         }
         #endregion
@@ -645,14 +655,24 @@ namespace ReceivingStation.Decode
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
                 WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
+                _sw.WriteLine("\n");
 
                 UpdateDataGui();
+               
+                if (_delegateCallCounter == 240)
+                {
+                    _sw.Close();
+                    _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info_{++_logFilesNameCounter}.txt";
+                    _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+                    _delegateCallCounter = 0;
+                }
+
+                _delegateCallCounter++;
 
                 Parallel.For(0, _imagesLines.Length, j =>
                 {
                     _imagesLines[j].Dispose();
                     _imagesLines[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
-
                 });
 
                 PreparePicture();
@@ -668,7 +688,7 @@ namespace ReceivingStation.Decode
             tm = (_jpeg.jpeg_buf_in[8] << 24) | (_jpeg.jpeg_buf_in[9] << 16) | (_jpeg.jpeg_buf_in[10] << 8) | _jpeg.jpeg_buf_in[11];
             mc = (_jpeg.jpeg_buf_in[12] << 8) | _jpeg.jpeg_buf_in[13];   //микросек.
 
-            Xt = _jpeg.jpeg_buf_in[14];           //Номер MCU
+            Xt = _jpeg.jpeg_buf_in[14];  //Номер MCU
             if (Xt > Constants.MAX_MSU)
             {
                 Xt = Constants.MAX_MSU;

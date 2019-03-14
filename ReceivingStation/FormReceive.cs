@@ -28,8 +28,7 @@ namespace ReceivingStation
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
         
         private string _fileName;
-
-        private int _callingUpdateImageCounter; // Сколько раз был вызван метод UpdateGui. Нужно для сохранения изображений на диск.
+       
         private long _imageCounter; // Счетчик сохранненых изображений.
 
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
@@ -341,8 +340,7 @@ namespace ReceivingStation
                 }
 
                 _startWorkingTime = DateTime.Now;
-                _imageCounter = 0;
-                _callingUpdateImageCounter = 0;               
+                _imageCounter = 0;              
 
                 LogFiles.WriteUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
                 LogFiles.WriteUserActions("Запись потока начата");                
@@ -501,15 +499,12 @@ namespace ReceivingStation
         /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
         /// <param name="linesPcdm">Значения ПЦДМ полученной полосы.</param>
         /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param>
-        private void UpdateGuiDecodeData(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines)
+        private void UpdateGuiDecodeData(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines, int delegateCallCounter)
         {
-            _callingUpdateImageCounter++;
-
             // Набрал 1920 строчек изображения (8 * 240).
-            if (_callingUpdateImageCounter == 240)
+            if (delegateCallCounter == 240)
             {
                 bwImageSaver.RunWorkerAsync();
-                _callingUpdateImageCounter = 0;
             }
 
             if (InvokeRequired)
