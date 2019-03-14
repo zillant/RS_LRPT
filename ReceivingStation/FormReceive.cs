@@ -52,7 +52,7 @@ namespace ReceivingStation
         private byte _interliving;
         private byte _modulation;
 
-        private bool[] flags = new bool[2]; // массив состояний демодулятора flag[0] = синхронизация фазы синхропосылки; flag[1] = захват петли ФАПЧ
+        private bool[] flags = new bool[2]; // Массив состояний демодулятора flag[0] = синхронизация фазы синхропосылки; flag[1] = захват петли ФАПЧ
 
         public FormReceive()
         {
@@ -431,8 +431,6 @@ namespace ReceivingStation
                 Invoke(new Action(() => { slMode.Text = Resources.RemoteControlString; }));
 
                 LogFiles.WriteUserActions(Resources.RemoteControlString);
-
-
             }
             else if (modeNumber == 1)
             {
@@ -497,6 +495,7 @@ namespace ReceivingStation
         /// Каждые 60 вызовов этой функции вызывается сохранение полученных изображений.
         /// </remarks>
         /// <param name="linesDate">Значения Даты и времени полученной полосы.</param>
+        /// <param name="linesService">Значения служебной информации полученной полосы.</param>
         /// <param name="linesTd">Значения ТД полученной полосы.</param>
         /// <param name="linesOshv">Значения ОШВ полученной полосы.</param>
         /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
@@ -516,13 +515,14 @@ namespace ReceivingStation
             if (InvokeRequired)
             {
                 Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesService, linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
-                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines, rtbServiceData)));
+                    rtbDateTime, rtbMkoData, rtbServiceData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
             }
         }
 
         /// <summary>
         /// Обновление данных демодуляции на GUI.
         /// </summary>
+        /// <param name="flags">Массив состояний демодулятора.</param>
         private void UpdateGuiDemodulationData(bool[] flags)
         {
             if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");

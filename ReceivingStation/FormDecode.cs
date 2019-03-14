@@ -264,6 +264,7 @@ namespace ReceivingStation
         /// Каждые 60 вызовов этой функции вызывается сохранение полученных изображений.
         /// </remarks>
         /// <param name="linesDate">Значения Даты и времени полученной полосы.</param>
+        /// <param name="linesService">Значения служебной информации полученной полосы.</param>
         /// <param name="linesTd">Значения ТД полученной полосы.</param>
         /// <param name="linesOshv">Значения ОШВ полученной полосы.</param>
         /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
@@ -283,7 +284,7 @@ namespace ReceivingStation
             if (InvokeRequired)
             {
                 Invoke(new Action(() => GuiUpdater.UpdateGuiDecodeData(linesService, linesTd, linesOshv, linesBshv, linesPcdm, linesDate,
-                    rtbDateTime, rtbMkoData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines, rtbServiceData)));
+                    rtbDateTime, rtbMkoData, rtbServiceData, _channels, _allChannels, _channelsPanels, _allChannelsPanels, _listImagesForSave, imagesLines)));
             }
         }
     }

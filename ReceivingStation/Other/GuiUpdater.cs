@@ -147,7 +147,7 @@ namespace ReceivingStation.Other
             rtbMko.Text = MkoTitle;
             rtbMko.BorderStyle = BorderStyle.None;
 
-            var mkoData = "0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0\n\n0";
+            var mkoData = "\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0\n\n\t0";
             rtbMkoData.Text = mkoData;
             rtbMkoData.BorderStyle = BorderStyle.None;
 
@@ -162,11 +162,15 @@ namespace ReceivingStation.Other
             var serviceTitle = "Время включения прибора ФЦП\n\n" +
                 "Текущее бортовое время КА\n\n" +
                 "Задержка начала сканирования строки по отношению к секундной метке\n\n" +
-                "Порядковый номер комплекта прибора ЭА240(МСУ - МР)";
+                "Порядковый номер комплекта прибора ЭА240 (МСУ - МР)\n\n" +
+                "Маркер признака передачи блока аналоговой или цифровой телеметрии прибора\n\n" +
+                "Блок служебной телеметрии прибора\n\n" +
+                "Резерв\n\n" +
+                "Интегралы уровней яркости внутренних калибровочных сигналов прибора";
             rtbServiceTitle.Text = serviceTitle;
             rtbServiceTitle.BorderStyle = BorderStyle.None;
 
-            var serviceData = "0\n\n0\n\n0\n\n0";
+            var serviceData = "\t\t\t0\n\n\t\t\t0\n\n\t\t\t0\n\n\n\t\t\t0\n\n\t\t\t0\n\n\n\t\t\t0\n\n\t\t\t0\n\n\t\t\t0";
             rtbServiceData.Text = serviceData;
             rtbServiceData.BorderStyle = BorderStyle.None;
         }
@@ -184,15 +188,15 @@ namespace ReceivingStation.Other
         /// <param name="linesDate">Значения Даты и времени полученной полосы.</param> 
         /// <param name="rtbDateTime">RichTextBox для даты и времени из МКО.</param> 
         /// <param name="rtbMkoData">RichTextBox для данных МКО.</param>
+        /// <param name="rtbServiceData">RichTextBox для данных служебной информации.</param>
         /// <param name="channels">Набор FlowLayoutPanel для одиночных каналов.</param> 
         /// <param name="allChannels">Набор FlowLayoutPanel для каналов на вкладке "Все каналы".</param> 
         /// <param name="channelsPanels">Набор контейнеров на которых находятся FlowLayoutPanel для одиночных каналов.</param>
         /// <param name="allChannelsPanels">Набор контейнеров на которых находятся FlowLayoutPanel для каналов на вкладке "Все каналы".</param>
         /// <param name="listImagesForSave">Список хранящий изображения по каждому каналу.</param> 
         /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param> 
-        /// <param name="rtbServiceData">RichTextBox для данных служебной информации.</param>
         public static void UpdateGuiDecodeData(string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DateTime linesDate,
-            DisabledRichTextBox rtbDateTime, DisabledRichTextBox rtbMkoData, FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels, List<Bitmap>[] listImagesForSave, DirectBitmap[] imagesLines, DisabledRichTextBox rtbServiceData)
+            DisabledRichTextBox rtbDateTime, DisabledRichTextBox rtbMkoData, DisabledRichTextBox rtbServiceData, FlowLayoutPanel[] channels, FlowLayoutPanel[] allChannels, Panel[] channelsPanels, Panel[] allChannelsPanels, List<Bitmap>[] listImagesForSave, DirectBitmap[] imagesLines)
         {
             var td = linesTd.Split(' ');
             var oshv = linesOshv.Split(' ');
@@ -206,7 +210,33 @@ namespace ReceivingStation.Other
             var time = $"{linesDate.Hour:D2}:{linesDate.Minute:D2}:{linesDate.Second:D2}";
             var dateTime = $"\n{date}\n\n{time}";
 
-            var serviceData = $"{service[0]} {service[1]} {service[2]} {service[3]} {service[4]} {service[5]} {service[6]} {service[7]}\n\n{service[8]} {service[9]} {service[10]}\n\n{service[11]}\n\n{service[12]}";
+            // Служебная информация - расшифровка "Время включения прибора ФЦП".
+            var fcpDaysFromHex = Convert.ToInt32($"{service[0]}{service[1]}", 16); // Кол-во суток.
+            var fcpMsFromHex = Convert.ToInt32($"{service[2]}{service[3]}{service[4]}{service[5]}", 16); // Миллисекунды.
+            var fcpUsFromHex = Convert.ToInt32($"{service[6]}{service[7]}", 16);  // Микросекунды.
+
+            var fcpDateTime = Constants.referenceDate + TimeSpan.FromDays(fcpDaysFromHex - 1) + TimeSpan.FromMilliseconds(fcpMsFromHex);
+            var decodeFcpDateTime = $"{fcpDateTime.Day}.{fcpDateTime.Month}.{fcpDateTime.Year}  {fcpDateTime.Hour:D2}:{fcpDateTime.Minute:D2}:{fcpDateTime.Second:D2}.{fcpUsFromHex}";
+
+            // Служебная информация - расшифровка "Текущее бортовое время КА". 
+            var onBoardHoursFromHex = Convert.ToInt32($"{service[8]}", 16);
+            var onBoardMinutesFromHex = Convert.ToInt32($"{service[9]}", 16);
+            var onBoardSecondsFromHex = Convert.ToInt32($"{service[10]}", 16);
+            
+            var onBoardTime = $"{onBoardHoursFromHex:D2}:{onBoardMinutesFromHex:D2}:{onBoardSecondsFromHex:D2}";
+
+            // Служебная информация - расшифровка "Задержка начала сканирования строки по отношению к секундной метке". 
+            var scanDelayFromHex = Convert.ToInt32($"{service[11]}", 16);
+
+            // Служебная информация - расшифровка "Порядковый номер комплекта прибора ЭА240 (МСУ - МР)". 
+            var msuSerialTypeNumber = $"{service[12]}".ToCharArray();
+            var msuSerialNumber = Convert.ToInt32($"{msuSerialTypeNumber[0]}", 16);
+            var msuSerialType = msuSerialTypeNumber[1] == 'F' ? "Резервный" : "Основной";
+
+            var msuSerialResult = $"Номер прибора: {msuSerialNumber}. Полукомплект: {msuSerialType}";
+
+            // Вывод служебной информации. 
+            var serviceData = $"{service[0]} {service[1]} {service[2]} {service[3]} {service[4]} {service[5]} {service[6]} {service[7]} ({decodeFcpDateTime})\n\n{service[8]} {service[9]} {service[10]} ({onBoardTime})\n\n{service[11]} ({scanDelayFromHex} мс)\n\n\n{service[12]} ({msuSerialResult})\n\n{service[13]}\n\n\n{service[14]} {service[15]} {service[16]} {service[17]} {service[18]} {service[19]} {service[20]} {service[21]} {service[22]} {service[23]} {service[24]} {service[25]} {service[26]} {service[27]} {service[28]} {service[29]} {service[30]} {service[31]} {service[32]} {service[33]}\n\n{service[34]}\n\n{service[35]} {service[36]} {service[37]} {service[38]} {service[39]} {service[40]} {service[41]} {service[42]} {service[43]} {service[44]} {service[45]} {service[46]} {service[47]} {service[48]} {service[49]}";
 
             rtbDateTime.Text = dateTime;
             rtbMkoData.Text = mkoData;
