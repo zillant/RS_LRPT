@@ -230,8 +230,8 @@ namespace ReceivingStation.Decode
             _delegateCallCounter = 0;
             _logFilesNameCounter = 0;
 
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info_{_logFilesNameCounter}.txt";
-            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+            CreateLogDirectory();
+            CreateNewLogFile(_logFilesNameCounter);
 
             for (int i = 0; i < 6; i++)
             {
@@ -300,8 +300,9 @@ namespace ReceivingStation.Decode
             _logFilesNameCounter = 0;
 
             _fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read);
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info_{_logFilesNameCounter}.txt";
-            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+
+            CreateLogDirectory();
+            CreateNewLogFile(_logFilesNameCounter);
 
             stopDecoding = false;
             _isItSelfTest = false;
@@ -662,8 +663,7 @@ namespace ReceivingStation.Decode
                 if (_delegateCallCounter == 240)
                 {
                     _sw.Close();
-                    _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_info_{++_logFilesNameCounter}.txt";
-                    _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+                    CreateNewLogFile(++_logFilesNameCounter);
                     _delegateCallCounter = 0;
                 }
 
@@ -697,26 +697,26 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {
-                _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
-                _sw.WriteLine($"Миллисекунды: {tm}");
-                _sw.WriteLine($"Микросекунды: {mc}");
-                _sw.WriteLine("-----------------------------------------------------------------------");
+                //_sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
+                //_sw.WriteLine($"Миллисекунды: {tm}");
+                //_sw.WriteLine($"Микросекунды: {mc}");
+                //_sw.WriteLine("-----------------------------------------------------------------------");
 
                 GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
 
                 if (Convert.ToBoolean(tm_last))
                 {
                     dt = (tm - tm_last) / 1000f; //разница в секундах
-                    _sw.WriteLine($"Разница: {dt}");
+                    //_sw.WriteLine($"Разница: {dt}");
 
                     if (dt < 1.2 || dt > 1.25)
                     {
-                        _sw.WriteLine("??????????????????????????????????????????????");
+                        //_sw.WriteLine("??????????????????????????????????????????????");
                         errs++;
                     }
                 }
 
-                _sw.WriteLine("-----------------------------------------------------------------------");
+                //_sw.WriteLine("-----------------------------------------------------------------------");
                 tm_last = tm;
             }
 
@@ -869,7 +869,7 @@ namespace ReceivingStation.Decode
             _reedSolo.Decode_RS(tk_in, _isReedSolo);   //декодирование Рида-Соломона
 
             kol_all++;
-            _sw.WriteLine($"Пакет № {kol_all}");
+            //_sw.WriteLine($"Пакет № {kol_all}");
             WriteServiceDataToLogFile(tk_in, "ТК: ", 0, 10, 1);
 
             //Тестирование ТК
@@ -1047,5 +1047,30 @@ namespace ReceivingStation.Decode
         }
 
         #endregion
+
+        private void CreateNewLogFile(long counter)
+        {
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{counter}.txt";
+            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+        }
+
+        private void CreateLogDirectory()
+        {
+            string decodeLogsDirName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs";
+
+            if (Directory.Exists(decodeLogsDirName) == false)
+            {
+                Directory.CreateDirectory(decodeLogsDirName);
+            }
+            else
+            {
+                DirectoryInfo di = new DirectoryInfo(decodeLogsDirName);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+            }
+        }
     }
 }

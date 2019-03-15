@@ -37,7 +37,7 @@ namespace ReceivingStation.Other
                         }
                     }
 
-                    bmp.Save($"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(fileName)}_{i + 1}_{imageCounter}.bmp");
+                    bmp.Save($"{Path.GetDirectoryName(fileName)}\\{Path.GetFileNameWithoutExtension(fileName)}_Channel_{i + 1}\\{Path.GetFileNameWithoutExtension(fileName)}_сhannel_{i + 1}_{imageCounter}.bmp");
                 }
             });          
         }

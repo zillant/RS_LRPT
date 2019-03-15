@@ -231,10 +231,18 @@ namespace ReceivingStation.Other
             // Служебная информация - расшифровка "Порядковый номер комплекта прибора ЭА240 (МСУ - МР)". 
             var msuSerialTypeNumber = $"{service[12]}".ToCharArray();
             var msuSerialNumber = Convert.ToInt32($"{msuSerialTypeNumber[0]}", 16);
-            var msuSerialType = msuSerialTypeNumber[1] == 'F' ? "Резервный" : "Основной";
+            var msuSerialResult = string.Empty;
 
-            var msuSerialResult = $"Номер прибора: {msuSerialNumber}. Полукомплект: {msuSerialType}";
-
+            if (msuSerialTypeNumber.Length > 1) // Костыль. Возникала ошибка при декодировании файла с NRZ. В нем в массив попадает только 1 элемент.
+            {
+                var msuSerialType = msuSerialTypeNumber[1] == 'F' ? "Резервный" : "Основной";
+                msuSerialResult = $"Номер прибора: {msuSerialNumber}. Полукомплект: {msuSerialType}";
+            }
+            else
+            {
+                msuSerialResult = $"Номер прибора: {msuSerialNumber}";
+            }
+            
             // Вывод служебной информации. 
             var serviceData = $"\t{service[0]} {service[1]} {service[2]} {service[3]} {service[4]} {service[5]} {service[6]} {service[7]} ({decodeFcpDateTime})\n\n\t{service[8]} {service[9]} {service[10]} ({onBoardTime})\n\n\t{service[11]} ({scanDelayFromHex} мс)\n\n\n\t{service[12]} ({msuSerialResult})\n\n\t{service[13]}\n\n\n\t{service[14]} {service[15]} {service[16]} {service[17]} {service[18]} {service[19]} {service[20]} {service[21]} {service[22]} {service[23]} {service[24]} {service[25]} {service[26]} {service[27]} {service[28]} {service[29]} {service[30]} {service[31]} {service[32]} {service[33]}\n\n\t{service[34]}\n\n\t{service[35]} {service[36]} {service[37]} {service[38]} {service[39]} {service[40]} {service[41]} {service[42]} {service[43]} {service[44]} {service[45]} {service[46]} {service[47]} {service[48]} {service[49]}";
 
