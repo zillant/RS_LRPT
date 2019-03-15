@@ -1048,12 +1048,19 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        private void CreateNewLogFile(long counter)
+        /// <summary>
+        /// Создание нового файла логов декодирования.
+        /// </summary>
+        /// <param name="filesCounter">Счетчик кол-ва файлов.</param> 
+        private void CreateNewLogFile(long filesCounter)
         {
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{counter}.txt";
+            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{filesCounter}.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
         }
 
+        /// <summary>
+        /// Создание каталога для хранения логов декодирования.
+        /// </summary>
         private void CreateLogDirectory()
         {
             string decodeLogsDirName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs";
