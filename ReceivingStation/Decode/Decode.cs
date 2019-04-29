@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ReceivingStation.Other;
@@ -41,6 +42,7 @@ namespace ReceivingStation.Decode
         private string _fileName; // Имя открытого файла.
         private FileStream _fs; // Содержимое открытого .dat файла.
         private StreamWriter _sw;
+        private string _decodeLogDir;
         private string _decodeLogFileName; // Файл для записи информации.
 
         private uint Kol_tk; //Считает число транспортных кадров.       
@@ -80,6 +82,7 @@ namespace ReceivingStation.Decode
         private int last_count_pac; // Запоминаем счетчик пакетов.
         private int apid; // Запоминаем последний апид.
         private int errs; // Накапливаем ошибки здесь.
+        private int timeShiftErrs; // Накапливаем ошибки сдвига по времени.
 
         private bool _isReedSolo; // Требуется ли декодирование Рида-Соломона.
         private byte Q_Value; // Фактор качества.
@@ -363,7 +366,9 @@ namespace ReceivingStation.Decode
             _sw.WriteLine("-------------------------------------------------");
             _sw.WriteLine("------------------------------------------");
             _sw.WriteLine($"Всего найдено ошибок: {errs}");
+            _sw.WriteLine($"Найдено сдвигов по времени: {timeShiftErrs}");
             _sw.Close();
+            CreateBigLogFile();
         }
 
         #endregion
@@ -385,7 +390,7 @@ namespace ReceivingStation.Decode
             dl_jpeg_in = -1;
             ind_tk_in = 0;
             Kol_tk = 0;
-
+            
             last_bit_in = Convert.ToBoolean(0);
 
             //Для поиска маркера ТК
@@ -411,6 +416,7 @@ namespace ReceivingStation.Decode
             last_count_pac = -1;
             apid = -1;
             errs = 0;       //считаем ошибки
+            timeShiftErrs = 0;
 
             Yt = 0;
             kol_all = 0;
@@ -697,26 +703,26 @@ namespace ReceivingStation.Decode
 
             if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
             {
-                //_sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
-                //_sw.WriteLine($"Миллисекунды: {tm}");
-                //_sw.WriteLine($"Микросекунды: {mc}");
-                //_sw.WriteLine("-----------------------------------------------------------------------");
+                _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
+                _sw.WriteLine($"Миллисекунды: {tm}" + $" ({TimeSpan.FromMilliseconds(tm)})");
+                _sw.WriteLine($"Микросекунды: {mc}");
+                _sw.WriteLine("-----------------------------------------------------------------------");
 
                 GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
 
                 if (Convert.ToBoolean(tm_last))
                 {
                     dt = (tm - tm_last) / 1000f; //разница в секундах
-                    //_sw.WriteLine($"Разница: {dt}");
+                    _sw.WriteLine($"Разница: {dt}");
 
                     if (dt < 1.2 || dt > 1.25)
                     {
-                        //_sw.WriteLine("??????????????????????????????????????????????");
-                        errs++;
+                        _sw.WriteLine("??????????????????????????????????????????????");
+                        timeShiftErrs++;
                     }
                 }
 
-                //_sw.WriteLine("-----------------------------------------------------------------------");
+                _sw.WriteLine("-----------------------------------------------------------------------");
                 tm_last = tm;
             }
 
@@ -1053,8 +1059,8 @@ namespace ReceivingStation.Decode
         /// </summary>
         /// <param name="filesCounter">Счетчик кол-ва файлов.</param> 
         private void CreateNewLogFile(long filesCounter)
-        {
-            _decodeLogFileName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{filesCounter}.txt";
+        {           
+            _decodeLogFileName = $"{_decodeLogDir}\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{filesCounter}.txt";
             _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
         }
 
@@ -1063,19 +1069,44 @@ namespace ReceivingStation.Decode
         /// </summary>
         private void CreateLogDirectory()
         {
-            string decodeLogsDirName = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs";
+            _decodeLogDir = $"{Path.GetDirectoryName(_fileName)}\\{Path.GetFileNameWithoutExtension(_fileName)}_Decode_logs";
 
-            if (Directory.Exists(decodeLogsDirName) == false)
+            if (Directory.Exists(_decodeLogDir) == false)
             {
-                Directory.CreateDirectory(decodeLogsDirName);
+                Directory.CreateDirectory(_decodeLogDir);
             }
             else
             {
-                DirectoryInfo di = new DirectoryInfo(decodeLogsDirName);
+                DirectoryInfo di = new DirectoryInfo(_decodeLogDir);
 
                 foreach (FileInfo file in di.GetFiles())
                 {
                     file.Delete();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Создание полноценного лог файла.
+        /// </summary>
+        private void CreateBigLogFile()
+        {
+            var filePaths = Directory.GetFiles($"{_decodeLogDir}\\", "*.txt", SearchOption.TopDirectoryOnly)
+                .OrderBy(f => new FileInfo(f).CreationTime);
+
+            using (StreamWriter sw = new StreamWriter($"{_decodeLogDir}\\{Path.GetFileNameWithoutExtension(_fileName)}_big_decode_log.txt", true, Encoding.UTF8, 65536))
+            {
+                foreach (var file in filePaths)
+                {
+                    using (StreamReader sr = new StreamReader(file, Encoding.Default))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            sw.WriteLine(line);
+                        }
+
+                    }
                 }
             }
         }
