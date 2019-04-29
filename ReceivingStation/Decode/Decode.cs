@@ -43,7 +43,7 @@ namespace ReceivingStation.Decode
         private FileStream _fs; // Содержимое открытого .dat файла.
         private StreamWriter _sw;
         private string _decodeLogDir;
-        private string _decodeLogFileName; // Файл для записи информации.
+        private string _decodeLogFile; // Файл для записи информации.
 
         private uint Kol_tk; //Считает число транспортных кадров.       
         private byte[] tk_in = new byte[1020]; //Входящий транспортный кадр баз маркера(4 байта).
@@ -1060,8 +1060,8 @@ namespace ReceivingStation.Decode
         /// <param name="filesCounter">Счетчик кол-ва файлов.</param> 
         private void CreateNewLogFile(long filesCounter)
         {           
-            _decodeLogFileName = $"{_decodeLogDir}\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{filesCounter}.txt";
-            _sw = new StreamWriter(_decodeLogFileName, true, Encoding.UTF8, 65536);
+            _decodeLogFile = $"{_decodeLogDir}\\{Path.GetFileNameWithoutExtension(_fileName)}_decode_log_{filesCounter}.txt";
+            _sw = new StreamWriter(_decodeLogFile, true, Encoding.UTF8, 65536);
         }
 
         /// <summary>
