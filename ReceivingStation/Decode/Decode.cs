@@ -116,7 +116,7 @@ namespace ReceivingStation.Decode
         /// </summary>   
         public void SFStartDecode(byte[] data, bool nrz, bool _isInterliving)
         {
-            if (_isInterliving) Constants.DL_IN_BUF = 32000;
+            if (_isInterliving) Constants.DL_IN_BUF = 32768;
             else Constants.DL_IN_BUF = 4096;
 
             in_buf = new byte[Constants.DL_IN_BUF];
@@ -124,12 +124,10 @@ namespace ReceivingStation.Decode
 
             _isNrz = nrz;
 
-            beg_mark_uw = Test_uw();
-            _isInterliving = beg_mark_uw != -1;
+            beg_mark_uw = Test_uw(in_buf.Length);
 
             if (_isInterliving)
             {
-                beg_mark_uw = Test_uw();
                 Deinterl(); //деинтерливинг
             }
             else
@@ -252,7 +250,7 @@ namespace ReceivingStation.Decode
         /// <param name="_isInterliving">Есть ли интерливинг.</param>
         public void StartDecode(byte[] data, bool nrz, bool _isInterliving)
         {
-            if (_isInterliving) Constants.DL_IN_BUF = 32000;
+            if (_isInterliving) Constants.DL_IN_BUF = 32768;
             else Constants.DL_IN_BUF = 4096;
 
             in_buf = new byte[Constants.DL_IN_BUF];
@@ -260,12 +258,10 @@ namespace ReceivingStation.Decode
 
             _isNrz = nrz;
 
-            beg_mark_uw = Test_uw();
-            //_isInterliving = beg_mark_uw != -1;
+            beg_mark_uw = Test_uw(in_buf.Length);
 
             if (_isInterliving)
             {
-                beg_mark_uw = Test_uw();
                 Deinterl(); //деинтерливинг
             }
             else
@@ -334,12 +330,11 @@ namespace ReceivingStation.Decode
                     break;
                 }
 
-                beg_mark_uw = Test_uw();
+                beg_mark_uw = Test_uw(bytesCount);
                 _isInterliving = beg_mark_uw != -1;
 
                 if (_isInterliving)
                 {
-                    beg_mark_uw = Test_uw();
                     Deinterl(); //деинтерливинг
                 }
                 else
@@ -425,28 +420,48 @@ namespace ReceivingStation.Decode
         #endregion
 
         #region Поиск синхромаркера.
-        private int Test_uw()
-        {
-            int kol;
-            byte bt;
+        //private int Test_uw()
+        //{
+        //    int kol;
+        //    byte bt;
 
-            for (int i = 0; i < Constants.DL_IN_BUF - 100; i++)
+        //    for (int i = 0; i < Constants.DL_IN_BUF - 100; i++)
+        //    {
+        //        for (byte k = 0; k < 8; k++)
+        //        {
+        //            kol = 0;
+
+        //            for (byte j = 0; j < 5; j++)
+        //            {
+        //                bt = Convert.ToByte(((in_buf[j * 10 + i] << k) & 0xFF) | (in_buf[j * 10 + i + 1] >> (8 - k)));
+
+        //                kol = bt == 0x27 ? kol + 1 : 0;
+
+        //                if (kol == 4) // Нашли синхромаркер.
+        //                {
+        //                    return (i * 8 + k) % 80; // Битовый индекс начала синхромаркера uw.
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return -1;
+        //}
+
+        private int Test_uw(int kol)
+        {
+            byte bt, j;
+
+            for (int i = 0; i < kol - 50; i++)
             {
                 for (byte k = 0; k < 8; k++)
                 {
-                    kol = 0;
-
-                    for (byte j = 0; j < 5; j++)
+                    for (j = 0; j < 5; j++)
                     {
                         bt = Convert.ToByte(((in_buf[j * 10 + i] << k) & 0xFF) | (in_buf[j * 10 + i + 1] >> (8 - k)));
-
-                        kol = bt == 0x27 ? kol + 1 : 0;
-
-                        if (kol == 4) // Нашли синхромаркер.
-                        {
-                            return (i * 8 + k) % 80; // Битовый индекс начала синхромаркера uw.
-                        }
+                        if (bt != 0x27) break;                      
                     }
+                    if (j == 5) return (i * 8 + k) % 80;
                 }
             }
 

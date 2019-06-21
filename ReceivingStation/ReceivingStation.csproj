@@ -7,7 +7,7 @@
     <ProjectGuid>{A9F19005-35CB-49F2-8565-A666C3B8B150}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ReceivingStation</RootNamespace>
-    <AssemblyName>ReceivingStation</AssemblyName>
+    <AssemblyName>kpaprs</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

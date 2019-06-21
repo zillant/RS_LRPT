@@ -12,7 +12,7 @@ namespace ReceivingStation.Decode
         public static int DL_JPEG = 1500; // Длина буфера jpeg с запасом - полос + на шапку.
         public static int DL_VIDEO = 896; // Длина видеобуфера.
 
-        public static int DL_IN_BUF = 4096; // Длина входного буфера, должно делиться на 2048.
+        public static int DL_IN_BUF = 32768; // Длина входного буфера, должно делиться на 2048.
 
         public static int DL_INTRL_BUF = 2654208; // Длина буфера интерл. в битах 2048*36*36.
 
