@@ -88,6 +88,7 @@ namespace ReceivingStation.Decode
         private byte Q_Value; // Фактор качества.
         private int dl_jpeg_in; //Длина данных jpeg.
         private int Xt, Yt;    //Индекс полосы при выводе.    
+        private int _lastXt; //Последнее Xt
 
         // Для НРЗ.
         private bool _isNrz; // Есть ли NRZ.
@@ -355,30 +356,9 @@ namespace ReceivingStation.Decode
 
         #endregion
 
-        #region Завершение декодирования.
-        public void FinishDecode()
-        {
-            _sw.WriteLine("-------------------------------------------------");
-            _sw.WriteLine("------------------------------------------");
-            _sw.WriteLine($"Всего найдено ошибок: {errs}");
-            _sw.WriteLine($"Найдено сдвигов по времени: {timeShiftErrs}");
-            _sw.Close();
-            CreateBigLogFile();
-        }
-
-        #endregion
-
-        #region Обновление данных и информации на форме.
-        public void UpdateDataGui()
-        {
-            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
-            {
-                ThreadSafeUpdateGui(_linesDate, _linesService, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines, _delegateCallCounter);
-            }
-        }
-        #endregion
-
-        #region Инициализация переменных.
+        /// <summary>
+        /// Инициализация переменных.
+        /// </summary>
         private void Init()
         {
             ind_bt_in = 0;
@@ -413,41 +393,16 @@ namespace ReceivingStation.Decode
             errs = 0;       //считаем ошибки
             timeShiftErrs = 0;
 
+            _lastXt = 0;
+
             Yt = 0;
             kol_all = 0;
         }
 
-        #endregion
-
-        #region Поиск синхромаркера.
-        //private int Test_uw()
-        //{
-        //    int kol;
-        //    byte bt;
-
-        //    for (int i = 0; i < Constants.DL_IN_BUF - 100; i++)
-        //    {
-        //        for (byte k = 0; k < 8; k++)
-        //        {
-        //            kol = 0;
-
-        //            for (byte j = 0; j < 5; j++)
-        //            {
-        //                bt = Convert.ToByte(((in_buf[j * 10 + i] << k) & 0xFF) | (in_buf[j * 10 + i + 1] >> (8 - k)));
-
-        //                kol = bt == 0x27 ? kol + 1 : 0;
-
-        //                if (kol == 4) // Нашли синхромаркер.
-        //                {
-        //                    return (i * 8 + k) % 80; // Битовый индекс начала синхромаркера uw.
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return -1;
-        //}
-
+        /// <summary>
+        /// Поиск синхромаркера.
+        /// </summary>
+        /// <param name="kol">Длина массива входных данных.</param> 
         private int Test_uw(int kol)
         {
             byte bt, j;
@@ -468,9 +423,9 @@ namespace ReceivingStation.Decode
             return -1;
         }
 
-        #endregion
-
-        #region Деинтерливинг.
+        /// <summary>
+        /// Деинтерливинг.
+        /// </summary>     
         private void Deinterl()
         {
             int pos, beg;
@@ -559,9 +514,10 @@ namespace ReceivingStation.Decode
             }
         }
 
-        #endregion
-
-        #region Преобразование в бит. поток 2048 байт.
+        /// <summary>
+        /// Преобразование в бит. поток 2048 байт.
+        /// </summary>
+        /// <param name="initialArrayIndex">Начальный индекс массива данных.</param>     
         private void To_bits(int initialArrayIndex)
         {
             int ind, limitIndex;
@@ -583,195 +539,9 @@ namespace ReceivingStation.Decode
             }
         }
 
-        #endregion
-
-        #region Индекс поиска нового начала заголовка.
-        private int Find_new_beg_zag(int k)
-        {
-            int i, j, n, kol;
-            bool[] buf = new bool[32];
-
-            if (!Convert.ToBoolean(k))
-            {
-                return 0;
-            }
-
-            //Формируем полученную последовательность
-            for (i = 0; i < k; i++)
-            {
-                buf[i] = Convert.ToBoolean(Constants.zag_tk_bit[i]);
-            }
-
-            buf[i] = !Convert.ToBoolean(Constants.zag_tk_bit[i]);    //след. бит
-
-            kol = k + 1;
-
-            for (i = k; i >= 0; i--)
-            {
-                n = 0;
-
-                for (j = i; j < kol; j++)
-                {
-                    if (Convert.ToBoolean(Constants.zag_tk_bit[n]) != buf[j])
-                    {
-                        return (kol - i - 1);
-                    }
-
-                    n++;
-                }
-            }
-
-            return 0;
-        }
-
-        #endregion
-
-        #region Разбор парциального кадра.
-        private void Razbor_parc()
-        {
-            int mc, i;
-            int data;
-            long tm;
-            float dt;
-
-            if (dl_jpeg_in < 0 || ind_bt_in <= 20)
-            {
-                ind_bt_in = 0;
-                dl_jpeg_in = -1;
-
-                return;
-            }
-
-            //WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, " ПП: ", 0, 20, 1);
-
-            apid = ((_jpeg.jpeg_buf_in[0] & 0x07) << 8) | _jpeg.jpeg_buf_in[1];
-            if (apid < Constants.APID_1 || apid > Constants.APID_c)
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка АПИД");
-
-                ind_bt_in = 0;
-                dl_jpeg_in = -1;
-
-                return;
-            }
-
-            data = ((_jpeg.jpeg_buf_in[2] & 0x3f) << 8) | _jpeg.jpeg_buf_in[3]; //счетчик пакетов
-
-            i = last_count_pac == 0x3fff ? 0 : last_count_pac + 1; //набрали максимум
-
-            if (last_count_pac >= 0 && data != i)
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка счетчика пакетов");
-            }
-
-            last_count_pac = data;
-
-            //если служебный пакет
-            if (apid == Constants.APID_c)
-            {
-                // МКО.
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 64, 1);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
-                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
-                _sw.WriteLine("\n");
-
-                UpdateDataGui();
-               
-                if (_delegateCallCounter == 240)
-                {
-                    _sw.Close();
-                    CreateNewLogFile(++_logFilesNameCounter);
-                    _delegateCallCounter = 0;
-                }
-
-                _delegateCallCounter++;
-
-                Parallel.For(0, _imagesLines.Length, j =>
-                {
-                    _imagesLines[j].Dispose();
-                    _imagesLines[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
-                });
-
-                PreparePicture();
-
-                ind_bt_in = 0;
-                dl_jpeg_in = -1;
-
-                return;
-            }
-
-            //Время
-            //Считаем миллисек.
-            tm = (_jpeg.jpeg_buf_in[8] << 24) | (_jpeg.jpeg_buf_in[9] << 16) | (_jpeg.jpeg_buf_in[10] << 8) | _jpeg.jpeg_buf_in[11];
-            mc = (_jpeg.jpeg_buf_in[12] << 8) | _jpeg.jpeg_buf_in[13];   //микросек.
-
-            Xt = _jpeg.jpeg_buf_in[14];  //Номер MCU
-            if (Xt > Constants.MAX_MSU)
-            {
-                Xt = Constants.MAX_MSU;
-                errs++;
-            }
-
-            if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
-            {
-                _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
-                _sw.WriteLine($"Миллисекунды: {tm}" + $" ({TimeSpan.FromMilliseconds(tm)})");
-                _sw.WriteLine($"Микросекунды: {mc}");
-                _sw.WriteLine("-----------------------------------------------------------------------");
-
-                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
-
-                if (Convert.ToBoolean(tm_last))
-                {
-                    dt = (tm - tm_last) / 1000f; //разница в секундах
-                    _sw.WriteLine($"Разница: {dt}");
-
-                    if (dt < 1.2 || dt > 1.25)
-                    {
-                        _sw.WriteLine("??????????????????????????????????????????????");
-                        timeShiftErrs++;
-                    }
-                }
-
-                _sw.WriteLine("-----------------------------------------------------------------------");
-                tm_last = tm;
-            }
-
-
-            if (Convert.ToBoolean(_jpeg.jpeg_buf_in[15]) || Convert.ToBoolean(_jpeg.jpeg_buf_in[16]))
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка заголовка скана");
-            }
-
-            if (_jpeg.jpeg_buf_in[17] != 0xff || _jpeg.jpeg_buf_in[18] != 0xf0)
-            {
-                errs++;
-                _sw.WriteLine("    ----- ошибка заголовка сегмента");
-            }
-
-            Q_Value = _jpeg.jpeg_buf_in[19];
-
-            if (Q_Value > Constants.MAX_Q)
-            {
-                Q_Value = 75;
-                errs++;
-            }
-
-            kol_pix = _jpeg.DeCompress(Xt, dl_jpeg_in, Q_Value);
-
-            PreparePicture();
-            ind_bt_in = 0;
-            dl_jpeg_in = -1;
-        }
-
-        #endregion
-
-        #region Разбирает кадр после Витерби и NRZ.
+        /// <summary>
+        /// Разбирает кадр после Витерби и NRZ.
+        /// </summary>
         private void Find_tk_in()
         {
             int i;
@@ -822,7 +592,7 @@ namespace ReceivingStation.Decode
                                 Fl_err = Convert.ToBoolean(0);
                             }
 
-                            if (cnt_mark < 16)      //потеря маркера
+                            if (cnt_mark < 24)      //потеря маркера
                             {
                                 Ind_mar_tk_bit = 0;
                                 cnt_mark = 0;
@@ -878,9 +648,9 @@ namespace ReceivingStation.Decode
             }
         }
 
-        #endregion   
-
-        #region Расшифровка ТК.
+        /// <summary>
+        /// Расшифровка ТК.
+        /// </summary>
         private void Get_dat_tk()
         {
             int i, beg, pr;
@@ -956,7 +726,7 @@ namespace ReceivingStation.Decode
 
             if (!Convert.ToBoolean(bt))            //заголовок есть
             {
-                beg = (tk_in[8] << 8 | tk_in[9]) + 10;    //указатель заголовка
+                beg = ((tk_in[8] & 0x07) << 8 | tk_in[9]) + 10;    //указатель заголовка
             }
             else
             {
@@ -970,25 +740,176 @@ namespace ReceivingStation.Decode
                     Razbor_parc();
                 }
 
-                _jpeg.jpeg_buf_in[ind_bt_in++] = tk_in[i];
+                _jpeg.jpeg_buf_in[ind_bt_in] = tk_in[i];
+                if (_jpeg.jpeg_buf_in[0] != 0x08)
+                    continue;
+                ind_bt_in++;
 
                 if (ind_bt_in == 6)
                 {
                     data = Convert.ToUInt16((_jpeg.jpeg_buf_in[4] << 8) | _jpeg.jpeg_buf_in[5]);  //длина парц.пакета
                     dl_jpeg_in = data + 7;
 
-                    if (_jpeg.jpeg_buf_in[0] != 0x08 || dl_jpeg_in > Constants.DL_JPEG)
+                    
+                    if (dl_jpeg_in > Constants.DL_JPEG)
                     {
-                        dl_jpeg_in = -1;
-                        ind_bt_in = 0;
+                        Razbor_parc();
                     }
                 }
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Разбор парциального кадра.
+        /// </summary>
+        private void Razbor_parc()
+        {
+            int mc, i;
+            int data;
+            long tm;
+            float dt;
 
-        #region Формирование изображения.
+            if (dl_jpeg_in < 14 || ind_bt_in <= 20)
+            {
+                ind_bt_in = 0;
+                dl_jpeg_in = -1;
+
+                return;
+            }
+
+            //WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, " ПП: ", 0, 20, 1);
+
+            apid = ((_jpeg.jpeg_buf_in[0] & 0x07) << 8) | _jpeg.jpeg_buf_in[1];
+            if (apid < Constants.APID_1 || apid > Constants.APID_c)
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка АПИД");
+
+                ind_bt_in = 0;
+                dl_jpeg_in = -1;
+
+                return;
+            }
+
+            data = ((_jpeg.jpeg_buf_in[2] & 0x3f) << 8) | _jpeg.jpeg_buf_in[3]; //счетчик пакетов
+
+            i = last_count_pac == 0x3fff ? 0 : last_count_pac + 1; //набрали максимум
+
+            if (last_count_pac >= 0 && data != i)
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка счетчика пакетов");
+            }
+
+            last_count_pac = data;
+
+            //если служебный пакет
+            if (apid == Constants.APID_c)
+            {
+                // МКО.
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "Служебная сканера: ", 14, 64, 1);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ТД: ", 64, 72, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ОШВ: ", 72, 76, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#БШВ: ", 76, 96, 2);
+                WriteServiceDataToLogFile(_jpeg.jpeg_buf_in, "#ПДЦМ: ", 96, 124, 2);
+                _sw.WriteLine("\n");
+
+                ind_bt_in = 0;
+                dl_jpeg_in = -1;
+
+                return;
+            }
+
+            //Время
+            //Считаем миллисек.
+            tm = (_jpeg.jpeg_buf_in[8] << 24) | (_jpeg.jpeg_buf_in[9] << 16) | (_jpeg.jpeg_buf_in[10] << 8) | _jpeg.jpeg_buf_in[11];
+            mc = (_jpeg.jpeg_buf_in[12] << 8) | _jpeg.jpeg_buf_in[13];   //микросек.
+
+            Xt = _jpeg.jpeg_buf_in[14];  //Номер MCU
+
+            if (Xt > Constants.MAX_MSU || Convert.ToBoolean(Xt % 14))
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка номера МСУ");
+
+                Xt = _lastXt + 14;
+
+                if (Xt > Constants.MAX_MSU)
+                    Xt = 0;
+            }
+            _lastXt = Xt;
+
+            if (tm != tm_last && !Convert.ToBoolean(Xt)) // Новая полоса.        
+            {
+                _sw.WriteLine($"Номер суток: {(_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7]}");
+                _sw.WriteLine($"Миллисекунды: {tm}" + $" ({TimeSpan.FromMilliseconds(tm)})");
+                _sw.WriteLine($"Микросекунды: {mc}");
+                _sw.WriteLine("-----------------------------------------------------------------------");
+
+                GetDateTime((_jpeg.jpeg_buf_in[6] << 8) | _jpeg.jpeg_buf_in[7], tm);
+
+                if (Convert.ToBoolean(tm_last))
+                {
+                    if (tm < tm_last) dt = (86400000 - tm_last + tm) / 1000f; //смена суток
+                    else dt = (tm - tm_last) / 1000f; //разница в секундах
+                    _sw.WriteLine($"Разница: {dt}");
+
+                    if (dt < 1.2 || dt > 1.25)
+                    {
+                        _sw.WriteLine("??????????????????????????????????????????????");
+                        timeShiftErrs++;
+
+                        UpdateDataGui();
+                    }
+
+                    UpdateDataGui();
+
+                    if (_delegateCallCounter == Constants.DELEGATE_CALL_COUNTER)
+                    {
+                        _sw.Close();
+                        CreateNewLogFile(++_logFilesNameCounter);
+                        _delegateCallCounter = 0;
+                    }
+
+                    _delegateCallCounter++;
+
+                }
+
+                _sw.WriteLine("-----------------------------------------------------------------------");
+                tm_last = tm;
+            }
+
+
+            if (Convert.ToBoolean(_jpeg.jpeg_buf_in[15]) || Convert.ToBoolean(_jpeg.jpeg_buf_in[16]))
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка заголовка скана");
+            }
+
+            if (_jpeg.jpeg_buf_in[17] != 0xff || _jpeg.jpeg_buf_in[18] != 0xf0)
+            {
+                errs++;
+                _sw.WriteLine("    ----- ошибка заголовка сегмента");
+            }
+
+            Q_Value = _jpeg.jpeg_buf_in[19];
+
+            if (Q_Value > Constants.MAX_Q)
+            {
+                Q_Value = 75;
+                errs++;
+            }
+
+            kol_pix = _jpeg.DeCompress(Xt, dl_jpeg_in, Q_Value);
+
+            PreparePicture();
+            ind_bt_in = 0;
+            dl_jpeg_in = -1;
+        }
+
+        /// <summary>
+        /// Формирование изображения.
+        /// </summary>
         private void PreparePicture()
         {
             int k, x, num, nc, color;
@@ -1019,9 +940,56 @@ namespace ReceivingStation.Decode
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Поиск нового начала заголовка.
+        /// </summary>
+        /// <param name="k">Индекс поиска нового начала заголовка.</param>
+        private int Find_new_beg_zag(int k)
+        {
+            int i, j, n, kol;
+            bool[] buf = new bool[32];
 
-        #region Запись той служебной информации в лог файл которая формируется через StringBuilder.
+            if (!Convert.ToBoolean(k))
+            {
+                return 0;
+            }
+
+            //Формируем полученную последовательность
+            for (i = 0; i < k; i++)
+            {
+                buf[i] = Convert.ToBoolean(Constants.zag_tk_bit[i]);
+            }
+
+            buf[i] = !Convert.ToBoolean(Constants.zag_tk_bit[i]);    //след. бит
+
+            kol = k + 1;
+
+            for (i = k; i >= 0; i--)
+            {
+                n = 0;
+
+                for (j = i; j < kol; j++)
+                {
+                    if (Convert.ToBoolean(Constants.zag_tk_bit[n]) != buf[j])
+                    {
+                        return (kol - i - 1);
+                    }
+
+                    n++;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Запись той служебной информации в лог файл которая формируется через StringBuilder.
+        /// </summary>
+        /// <param name="data">Данные.</param>
+        /// <param name="header">Заголовок.</param>
+        /// <param name="startIndex">Начальный индекс из данных.</param>
+        /// <param name="finishIndex">Конечный индекс из данных.</param>
+        /// <param name="iterStep">Шаг итерации.</param>
         private void WriteServiceDataToLogFile(byte[] data, string header, int startIndex, int finishIndex, int iterStep)
         {
             StringBuilder _sb = new StringBuilder();
@@ -1052,9 +1020,11 @@ namespace ReceivingStation.Decode
             _sw.WriteLine($"{_sb}");
         }
 
-        #endregion
-
-        #region Формирование даты и времени.
+        /// <summary>
+        /// Формирование даты и времени.
+        /// </summary>
+        /// <param name="date">Дата.</param>
+        /// <param name="ms">Кол-во миллисекунд.</param>
         private void GetDateTime(int date, long ms)
         {
             if (_isNrz)
@@ -1066,8 +1036,6 @@ namespace ReceivingStation.Decode
                 _linesDate = Constants.referenceDate + TimeSpan.FromMilliseconds(ms);
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Создание нового файла логов декодирования.
@@ -1123,6 +1091,35 @@ namespace ReceivingStation.Decode
 
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Завершение декодирования.
+        /// </summary>
+        public void FinishDecode()
+        {
+            _sw.WriteLine("-------------------------------------------------");
+            _sw.WriteLine("------------------------------------------");
+            _sw.WriteLine($"Всего найдено ошибок: {errs}");
+            _sw.WriteLine($"Найдено сдвигов по времени: {timeShiftErrs}");
+            _sw.Close();
+            CreateBigLogFile();
+        }
+
+        /// <summary>
+        /// Обновление данных и информации на форме.
+        /// </summary>
+        public void UpdateDataGui()
+        {
+            if (_linesTd != null) // Костыль, проверка на то что файл начал декодироваться. Возникал эксепшн, если запускал файл с NRZ и не отмечал его, и наоборот, а потом останавливал. 
+            {
+                ThreadSafeUpdateGui(_linesDate, _linesService, _linesTd, _linesOshv, _linesBshv, _linesPcdm, _imagesLines, _delegateCallCounter);
+                Parallel.For(0, _imagesLines.Length, j =>
+                {
+                    _imagesLines[j].Dispose();
+                    _imagesLines[j] = new DirectBitmap(Constants.WDT, Constants.HGT);
+                });
             }
         }
     }

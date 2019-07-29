@@ -4,6 +4,8 @@ namespace ReceivingStation.Decode
 {
     static class Constants
     {
+        public static int DELEGATE_CALL_COUNTER = 800; // Кол-во вызовов делегата для сброса изображений и логов. Нужно чтобы набрать 6400 строчек.
+
         public static int WDT = 1568; // Ширина рисунка.
         public static int HGT = 8; // Высота рисунка.
 

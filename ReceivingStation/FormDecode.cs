@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.MessageBoxes;
+using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
@@ -270,8 +271,8 @@ namespace ReceivingStation
         /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param>
         private void UpdateGuiDecodeData(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines, int delegateCallCounter)
         {
-            // Набрал 1920 строчек изображения (8 * 240).
-            if (delegateCallCounter == 240)
+            // Набрал 6400 строчек изображения (8 * 800).
+            if (delegateCallCounter == Constants.DELEGATE_CALL_COUNTER)
             {
                 bwImageSaver.RunWorkerAsync();
             }
