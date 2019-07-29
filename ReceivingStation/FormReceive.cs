@@ -10,14 +10,15 @@ using System.Globalization;
 using MaterialSkin.Controls;
 using ReceivingStation.MessageBoxes;
 using ReceivingStation.Properties;
+using SDRSharp.Radio.PortAudio;
+using SDRSharp.Radio;
+using SDRSharp.RTLSDR;
 using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
-    /// <summary>
-    /// Класс формы режима "Прием".
-    /// </summary>
-    public partial class FormReceive : MaterialForm
+
+    public unsafe partial class FormReceive : MaterialForm
     {       
         public static TimeSpan MainFcpWorkingTime;
         public static TimeSpan ReserveFcpWorkingTime;
@@ -52,6 +53,16 @@ namespace ReceivingStation
         private byte _interliving;
         private byte _modulation;
 
+        private string _waveFile;
+
+        // private Demodulator.FFT_Form FFT_Form;
+        private enum InputType
+        {
+            RTLSDR,
+            WavFile
+        }
+        private InputType _inputType;
+
         private bool[] flags = new bool[2]; // Массив состояний демодулятора flag[0] = синхронизация фазы синхропосылки; flag[1] = захват петли ФАПЧ
 
         public FormReceive()
@@ -59,12 +70,21 @@ namespace ReceivingStation
             InitializeComponent();
         }
 
+        #region gui
+
         private void FormReceive_Load(object sender, EventArgs e)
         {
             lblDemOn.Text = "";
             lblDongOn.Text = "";
             lblLockOn.Text = "";
             lblSignDetect.Text = "";
+            ConfigSecretTab();
+
+            numUpD_FindedBitsInPSP.Value = Properties.Settings.Default.PSP_FindedBits;
+            numUpD_FindedBitsInInterliving.Value = Settings.Default.Interliving_FindedBits;
+            numUpD_PLLBw.Value = Properties.Settings.Default.PLL_Bandwidth;
+            cBx_HardPSP.Checked = Settings.Default.HardPSP;
+            //FFT_Form = new Demodulator.FFT_Form();
 
             GuiUpdater.SmoothLoadingForm(this);
 
@@ -89,6 +109,8 @@ namespace ReceivingStation
             _allChannelsPanels[3] = pImage10;
             _allChannelsPanels[4] = pImage11;
             _allChannelsPanels[5] = pImage12;
+
+            materialTabControl1.TabPages.Remove(tabPage10);
 
             for (int i = 0; i < 6; i++)
             {
@@ -143,18 +165,24 @@ namespace ReceivingStation
                 if (pModulation.Visible)
                 {
                     pModulation.Visible = false;
+                    pSourcePanel.Visible = false;
+                    materialTabControl1.TabPages.Remove(tabPage10);
                 }
                 else
                 {
                     pModulation.Visible = true;
+                    pSourcePanel.Visible = true;
+                    materialTabControl1.TabPages.Add(tabPage10);
                 }
                 e.SuppressKeyPress = true;
+                
             }
         }
 
         private void btnStartRecieve_Click(object sender, EventArgs e)
         {
             StartStopReceiving();
+            
         }
 
         private void slMode_DoubleClick(object sender, EventArgs e)
@@ -224,11 +252,10 @@ namespace ReceivingStation
             _imageCounter += 1;
         }
 
+        #endregion
+
         #region Установка параметров записи потока.
 
-        /// <summary>
-        /// Установка параметров записи потока в местном режиме управления.
-        /// </summary>
         private void SetReceiveParameters()
         {
             _fcp = Convert.ToByte(rbFCPMain.Checked ? 0x1 : 0x2);
@@ -237,16 +264,6 @@ namespace ReceivingStation
             _interliving = Convert.ToByte(rbInterlivingReceiveOn.Checked ? 0x1 : 0x2);
         }
 
-        /// <summary>
-        /// Установка параметров записи потока в дистанционном режиме управления.
-        /// </summary>
-        /// <remarks>
-        /// Связан с делегатом ThreadSafeSetReceiveParameters в потоке сервера.      
-        /// </remarks>
-        /// <param name="fcp">Значение ФЦП.</param>
-        /// <param name="prd">Значение ПРД.</param>
-        /// <param name="freq">Значение несущей частоты.</param>
-        /// <param name="interliving">Значение интеливинга.</param>
         private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
         {
             _fcp = fcp;
@@ -260,12 +277,7 @@ namespace ReceivingStation
             Invoke(new Action(() => { SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff); }));
         }
 
-        /// <summary>
-        /// Смена состояний RadioButton для установка параметров записи потока в дистанционном режиме управления.
-        /// </summary>
-        /// <param name="param">Параметр.</param>
-        /// <param name="rb1">Первый RadioButton параметра.</param>
-        /// <param name="rb2">Второй RadioButton параметра.</param>
+
         private void SetRadioButtons(byte param, RadioButton rb1, RadioButton rb2)
         {
             if (param == 0x1)
@@ -282,14 +294,7 @@ namespace ReceivingStation
 
         #region Начать/Остановить прием потока.
 
-        /// <summary>
-        /// Начать/Остановить прием потока.
-        /// </summary> 
-        /// <remarks>
-        /// Создает имя, приемник и декодер текущего сеанса.
-        /// Очищает контролы от предыдущего сеанса.
-        /// Связан с делегатом ThreadSafeStartStopReceiving в потоке сервера.  
-        /// </remarks>
+
         public void StartStopReceiving()
         {
             if (!_server.ReceivingStartedFlag)
@@ -298,6 +303,8 @@ namespace ReceivingStation
                 {
                     SetReceiveParameters();                   
                 }
+
+                GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime, rtbServiceTitle, rtbServiceData);
 
                 _server.ReceivingStartedFlag = true;
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
@@ -320,10 +327,15 @@ namespace ReceivingStation
                 if (_interliving == 0x1) inters = "с_инт";
                 else if (_interliving == 0x2) inters = "без_инт";
 
+                if (rbFUNcube.Checked) _inputType = InputType.RTLSDR;
+                if (rbWav.Checked) _inputType = InputType.WavFile;
+
                 var timeString = DateTime.Now.ToString("HH-mm-ss");
                 var sessionName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
                 _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}.dat";
-          
+
+                //
+
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
                 {
@@ -349,17 +361,52 @@ namespace ReceivingStation
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
 
+                lblLocked.Visible = false;
+
                 var isSelfTest = false;
-
+                var SampleRate = UInt32.Parse(comBx_SampleRate.Text);
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode);
-                
-                _receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
-                _receiver.StartDecoding();
-                _receiver.RecordStart(isSelfTest);
-
-                lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
-                lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
+                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode,comBxModulation.SelectedItem.ToString() ,chBx_sWriter.Checked, cBx_datWriter.Checked,cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
+                SetupGraphLabels((int)SampleRate);
+               
+                if (_inputType == InputType.RTLSDR)
+                {
+                    var freq = Decimal.Parse(comBx_carrier.Text);
+                    var Frequency = (uint)(freq * 1000000);
+                    
+                    var gain = (int)GainNM.Value;
+                    
+                    _receiver.Dongle_Configuration(Frequency, SampleRate, gain);// инициализируем свисток, в нем отсчеты записываются в поток                    StartDecoding();
+                    _receiver.StartDecoding();
+                    _receiver.RecordStart(isSelfTest);
+                    lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
+                    lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
+                }
+                if (_inputType == InputType.WavFile) // если хотим считать с файла
+                {
+                    
+                    try
+                    {
+                        SelectWaveFile();
+                        if (!File.Exists(_waveFile))
+                        {
+                            throw new ApplicationException("Не выбран файл");
+                        }
+                        lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Чтение .wav файла");
+                        lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Демодулятор включен");
+                        _receiver.wav_samples(_waveFile, 2048);
+                    }
+                    catch (ApplicationException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        StopReceiving();
+                    }
+                }
+                cBx_HardPSP.CheckedChanged += CBx_HardPSP_CheckedChanged;
+                GainNM.ValueChanged += GainNM_ValueChanged;
+                numUpD_FindedBitsInPSP.ValueChanged += NumUpD_FindedBitsInPSP_ValueChanged;
+                numUpD_FindedBitsInInterliving.ValueChanged += NumUpD_FindedBitsInInterliving_ValueChanged;
+                //FFT_Form.SetupGraphLabels(_receiver.SampleRate);
             }
             else
             {
@@ -368,20 +415,44 @@ namespace ReceivingStation
 
         }
 
-        /// <summary>
-        /// Остановить прием потока.
-        /// </summary> 
-        /// <remarks>
-        /// Логика остановки приема потока.
-        /// </remarks>
+        private void NumUpD_FindedBitsInInterliving_ValueChanged(object sender, EventArgs e)
+        {
+            _receiver.InterlivingFindedBitsChanged((int)numUpD_FindedBitsInInterliving.Value);
+        }
+
+        private void CBx_HardPSP_CheckedChanged(object sender, EventArgs e)
+        {
+            _receiver.HardPSPChanged(cBx_HardPSP.Checked);
+        }
+
+        private void NumUpD_FindedBitsInPSP_ValueChanged(object sender, EventArgs e)
+        {
+            _receiver.FindedBitsChanged((int)numUpD_FindedBitsInPSP.Value);
+        }
+
+        private void GainNM_ValueChanged(object sender, EventArgs e)
+        {
+            _receiver.GainChanged((int)GainNM.Value);
+        }
+
+       
+
+        private void SelectWaveFile()
+        {
+            if (opnDlg.ShowDialog() == DialogResult.OK)
+            {
+                _waveFile = opnDlg.FileName;
+            }
+        }
+
+
         private void StopReceiving()
         {
-            _decode.UpdateDataGui();
-            _decode.FinishDecode();
-
             _server.ReceivingStartedFlag = false;
             _receiver.StopDecoding();
 
+            _decode.UpdateDataGui();
+            
             try
             {
                 bwImageSaver.RunWorkerAsync();
@@ -404,23 +475,33 @@ namespace ReceivingStation
             LogFiles.WriteWorkingTimeValues(MainFcpWorkingTime, ReserveFcpWorkingTime, MainPrdWorkingTime, ReservePrdWorkingTime);
             LogFiles.WriteUserActions("Запись потока завершена");
 
+            try
+            {
+                _decode.FinishDecode();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             // Чтобы при удаленной работе не выскакивало информационное окно.
             if (!Server.Server.RemoteModeFlag)
             {
                 FormInformationMessageBox.Show("Сообщение", "Прием потока завершен.", Resources.done_icon, "Перейти в", "каталог с результатами", _fileName);
             }
+
+
+            Settings.Default.Interliving_FindedBits = (int)numUpD_FindedBitsInInterliving.Value;
+            Properties.Settings.Default.PSP_FindedBits = (int)numUpD_FindedBitsInPSP.Value;
+            Properties.Settings.Default.PLL_Bandwidth = (int)numUpD_PLLBw.Value;
+            Settings.Default.HardPSP = cBx_HardPSP.Checked;
+            Properties.Settings.Default.Save();
         }
 
         #endregion
 
-        /// <summary>
-        /// Смена режима управления.
-        /// </summary>
-        /// <remarks>
-        /// Нужно для работы с ИВК.
-        /// Связан с делегатом ThreadSafeChangeMode в потоке сервера.      
-        /// </remarks>
-        /// <param name="modeNumber">Номер режима управления. 0 - ДУ, 1 - МУ.</param>
+        #region gui2
+
         private void ChangeMode(byte modeNumber)
         {
             if (modeNumber == 0)
@@ -441,9 +522,7 @@ namespace ReceivingStation
             }
         }
 
-        /// <summary>
-        /// Расчет времени наработки каждого полукомплекта.
-        /// </summary>
+
         private void CountWorkingTime()
         {
             DateTime finishWorkingTime = DateTime.Now;
@@ -469,12 +548,9 @@ namespace ReceivingStation
             }
         }
 
-        /// <summary>
-        /// Получение статусов синхронизации для ИВК в режиме ДУ.
-        /// </summary>
-        /// <remarks>
-        /// Связан с делегатом ThreadSafeGetSyncsStates в потоке сервера.      
-        /// </remarks>
+
+
+
         public bool[] GetSyncsStates()
         {
             bool[] syncsStatesValues = new bool[2];
@@ -484,22 +560,11 @@ namespace ReceivingStation
             return syncsStatesValues;
         }
 
+        #endregion
+
         #region Обновление GUI.
 
-        /// <summary>
-        /// Обновление данных декодирования на GUI.
-        /// </summary>
-        /// <remarks>
-        /// Связан с делегатом ThreadSafeUpdateGui в потоке декодирования.
-        /// Каждые 60 вызовов этой функции вызывается сохранение полученных изображений.
-        /// </remarks>
-        /// <param name="linesDate">Значения Даты и времени полученной полосы.</param>
-        /// <param name="linesService">Значения служебной информации полученной полосы.</param>
-        /// <param name="linesTd">Значения ТД полученной полосы.</param>
-        /// <param name="linesOshv">Значения ОШВ полученной полосы.</param>
-        /// <param name="linesBshv">Значения БШВ полученной полосы.</param>
-        /// <param name="linesPcdm">Значения ПЦДМ полученной полосы.</param>
-        /// <param name="imagesLines">Полученные полосы изображений по каждому каналу.</param>
+
         private void UpdateGuiDecodeData(DateTime linesDate, string linesService, string linesTd, string linesOshv, string linesBshv, string linesPcdm, DirectBitmap[] imagesLines, int delegateCallCounter)
         {
             // Набрал 6400 строчек изображения (8 * 800).
@@ -515,10 +580,7 @@ namespace ReceivingStation
             }
         }
 
-        /// <summary>
-        /// Обновление данных демодуляции на GUI.
-        /// </summary>
-        /// <param name="flags">Массив состояний демодулятора.</param>
+
         private void UpdateGuiDemodulationData(bool[] flags)
         {
             if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");
@@ -532,5 +594,60 @@ namespace ReceivingStation
         }
 
         #endregion
+
+        #region  Demodulator
+
+        
+        private void ConfigSecretTab()
+        {
+            scottPlotUC1.fig.labelTitle = "File FFT Data";
+            scottPlotUC1.fig.labelY = "Power ";
+            scottPlotUC1.fig.labelX = "Frequency (Hz)";
+            scottPlotUC1.Redraw();
+
+            comBxModulation.SelectedItem = "Meteor-M2.2";
+           
+            lblFinded.Visible = true;
+
+            comBx_carrier.SelectedItem = "137,087";
+            comBx_SampleRate.SelectedItem = "1024000";
+        }
+
+        public void SetupGraphLabels(int SampleRate)
+        {
+
+            scottPlotUC1.fig.AxisSet(0, SampleRate / 1000, -40, 60);
+            scottPlotUC1.Redraw();
+            //scottPlotUC2.fig.AxisSet(-3, 3, -3, 3);
+            //scottPlotUC2.Redraw();
+
+        }
+
+        #endregion
+
+        private void DemodTimer_Tick(object sender, EventArgs e)
+        {
+            if (_receiver != null)
+            {
+                _receiver.RefreshGUIfromDemod(display1, rbEYE.Checked, rbConstel.Checked, cBx_Input.Checked, cBx_output.Checked, scottPlotUC1, lblShift, lbl_PSPMode);
+                // TO DO Обновление ГУИ на этот вроде бы все
+                _receiver.UpdateFilterParameters(cBx_iqFilter.Checked, (int)NumUpDown_Bandwidth.Value, cBx_matchedFilter.Checked, (int)numUpD_PLLBw.Value);
+                flags = _receiver.UpdateDataGui();
+            }
+            
+            if (flags[1]) lblLocked.Visible = true;
+            else lblLocked.Visible = false;
+
+            if (flags[0]) lblFinded.Visible = true;
+            else lblFinded.Visible = false;
+        }
+
+        private void btnSave_S_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
+            {
+               // _RecorderPath = folderBrowserDialog1.SelectedPath;
+            }
+        }
     }
 }

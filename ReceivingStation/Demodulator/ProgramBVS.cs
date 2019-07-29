@@ -285,7 +285,7 @@ namespace ReceivingStation.Demodulator
             }
 
             Array.Copy(outarray, array, array.Length);
-            if  (!_isSelfTest) datfile.Write(outarray, 0, outarray.Length);
+            //if  (!_isSelfTest) datfile.Write(outarray, 0, outarray.Length);
         }
 
         public void fromAmplitudesToBits_int(byte[] indata, byte[] array)

@@ -70,5 +70,53 @@ namespace ReceivingStation.Properties {
                 this["lastSelfTestServerDate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public int PSP_FindedBits {
+            get {
+                return ((int)(this["PSP_FindedBits"]));
+            }
+            set {
+                this["PSP_FindedBits"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
+        public int PLL_Bandwidth {
+            get {
+                return ((int)(this["PLL_Bandwidth"]));
+            }
+            set {
+                this["PLL_Bandwidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HardPSP {
+            get {
+                return ((bool)(this["HardPSP"]));
+            }
+            set {
+                this["HardPSP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
+        public int Interliving_FindedBits {
+            get {
+                return ((int)(this["Interliving_FindedBits"]));
+            }
+            set {
+                this["Interliving_FindedBits"] = value;
+            }
+        }
     }
 }

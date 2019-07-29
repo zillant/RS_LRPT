@@ -66,11 +66,45 @@
             this.pImage11 = new System.Windows.Forms.Panel();
             this.pImage12 = new System.Windows.Forms.Panel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.DemodPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.scottPlotUC1 = new ScottPlot.ScottPlotUC();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numUpD_FindedBitsInInterliving = new System.Windows.Forms.NumericUpDown();
+            this.lbl_PSPMode = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cBx_HardPSP = new System.Windows.Forms.CheckBox();
+            this.numUpD_FindedBitsInPSP = new System.Windows.Forms.NumericUpDown();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cBx_datWriter = new System.Windows.Forms.CheckBox();
+            this.lblShift = new System.Windows.Forms.Label();
+            this.lblFinded = new System.Windows.Forms.Label();
+            this.lblLocked = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chBx_sWriter = new System.Windows.Forms.CheckBox();
+            this.lblSizeS = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comBxModulation = new System.Windows.Forms.ComboBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.GainNM = new System.Windows.Forms.NumericUpDown();
+            this.cBx_matchedFilter = new System.Windows.Forms.CheckBox();
+            this.comBx_SampleRate = new System.Windows.Forms.ComboBox();
+            this.comBx_carrier = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cBx_iqFilter = new System.Windows.Forms.CheckBox();
+            this.numUpD_PLLBw = new System.Windows.Forms.NumericUpDown();
+            this.NumUpDown_Bandwidth = new System.Windows.Forms.NumericUpDown();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cBx_output = new System.Windows.Forms.CheckBox();
+            this.rbEYE = new System.Windows.Forms.RadioButton();
+            this.cBx_Input = new System.Windows.Forms.CheckBox();
+            this.rbConstel = new System.Windows.Forms.RadioButton();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.tlp1 = new System.Windows.Forms.TableLayoutPanel();
@@ -81,10 +115,6 @@
             this.rbPRDReserve = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbPRDMain = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblPRD = new MaterialSkin.Controls.MaterialLabel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
-            this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
-            this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.rbFreq2 = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbFreq1 = new MaterialSkin.Controls.MaterialRadioButton();
@@ -93,20 +123,40 @@
             this.rbFCPReserve = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbFCPMain = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblFCP = new MaterialSkin.Controls.MaterialLabel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
+            this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
+            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.display1 = new ReceivingStation.Demodulator.Display();
             this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbQpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbOqpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.pSourcePanel = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.rbWav = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbFUNcube = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
             this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
             this.lblDemOn = new MaterialSkin.Controls.MaterialLabel();
             this.lblDongOn = new MaterialSkin.Controls.MaterialLabel();
             this.lblSignDetect = new MaterialSkin.Controls.MaterialLabel();
             this.lblLockOn = new MaterialSkin.Controls.MaterialLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -119,18 +169,32 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            this.tabPage10.SuspendLayout();
+            this.DemodPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpD_FindedBitsInInterliving)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpD_FindedBitsInPSP)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GainNM)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpD_PLLBw)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumUpDown_Bandwidth)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.tlp1.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tlpReceivingParameters.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.pModulation.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.doubleBufferedPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pModulation.SuspendLayout();
+            this.doubleBufferedPanel1.SuspendLayout();
+            this.pSourcePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -227,6 +291,7 @@
             this.materialTabControl1.Controls.Add(this.tabPage7);
             this.materialTabControl1.Controls.Add(this.tabPage8);
             this.materialTabControl1.Controls.Add(this.tabPage9);
+            this.materialTabControl1.Controls.Add(this.tabPage10);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialTabControl1.Location = new System.Drawing.Point(0, 213);
@@ -543,24 +608,6 @@
             this.tabPage8.Text = "МКО";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // rtbMkoData
-            // 
-            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(979, 33);
-            this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
-            this.rtbMkoData.TabIndex = 108;
-            this.rtbMkoData.Text = "";
-            // 
-            // rtbMkoTitle
-            // 
-            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
-            this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(531, 475);
-            this.rtbMkoTitle.TabIndex = 107;
-            this.rtbMkoTitle.Text = "";
-            // 
             // tabPage9
             // 
             this.tabPage9.Controls.Add(this.rtbServiceData);
@@ -572,23 +619,526 @@
             this.tabPage9.Text = "Служебная информация";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
-            // rtbServiceData
+            // tabPage10
             // 
-            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceData.Location = new System.Drawing.Point(880, 33);
-            this.rtbServiceData.Name = "rtbServiceData";
-            this.rtbServiceData.Size = new System.Drawing.Size(511, 352);
-            this.rtbServiceData.TabIndex = 110;
-            this.rtbServiceData.Text = "";
+            this.tabPage10.Controls.Add(this.DemodPanel);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(1548, 531);
+            this.tabPage10.TabIndex = 9;
+            this.tabPage10.Text = "File FFT Data";
+            this.tabPage10.UseVisualStyleBackColor = true;
             // 
-            // rtbServiceTitle
+            // DemodPanel
             // 
-            this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceTitle.Location = new System.Drawing.Point(442, 33);
-            this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(433, 352);
-            this.rtbServiceTitle.TabIndex = 109;
-            this.rtbServiceTitle.Text = "";
+            this.DemodPanel.ColumnCount = 3;
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 408F));
+            this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
+            this.DemodPanel.Controls.Add(this.panel1, 0, 0);
+            this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
+            this.DemodPanel.Controls.Add(this.display1, 2, 0);
+            this.DemodPanel.Controls.Add(this.groupBox3, 2, 1);
+            this.DemodPanel.Location = new System.Drawing.Point(3, 3);
+            this.DemodPanel.Name = "DemodPanel";
+            this.DemodPanel.RowCount = 2;
+            this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.DemodPanel.Size = new System.Drawing.Size(1537, 525);
+            this.DemodPanel.TabIndex = 29;
+            // 
+            // scottPlotUC1
+            // 
+            this.scottPlotUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scottPlotUC1.Location = new System.Drawing.Point(217, 2);
+            this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
+            this.scottPlotUC1.Name = "scottPlotUC1";
+            this.scottPlotUC1.Size = new System.Drawing.Size(909, 456);
+            this.scottPlotUC1.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.numUpD_FindedBitsInInterliving);
+            this.panel1.Controls.Add(this.lbl_PSPMode);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.groupBox5);
+            this.panel1.Controls.Add(this.numUpD_FindedBitsInPSP);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.lblShift);
+            this.panel1.Controls.Add(this.lblFinded);
+            this.panel1.Controls.Add(this.lblLocked);
+            this.panel1.Controls.Add(this.groupBox2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.comBxModulation);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(209, 454);
+            this.panel1.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label7.Location = new System.Drawing.Point(31, 371);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(116, 13);
+            this.label7.TabIndex = 65;
+            this.label7.Text = "Finded bits in interliving";
+            // 
+            // numUpD_FindedBitsInInterliving
+            // 
+            this.numUpD_FindedBitsInInterliving.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numUpD_FindedBitsInInterliving.Location = new System.Drawing.Point(79, 387);
+            this.numUpD_FindedBitsInInterliving.Maximum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.numUpD_FindedBitsInInterliving.Minimum = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.numUpD_FindedBitsInInterliving.Name = "numUpD_FindedBitsInInterliving";
+            this.numUpD_FindedBitsInInterliving.Size = new System.Drawing.Size(45, 20);
+            this.numUpD_FindedBitsInInterliving.TabIndex = 64;
+            this.numUpD_FindedBitsInInterliving.Value = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            // 
+            // lbl_PSPMode
+            // 
+            this.lbl_PSPMode.AutoSize = true;
+            this.lbl_PSPMode.ForeColor = System.Drawing.Color.Black;
+            this.lbl_PSPMode.Location = new System.Drawing.Point(23, 108);
+            this.lbl_PSPMode.Name = "lbl_PSPMode";
+            this.lbl_PSPMode.Size = new System.Drawing.Size(83, 13);
+            this.lbl_PSPMode.TabIndex = 63;
+            this.lbl_PSPMode.Text = "correction mode";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label6.Location = new System.Drawing.Point(31, 314);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(129, 13);
+            this.label6.TabIndex = 62;
+            this.label6.Text = "Finded bits in sync marker";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cBx_HardPSP);
+            this.groupBox5.Location = new System.Drawing.Point(25, 255);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(159, 45);
+            this.groupBox5.TabIndex = 13;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Hard mark search";
+            // 
+            // cBx_HardPSP
+            // 
+            this.cBx_HardPSP.AutoSize = true;
+            this.cBx_HardPSP.ForeColor = System.Drawing.Color.Black;
+            this.cBx_HardPSP.Location = new System.Drawing.Point(6, 20);
+            this.cBx_HardPSP.Name = "cBx_HardPSP";
+            this.cBx_HardPSP.Size = new System.Drawing.Size(65, 17);
+            this.cBx_HardPSP.TabIndex = 9;
+            this.cBx_HardPSP.Text = "Enabled";
+            this.cBx_HardPSP.UseVisualStyleBackColor = true;
+            // 
+            // numUpD_FindedBitsInPSP
+            // 
+            this.numUpD_FindedBitsInPSP.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numUpD_FindedBitsInPSP.Location = new System.Drawing.Point(79, 334);
+            this.numUpD_FindedBitsInPSP.Maximum = new decimal(new int[] {
+            96,
+            0,
+            0,
+            0});
+            this.numUpD_FindedBitsInPSP.Minimum = new decimal(new int[] {
+            48,
+            0,
+            0,
+            0});
+            this.numUpD_FindedBitsInPSP.Name = "numUpD_FindedBitsInPSP";
+            this.numUpD_FindedBitsInPSP.Size = new System.Drawing.Size(45, 20);
+            this.numUpD_FindedBitsInPSP.TabIndex = 61;
+            this.numUpD_FindedBitsInPSP.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cBx_datWriter);
+            this.groupBox1.Location = new System.Drawing.Point(25, 195);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(159, 45);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = ".dat writer";
+            // 
+            // cBx_datWriter
+            // 
+            this.cBx_datWriter.AutoSize = true;
+            this.cBx_datWriter.ForeColor = System.Drawing.Color.Black;
+            this.cBx_datWriter.Location = new System.Drawing.Point(6, 20);
+            this.cBx_datWriter.Name = "cBx_datWriter";
+            this.cBx_datWriter.Size = new System.Drawing.Size(65, 17);
+            this.cBx_datWriter.TabIndex = 9;
+            this.cBx_datWriter.Text = "Enabled";
+            this.cBx_datWriter.UseVisualStyleBackColor = true;
+            // 
+            // lblShift
+            // 
+            this.lblShift.AutoSize = true;
+            this.lblShift.ForeColor = System.Drawing.Color.Black;
+            this.lblShift.Location = new System.Drawing.Point(23, 88);
+            this.lblShift.Name = "lblShift";
+            this.lblShift.Size = new System.Drawing.Size(52, 13);
+            this.lblShift.TabIndex = 11;
+            this.lblShift.Text = "Freq Shift";
+            // 
+            // lblFinded
+            // 
+            this.lblFinded.AutoSize = true;
+            this.lblFinded.BackColor = System.Drawing.Color.Lime;
+            this.lblFinded.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lblFinded.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.lblFinded.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblFinded.Location = new System.Drawing.Point(100, 62);
+            this.lblFinded.Name = "lblFinded";
+            this.lblFinded.Size = new System.Drawing.Size(84, 13);
+            this.lblFinded.TabIndex = 10;
+            this.lblFinded.Text = "MARK FINDED ";
+            // 
+            // lblLocked
+            // 
+            this.lblLocked.AutoSize = true;
+            this.lblLocked.BackColor = System.Drawing.Color.Lime;
+            this.lblLocked.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lblLocked.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.lblLocked.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblLocked.Location = new System.Drawing.Point(22, 62);
+            this.lblLocked.Name = "lblLocked";
+            this.lblLocked.Size = new System.Drawing.Size(72, 13);
+            this.lblLocked.TabIndex = 9;
+            this.lblLocked.Text = "PLL LOCKED";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chBx_sWriter);
+            this.groupBox2.Controls.Add(this.lblSizeS);
+            this.groupBox2.Location = new System.Drawing.Point(25, 124);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(159, 65);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = ".s writer";
+            // 
+            // chBx_sWriter
+            // 
+            this.chBx_sWriter.AutoSize = true;
+            this.chBx_sWriter.ForeColor = System.Drawing.Color.Black;
+            this.chBx_sWriter.Location = new System.Drawing.Point(6, 20);
+            this.chBx_sWriter.Name = "chBx_sWriter";
+            this.chBx_sWriter.Size = new System.Drawing.Size(65, 17);
+            this.chBx_sWriter.TabIndex = 9;
+            this.chBx_sWriter.Text = "Enabled";
+            this.chBx_sWriter.UseVisualStyleBackColor = true;
+            // 
+            // lblSizeS
+            // 
+            this.lblSizeS.AutoSize = true;
+            this.lblSizeS.ForeColor = System.Drawing.Color.Black;
+            this.lblSizeS.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblSizeS.Location = new System.Drawing.Point(6, 40);
+            this.lblSizeS.Name = "lblSizeS";
+            this.lblSizeS.Size = new System.Drawing.Size(27, 13);
+            this.lblSizeS.TabIndex = 8;
+            this.lblSizeS.Text = "Size";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label1.Location = new System.Drawing.Point(22, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Модель КА";
+            // 
+            // comBxModulation
+            // 
+            this.comBxModulation.FormattingEnabled = true;
+            this.comBxModulation.Items.AddRange(new object[] {
+            "Meteor-M2",
+            "Meteor-M2.2"});
+            this.comBxModulation.Location = new System.Drawing.Point(103, 14);
+            this.comBxModulation.Name = "comBxModulation";
+            this.comBxModulation.Size = new System.Drawing.Size(82, 21);
+            this.comBxModulation.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.GainNM);
+            this.groupBox4.Controls.Add(this.cBx_matchedFilter);
+            this.groupBox4.Controls.Add(this.comBx_SampleRate);
+            this.groupBox4.Controls.Add(this.comBx_carrier);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.cBx_iqFilter);
+            this.groupBox4.Controls.Add(this.numUpD_PLLBw);
+            this.groupBox4.Controls.Add(this.NumUpDown_Bandwidth);
+            this.groupBox4.Location = new System.Drawing.Point(416, 463);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(510, 59);
+            this.groupBox4.TabIndex = 36;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "RTL-SDR";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(184, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.TabIndex = 60;
+            this.label5.Text = "Gain";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(82, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 13);
+            this.label4.TabIndex = 59;
+            this.label4.Text = "Sample Rate";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 58;
+            this.label2.Text = "Carrier";
+            // 
+            // GainNM
+            // 
+            this.GainNM.Location = new System.Drawing.Point(180, 33);
+            this.GainNM.Maximum = new decimal(new int[] {
+            26,
+            0,
+            0,
+            0});
+            this.GainNM.Name = "GainNM";
+            this.GainNM.Size = new System.Drawing.Size(41, 20);
+            this.GainNM.TabIndex = 57;
+            this.GainNM.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.GainNM.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // cBx_matchedFilter
+            // 
+            this.cBx_matchedFilter.AutoSize = true;
+            this.cBx_matchedFilter.Checked = true;
+            this.cBx_matchedFilter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBx_matchedFilter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cBx_matchedFilter.Location = new System.Drawing.Point(401, 31);
+            this.cBx_matchedFilter.Name = "cBx_matchedFilter";
+            this.cBx_matchedFilter.Size = new System.Drawing.Size(93, 17);
+            this.cBx_matchedFilter.TabIndex = 41;
+            this.cBx_matchedFilter.Text = "Matched Filter";
+            this.cBx_matchedFilter.UseVisualStyleBackColor = true;
+            // 
+            // comBx_SampleRate
+            // 
+            this.comBx_SampleRate.FormattingEnabled = true;
+            this.comBx_SampleRate.Items.AddRange(new object[] {
+            "1024000",
+            "2048000"});
+            this.comBx_SampleRate.Location = new System.Drawing.Point(82, 32);
+            this.comBx_SampleRate.Name = "comBx_SampleRate";
+            this.comBx_SampleRate.Size = new System.Drawing.Size(92, 21);
+            this.comBx_SampleRate.TabIndex = 1;
+            // 
+            // comBx_carrier
+            // 
+            this.comBx_carrier.FormattingEnabled = true;
+            this.comBx_carrier.Items.AddRange(new object[] {
+            "137,087",
+            "137,887"});
+            this.comBx_carrier.Location = new System.Drawing.Point(6, 32);
+            this.comBx_carrier.Name = "comBx_carrier";
+            this.comBx_carrier.Size = new System.Drawing.Size(70, 21);
+            this.comBx_carrier.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label3.Location = new System.Drawing.Point(243, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 13);
+            this.label3.TabIndex = 40;
+            this.label3.Text = "PLL Bandwidth";
+            // 
+            // cBx_iqFilter
+            // 
+            this.cBx_iqFilter.AutoSize = true;
+            this.cBx_iqFilter.Checked = true;
+            this.cBx_iqFilter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBx_iqFilter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cBx_iqFilter.Location = new System.Drawing.Point(250, 39);
+            this.cBx_iqFilter.Name = "cBx_iqFilter";
+            this.cBx_iqFilter.Size = new System.Drawing.Size(62, 17);
+            this.cBx_iqFilter.TabIndex = 37;
+            this.cBx_iqFilter.Text = "IQ Filter";
+            this.cBx_iqFilter.UseVisualStyleBackColor = true;
+            // 
+            // numUpD_PLLBw
+            // 
+            this.numUpD_PLLBw.Increment = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numUpD_PLLBw.Location = new System.Drawing.Point(328, 17);
+            this.numUpD_PLLBw.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numUpD_PLLBw.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numUpD_PLLBw.Name = "numUpD_PLLBw";
+            this.numUpD_PLLBw.Size = new System.Drawing.Size(67, 20);
+            this.numUpD_PLLBw.TabIndex = 39;
+            this.numUpD_PLLBw.Value = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            // 
+            // NumUpDown_Bandwidth
+            // 
+            this.NumUpDown_Bandwidth.Increment = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.NumUpDown_Bandwidth.Location = new System.Drawing.Point(328, 38);
+            this.NumUpDown_Bandwidth.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.NumUpDown_Bandwidth.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NumUpDown_Bandwidth.Name = "NumUpDown_Bandwidth";
+            this.NumUpDown_Bandwidth.Size = new System.Drawing.Size(67, 20);
+            this.NumUpDown_Bandwidth.TabIndex = 38;
+            this.NumUpDown_Bandwidth.Value = new decimal(new int[] {
+            180000,
+            0,
+            0,
+            0});
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox3.Controls.Add(this.cBx_output);
+            this.groupBox3.Controls.Add(this.rbEYE);
+            this.groupBox3.Controls.Add(this.cBx_Input);
+            this.groupBox3.Controls.Add(this.rbConstel);
+            this.groupBox3.Location = new System.Drawing.Point(1168, 463);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(329, 59);
+            this.groupBox3.TabIndex = 37;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Constellation";
+            // 
+            // cBx_output
+            // 
+            this.cBx_output.AutoSize = true;
+            this.cBx_output.Checked = true;
+            this.cBx_output.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBx_output.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cBx_output.Location = new System.Drawing.Point(166, 32);
+            this.cBx_output.Name = "cBx_output";
+            this.cBx_output.Size = new System.Drawing.Size(122, 17);
+            this.cBx_output.TabIndex = 33;
+            this.cBx_output.Text = "Выходные отсчеты";
+            this.cBx_output.UseVisualStyleBackColor = true;
+            // 
+            // rbEYE
+            // 
+            this.rbEYE.AutoSize = true;
+            this.rbEYE.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.rbEYE.Location = new System.Drawing.Point(6, 33);
+            this.rbEYE.Name = "rbEYE";
+            this.rbEYE.Size = new System.Drawing.Size(139, 17);
+            this.rbEYE.TabIndex = 31;
+            this.rbEYE.Text = "Глазковая диаграмма";
+            this.rbEYE.UseVisualStyleBackColor = true;
+            // 
+            // cBx_Input
+            // 
+            this.cBx_Input.AutoSize = true;
+            this.cBx_Input.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cBx_Input.Location = new System.Drawing.Point(166, 15);
+            this.cBx_Input.Name = "cBx_Input";
+            this.cBx_Input.Size = new System.Drawing.Size(114, 17);
+            this.cBx_Input.TabIndex = 32;
+            this.cBx_Input.Text = "Входные отсчеты";
+            this.cBx_Input.UseVisualStyleBackColor = true;
+            // 
+            // rbConstel
+            // 
+            this.rbConstel.AutoSize = true;
+            this.rbConstel.Checked = true;
+            this.rbConstel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.rbConstel.Location = new System.Drawing.Point(6, 17);
+            this.rbConstel.Name = "rbConstel";
+            this.rbConstel.Size = new System.Drawing.Size(80, 17);
+            this.rbConstel.TabIndex = 30;
+            this.rbConstel.TabStop = true;
+            this.rbConstel.Text = "Созвездие";
+            this.rbConstel.UseVisualStyleBackColor = true;
             // 
             // materialTabSelector1
             // 
@@ -667,12 +1217,12 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.37063F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 201F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
-            this.tlpReceivingParameters.Controls.Add(this.panel2, 2, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
+            this.tlpReceivingParameters.Controls.Add(this.panel2, 3, 0);
             this.tlpReceivingParameters.Controls.Add(this.pModulation, 4, 0);
             this.tlpReceivingParameters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpReceivingParameters.Location = new System.Drawing.Point(3, 3);
@@ -690,10 +1240,9 @@
             this.panel7.Controls.Add(this.rbPRDReserve);
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(134, 3);
+            this.panel7.Location = new System.Drawing.Point(111, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(117, 102);
+            this.panel7.Size = new System.Drawing.Size(96, 92);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -742,64 +1291,6 @@
             this.lblPRD.TabIndex = 38;
             this.lblPRD.Text = "ПРД";
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
-            this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
-            this.panel2.Controls.Add(this.lblInterliving);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(448, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(120, 102);
-            this.panel2.TabIndex = 42;
-            // 
-            // rbInterlivingReceiveOff
-            // 
-            this.rbInterlivingReceiveOff.AutoSize = true;
-            this.rbInterlivingReceiveOff.Depth = 0;
-            this.rbInterlivingReceiveOff.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbInterlivingReceiveOff.Location = new System.Drawing.Point(7, 62);
-            this.rbInterlivingReceiveOff.Margin = new System.Windows.Forms.Padding(0);
-            this.rbInterlivingReceiveOff.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbInterlivingReceiveOff.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbInterlivingReceiveOff.Name = "rbInterlivingReceiveOff";
-            this.rbInterlivingReceiveOff.Ripple = true;
-            this.rbInterlivingReceiveOff.Size = new System.Drawing.Size(105, 30);
-            this.rbInterlivingReceiveOff.TabIndex = 45;
-            this.rbInterlivingReceiveOff.Text = "Выключить";
-            this.rbInterlivingReceiveOff.UseVisualStyleBackColor = true;
-            // 
-            // rbInterlivingReceiveOn
-            // 
-            this.rbInterlivingReceiveOn.AutoSize = true;
-            this.rbInterlivingReceiveOn.Checked = true;
-            this.rbInterlivingReceiveOn.Depth = 0;
-            this.rbInterlivingReceiveOn.Font = new System.Drawing.Font("Roboto", 10F);
-            this.rbInterlivingReceiveOn.Location = new System.Drawing.Point(7, 30);
-            this.rbInterlivingReceiveOn.Margin = new System.Windows.Forms.Padding(0);
-            this.rbInterlivingReceiveOn.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbInterlivingReceiveOn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbInterlivingReceiveOn.Name = "rbInterlivingReceiveOn";
-            this.rbInterlivingReceiveOn.Ripple = true;
-            this.rbInterlivingReceiveOn.Size = new System.Drawing.Size(94, 30);
-            this.rbInterlivingReceiveOn.TabIndex = 44;
-            this.rbInterlivingReceiveOn.TabStop = true;
-            this.rbInterlivingReceiveOn.Text = "Включить";
-            this.rbInterlivingReceiveOn.UseVisualStyleBackColor = true;
-            // 
-            // lblInterliving
-            // 
-            this.lblInterliving.Depth = 0;
-            this.lblInterliving.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblInterliving.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblInterliving.Location = new System.Drawing.Point(3, 6);
-            this.lblInterliving.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblInterliving.Name = "lblInterliving";
-            this.lblInterliving.Size = new System.Drawing.Size(108, 19);
-            this.lblInterliving.TabIndex = 38;
-            this.lblInterliving.Text = "Интерливинг";
-            // 
             // panel3
             // 
             this.panel3.AutoSize = true;
@@ -807,10 +1298,9 @@
             this.panel3.Controls.Add(this.rbFreq2);
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(257, 3);
+            this.panel3.Location = new System.Drawing.Point(213, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(185, 102);
+            this.panel3.Size = new System.Drawing.Size(151, 92);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -861,16 +1351,14 @@
             // 
             // panel4
             // 
-            this.panel4.AutoSize = true;
             this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel4.BackColor = System.Drawing.SystemColors.Window;
             this.panel4.Controls.Add(this.rbFCPReserve);
             this.panel4.Controls.Add(this.rbFCPMain);
             this.panel4.Controls.Add(this.lblFCP);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(125, 102);
+            this.panel4.Size = new System.Drawing.Size(102, 102);
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -919,15 +1407,182 @@
             this.lblFCP.TabIndex = 37;
             this.lblFCP.Text = "ФЦП-М";
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
+            this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
+            this.panel2.Controls.Add(this.lblInterliving);
+            this.panel2.Location = new System.Drawing.Point(370, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(116, 102);
+            this.panel2.TabIndex = 42;
+            // 
+            // rbInterlivingReceiveOff
+            // 
+            this.rbInterlivingReceiveOff.AutoSize = true;
+            this.rbInterlivingReceiveOff.Depth = 0;
+            this.rbInterlivingReceiveOff.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbInterlivingReceiveOff.Location = new System.Drawing.Point(7, 62);
+            this.rbInterlivingReceiveOff.Margin = new System.Windows.Forms.Padding(0);
+            this.rbInterlivingReceiveOff.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbInterlivingReceiveOff.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbInterlivingReceiveOff.Name = "rbInterlivingReceiveOff";
+            this.rbInterlivingReceiveOff.Ripple = true;
+            this.rbInterlivingReceiveOff.Size = new System.Drawing.Size(105, 30);
+            this.rbInterlivingReceiveOff.TabIndex = 45;
+            this.rbInterlivingReceiveOff.Text = "Выключить";
+            this.rbInterlivingReceiveOff.UseVisualStyleBackColor = true;
+            // 
+            // rbInterlivingReceiveOn
+            // 
+            this.rbInterlivingReceiveOn.AutoSize = true;
+            this.rbInterlivingReceiveOn.Checked = true;
+            this.rbInterlivingReceiveOn.Depth = 0;
+            this.rbInterlivingReceiveOn.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbInterlivingReceiveOn.Location = new System.Drawing.Point(7, 30);
+            this.rbInterlivingReceiveOn.Margin = new System.Windows.Forms.Padding(0);
+            this.rbInterlivingReceiveOn.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbInterlivingReceiveOn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbInterlivingReceiveOn.Name = "rbInterlivingReceiveOn";
+            this.rbInterlivingReceiveOn.Ripple = true;
+            this.rbInterlivingReceiveOn.Size = new System.Drawing.Size(94, 30);
+            this.rbInterlivingReceiveOn.TabIndex = 44;
+            this.rbInterlivingReceiveOn.TabStop = true;
+            this.rbInterlivingReceiveOn.Text = "Включить";
+            this.rbInterlivingReceiveOn.UseVisualStyleBackColor = true;
+            // 
+            // lblInterliving
+            // 
+            this.lblInterliving.Depth = 0;
+            this.lblInterliving.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblInterliving.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblInterliving.Location = new System.Drawing.Point(3, 6);
+            this.lblInterliving.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblInterliving.Name = "lblInterliving";
+            this.lblInterliving.Size = new System.Drawing.Size(108, 19);
+            this.lblInterliving.TabIndex = 38;
+            this.lblInterliving.Text = "Интерливинг";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Window;
+            this.panel6.Controls.Add(this.tableLayoutPanel2);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(858, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(695, 108);
+            this.panel6.TabIndex = 44;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
+            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(695, 108);
+            this.tableLayoutPanel2.TabIndex = 46;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(584, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
+            // opnDlg
+            // 
+            this.opnDlg.Filter = "WAV files|*.wav";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 50;
+            // 
+            // timer3
+            // 
+            this.timer3.Enabled = true;
+            this.timer3.Interval = 50;
+            // 
+            // DemodTimer
+            // 
+            this.DemodTimer.Enabled = true;
+            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
+            // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoData.Location = new System.Drawing.Point(979, 33);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(191, 475);
+            this.rtbMkoData.TabIndex = 108;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMkoTitle
+            // 
+            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(442, 33);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(531, 475);
+            this.rtbMkoTitle.TabIndex = 107;
+            this.rtbMkoTitle.Text = "";
+            // 
+            // rtbServiceData
+            // 
+            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceData.Location = new System.Drawing.Point(880, 33);
+            this.rtbServiceData.Name = "rtbServiceData";
+            this.rtbServiceData.Size = new System.Drawing.Size(511, 352);
+            this.rtbServiceData.TabIndex = 110;
+            this.rtbServiceData.Text = "";
+            // 
+            // rtbServiceTitle
+            // 
+            this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceTitle.Location = new System.Drawing.Point(442, 33);
+            this.rtbServiceTitle.Name = "rtbServiceTitle";
+            this.rtbServiceTitle.Size = new System.Drawing.Size(433, 352);
+            this.rtbServiceTitle.TabIndex = 109;
+            this.rtbServiceTitle.Text = "";
+            // 
+            // display1
+            // 
+            this.display1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.display1.Constellation = false;
+            this.display1.Eye = false;
+            this.display1.Gain = 1;
+            this.display1.Input = false;
+            this.display1.Location = new System.Drawing.Point(1205, 103);
+            this.display1.Name = "display1";
+            this.display1.Output = false;
+            this.display1.Pause = false;
+            this.display1.SamplesPerSymbol = 0;
+            this.display1.Size = new System.Drawing.Size(254, 254);
+            this.display1.TabIndex = 38;
+            this.display1.Zoom = 1;
+            // 
             // pModulation
             // 
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
-            this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(574, 3);
+            this.pModulation.Location = new System.Drawing.Point(492, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(114, 102);
+            this.pModulation.Size = new System.Drawing.Size(140, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
@@ -977,33 +1632,9 @@
             this.materialLabel7.TabIndex = 46;
             this.materialLabel7.Text = "Модуляция";
             // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.SystemColors.Window;
-            this.panel6.Controls.Add(this.tableLayoutPanel2);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(858, 3);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(695, 108);
-            this.panel6.TabIndex = 44;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
-            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(695, 108);
-            this.tableLayoutPanel2.TabIndex = 46;
-            // 
             // doubleBufferedPanel1
             // 
+            this.doubleBufferedPanel1.Controls.Add(this.pSourcePanel);
             this.doubleBufferedPanel1.Controls.Add(this.rtbDateTimeTitle);
             this.doubleBufferedPanel1.Controls.Add(this.rtbDateTime);
             this.doubleBufferedPanel1.Controls.Add(this.lblDemOn);
@@ -1015,6 +1646,63 @@
             this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
             this.doubleBufferedPanel1.Size = new System.Drawing.Size(574, 102);
             this.doubleBufferedPanel1.TabIndex = 46;
+            // 
+            // pSourcePanel
+            // 
+            this.pSourcePanel.Controls.Add(this.rbWav);
+            this.pSourcePanel.Controls.Add(this.rbFUNcube);
+            this.pSourcePanel.Controls.Add(this.materialLabel8);
+            this.pSourcePanel.Location = new System.Drawing.Point(219, 1);
+            this.pSourcePanel.Name = "pSourcePanel";
+            this.pSourcePanel.Size = new System.Drawing.Size(149, 100);
+            this.pSourcePanel.TabIndex = 51;
+            this.pSourcePanel.Visible = false;
+            // 
+            // rbWav
+            // 
+            this.rbWav.AutoSize = true;
+            this.rbWav.Depth = 0;
+            this.rbWav.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbWav.Location = new System.Drawing.Point(11, 54);
+            this.rbWav.Margin = new System.Windows.Forms.Padding(0);
+            this.rbWav.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbWav.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbWav.Name = "rbWav";
+            this.rbWav.Ripple = true;
+            this.rbWav.Size = new System.Drawing.Size(57, 30);
+            this.rbWav.TabIndex = 56;
+            this.rbWav.Text = ".wav";
+            this.rbWav.UseVisualStyleBackColor = true;
+            // 
+            // rbFUNcube
+            // 
+            this.rbFUNcube.AutoSize = true;
+            this.rbFUNcube.Checked = true;
+            this.rbFUNcube.Depth = 0;
+            this.rbFUNcube.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFUNcube.Location = new System.Drawing.Point(11, 25);
+            this.rbFUNcube.Margin = new System.Windows.Forms.Padding(0);
+            this.rbFUNcube.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbFUNcube.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbFUNcube.Name = "rbFUNcube";
+            this.rbFUNcube.Ripple = true;
+            this.rbFUNcube.Size = new System.Drawing.Size(83, 30);
+            this.rbFUNcube.TabIndex = 55;
+            this.rbFUNcube.TabStop = true;
+            this.rbFUNcube.Text = "FunCube";
+            this.rbFUNcube.UseVisualStyleBackColor = true;
+            // 
+            // materialLabel8
+            // 
+            this.materialLabel8.Depth = 0;
+            this.materialLabel8.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel8.Location = new System.Drawing.Point(7, 3);
+            this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel8.Name = "materialLabel8";
+            this.materialLabel8.Size = new System.Drawing.Size(152, 19);
+            this.materialLabel8.TabIndex = 54;
+            this.materialLabel8.Text = "Источник сигнала";
             // 
             // rtbDateTimeTitle
             // 
@@ -1086,17 +1774,6 @@
             this.lblLockOn.TabIndex = 47;
             this.lblLockOn.Text = "label9";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(584, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 42;
-            this.pictureBox1.TabStop = false;
-            // 
             // FormReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1133,25 +1810,46 @@
             this.tableLayoutPanel1.PerformLayout();
             this.tabPage8.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
+            this.tabPage10.ResumeLayout(false);
+            this.DemodPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpD_FindedBitsInInterliving)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpD_FindedBitsInPSP)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GainNM)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpD_PLLBw)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumUpDown_Bandwidth)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.tlp1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.tlpReceivingParameters.ResumeLayout(false);
             this.tlpReceivingParameters.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.pModulation.ResumeLayout(false);
-            this.pModulation.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pModulation.ResumeLayout(false);
+            this.pModulation.PerformLayout();
             this.doubleBufferedPanel1.ResumeLayout(false);
             this.doubleBufferedPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pSourcePanel.ResumeLayout(false);
+            this.pSourcePanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1235,6 +1933,56 @@
         private System.Windows.Forms.TabPage tabPage9;
         private Other.DisabledRichTextBox rtbServiceData;
         private Other.DisabledRichTextBox rtbServiceTitle;
+        private Other.DoubleBufferedPanel pSourcePanel;
+        private MaterialSkin.Controls.MaterialRadioButton rbWav;
+        private MaterialSkin.Controls.MaterialRadioButton rbFUNcube;
+        private MaterialSkin.Controls.MaterialLabel materialLabel8;
+        private System.Windows.Forms.OpenFileDialog opnDlg;
+        private System.Windows.Forms.NumericUpDown GainNM;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.TableLayoutPanel DemodPanel;
+        private ScottPlot.ScottPlotUC scottPlotUC1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblFinded;
+        private System.Windows.Forms.Label lblLocked;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblSizeS;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comBxModulation;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox cBx_matchedFilter;
+        private System.Windows.Forms.ComboBox comBx_SampleRate;
+        private System.Windows.Forms.ComboBox comBx_carrier;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cBx_iqFilter;
+        private System.Windows.Forms.NumericUpDown numUpD_PLLBw;
+        private System.Windows.Forms.NumericUpDown NumUpDown_Bandwidth;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox cBx_output;
+        private System.Windows.Forms.RadioButton rbEYE;
+        private System.Windows.Forms.CheckBox cBx_Input;
+        private System.Windows.Forms.RadioButton rbConstel;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Timer DemodTimer;
+        private Demodulator.Display display1;
+        private System.Windows.Forms.CheckBox chBx_sWriter;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblShift;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox cBx_datWriter;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox cBx_HardPSP;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown numUpD_FindedBitsInPSP;
+        private System.Windows.Forms.Label lbl_PSPMode;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown numUpD_FindedBitsInInterliving;
     }
 }
 

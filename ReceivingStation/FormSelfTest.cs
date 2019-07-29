@@ -131,7 +131,7 @@ namespace ReceivingStation
             var isSelfTest = true;
             Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
             if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
-            _receiver.Dongle_Configuration(1024000); // инициализируем свисток, в нем отсчеты записываются в поток
+            _receiver.Dongle_Configuration(137100000,1024000,5); // инициализируем свисток, в нем отсчеты записываются в поток
             _receiver.StartDecoding();
             _receiver.RecordStart(isSelfTest);
 

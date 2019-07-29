@@ -177,6 +177,8 @@ namespace ReceivingStation
                     _isDecodeStarting = true;
                     btnStartStopDecode.Text = "Остановить";
 
+                    GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime, rtbServiceTitle, rtbServiceData);
+
                     _decode = new Decode.Decode(_fileName, reedSoloFlag, nrzFlag)
                     {
                         ThreadSafeUpdateGui = UpdateGuiDecodeData

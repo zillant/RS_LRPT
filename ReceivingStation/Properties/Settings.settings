@@ -14,5 +14,17 @@
     <Setting Name="lastSelfTestServerDate" Type="System.String" Scope="User">
       <Value Profile="(Default)">Не проводилась</Value>
     </Setting>
+    <Setting Name="PSP_FindedBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="PLL_Bandwidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">250</Value>
+    </Setting>
+    <Setting Name="HardPSP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Interliving_FindedBits" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">24</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
