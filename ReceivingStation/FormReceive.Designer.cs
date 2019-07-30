@@ -670,7 +670,7 @@
             this.DemodPanel.ColumnCount = 3;
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
-            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 409F));
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 410F));
             this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
             this.DemodPanel.Controls.Add(this.panel1, 0, 0);
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
@@ -692,7 +692,7 @@
             this.scottPlotUC1.Location = new System.Drawing.Point(216, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
-            this.scottPlotUC1.Size = new System.Drawing.Size(909, 456);
+            this.scottPlotUC1.Size = new System.Drawing.Size(908, 456);
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -1121,7 +1121,7 @@
             this.display1.Eye = false;
             this.display1.Gain = 1;
             this.display1.Input = false;
-            this.display1.Location = new System.Drawing.Point(1205, 103);
+            this.display1.Location = new System.Drawing.Point(1204, 103);
             this.display1.Name = "display1";
             this.display1.Output = false;
             this.display1.Pause = false;
@@ -1270,7 +1270,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.73893F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.89044F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 202F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 204F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
@@ -1352,7 +1352,7 @@
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Location = new System.Drawing.Point(211, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(151, 92);
+            this.panel3.Size = new System.Drawing.Size(150, 92);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -1465,7 +1465,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOff);
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
-            this.panel2.Location = new System.Drawing.Point(368, 3);
+            this.panel2.Location = new System.Drawing.Point(367, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(116, 102);
             this.panel2.TabIndex = 42;
@@ -1521,7 +1521,7 @@
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
-            this.pModulation.Location = new System.Drawing.Point(490, 3);
+            this.pModulation.Location = new System.Drawing.Point(489, 3);
             this.pModulation.Name = "pModulation";
             this.pModulation.Size = new System.Drawing.Size(140, 102);
             this.pModulation.TabIndex = 46;

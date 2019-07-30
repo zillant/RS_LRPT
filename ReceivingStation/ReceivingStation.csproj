@@ -56,26 +56,15 @@
     <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
     </Reference>
-    <Reference Include="Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Platform.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="ScottPlot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\ScottPlot.dll</HintPath>
+    <Reference Include="ScottPlot">
+      <HintPath>..\Source\lib\ScottPlot.dll</HintPath>
     </Reference>
-    <Reference Include="SDRSharp.Meteor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\SDRSharp.Meteor.dll</HintPath>
+    <Reference Include="SDRSharp.Radio">
+      <HintPath>..\Source\lib\SDRSharp.Radio.dll</HintPath>
     </Reference>
-    <Reference Include="SDRSharp.Radio, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\SDRSharp.Radio.dll</HintPath>
-    </Reference>
-    <Reference Include="SDRSharp.RTLSDR, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\SDRSharp.RTLSDR.dll</HintPath>
+    <Reference Include="SDRSharp.RTLSDR">
+      <HintPath>..\Source\lib\SDRSharp.RTLSDR.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
