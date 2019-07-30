@@ -19,8 +19,6 @@ namespace ReceivingStation.Demodulator
         const int TotalSamples = 10000;
         const int BL = 401;// Matlabs FIR Order
         const double SampleRate_FIR = 1024000;
-        //const int _SymbolRate = 72000;
-        //const int _symbolRateINT = 80000;
         const uint _Frequency = 137883170;
         static uint _SampleRate;
         uint Frequency;
