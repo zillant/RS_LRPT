@@ -251,7 +251,7 @@ namespace ReceivingStation.Decode
         /// <param name="_isInterliving">Есть ли интерливинг.</param>
         public void StartDecode(byte[] data, bool nrz, bool _isInterliving)
         {
-            if (_isInterliving) Constants.DL_IN_BUF = 32768;
+            if (_isInterliving) Constants.DL_IN_BUF = 32000;
             else Constants.DL_IN_BUF = 4096;
 
             in_buf = new byte[Constants.DL_IN_BUF];
