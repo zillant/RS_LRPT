@@ -394,7 +394,6 @@ namespace ReceivingStation.Demodulator
             _needPLLConfigure = true;
             _droppedBuffers = 0;
             _processIsStarted = true;
-            //_workerThread = new Thread(BufferProcess);
             _workerThread = new Thread(new ThreadStart(DSPProc));
             _workerThread.Name = "PSK demodulator";
             _workerThread.Priority = ThreadPriority.Highest;
