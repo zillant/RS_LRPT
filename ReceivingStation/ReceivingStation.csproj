@@ -97,7 +97,6 @@
     <Compile Include="Demodulator\FFT_Form.designer.cs">
       <DependentUpon>FFT_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Demodulator\FIFO_Stream.cs" />
     <Compile Include="Demodulator\FileWriter.cs" />
     <Compile Include="Demodulator\LogWriter.cs" />
     <Compile Include="Demodulator\Packet.cs" />
