@@ -181,7 +181,10 @@ namespace ReceivingStation
             }
             if (e.Alt && e.KeyCode == Keys.J)
             {
-                this.Size = new Size(currentWidth - 50, currentHeight - 25);
+                if (this.Size.Width > 1406 && this.Size.Height > 725)
+                {
+                    this.Size = new Size(currentWidth - 50, currentHeight - 25);
+                }                    
                 e.SuppressKeyPress = true;
             }
             else if (e.Alt && e.KeyCode == Keys.K)

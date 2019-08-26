@@ -646,23 +646,24 @@
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
             this.DemodPanel.Controls.Add(this.display1, 2, 0);
             this.DemodPanel.Controls.Add(this.groupBox3, 2, 1);
-            this.DemodPanel.Location = new System.Drawing.Point(3, 3);
+            this.DemodPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DemodPanel.Location = new System.Drawing.Point(0, 0);
             this.DemodPanel.Name = "DemodPanel";
             this.DemodPanel.RowCount = 2;
             this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.DemodPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.DemodPanel.Size = new System.Drawing.Size(1537, 525);
+            this.DemodPanel.Size = new System.Drawing.Size(1548, 531);
             this.DemodPanel.TabIndex = 29;
             // 
             // scottPlotUC1
             // 
             this.scottPlotUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scottPlotUC1.Location = new System.Drawing.Point(216, 2);
+            this.scottPlotUC1.Location = new System.Drawing.Point(218, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
-            this.scottPlotUC1.Size = new System.Drawing.Size(907, 456);
+            this.scottPlotUC1.Size = new System.Drawing.Size(916, 462);
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -684,7 +685,7 @@
             this.panel1.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(208, 454);
+            this.panel1.Size = new System.Drawing.Size(210, 460);
             this.panel1.TabIndex = 0;
             // 
             // label7
@@ -920,7 +921,7 @@
             this.groupBox4.Controls.Add(this.cBx_iqFilter);
             this.groupBox4.Controls.Add(this.numUpD_PLLBw);
             this.groupBox4.Controls.Add(this.NumUpDown_Bandwidth);
-            this.groupBox4.Location = new System.Drawing.Point(414, 463);
+            this.groupBox4.Location = new System.Drawing.Point(421, 469);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(510, 59);
             this.groupBox4.TabIndex = 36;
@@ -1091,7 +1092,7 @@
             this.display1.Eye = false;
             this.display1.Gain = 1;
             this.display1.Input = false;
-            this.display1.Location = new System.Drawing.Point(1204, 103);
+            this.display1.Location = new System.Drawing.Point(1215, 106);
             this.display1.Name = "display1";
             this.display1.Output = false;
             this.display1.Pause = false;
@@ -1107,7 +1108,7 @@
             this.groupBox3.Controls.Add(this.rbEYE);
             this.groupBox3.Controls.Add(this.cBx_Input);
             this.groupBox3.Controls.Add(this.rbConstel);
-            this.groupBox3.Location = new System.Drawing.Point(1166, 463);
+            this.groupBox3.Location = new System.Drawing.Point(1177, 469);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(329, 59);
             this.groupBox3.TabIndex = 37;
