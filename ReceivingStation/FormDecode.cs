@@ -98,6 +98,9 @@ namespace ReceivingStation
 
         private void FormDecode_KeyDown(object sender, KeyEventArgs e)
         {
+            int currentWidth = Size.Width;
+            int currentHeight = Size.Height;
+
             // Alt + L  
             if (e.Alt && e.KeyCode == Keys.L)
             {
@@ -116,6 +119,19 @@ namespace ReceivingStation
                     _isDecodeTimeVisible = false;
                 }
 
+                e.SuppressKeyPress = true;
+            }
+            if (e.Alt && e.KeyCode == Keys.J)
+            {       
+                this.Size = new Size(currentWidth - 50, currentHeight - 25);
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Alt && e.KeyCode == Keys.K)
+            {
+                if (this.Size.Width < 1556 && this.Size.Height < 795)
+                {
+                    this.Size = new Size(currentWidth + 50, currentHeight + 25);
+                }
                 e.SuppressKeyPress = true;
             }
         }
@@ -203,10 +219,10 @@ namespace ReceivingStation
 
                     _worktimestart = DateTime.Now;
                     LogFiles.WriteUserActions($"Начата расшифровка файла - {_fileName}");
-
+                 
                     await Task.Run(() => _decode.StartDecode());
+                                           
                     StopDecoding();
-
                 }
                 else
                 {

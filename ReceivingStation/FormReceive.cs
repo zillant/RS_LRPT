@@ -159,6 +159,9 @@ namespace ReceivingStation
 
         private void FormReceive_KeyDown(object sender, KeyEventArgs e)
         {
+            int currentWidth = Size.Width;
+            int currentHeight = Size.Height;
+
             // Alt + L  
             if (e.Alt && e.KeyCode == Keys.L)
             {
@@ -174,8 +177,20 @@ namespace ReceivingStation
                     pSourcePanel.Visible = true;
                     materialTabControl1.TabPages.Add(tabPage10);
                 }
+                e.SuppressKeyPress = true;              
+            }
+            if (e.Alt && e.KeyCode == Keys.J)
+            {
+                this.Size = new Size(currentWidth - 50, currentHeight - 25);
                 e.SuppressKeyPress = true;
-                
+            }
+            else if (e.Alt && e.KeyCode == Keys.K)
+            {
+                if (this.Size.Width < 1556 && this.Size.Height < 795)
+                {
+                    this.Size = new Size(currentWidth + 50, currentHeight + 25);
+                }
+                e.SuppressKeyPress = true;
             }
         }
 
