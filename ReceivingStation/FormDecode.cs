@@ -26,7 +26,14 @@ namespace ReceivingStation
         private bool _isDecodeTimeVisible; // Для скрытия времени декодирования.
         
         private long _imageCounter; // Счетчик сохранненых изображений.
-      
+
+        private const int MinFormWidth = 1406;
+        private const int MinFormHeight = 725;
+        private const int MaxFormWidth = 1556;
+        private const int MaxFormHeight = 795;
+        private const int FormWidthValue = 50;
+        private const int FormHeightValue = 25;
+
         private Decode.Decode _decode;
 
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
@@ -123,17 +130,17 @@ namespace ReceivingStation
             }
             if (e.Alt && e.KeyCode == Keys.J)
             {
-                if (this.Size.Width > 1406 && this.Size.Height > 725)
+                if (this.Size.Width > MinFormWidth && this.Size.Height > MinFormHeight)
                 {
-                    this.Size = new Size(currentWidth - 50, currentHeight - 25);
+                    this.Size = new Size(currentWidth - FormWidthValue, currentHeight - FormHeightValue);
                 }
                 e.SuppressKeyPress = true;
             }
             else if (e.Alt && e.KeyCode == Keys.K)
             {
-                if (this.Size.Width < 1556 && this.Size.Height < 795)
+                if (this.Size.Width < MaxFormWidth && this.Size.Height < MaxFormHeight)
                 {
-                    this.Size = new Size(currentWidth + 50, currentHeight + 25);
+                    this.Size = new Size(currentWidth + FormWidthValue, currentHeight + FormHeightValue);
                 }
                 e.SuppressKeyPress = true;
             }
