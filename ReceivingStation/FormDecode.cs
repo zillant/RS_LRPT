@@ -27,13 +27,6 @@ namespace ReceivingStation
         
         private long _imageCounter; // Счетчик сохранненых изображений.
 
-        private const int MinFormWidth = 1406;
-        private const int MinFormHeight = 725;
-        private const int MaxFormWidth = 1556;
-        private const int MaxFormHeight = 795;
-        private const int FormWidthValue = 50;
-        private const int FormHeightValue = 25;
-
         private Decode.Decode _decode;
 
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
@@ -130,17 +123,17 @@ namespace ReceivingStation
             }
             if (e.Alt && e.KeyCode == Keys.J)
             {
-                if (this.Size.Width > MinFormWidth && this.Size.Height > MinFormHeight)
+                if (this.Size.Width > GuiUpdater.MinFormWidth && this.Size.Height > GuiUpdater.MinFormHeight)
                 {
-                    this.Size = new Size(currentWidth - FormWidthValue, currentHeight - FormHeightValue);
+                    this.Size = new Size(currentWidth - GuiUpdater.FormWidthValue, currentHeight - GuiUpdater.FormHeightValue);
                 }
                 e.SuppressKeyPress = true;
             }
             else if (e.Alt && e.KeyCode == Keys.K)
             {
-                if (this.Size.Width < MaxFormWidth && this.Size.Height < MaxFormHeight)
+                if (this.Size.Width < GuiUpdater.MaxFormWidth && this.Size.Height < GuiUpdater.MaxFormHeight)
                 {
-                    this.Size = new Size(currentWidth + FormWidthValue, currentHeight + FormHeightValue);
+                    this.Size = new Size(currentWidth + GuiUpdater.FormWidthValue, currentHeight + GuiUpdater.FormHeightValue);
                 }
                 e.SuppressKeyPress = true;
             }
