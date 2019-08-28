@@ -88,16 +88,16 @@
             this.pImage11 = new System.Windows.Forms.Panel();
             this.pImage12 = new System.Windows.Forms.Panel();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
-            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.splitter2 = new System.Windows.Forms.Splitter();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.splitter2 = new System.Windows.Forms.Splitter();
+            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.statusStrip1.SuspendLayout();
             this.pnlControls.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -120,8 +120,8 @@
             this.tabPage14.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,10 +133,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slTime,
             this.slDecodeTime});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 770);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 775);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(1556, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1550, 25);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.Stretch = false;
             this.statusStrip1.TabIndex = 3;
@@ -149,7 +149,7 @@
             this.slTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.slTime.Margin = new System.Windows.Forms.Padding(2, 3, 0, 2);
             this.slTime.Name = "slTime";
-            this.slTime.Size = new System.Drawing.Size(1539, 20);
+            this.slTime.Size = new System.Drawing.Size(1533, 20);
             this.slTime.Spring = true;
             this.slTime.Text = "01/01/1668 12:12:01";
             this.slTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -180,7 +180,7 @@
             this.pnlControls.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pnlControls.Location = new System.Drawing.Point(0, 59);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(1556, 114);
+            this.pnlControls.Size = new System.Drawing.Size(1550, 114);
             this.pnlControls.TabIndex = 23;
             // 
             // tableLayoutPanel3
@@ -198,7 +198,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1556, 114);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1550, 114);
             this.tableLayoutPanel3.TabIndex = 45;
             // 
             // panel5
@@ -206,7 +206,7 @@
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.btnStartStopDecode);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(703, 3);
+            this.panel5.Location = new System.Drawing.Point(700, 3);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(149, 108);
             this.panel5.TabIndex = 43;
@@ -242,7 +242,7 @@
             this.tlpDecodingParameters.Name = "tlpDecodingParameters";
             this.tlpDecodingParameters.RowCount = 1;
             this.tlpDecodingParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDecodingParameters.Size = new System.Drawing.Size(694, 108);
+            this.tlpDecodingParameters.Size = new System.Drawing.Size(691, 108);
             this.tlpDecodingParameters.TabIndex = 45;
             // 
             // pRS
@@ -252,7 +252,7 @@
             this.pRS.Controls.Add(this.rbRSYes);
             this.pRS.Controls.Add(this.rbRSNo);
             this.pRS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pRS.Location = new System.Drawing.Point(340, 3);
+            this.pRS.Location = new System.Drawing.Point(337, 3);
             this.pRS.Name = "pRS";
             this.pRS.Size = new System.Drawing.Size(351, 102);
             this.pRS.TabIndex = 42;
@@ -310,9 +310,9 @@
             this.pNRZ.Controls.Add(this.rbNRZYes);
             this.pNRZ.Controls.Add(this.rbNRZNo);
             this.pNRZ.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pNRZ.Location = new System.Drawing.Point(250, 3);
+            this.pNRZ.Location = new System.Drawing.Point(248, 3);
             this.pNRZ.Name = "pNRZ";
-            this.pNRZ.Size = new System.Drawing.Size(84, 102);
+            this.pNRZ.Size = new System.Drawing.Size(83, 102);
             this.pNRZ.TabIndex = 43;
             this.pNRZ.Visible = false;
             // 
@@ -371,7 +371,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(241, 102);
+            this.panel4.Size = new System.Drawing.Size(239, 102);
             this.panel4.TabIndex = 44;
             // 
             // materialLabel10
@@ -421,9 +421,9 @@
             this.panel6.BackColor = System.Drawing.SystemColors.Window;
             this.panel6.Controls.Add(this.tableLayoutPanel5);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(858, 3);
+            this.panel6.Location = new System.Drawing.Point(855, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(695, 108);
+            this.panel6.Size = new System.Drawing.Size(692, 108);
             this.panel6.TabIndex = 44;
             // 
             // tableLayoutPanel5
@@ -438,7 +438,7 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(695, 108);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(692, 108);
             this.tableLayoutPanel5.TabIndex = 45;
             // 
             // doubleBufferedPanel1
@@ -448,13 +448,13 @@
             this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
             this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
-            this.doubleBufferedPanel1.Size = new System.Drawing.Size(574, 102);
+            this.doubleBufferedPanel1.Size = new System.Drawing.Size(571, 102);
             this.doubleBufferedPanel1.TabIndex = 46;
             // 
             // rtbDateTimeTitle
             // 
             this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTimeTitle.Location = new System.Drawing.Point(374, 0);
+            this.rtbDateTimeTitle.Location = new System.Drawing.Point(371, 0);
             this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
             this.rtbDateTimeTitle.Size = new System.Drawing.Size(100, 102);
             this.rtbDateTimeTitle.TabIndex = 46;
@@ -463,7 +463,7 @@
             // rtbDateTime
             // 
             this.rtbDateTime.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTime.Location = new System.Drawing.Point(474, 0);
+            this.rtbDateTime.Location = new System.Drawing.Point(471, 0);
             this.rtbDateTime.Name = "rtbDateTime";
             this.rtbDateTime.Size = new System.Drawing.Size(100, 102);
             this.rtbDateTime.TabIndex = 45;
@@ -473,7 +473,7 @@
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(584, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(581, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(108, 102);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -501,7 +501,7 @@
             this.materialTabSelector1.Location = new System.Drawing.Point(0, 173);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(1556, 40);
+            this.materialTabSelector1.Size = new System.Drawing.Size(1550, 40);
             this.materialTabSelector1.TabIndex = 25;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
@@ -522,7 +522,7 @@
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(1556, 557);
+            this.materialTabControl1.Size = new System.Drawing.Size(1550, 562);
             this.materialTabControl1.TabIndex = 24;
             // 
             // tabPage8
@@ -531,7 +531,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(1548, 531);
+            this.tabPage8.Size = new System.Drawing.Size(1542, 536);
             this.tabPage8.TabIndex = 0;
             this.tabPage8.Text = "Канал 1";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -542,7 +542,7 @@
             this.pImage1.Location = new System.Drawing.Point(3, 3);
             this.pImage1.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.pImage1.Name = "pImage1";
-            this.pImage1.Size = new System.Drawing.Size(1542, 525);
+            this.pImage1.Size = new System.Drawing.Size(1536, 530);
             this.pImage1.TabIndex = 3;
             // 
             // tabPage9
@@ -826,6 +826,53 @@
             this.tabPage1.Text = "МКО";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 330F));
+            this.tableLayoutPanel2.Controls.Add(this.rtbMkoData, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.rtbMkoTitle, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 46);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1548, 485);
+            this.tableLayoutPanel2.TabIndex = 107;
+            // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoData.Location = new System.Drawing.Point(972, 3);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(242, 479);
+            this.rtbMkoData.TabIndex = 106;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMkoTitle
+            // 
+            this.rtbMkoTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(430, 3);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(536, 479);
+            this.rtbMkoTitle.TabIndex = 105;
+            this.rtbMkoTitle.Text = "";
+            // 
+            // splitter1
+            // 
+            this.splitter1.BackColor = System.Drawing.SystemColors.Window;
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter1.Location = new System.Drawing.Point(0, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(1548, 46);
+            this.splitter1.TabIndex = 108;
+            this.splitter1.TabStop = false;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.tableLayoutPanel4);
@@ -837,15 +884,22 @@
             this.tabPage2.Text = "Служебная информация";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // rtbServiceData
+            // tableLayoutPanel4
             // 
-            this.rtbServiceData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceData.Location = new System.Drawing.Point(891, 3);
-            this.rtbServiceData.Name = "rtbServiceData";
-            this.rtbServiceData.Size = new System.Drawing.Size(501, 479);
-            this.rtbServiceData.TabIndex = 108;
-            this.rtbServiceData.Text = "";
+            this.tableLayoutPanel4.ColumnCount = 4;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
+            this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 46);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1548, 485);
+            this.tableLayoutPanel4.TabIndex = 110;
             // 
             // rtbServiceTitle
             // 
@@ -853,9 +907,29 @@
             this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.rtbServiceTitle.Location = new System.Drawing.Point(430, 3);
             this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(455, 479);
+            this.rtbServiceTitle.Size = new System.Drawing.Size(454, 479);
             this.rtbServiceTitle.TabIndex = 107;
             this.rtbServiceTitle.Text = "";
+            // 
+            // rtbServiceData
+            // 
+            this.rtbServiceData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceData.Location = new System.Drawing.Point(890, 3);
+            this.rtbServiceData.Name = "rtbServiceData";
+            this.rtbServiceData.Size = new System.Drawing.Size(501, 479);
+            this.rtbServiceData.TabIndex = 108;
+            this.rtbServiceData.Text = "";
+            // 
+            // splitter2
+            // 
+            this.splitter2.BackColor = System.Drawing.SystemColors.Window;
+            this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter2.Location = new System.Drawing.Point(0, 0);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(1548, 46);
+            this.splitter2.TabIndex = 109;
+            this.splitter2.TabStop = false;
             // 
             // materialDivider1
             // 
@@ -872,85 +946,11 @@
             this.materialDivider1.TabIndex = 26;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // rtbMkoTitle
-            // 
-            this.rtbMkoTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(430, 3);
-            this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(537, 479);
-            this.rtbMkoTitle.TabIndex = 105;
-            this.rtbMkoTitle.Text = "";
-            // 
-            // rtbMkoData
-            // 
-            this.rtbMkoData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(973, 3);
-            this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(242, 479);
-            this.rtbMkoData.TabIndex = 106;
-            this.rtbMkoData.Text = "";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 329F));
-            this.tableLayoutPanel2.Controls.Add(this.rtbMkoData, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.rtbMkoTitle, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 46);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1548, 485);
-            this.tableLayoutPanel2.TabIndex = 107;
-            // 
-            // splitter1
-            // 
-            this.splitter1.BackColor = System.Drawing.SystemColors.Window;
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter1.Location = new System.Drawing.Point(0, 0);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(1548, 46);
-            this.splitter1.TabIndex = 108;
-            this.splitter1.TabStop = false;
-            // 
-            // splitter2
-            // 
-            this.splitter2.BackColor = System.Drawing.SystemColors.Window;
-            this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter2.Location = new System.Drawing.Point(0, 0);
-            this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(1548, 46);
-            this.splitter2.TabIndex = 109;
-            this.splitter2.TabStop = false;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 4;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
-            this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 46);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1548, 485);
-            this.tableLayoutPanel4.TabIndex = 110;
-            // 
             // FormDecode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1556, 795);
+            this.ClientSize = new System.Drawing.Size(1550, 800);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.pnlControls);
@@ -993,8 +993,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

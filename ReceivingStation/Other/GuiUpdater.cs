@@ -20,12 +20,14 @@ namespace ReceivingStation.Other
         public static Color ErrorColor = Color.FromArgb(222, 211, 47, 47);
         public static Color OkColor = Color.FromArgb(222, 46, 125, 50);
 
-        public static int MinFormWidth = 1406;
-        public static int MinFormHeight = 725;
-        public static int MaxFormWidth = 1556;
-        public static int MaxFormHeight = 795;
+        public static int MaxFormWidth = 1550;
+        public static int MaxFormHeight = 800;
+           
         public static int FormWidthValue = 50;
         public static int FormHeightValue = 25;
+
+        public static int MinFormWidth = MaxFormWidth - FormWidthValue * 3;
+        public static int MinFormHeight = MaxFormHeight - FormHeightValue * 3;
 
         private delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
 
