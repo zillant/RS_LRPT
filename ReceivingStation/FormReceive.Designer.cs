@@ -67,9 +67,13 @@
             this.pImage12 = new System.Windows.Forms.Panel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.DemodPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -104,6 +108,7 @@
             this.cBx_iqFilter = new System.Windows.Forms.CheckBox();
             this.numUpD_PLLBw = new System.Windows.Forms.NumericUpDown();
             this.NumUpDown_Bandwidth = new System.Windows.Forms.NumericUpDown();
+            this.display1 = new ReceivingStation.Demodulator.Display();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cBx_output = new System.Windows.Forms.CheckBox();
             this.rbEYE = new System.Windows.Forms.RadioButton();
@@ -131,25 +136,12 @@
             this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
-            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
-            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.display1 = new ReceivingStation.Demodulator.Display();
             this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbQpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbOqpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pSourcePanel = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbWav = new MaterialSkin.Controls.MaterialRadioButton();
@@ -161,6 +153,14 @@
             this.lblDongOn = new MaterialSkin.Controls.MaterialLabel();
             this.lblSignDetect = new MaterialSkin.Controls.MaterialLabel();
             this.lblLockOn = new MaterialSkin.Controls.MaterialLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
+            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.statusStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -195,12 +195,12 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.pModulation.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.pModulation.SuspendLayout();
             this.doubleBufferedPanel1.SuspendLayout();
             this.pSourcePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -619,7 +619,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 334F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 335F));
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoData, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoTitle, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -629,6 +629,26 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1556, 484);
             this.tableLayoutPanel3.TabIndex = 110;
+            // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoData.Location = new System.Drawing.Point(975, 3);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(242, 478);
+            this.rtbMkoData.TabIndex = 106;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMkoTitle
+            // 
+            this.rtbMkoTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(431, 3);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(538, 478);
+            this.rtbMkoTitle.TabIndex = 105;
+            this.rtbMkoTitle.Text = "";
             // 
             // splitter1
             // 
@@ -657,7 +677,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -667,6 +687,26 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1562, 490);
             this.tableLayoutPanel4.TabIndex = 112;
+            // 
+            // rtbServiceTitle
+            // 
+            this.rtbServiceTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceTitle.Location = new System.Drawing.Point(434, 3);
+            this.rtbServiceTitle.Name = "rtbServiceTitle";
+            this.rtbServiceTitle.Size = new System.Drawing.Size(459, 484);
+            this.rtbServiceTitle.TabIndex = 107;
+            this.rtbServiceTitle.Text = "";
+            // 
+            // rtbServiceData
+            // 
+            this.rtbServiceData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbServiceData.Location = new System.Drawing.Point(899, 3);
+            this.rtbServiceData.Name = "rtbServiceData";
+            this.rtbServiceData.Size = new System.Drawing.Size(501, 484);
+            this.rtbServiceData.TabIndex = 108;
+            this.rtbServiceData.Text = "";
             // 
             // splitter2
             // 
@@ -693,7 +733,7 @@
             this.DemodPanel.ColumnCount = 3;
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
-            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 416F));
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 417F));
             this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
             this.DemodPanel.Controls.Add(this.panel1, 0, 0);
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
@@ -716,7 +756,7 @@
             this.scottPlotUC1.Location = new System.Drawing.Point(220, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
-            this.scottPlotUC1.Size = new System.Drawing.Size(923, 467);
+            this.scottPlotUC1.Size = new System.Drawing.Size(922, 467);
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -1138,6 +1178,22 @@
             0,
             0});
             // 
+            // display1
+            // 
+            this.display1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.display1.Constellation = false;
+            this.display1.Eye = false;
+            this.display1.Gain = 1;
+            this.display1.Input = false;
+            this.display1.Location = new System.Drawing.Point(1226, 108);
+            this.display1.Name = "display1";
+            this.display1.Output = false;
+            this.display1.Pause = false;
+            this.display1.SamplesPerSymbol = 0;
+            this.display1.Size = new System.Drawing.Size(254, 254);
+            this.display1.TabIndex = 38;
+            this.display1.Zoom = 1;
+            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -1145,7 +1201,7 @@
             this.groupBox3.Controls.Add(this.rbEYE);
             this.groupBox3.Controls.Add(this.cBx_Input);
             this.groupBox3.Controls.Add(this.rbConstel);
-            this.groupBox3.Location = new System.Drawing.Point(1189, 474);
+            this.groupBox3.Location = new System.Drawing.Point(1188, 474);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(329, 59);
             this.groupBox3.TabIndex = 37;
@@ -1278,7 +1334,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.00926F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.82407F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
@@ -1362,7 +1418,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(256, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(184, 102);
+            this.panel3.Size = new System.Drawing.Size(183, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -1477,7 +1533,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(446, 3);
+            this.panel2.Location = new System.Drawing.Point(445, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(117, 102);
             this.panel2.TabIndex = 42;
@@ -1528,130 +1584,15 @@
             this.lblInterliving.TabIndex = 38;
             this.lblInterliving.Text = "Интерливинг";
             // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.SystemColors.Window;
-            this.panel6.Controls.Add(this.tableLayoutPanel2);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(865, 3);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(702, 108);
-            this.panel6.TabIndex = 44;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
-            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(702, 108);
-            this.tableLayoutPanel2.TabIndex = 46;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(591, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 42;
-            this.pictureBox1.TabStop = false;
-            // 
-            // opnDlg
-            // 
-            this.opnDlg.Filter = "WAV files|*.wav";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // timer2
-            // 
-            this.timer2.Enabled = true;
-            this.timer2.Interval = 50;
-            // 
-            // timer3
-            // 
-            this.timer3.Enabled = true;
-            this.timer3.Interval = 50;
-            // 
-            // DemodTimer
-            // 
-            this.DemodTimer.Enabled = true;
-            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
-            // 
-            // rtbMkoData
-            // 
-            this.rtbMkoData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(976, 3);
-            this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(242, 478);
-            this.rtbMkoData.TabIndex = 106;
-            this.rtbMkoData.Text = "";
-            // 
-            // rtbMkoTitle
-            // 
-            this.rtbMkoTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoTitle.Location = new System.Drawing.Point(431, 3);
-            this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(539, 478);
-            this.rtbMkoTitle.TabIndex = 105;
-            this.rtbMkoTitle.Text = "";
-            // 
-            // rtbServiceTitle
-            // 
-            this.rtbServiceTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceTitle.Location = new System.Drawing.Point(434, 3);
-            this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(460, 484);
-            this.rtbServiceTitle.TabIndex = 107;
-            this.rtbServiceTitle.Text = "";
-            // 
-            // rtbServiceData
-            // 
-            this.rtbServiceData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceData.Location = new System.Drawing.Point(900, 3);
-            this.rtbServiceData.Name = "rtbServiceData";
-            this.rtbServiceData.Size = new System.Drawing.Size(501, 484);
-            this.rtbServiceData.TabIndex = 108;
-            this.rtbServiceData.Text = "";
-            // 
-            // display1
-            // 
-            this.display1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.display1.Constellation = false;
-            this.display1.Eye = false;
-            this.display1.Gain = 1;
-            this.display1.Input = false;
-            this.display1.Location = new System.Drawing.Point(1226, 108);
-            this.display1.Name = "display1";
-            this.display1.Output = false;
-            this.display1.Pause = false;
-            this.display1.SamplesPerSymbol = 0;
-            this.display1.Size = new System.Drawing.Size(254, 254);
-            this.display1.TabIndex = 38;
-            this.display1.Zoom = 1;
-            // 
             // pModulation
             // 
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(569, 3);
+            this.pModulation.Location = new System.Drawing.Point(568, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(125, 102);
+            this.pModulation.Size = new System.Drawing.Size(126, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
@@ -1700,6 +1641,31 @@
             this.materialLabel7.Size = new System.Drawing.Size(94, 19);
             this.materialLabel7.TabIndex = 46;
             this.materialLabel7.Text = "Модуляция";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Window;
+            this.panel6.Controls.Add(this.tableLayoutPanel2);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(865, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(702, 108);
+            this.panel6.TabIndex = 44;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
+            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(702, 108);
+            this.tableLayoutPanel2.TabIndex = 46;
             // 
             // doubleBufferedPanel1
             // 
@@ -1843,6 +1809,40 @@
             this.lblLockOn.TabIndex = 47;
             this.lblLockOn.Text = "label9";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(591, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
+            // opnDlg
+            // 
+            this.opnDlg.Filter = "WAV files|*.wav";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 50;
+            // 
+            // timer3
+            // 
+            this.timer3.Enabled = true;
+            this.timer3.Interval = 50;
+            // 
+            // DemodTimer
+            // 
+            this.DemodTimer.Enabled = true;
+            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
+            // 
             // FormReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1910,15 +1910,15 @@
             this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pModulation.ResumeLayout(false);
             this.pModulation.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.doubleBufferedPanel1.ResumeLayout(false);
             this.doubleBufferedPanel1.PerformLayout();
             this.pSourcePanel.ResumeLayout(false);
             this.pSourcePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
