@@ -20,7 +20,7 @@ namespace ReceivingStation.Other
         public static Color ErrorColor = Color.FromArgb(222, 211, 47, 47);
         public static Color OkColor = Color.FromArgb(222, 46, 125, 50);
 
-        public static int MaxFormWidth = 1550;
+        public static int MaxFormWidth = 1570;
         public static int MaxFormHeight = 800;
            
         public static int FormWidthValue = 50;
