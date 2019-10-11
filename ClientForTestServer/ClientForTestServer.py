@@ -8,7 +8,7 @@ print("""
 1 - Remote control (0x33 0xFF 0x34)
 2 - Local control (0x33 0x01 0x03)
 3 - Set Parameters (BAD) (0x33 0x01 0x03 0x01 0x01 0x35)
-4 - Set Parameters (0x33 0x02 0x01 0x02 0x02 0x55)
+4 - Set Parameters (0x33 0x01 0x01 0x01 0x01 0x55)
 5 - Start stream record (0x33 0xFC 0x03)
 6 - Stop stream record (0x33 0xFD 0x03)
 7 - Check is main program busy
@@ -35,7 +35,7 @@ while True:
         transfer_rcv_data(b"\x33\x01\x03\x01\x01\x35")
     elif transfer == 4:
         # Параметры приема битового потока
-        transfer_rcv_data(b"\x33\x02\x01\x02\x01\x55")
+        transfer_rcv_data(b"\x33\x01\x01\x01\x01\x55")
     elif transfer == 5:
         # Начать запись
         transfer_rcv_data(b"\x33\xFC\x03")

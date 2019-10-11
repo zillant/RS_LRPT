@@ -316,14 +316,12 @@ namespace ReceivingStation
         public void StartStopReceiving()
         {
             if (!_server.ReceivingStartedFlag)
-            {               
+            {
                 if (!Server.Server.RemoteModeFlag)
                 {
                     SetReceiveParameters();                   
                 }
-
-                GuiUpdater.DecodeRichTextBoxInit(rtbMkoTitle, rtbMkoData, rtbDateTimeTitle, rtbDateTime, rtbServiceTitle, rtbServiceData);
-
+             
                 _server.ReceivingStartedFlag = true;
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
                 tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
@@ -332,7 +330,7 @@ namespace ReceivingStation
                 string prds = "";
                 string inters = "";
                 string freqs = "";
-
+                
                 if (_fcp == 0x1) fcps = "O";
                 else if (_fcp == 0x2) fcps = "P";
 
@@ -627,7 +625,7 @@ namespace ReceivingStation
            
             lblFinded.Visible = true;
 
-            comBx_carrier.SelectedItem = "137,087";
+            comBx_carrier.SelectedItem = "137.087";
             comBx_SampleRate.SelectedItem = "1024000";
         }
 
