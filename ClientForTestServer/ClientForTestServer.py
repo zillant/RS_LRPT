@@ -67,7 +67,7 @@ while True:
         # Проверить синхронизацию.
         transfer_rcv_data(b"\x33\x03\x03")
 
-    # ---------- Проверка на ошибочные КМС ----------
+    # ---------- Ошибочные КМС ----------
     elif transfer == 11:
         transfer_rcv_data(b"\x33\x02\x02\x02\x03\x09")
     elif transfer == 12:

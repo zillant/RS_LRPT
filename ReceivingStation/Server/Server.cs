@@ -152,11 +152,6 @@ namespace ReceivingStation.Server
                 // Для команд смены режима управления, начать/остановить запись потока, получить статус синхронизации.
                 switch (command.Length)
                 {
-                    case 2:
-                        byte[] newCommandArray = new byte[command.Length + 1];
-                        command.CopyTo(newCommandArray, 0);
-                        command = newCommandArray;
-                        break;
                     case 3:
                         // Перевод в дистанционный/местный режим управления.
                         if (command[1] == 0x1 || command[1] == 0xFF)
