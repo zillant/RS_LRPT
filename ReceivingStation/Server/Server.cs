@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace ReceivingStation.Server
 
             try
             {
-                var server = new TcpListener(IPAddress.Parse("0.0.0.0"), 11005);
+                var server = new TcpListener(IPAddress.Parse("0.0.0.0"), 2503);
 
                 _setParametersFlag = false;
                 ReceivingStartedFlag = false;
@@ -144,12 +145,18 @@ namespace ReceivingStation.Server
             if (command[0] != CommandHeader)
             {
                 commandStatus = InvalidCommandMessage;
+                command[0] = CommandHeader;
             }
             else
             {
                 // Для команд смены режима управления, начать/остановить запись потока, получить статус синхронизации.
                 switch (command.Length)
                 {
+                    case 2:
+                        byte[] newCommandArray = new byte[command.Length + 1];
+                        command.CopyTo(newCommandArray, 0);
+                        command = newCommandArray;
+                        break;
                     case 3:
                         // Перевод в дистанционный/местный режим управления.
                         if (command[1] == 0x1 || command[1] == 0xFF)
@@ -356,6 +363,7 @@ namespace ReceivingStation.Server
         private byte[] GetAnswer(byte[] command, byte commandStatus)
         {
             List<byte> answer = new List<byte>();
+            Random random = new Random();
 
             // Если запрос статуса синхронизации.
             if (command[1] == 0x03)
@@ -368,7 +376,8 @@ namespace ReceivingStation.Server
             }
             else
             {
-                answer.AddRange(command);
+                answer.AddRange(command.Take(command.Length - 1));
+                answer.Add((byte)random.Next(0x00, 0xFF));
             }
 
             answer.Add(commandStatus);

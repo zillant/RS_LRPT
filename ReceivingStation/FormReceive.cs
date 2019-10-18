@@ -284,6 +284,9 @@ namespace ReceivingStation
 
         private void SetReceiveParameters(byte fcp, byte prd, byte freq, byte interliving)
         {
+            // Пауза для тестирования "Выполнение предыдущей команды не завершено"
+            // for (int i = 0; i < 999999999; i++) { }
+
             _fcp = fcp;
             _prd = prd;
             _freq = freq;
