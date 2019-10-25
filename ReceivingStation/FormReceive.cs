@@ -82,7 +82,7 @@ namespace ReceivingStation
             lblDongOn.Text = "";
             lblLockOn.Text = "";
             lblSignDetect.Text = "";
-            ConfigSecretTab();
+           
 
             numUpD_FindedBitsInPSP.Value = Properties.Settings.Default.PSP_FindedBits;
             numUpD_FindedBitsInInterliving.Value = Settings.Default.Interliving_FindedBits;
@@ -140,6 +140,7 @@ namespace ReceivingStation
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
 
+            ConfigSecretTab();
             timer1.Start();
         }
 
@@ -344,7 +345,10 @@ namespace ReceivingStation
                 if (_prd == 0x1) prds = "O";
                 else if (_prd == 0x2) prds = "P";
 
-                if (_freq == 0x1) freqs = "137.1";
+                if (_freq == 0x1)
+                {
+                    freqs = "137.1";
+                }
                 else if (_freq == 0x2) freqs = "137.9";
 
                 if (_interliving == 0x1) inters = "с_инт";
@@ -629,11 +633,12 @@ namespace ReceivingStation
             scottPlotUC1.Redraw();
 
             comBxModulation.SelectedItem = "Meteor-M2.2";
-           
+            
             lblFinded.Visible = true;
 
-            comBx_carrier.SelectedItem = "137.087";
-            comBx_SampleRate.SelectedItem = "1024000";
+            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137,100";
+            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137,900";
+                comBx_SampleRate.SelectedItem = "1024000";
         }
 
         public void SetupGraphLabels(int SampleRate)
@@ -670,6 +675,33 @@ namespace ReceivingStation
             if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
             {
                // _RecorderPath = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void rbFreq1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbFreq1.Checked)
+            {
+                comBx_carrier.SelectedIndex = 0;
+            }
+            if (rbFreq2.Checked)
+            {
+                comBx_carrier.SelectedIndex = 1;
+            }
+        }
+
+        private void comBx_carrier_SelectedValueChanged(object sender, EventArgs e)
+        {
+           double freq;
+           var parsed = double.TryParse((string)comBx_carrier.SelectedItem, out freq);
+            if (137.5 > freq)
+            {
+                rbFreq1.Checked = true;
+            }
+
+            if (137.5 < freq)
+            {
+                rbFreq2.Checked = true;
             }
         }
     }

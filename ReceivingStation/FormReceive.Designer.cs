@@ -67,13 +67,9 @@
             this.pImage12 = new System.Windows.Forms.Panel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
-            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.DemodPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -108,7 +104,6 @@
             this.cBx_iqFilter = new System.Windows.Forms.CheckBox();
             this.numUpD_PLLBw = new System.Windows.Forms.NumericUpDown();
             this.NumUpDown_Bandwidth = new System.Windows.Forms.NumericUpDown();
-            this.display1 = new ReceivingStation.Demodulator.Display();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cBx_output = new System.Windows.Forms.CheckBox();
             this.rbEYE = new System.Windows.Forms.RadioButton();
@@ -136,12 +131,25 @@
             this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
+            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.display1 = new ReceivingStation.Demodulator.Display();
             this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbQpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbOqpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.pSourcePanel = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbWav = new MaterialSkin.Controls.MaterialRadioButton();
@@ -153,14 +161,6 @@
             this.lblDongOn = new MaterialSkin.Controls.MaterialLabel();
             this.lblSignDetect = new MaterialSkin.Controls.MaterialLabel();
             this.lblLockOn = new MaterialSkin.Controls.MaterialLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
-            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.statusStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -195,12 +195,12 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.pModulation.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pModulation.SuspendLayout();
             this.doubleBufferedPanel1.SuspendLayout();
             this.pSourcePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -474,12 +474,12 @@
             this.materialLabel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.materialLabel3.AutoSize = true;
             this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(97, 4);
+            this.materialLabel3.Location = new System.Drawing.Point(98, 4);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel3.Size = new System.Drawing.Size(63, 18);
             this.materialLabel3.TabIndex = 8;
             this.materialLabel3.Text = "Канал 1";
             // 
@@ -488,12 +488,12 @@
             this.materialLabel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(356, 4);
+            this.materialLabel1.Location = new System.Drawing.Point(357, 4);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel1.Size = new System.Drawing.Size(63, 18);
             this.materialLabel1.TabIndex = 6;
             this.materialLabel1.Text = "Канал 2";
             // 
@@ -502,12 +502,12 @@
             this.materialLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.materialLabel6.AutoSize = true;
             this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(615, 4);
+            this.materialLabel6.Location = new System.Drawing.Point(616, 4);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
-            this.materialLabel6.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel6.Size = new System.Drawing.Size(63, 18);
             this.materialLabel6.TabIndex = 11;
             this.materialLabel6.Text = "Канал 3";
             // 
@@ -524,12 +524,12 @@
             this.materialLabel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.materialLabel2.AutoSize = true;
             this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(874, 4);
+            this.materialLabel2.Location = new System.Drawing.Point(875, 4);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel2.Size = new System.Drawing.Size(63, 18);
             this.materialLabel2.TabIndex = 7;
             this.materialLabel2.Text = "Канал 4";
             // 
@@ -538,12 +538,12 @@
             this.materialLabel5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.materialLabel5.AutoSize = true;
             this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(1133, 4);
+            this.materialLabel5.Location = new System.Drawing.Point(1134, 4);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel5.Size = new System.Drawing.Size(63, 18);
             this.materialLabel5.TabIndex = 10;
             this.materialLabel5.Text = "Канал 5";
             // 
@@ -560,12 +560,12 @@
             this.materialLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(1393, 4);
+            this.materialLabel4.Location = new System.Drawing.Point(1394, 4);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel4.Size = new System.Drawing.Size(63, 18);
             this.materialLabel4.TabIndex = 9;
             this.materialLabel4.Text = "Канал 6";
             // 
@@ -619,7 +619,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 336F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 338F));
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoData, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoTitle, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -629,22 +629,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1556, 484);
             this.tableLayoutPanel3.TabIndex = 110;
-            // 
-            // rtbMkoData
-            // 
-            this.rtbMkoData.Location = new System.Drawing.Point(974, 3);
-            this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(100, 96);
-            this.rtbMkoData.TabIndex = 0;
-            this.rtbMkoData.Text = "";
-            // 
-            // rtbMkoTitle
-            // 
-            this.rtbMkoTitle.Location = new System.Drawing.Point(431, 3);
-            this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(100, 96);
-            this.rtbMkoTitle.TabIndex = 1;
-            this.rtbMkoTitle.Text = "";
             // 
             // splitter1
             // 
@@ -673,7 +657,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 159F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 161F));
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -683,22 +667,6 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1562, 490);
             this.tableLayoutPanel4.TabIndex = 112;
-            // 
-            // rtbServiceTitle
-            // 
-            this.rtbServiceTitle.Location = new System.Drawing.Point(433, 3);
-            this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(100, 96);
-            this.rtbServiceTitle.TabIndex = 0;
-            this.rtbServiceTitle.Text = "";
-            // 
-            // rtbServiceData
-            // 
-            this.rtbServiceData.Location = new System.Drawing.Point(898, 3);
-            this.rtbServiceData.Name = "rtbServiceData";
-            this.rtbServiceData.Size = new System.Drawing.Size(100, 96);
-            this.rtbServiceData.TabIndex = 1;
-            this.rtbServiceData.Text = "";
             // 
             // splitter2
             // 
@@ -725,7 +693,7 @@
             this.DemodPanel.ColumnCount = 3;
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
-            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 418F));
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 420F));
             this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
             this.DemodPanel.Controls.Add(this.panel1, 0, 0);
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
@@ -748,7 +716,7 @@
             this.scottPlotUC1.Location = new System.Drawing.Point(219, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
-            this.scottPlotUC1.Size = new System.Drawing.Size(922, 467);
+            this.scottPlotUC1.Size = new System.Drawing.Size(920, 467);
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -1006,7 +974,7 @@
             this.groupBox4.Controls.Add(this.cBx_iqFilter);
             this.groupBox4.Controls.Add(this.numUpD_PLLBw);
             this.groupBox4.Controls.Add(this.NumUpDown_Bandwidth);
-            this.groupBox4.Location = new System.Drawing.Point(425, 474);
+            this.groupBox4.Location = new System.Drawing.Point(424, 474);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(510, 59);
             this.groupBox4.TabIndex = 36;
@@ -1086,12 +1054,13 @@
             // 
             this.comBx_carrier.FormattingEnabled = true;
             this.comBx_carrier.Items.AddRange(new object[] {
-            "137.087",
-            "137.887"});
+            "137,100",
+            "137,900"});
             this.comBx_carrier.Location = new System.Drawing.Point(6, 32);
             this.comBx_carrier.Name = "comBx_carrier";
             this.comBx_carrier.Size = new System.Drawing.Size(70, 21);
             this.comBx_carrier.TabIndex = 0;
+            this.comBx_carrier.SelectedValueChanged += new System.EventHandler(this.comBx_carrier_SelectedValueChanged);
             // 
             // label3
             // 
@@ -1170,21 +1139,6 @@
             0,
             0});
             // 
-            // display1
-            // 
-            this.display1.Constellation = false;
-            this.display1.Eye = false;
-            this.display1.Gain = 1;
-            this.display1.Input = false;
-            this.display1.Location = new System.Drawing.Point(1146, 3);
-            this.display1.Name = "display1";
-            this.display1.Output = false;
-            this.display1.Pause = false;
-            this.display1.SamplesPerSymbol = 0;
-            this.display1.Size = new System.Drawing.Size(150, 150);
-            this.display1.TabIndex = 37;
-            this.display1.Zoom = 1;
-            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -1192,7 +1146,7 @@
             this.groupBox3.Controls.Add(this.rbEYE);
             this.groupBox3.Controls.Add(this.cBx_Input);
             this.groupBox3.Controls.Add(this.rbConstel);
-            this.groupBox3.Location = new System.Drawing.Point(1188, 474);
+            this.groupBox3.Location = new System.Drawing.Point(1187, 474);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(329, 59);
             this.groupBox3.TabIndex = 37;
@@ -1325,7 +1279,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.00926F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.82407F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
@@ -1350,14 +1304,14 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(131, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(117, 102);
+            this.panel7.Size = new System.Drawing.Size(116, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
             // 
             this.rbPRDReserve.AutoSize = true;
             this.rbPRDReserve.Depth = 0;
-            this.rbPRDReserve.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbPRDReserve.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbPRDReserve.Location = new System.Drawing.Point(7, 62);
             this.rbPRDReserve.Margin = new System.Windows.Forms.Padding(0);
             this.rbPRDReserve.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1374,7 +1328,7 @@
             this.rbPRDMain.AutoSize = true;
             this.rbPRDMain.Checked = true;
             this.rbPRDMain.Depth = 0;
-            this.rbPRDMain.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbPRDMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbPRDMain.Location = new System.Drawing.Point(7, 30);
             this.rbPRDMain.Margin = new System.Windows.Forms.Padding(0);
             this.rbPRDMain.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1390,7 +1344,7 @@
             // lblPRD
             // 
             this.lblPRD.Depth = 0;
-            this.lblPRD.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblPRD.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblPRD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblPRD.Location = new System.Drawing.Point(3, 6);
             this.lblPRD.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1407,16 +1361,16 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(254, 3);
+            this.panel3.Location = new System.Drawing.Point(253, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(183, 102);
+            this.panel3.Size = new System.Drawing.Size(181, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
             // 
             this.rbFreq2.AutoSize = true;
             this.rbFreq2.Depth = 0;
-            this.rbFreq2.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFreq2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbFreq2.Location = new System.Drawing.Point(7, 62);
             this.rbFreq2.Margin = new System.Windows.Forms.Padding(0);
             this.rbFreq2.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1433,7 +1387,7 @@
             this.rbFreq1.AutoSize = true;
             this.rbFreq1.Checked = true;
             this.rbFreq1.Depth = 0;
-            this.rbFreq1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFreq1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbFreq1.Location = new System.Drawing.Point(7, 30);
             this.rbFreq1.Margin = new System.Windows.Forms.Padding(0);
             this.rbFreq1.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1445,11 +1399,12 @@
             this.rbFreq1.TabStop = true;
             this.rbFreq1.Text = "137.1";
             this.rbFreq1.UseVisualStyleBackColor = true;
+            this.rbFreq1.CheckedChanged += new System.EventHandler(this.rbFreq1_CheckedChanged);
             // 
             // lblFreq
             // 
             this.lblFreq.Depth = 0;
-            this.lblFreq.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblFreq.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblFreq.Location = new System.Drawing.Point(3, 6);
             this.lblFreq.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1475,7 +1430,7 @@
             // 
             this.rbFCPReserve.AutoSize = true;
             this.rbFCPReserve.Depth = 0;
-            this.rbFCPReserve.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFCPReserve.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbFCPReserve.Location = new System.Drawing.Point(13, 62);
             this.rbFCPReserve.Margin = new System.Windows.Forms.Padding(0);
             this.rbFCPReserve.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1492,7 +1447,7 @@
             this.rbFCPMain.AutoSize = true;
             this.rbFCPMain.Checked = true;
             this.rbFCPMain.Depth = 0;
-            this.rbFCPMain.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbFCPMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbFCPMain.Location = new System.Drawing.Point(13, 30);
             this.rbFCPMain.Margin = new System.Windows.Forms.Padding(0);
             this.rbFCPMain.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1508,7 +1463,7 @@
             // lblFCP
             // 
             this.lblFCP.Depth = 0;
-            this.lblFCP.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblFCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblFCP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblFCP.Location = new System.Drawing.Point(10, 6);
             this.lblFCP.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1524,7 +1479,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(443, 3);
+            this.panel2.Location = new System.Drawing.Point(440, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(117, 102);
             this.panel2.TabIndex = 42;
@@ -1533,7 +1488,7 @@
             // 
             this.rbInterlivingReceiveOff.AutoSize = true;
             this.rbInterlivingReceiveOff.Depth = 0;
-            this.rbInterlivingReceiveOff.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbInterlivingReceiveOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbInterlivingReceiveOff.Location = new System.Drawing.Point(7, 62);
             this.rbInterlivingReceiveOff.Margin = new System.Windows.Forms.Padding(0);
             this.rbInterlivingReceiveOff.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1550,7 +1505,7 @@
             this.rbInterlivingReceiveOn.AutoSize = true;
             this.rbInterlivingReceiveOn.Checked = true;
             this.rbInterlivingReceiveOn.Depth = 0;
-            this.rbInterlivingReceiveOn.Font = new System.Drawing.Font("Roboto", 10F);
+            this.rbInterlivingReceiveOn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.rbInterlivingReceiveOn.Location = new System.Drawing.Point(7, 30);
             this.rbInterlivingReceiveOn.Margin = new System.Windows.Forms.Padding(0);
             this.rbInterlivingReceiveOn.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1566,7 +1521,7 @@
             // lblInterliving
             // 
             this.lblInterliving.Depth = 0;
-            this.lblInterliving.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblInterliving.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblInterliving.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInterliving.Location = new System.Drawing.Point(3, 6);
             this.lblInterliving.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1575,15 +1530,121 @@
             this.lblInterliving.TabIndex = 38;
             this.lblInterliving.Text = "Интерливинг";
             // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Window;
+            this.panel6.Controls.Add(this.tableLayoutPanel2);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(865, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(702, 108);
+            this.panel6.TabIndex = 44;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
+            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(702, 108);
+            this.tableLayoutPanel2.TabIndex = 46;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(591, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
+            // opnDlg
+            // 
+            this.opnDlg.Filter = "WAV files|*.wav";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 50;
+            // 
+            // timer3
+            // 
+            this.timer3.Enabled = true;
+            this.timer3.Interval = 50;
+            // 
+            // DemodTimer
+            // 
+            this.DemodTimer.Enabled = true;
+            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
+            // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Location = new System.Drawing.Point(972, 3);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(100, 96);
+            this.rtbMkoData.TabIndex = 0;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMkoTitle
+            // 
+            this.rtbMkoTitle.Location = new System.Drawing.Point(430, 3);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(100, 96);
+            this.rtbMkoTitle.TabIndex = 1;
+            this.rtbMkoTitle.Text = "";
+            // 
+            // rtbServiceTitle
+            // 
+            this.rtbServiceTitle.Location = new System.Drawing.Point(432, 3);
+            this.rtbServiceTitle.Name = "rtbServiceTitle";
+            this.rtbServiceTitle.Size = new System.Drawing.Size(100, 96);
+            this.rtbServiceTitle.TabIndex = 0;
+            this.rtbServiceTitle.Text = "";
+            // 
+            // rtbServiceData
+            // 
+            this.rtbServiceData.Location = new System.Drawing.Point(896, 3);
+            this.rtbServiceData.Name = "rtbServiceData";
+            this.rtbServiceData.Size = new System.Drawing.Size(100, 96);
+            this.rtbServiceData.TabIndex = 1;
+            this.rtbServiceData.Text = "";
+            // 
+            // display1
+            // 
+            this.display1.Constellation = false;
+            this.display1.Eye = false;
+            this.display1.Gain = 1;
+            this.display1.Input = false;
+            this.display1.Location = new System.Drawing.Point(1144, 3);
+            this.display1.Name = "display1";
+            this.display1.Output = false;
+            this.display1.Pause = false;
+            this.display1.SamplesPerSymbol = 0;
+            this.display1.Size = new System.Drawing.Size(150, 150);
+            this.display1.TabIndex = 37;
+            this.display1.Zoom = 1;
+            // 
             // pModulation
             // 
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(566, 3);
+            this.pModulation.Location = new System.Drawing.Point(563, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(128, 102);
+            this.pModulation.Size = new System.Drawing.Size(131, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
@@ -1632,31 +1693,6 @@
             this.materialLabel7.Size = new System.Drawing.Size(94, 19);
             this.materialLabel7.TabIndex = 46;
             this.materialLabel7.Text = "Модуляция";
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.SystemColors.Window;
-            this.panel6.Controls.Add(this.tableLayoutPanel2);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(865, 3);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(702, 108);
-            this.panel6.TabIndex = 44;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
-            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(702, 108);
-            this.tableLayoutPanel2.TabIndex = 46;
             // 
             // doubleBufferedPanel1
             // 
@@ -1800,40 +1836,6 @@
             this.lblLockOn.TabIndex = 47;
             this.lblLockOn.Text = "label9";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
-            this.pictureBox1.Location = new System.Drawing.Point(591, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 42;
-            this.pictureBox1.TabStop = false;
-            // 
-            // opnDlg
-            // 
-            this.opnDlg.Filter = "WAV files|*.wav";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // timer2
-            // 
-            this.timer2.Enabled = true;
-            this.timer2.Interval = 50;
-            // 
-            // timer3
-            // 
-            this.timer3.Enabled = true;
-            this.timer3.Interval = 50;
-            // 
-            // DemodTimer
-            // 
-            this.DemodTimer.Enabled = true;
-            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
-            // 
             // FormReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1901,15 +1903,15 @@
             this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.pModulation.ResumeLayout(false);
-            this.pModulation.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pModulation.ResumeLayout(false);
+            this.pModulation.PerformLayout();
             this.doubleBufferedPanel1.ResumeLayout(false);
             this.doubleBufferedPanel1.PerformLayout();
             this.pSourcePanel.ResumeLayout(false);
             this.pSourcePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
