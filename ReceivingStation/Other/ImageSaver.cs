@@ -28,6 +28,11 @@ namespace ReceivingStation.Other
                 List<Bitmap> listImages = new List<Bitmap>(listImagesForSave[i]);
                 listImagesForSave[i].Clear();
 
+                if (listImages.Count == 0)
+                {
+                    return;
+                }
+
                 using (var bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
                 {
                     using (var g = Graphics.FromImage(bmp))
