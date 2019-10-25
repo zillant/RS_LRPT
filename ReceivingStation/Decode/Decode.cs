@@ -19,6 +19,8 @@ namespace ReceivingStation.Decode
         public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsTkCount); 
         public UpdateSelfTestDataDelegate ThreadSafeUpdateSelfTestData; // Для режима самопроверки. Передаем кол-во принятых кадров и кол-во ошибок.
 
+        public bool IsSignalPhaseSync { get; set; } = true;
+
         public bool stopDecoding;
 
         private bool _isItSelfTest; // Флаг, является ли это процессом самопроверки.
@@ -93,6 +95,7 @@ namespace ReceivingStation.Decode
         // Для НРЗ.
         private bool _isNrz; // Есть ли NRZ.
         private bool last_bit_in;
+      
 
         #region Режим "Самопроверка".
 
@@ -325,6 +328,7 @@ namespace ReceivingStation.Decode
             do
             {
                 bytesCount = _fs.Read(in_buf, 0, Constants.DL_IN_BUF);
+                Console.WriteLine(IsSignalPhaseSync.ToString());
 
                 if (bytesCount < 2048)
                 {
@@ -590,13 +594,15 @@ namespace ReceivingStation.Decode
                             if (cnt_mark == 32)
                             {
                                 Fl_err = Convert.ToBoolean(0);
+                                IsSignalPhaseSync = true;
                             }
 
-                            if (cnt_mark < 24)      //потеря маркера
+                            if (cnt_mark < 26)      //потеря маркера
                             {
                                 Ind_mar_tk_bit = 0;
                                 cnt_mark = 0;
                                 Fl_err = Convert.ToBoolean(1);
+                                IsSignalPhaseSync = false;
                             }
                             else
                             {

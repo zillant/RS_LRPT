@@ -62,7 +62,7 @@ namespace ReceivingStation.Server
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(Resources.ipAddressLocal);
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 2503);
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, Convert.ToInt16(Resources.PortNumber));
 
                 Socket sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 

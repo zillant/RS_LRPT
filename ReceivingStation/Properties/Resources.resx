@@ -169,4 +169,7 @@
   <data name="ipAddressLocal" xml:space="preserve">
     <value>127.0.0.1</value>
   </data>
+  <data name="PortNumber" xml:space="preserve">
+    <value>2503</value>
+  </data>
 </root>

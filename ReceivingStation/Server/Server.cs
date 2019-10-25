@@ -64,7 +64,7 @@ namespace ReceivingStation.Server
 
             try
             {
-                var server = new TcpListener(IPAddress.Parse("0.0.0.0"), 2503);
+                var server = new TcpListener(IPAddress.Parse("0.0.0.0"), Convert.ToInt16(Resources.PortNumber));
 
                 _setParametersFlag = false;
                 ReceivingStartedFlag = false;

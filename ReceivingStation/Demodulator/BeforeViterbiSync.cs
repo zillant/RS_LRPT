@@ -1559,7 +1559,7 @@ namespace ReceivingStation.Demodulator
                     for (int i = 0; i < array.Length / 2; i++)
                     {
                         sbyte temp;
-                        array[2 * i] = (sbyte)-array[2 * i];
+                        array[2 * i + 1] = (sbyte)-array[2 * i + 1];
                     }
                     break;
 
