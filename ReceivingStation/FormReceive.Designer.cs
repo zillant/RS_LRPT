@@ -632,17 +632,23 @@
             // 
             // rtbMkoData
             // 
+            this.rtbMkoData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbMkoData.Location = new System.Drawing.Point(961, 3);
             this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(100, 96);
+            this.rtbMkoData.Size = new System.Drawing.Size(242, 478);
             this.rtbMkoData.TabIndex = 0;
             this.rtbMkoData.Text = "";
             // 
             // rtbMkoTitle
             // 
+            this.rtbMkoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbMkoTitle.Location = new System.Drawing.Point(425, 3);
             this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(100, 96);
+            this.rtbMkoTitle.Size = new System.Drawing.Size(530, 478);
             this.rtbMkoTitle.TabIndex = 1;
             this.rtbMkoTitle.Text = "";
             // 
@@ -686,17 +692,23 @@
             // 
             // rtbServiceTitle
             // 
+            this.rtbServiceTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbServiceTitle.Location = new System.Drawing.Point(427, 3);
             this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(100, 96);
+            this.rtbServiceTitle.Size = new System.Drawing.Size(452, 484);
             this.rtbServiceTitle.TabIndex = 0;
             this.rtbServiceTitle.Text = "";
             // 
             // rtbServiceData
             // 
+            this.rtbServiceData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbServiceData.Location = new System.Drawing.Point(885, 3);
             this.rtbServiceData.Name = "rtbServiceData";
-            this.rtbServiceData.Size = new System.Drawing.Size(100, 96);
+            this.rtbServiceData.Size = new System.Drawing.Size(501, 484);
             this.rtbServiceData.TabIndex = 1;
             this.rtbServiceData.Text = "";
             // 
@@ -1764,6 +1776,7 @@
             this.lblDemOn.Size = new System.Drawing.Size(49, 19);
             this.lblDemOn.TabIndex = 45;
             this.lblDemOn.Text = "label7";
+            this.lblDemOn.Visible = false;
             // 
             // lblDongOn
             // 
@@ -1777,6 +1790,7 @@
             this.lblDongOn.Size = new System.Drawing.Size(49, 19);
             this.lblDongOn.TabIndex = 46;
             this.lblDongOn.Text = "label8";
+            this.lblDongOn.Visible = false;
             // 
             // lblSignDetect
             // 
