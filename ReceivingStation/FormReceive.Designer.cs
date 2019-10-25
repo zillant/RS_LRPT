@@ -1817,6 +1817,7 @@
             this.lblLockOn.Size = new System.Drawing.Size(49, 19);
             this.lblLockOn.TabIndex = 47;
             this.lblLockOn.Text = "label9";
+            this.lblLockOn.Visible = false;
             // 
             // pictureBox1
             // 
