@@ -56,6 +56,10 @@ namespace ReceivingStation
         private string _waveFile;
 
         // private Demodulator.FFT_Form FFT_Form;
+        
+        /// <summary>
+        /// Типы источника отсчетов сигнала
+        /// </summary>
         private enum InputType
         {
             RTLSDR,
