@@ -619,7 +619,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 335F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 337F));
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoData, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoTitle, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -632,17 +632,19 @@
             // 
             // rtbMkoData
             // 
-            this.rtbMkoData.Location = new System.Drawing.Point(975, 3);
+            this.rtbMkoData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMkoData.Location = new System.Drawing.Point(973, 3);
             this.rtbMkoData.Name = "rtbMkoData";
-            this.rtbMkoData.Size = new System.Drawing.Size(100, 96);
+            this.rtbMkoData.Size = new System.Drawing.Size(242, 478);
             this.rtbMkoData.TabIndex = 0;
             this.rtbMkoData.Text = "";
             // 
             // rtbMkoTitle
             // 
-            this.rtbMkoTitle.Location = new System.Drawing.Point(431, 3);
+            this.rtbMkoTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbMkoTitle.Location = new System.Drawing.Point(430, 3);
             this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(100, 96);
+            this.rtbMkoTitle.Size = new System.Drawing.Size(537, 478);
             this.rtbMkoTitle.TabIndex = 1;
             this.rtbMkoTitle.Text = "";
             // 
@@ -673,7 +675,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -686,17 +688,19 @@
             // 
             // rtbServiceTitle
             // 
-            this.rtbServiceTitle.Location = new System.Drawing.Point(434, 3);
+            this.rtbServiceTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbServiceTitle.Location = new System.Drawing.Point(433, 3);
             this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(100, 96);
+            this.rtbServiceTitle.Size = new System.Drawing.Size(458, 484);
             this.rtbServiceTitle.TabIndex = 0;
             this.rtbServiceTitle.Text = "";
             // 
             // rtbServiceData
             // 
-            this.rtbServiceData.Location = new System.Drawing.Point(899, 3);
+            this.rtbServiceData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbServiceData.Location = new System.Drawing.Point(897, 3);
             this.rtbServiceData.Name = "rtbServiceData";
-            this.rtbServiceData.Size = new System.Drawing.Size(100, 96);
+            this.rtbServiceData.Size = new System.Drawing.Size(501, 484);
             this.rtbServiceData.TabIndex = 1;
             this.rtbServiceData.Text = "";
             // 
@@ -725,7 +729,7 @@
             this.DemodPanel.ColumnCount = 3;
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
-            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 417F));
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 419F));
             this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
             this.DemodPanel.Controls.Add(this.panel1, 0, 0);
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
@@ -745,10 +749,10 @@
             // scottPlotUC1
             // 
             this.scottPlotUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scottPlotUC1.Location = new System.Drawing.Point(220, 2);
+            this.scottPlotUC1.Location = new System.Drawing.Point(219, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
-            this.scottPlotUC1.Size = new System.Drawing.Size(922, 467);
+            this.scottPlotUC1.Size = new System.Drawing.Size(921, 467);
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -770,7 +774,7 @@
             this.panel1.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(212, 465);
+            this.panel1.Size = new System.Drawing.Size(211, 465);
             this.panel1.TabIndex = 0;
             // 
             // label7
@@ -1006,7 +1010,7 @@
             this.groupBox4.Controls.Add(this.cBx_iqFilter);
             this.groupBox4.Controls.Add(this.numUpD_PLLBw);
             this.groupBox4.Controls.Add(this.NumUpDown_Bandwidth);
-            this.groupBox4.Location = new System.Drawing.Point(426, 474);
+            this.groupBox4.Location = new System.Drawing.Point(424, 474);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(510, 59);
             this.groupBox4.TabIndex = 36;
@@ -1176,7 +1180,7 @@
             this.display1.Eye = false;
             this.display1.Gain = 1;
             this.display1.Input = false;
-            this.display1.Location = new System.Drawing.Point(1147, 3);
+            this.display1.Location = new System.Drawing.Point(1145, 3);
             this.display1.Name = "display1";
             this.display1.Output = false;
             this.display1.Pause = false;
@@ -1192,7 +1196,7 @@
             this.groupBox3.Controls.Add(this.rbEYE);
             this.groupBox3.Controls.Add(this.cBx_Input);
             this.groupBox3.Controls.Add(this.rbConstel);
-            this.groupBox3.Location = new System.Drawing.Point(1188, 474);
+            this.groupBox3.Location = new System.Drawing.Point(1187, 474);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(329, 59);
             this.groupBox3.TabIndex = 37;
@@ -1325,7 +1329,7 @@
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.00926F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.82407F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134F));
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
@@ -1348,9 +1352,9 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(132, 3);
+            this.panel7.Location = new System.Drawing.Point(131, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(118, 102);
+            this.panel7.Size = new System.Drawing.Size(117, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -1407,9 +1411,9 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(256, 3);
+            this.panel3.Location = new System.Drawing.Point(254, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(183, 102);
+            this.panel3.Size = new System.Drawing.Size(182, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -1468,7 +1472,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(123, 102);
+            this.panel4.Size = new System.Drawing.Size(122, 102);
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -1524,7 +1528,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(445, 3);
+            this.panel2.Location = new System.Drawing.Point(442, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(117, 102);
             this.panel2.TabIndex = 42;
@@ -1581,9 +1585,9 @@
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pModulation.Location = new System.Drawing.Point(568, 3);
+            this.pModulation.Location = new System.Drawing.Point(565, 3);
             this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(126, 102);
+            this.pModulation.Size = new System.Drawing.Size(129, 102);
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
