@@ -393,7 +393,7 @@ namespace ReceivingStation
                 var isSelfTest = false;
                 var SampleRate = UInt32.Parse(comBx_SampleRate.Text);
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode,comBxModulation.SelectedItem.ToString() ,chBx_sWriter.Checked, cBx_datWriter.Checked,cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
+                _receiver = new Demodulator.Demodulating(_fileName, _freq, _interliving, _modulation, _decode,comBxModulation.SelectedItem.ToString() ,chBx_sWriter.Checked, cBx_datWriter.Checked,cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
                 SetupGraphLabels((int)SampleRate);
                
                 if (_inputType == InputType.RTLSDR)
