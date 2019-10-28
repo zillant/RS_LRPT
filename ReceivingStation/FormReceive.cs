@@ -80,8 +80,8 @@ namespace ReceivingStation
         {
             lblDemOn.Text = "";
             lblDongOn.Text = "";
-            lblLockOn.Text = "";
-            lblSignDetect.Text = "";
+            lblIntDetect.Text = "ИНТ";
+            lblSignDetect.Text = "СИНХР";
            
 
             numUpD_FindedBitsInPSP.Value = Properties.Settings.Default.PSP_FindedBits;
@@ -491,10 +491,10 @@ namespace ReceivingStation
             
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
-            lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
-            lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
-            lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "");
-            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+            //lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
+           // lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
+            lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Red);
+            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Red);
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
@@ -607,17 +607,35 @@ namespace ReceivingStation
             }
         }
 
-
+        /// <summary>
+        /// Обрабатывает возвращаемые значение из формы, тупой костыль в идеале переделать
+        /// </summary>
+        /// <param name="flags">flag[0] синхромаркер найден, flag[1] ФАПЧ захвачена</param>
         private void UpdateGuiDemodulationData(bool[] flags)
         {
-            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");
-            else
+            //if (flags[1]) lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.Text, "Захвачено");
+            //else
+            //{
+            //    lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.Text, "Захват...");
+            //    lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+            //}
+            if (flags[0] && flags[1] && rbInterlivingReceiveOn.Checked)
             {
-                lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захват...");
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
+                lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Green);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Green);
             }
-            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден");
-            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера...");
+            else if (flags[0] && flags[1] && !rbInterlivingReceiveOn.Checked)
+            {
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
+                lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Red);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Green);
+            }
+            else if (!flags[0] && flags[1])
+            {
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Red);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, !lblSignDetect.Visible);
+            }
         }
 
         #endregion
