@@ -15,14 +15,9 @@ namespace ReceivingStation.Demodulator
 {
     unsafe class Demodulating
     {
-        const int Gain = 14; // Усиление свистка 15дБ
-        const int TotalSamples = 10000;
-        const int BL = 401;// Matlabs FIR Order
-        const double SampleRate_FIR = 1024000;
-
-        const uint _Frequency = 137883170;
+       
         static uint _SampleRate;
-        uint Frequency;
+      
 
         static int _SymbolRate;
 
@@ -32,12 +27,7 @@ namespace ReceivingStation.Demodulator
 
         static bool _processIsStarted;
         static bool _outputIsStarted;
-        static bool _View;
-        static bool _syncronization;
-        static bool _recording;
 
-        static int Samples = 0;
-        static int _lostBuffers;
 
         static IQFirFilter _iqFilter;
 
@@ -72,7 +62,6 @@ namespace ReceivingStation.Demodulator
         static UnsafeBuffer ElementBuffer;
         static unsafe Complex* ElementBufferPtr;
 
-        static byte[] _bits;
         static Demodulator.FileWriter _rawWriter;
 
 
@@ -201,11 +190,26 @@ namespace ReceivingStation.Demodulator
         private static int _FindedBitsInPSP;
         private static int _InterlivingFindedBits;
 
-        public Demodulating(FormReceive rcvform, string filename, byte freqmode, byte interliving, byte modulation, Decode.Decode decode, string SatelliteModel, 
+        /// <summary>
+        /// Обработчик ВЧ сигнала, используется SDR приемник
+        /// </summary>
+        /// <param name="filename">Имя .dat файла после демодулятора</param>
+        /// <param name="freqmode">Режим несущей частоты</param>
+        /// <param name="interliving">Режим интерливинга</param>
+        /// <param name="modulation">Тип модуляции 0х1-QPSK; 0x2-OQPSK</param>
+        /// <param name="decode">Класс декодера данных</param>
+        /// <param name="SatelliteModel">Модель КА</param>
+        /// <param name="sWriter">.s файл, быть ему или нет</param>
+        /// <param name="datWriter">.dat файл после демодулятора, быть ему или нет</param>
+        /// <param name="HardPSP">Режим поиска синхромера, при Hard ищется только один раз и больше не проверяется</param>
+        /// <param name="sessionName"></param>
+        /// <param name="FindedBitsInPSP">Количество найденых битов в синхромаркере, по которым можно считть маркер найденным</param>
+        /// <param name="FindedBitsInInterliving">Количество найденых битов в синхромаркере интерливинга, по которым можно считть маркер найденным</param>
+        public Demodulating( string filename, byte freqmode, byte interliving, byte modulation, Decode.Decode decode, string SatelliteModel, 
                                 bool sWriter, bool datWriter,bool HardPSP, string sessionName, int FindedBitsInPSP, int FindedBitsInInterliving)
         {
             _FrequencyMode = freqmode;
-            _formrcv = rcvform;
+            
             _Modulation = modulation;
             _decode = decode;
             _sWriter = sWriter;
@@ -293,6 +297,13 @@ namespace ReceivingStation.Demodulator
             }
         }
 
+        
+        /// <summary>
+        /// Настройка SDR приемника
+        /// </summary>
+        /// <param name="Frequency">Несущая частота сигнала</param>
+        /// <param name="SampleRate">Частота дискретизации</param>
+        /// <param name="Gain">Усиление сигнала, индекс массива усилений (стандартные для приемника)</param>
         public void Dongle_Configuration(uint Frequency, uint SampleRate, int Gain)// Настройка свистка    
         {
             _SampleRate = SampleRate;
@@ -314,6 +325,11 @@ namespace ReceivingStation.Demodulator
 
 
         }
+        /// <summary>
+        /// Приемщик дискретизированных отсчетов сигнала от SDR
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="inputbuffer"></param>
         public static unsafe void Samples_Available(object sender, SamplesAvailableEventArgs inputbuffer)
         {
             if (_iqStream == null)
@@ -353,6 +369,12 @@ namespace ReceivingStation.Demodulator
             _HardPSP = @checked;
         }
 
+        /// <summary>
+        /// Сохранение IQ отсчетов
+        /// </summary>
+        /// <param name="BuftoSave">Массив отсчетов</param>
+        /// <param name="buflength">Размер массива</param>
+        /// <param name="BufName">Данные ДО/ПОСЛЕ согласованного фильтра</param>
         static void SaveData(Complex* BuftoSave, int buflength, bool BufName)
         {
             
@@ -380,6 +402,9 @@ namespace ReceivingStation.Demodulator
            
         }
 
+        /// <summary>
+        /// Запуск потока цифровой обработки сигнала
+        /// </summary>
         public void StartDecoding()
         {
             _FifoBuffer = new ComplexFifoStream(BlockMode.None);
@@ -405,6 +430,9 @@ namespace ReceivingStation.Demodulator
             }
         }
         #region Stop Demodulating and Decoding
+        /// <summary>
+        /// Остановка всех потоков обработки
+        /// </summary>
         public void StopDecoding()
         {
             _processIsStarted = false;
@@ -468,7 +496,6 @@ namespace ReceivingStation.Demodulator
             _recordBufferPtr = null;
             
 
-            _recording = false;
             StreamCorrection = null;
             _buffer = null;
             if (_FifoBuffer != null)
@@ -495,7 +522,9 @@ namespace ReceivingStation.Demodulator
         #endregion
 
         #region Demodulating
-
+        /// <summary>
+        /// Сброс параметров петли ФАПЧ
+        /// </summary>
         public static void PLLReset()
         {
             _carrierPhase = 0;
@@ -504,11 +533,10 @@ namespace ReceivingStation.Demodulator
             _needPLLConfigure = true;
             _carrierPhaseLocked = false;
         }
-
        
-   
-
-        #endregion
+        /// <summary>
+        /// Процесс ЦОС
+        /// </summary>
         private void DSPProc()
         {
 
@@ -776,16 +804,27 @@ namespace ReceivingStation.Demodulator
                     }
                     else
                     {
-                        _lostBuffers++;
+                        //_lostBuffers++;
                     }
                 }
 
                 PlotData(_fftSpectrumArray, _fftSpectrumArray.Length, (int)_SampleRate);
             }
         }
-       
-      
-
+        
+        #endregion
+        
+        /// <summary>
+        /// Обновление ГУИ 
+        /// </summary>
+        /// <param name="display1">Экран созвездия</param>
+        /// <param name="Eye">Вкл/выкл глазковая диаграмма</param>
+        /// <param name="Constellation">вкл/выкл созвездие</param>
+        /// <param name="Input">отображения входных данных</param>
+        /// <param name="Output">отображение выходных данных</param>
+        /// <param name="scottPlotUC1">график для спектра</param>
+        /// <param name="shiftLabel">поле для отображения смещения ФАПЧ</param>
+        /// <param name="lbl_PSPmode">режим корректировки потока, устранения фазовой неоднозначности</param>
         public void RefreshGUIfromDemod(Display display1, bool Eye, bool Constellation, bool Input, bool Output, ScottPlot.ScottPlotUC scottPlotUC1, Label shiftLabel, Label lbl_PSPmode)
         {
             display1.Eye = Eye;
@@ -829,6 +868,12 @@ namespace ReceivingStation.Demodulator
 
         
 
+        /// <summary>
+        /// Подготовка данных для спектра
+        /// </summary>
+        /// <param name="fftPower"></param>
+        /// <param name="frameSize"></param>
+        /// <param name="SampleRate"></param>
         public void PlotData(float[] fftPower, int frameSize, int SampleRate)
         {
             int graphPointCount = frameSize;
@@ -841,6 +886,14 @@ namespace ReceivingStation.Demodulator
 
         }
 
+        
+        /// <summary>
+        /// Обновление параметров фильтров и ФАПЧ
+        /// </summary>
+        /// <param name="IQFilterSelected"></param>
+        /// <param name="IQBandwidth">Ширина полосы фильтра</param>
+        /// <param name="MatchedFilterSelected"></param>
+        /// <param name="SearchBandwidth">Ширина полосы ФАПЧ</param>
         public void UpdateFilterParameters(bool IQFilterSelected ,int IQBandwidth, bool MatchedFilterSelected, int SearchBandwidth)
         {
 
@@ -860,12 +913,15 @@ namespace ReceivingStation.Demodulator
 
         #region Output
 
+        /// <summary>
+        /// Запуск записи и устранения фазовой неоднозначности сигнала
+        /// </summary>
+        /// <param name="isSelfTest"></param>
         public void RecordStart(bool isSelfTest)
         {
             FirstRead = false;
             PSPFinded = false;
 
-            _recording = true;
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;
@@ -904,9 +960,12 @@ namespace ReceivingStation.Demodulator
         }
         #region Decoding
 
+        /// <summary>
+        /// Запуск декодера и корректировки потока с демодулятора
+        /// </summary>
+
         static void RecordingThread()
         {
-            _recording = true;
 
             var Element = new byte[2];
             var count = 0;

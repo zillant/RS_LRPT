@@ -56,6 +56,10 @@ namespace ReceivingStation
         private string _waveFile;
 
         // private Demodulator.FFT_Form FFT_Form;
+        
+        /// <summary>
+        /// Типы источника отсчетов сигнала
+        /// </summary>
         private enum InputType
         {
             RTLSDR,
@@ -76,9 +80,9 @@ namespace ReceivingStation
         {
             lblDemOn.Text = "";
             lblDongOn.Text = "";
-            lblLockOn.Text = "";
-            lblSignDetect.Text = "";
-            ConfigSecretTab();
+            lblIntDetect.Text = "ИНТ";
+            lblSignDetect.Text = "СИНХР";
+           
 
             numUpD_FindedBitsInPSP.Value = Properties.Settings.Default.PSP_FindedBits;
             numUpD_FindedBitsInInterliving.Value = Settings.Default.Interliving_FindedBits;
@@ -136,6 +140,7 @@ namespace ReceivingStation
             _serverThread = new Thread(_server.StartServer) {IsBackground = true};
             _serverThread.Start();
 
+            ConfigSecretTab();
             timer1.Start();
         }
 
@@ -340,7 +345,10 @@ namespace ReceivingStation
                 if (_prd == 0x1) prds = "O";
                 else if (_prd == 0x2) prds = "P";
 
-                if (_freq == 0x1) freqs = "137.1";
+                if (_freq == 0x1)
+                {
+                    freqs = "137.1";
+                }
                 else if (_freq == 0x2) freqs = "137.9";
 
                 if (_interliving == 0x1) inters = "с_инт";
@@ -385,7 +393,7 @@ namespace ReceivingStation
                 var isSelfTest = false;
                 var SampleRate = UInt32.Parse(comBx_SampleRate.Text);
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-                _receiver = new Demodulator.Demodulating(this, _fileName, _freq, _interliving, _modulation, _decode,comBxModulation.SelectedItem.ToString() ,chBx_sWriter.Checked, cBx_datWriter.Checked,cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
+                _receiver = new Demodulator.Demodulating(_fileName, _freq, _interliving, _modulation, _decode,comBxModulation.SelectedItem.ToString() ,chBx_sWriter.Checked, cBx_datWriter.Checked,cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
                 SetupGraphLabels((int)SampleRate);
                
                 if (_inputType == InputType.RTLSDR)
@@ -483,10 +491,10 @@ namespace ReceivingStation
             
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
-            lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
-            lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
-            lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "");
-            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+            //lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
+           // lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
+            lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Red);
+            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Red);
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
@@ -599,17 +607,35 @@ namespace ReceivingStation
             }
         }
 
-
+        /// <summary>
+        /// Обрабатывает возвращаемые значение из формы, тупой костыль в идеале переделать
+        /// </summary>
+        /// <param name="flags">flag[0] синхромаркер найден, flag[1] ФАПЧ захвачена</param>
         private void UpdateGuiDemodulationData(bool[] flags)
         {
-            if (flags[1]) lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захвачено");
-            else
+            //if (flags[1]) lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.Text, "Захвачено");
+            //else
+            //{
+            //    lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.Text, "Захват...");
+            //    lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+            //}
+            if (flags[0] && flags[1] && rbInterlivingReceiveOn.Checked)
             {
-                lblLockOn.SetPropertyThreadSafe(() => lblLockOn.Text, "Захват...");
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
+                lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Green);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Green);
             }
-            if (flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Синхромаркер найден");
-            else if (!flags[0] && flags[1]) lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "Поиск синхромаркера...");
+            else if (flags[0] && flags[1] && !rbInterlivingReceiveOn.Checked)
+            {
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
+                lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Red);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Green);
+            }
+            else if (!flags[0] && flags[1])
+            {
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Red);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, !lblSignDetect.Visible);
+            }
         }
 
         #endregion
@@ -625,11 +651,12 @@ namespace ReceivingStation
             scottPlotUC1.Redraw();
 
             comBxModulation.SelectedItem = "Meteor-M2.2";
-           
+            
             lblFinded.Visible = true;
 
-            comBx_carrier.SelectedItem = "137.087";
-            comBx_SampleRate.SelectedItem = "1024000";
+            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137,100";
+            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137,900";
+                comBx_SampleRate.SelectedItem = "1024000";
         }
 
         public void SetupGraphLabels(int SampleRate)
@@ -666,6 +693,33 @@ namespace ReceivingStation
             if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
             {
                // _RecorderPath = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void rbFreq1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbFreq1.Checked)
+            {
+                comBx_carrier.SelectedIndex = 0;
+            }
+            if (rbFreq2.Checked)
+            {
+                comBx_carrier.SelectedIndex = 1;
+            }
+        }
+
+        private void comBx_carrier_SelectedValueChanged(object sender, EventArgs e)
+        {
+           double freq;
+           var parsed = double.TryParse((string)comBx_carrier.SelectedItem, out freq);
+            if (137.5 > freq)
+            {
+                rbFreq1.Checked = true;
+            }
+
+            if (137.5 < freq)
+            {
+                rbFreq2.Checked = true;
             }
         }
     }

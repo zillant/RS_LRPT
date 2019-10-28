@@ -19,10 +19,19 @@ namespace ReceivingStation.Other
         /// <param name="imageCounter">Номер сохраняемого изображения.</param>  
         public static void SaveImage(List<Bitmap>[] listImagesForSave, string fileName, long imageCounter)
         {
+            if (listImagesForSave.Length == 0)
+            {
+                return;
+            }
             Parallel.For(0, listImagesForSave.Length, i =>
             {
                 List<Bitmap> listImages = new List<Bitmap>(listImagesForSave[i]);
                 listImagesForSave[i].Clear();
+
+                if (listImages.Count == 0)
+                {
+                    return;
+                }
 
                 using (var bmp = new Bitmap(Constants.WDT, listImages.Count * Constants.HGT))
                 {
