@@ -14,7 +14,6 @@ using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
-
     public unsafe partial class FormReceive : MaterialForm
     {
         public static TimeSpan MainFcpWorkingTime;
