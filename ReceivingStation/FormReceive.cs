@@ -250,6 +250,7 @@ namespace ReceivingStation
             slTime.Text = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
             _counterForSaveWorkingTime -= 1;
+            _counterForSaveWorkingTime -= 1;
 
             if (_counterForSaveWorkingTime == 0)
             {

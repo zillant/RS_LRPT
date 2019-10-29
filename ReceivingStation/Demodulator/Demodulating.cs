@@ -518,6 +518,8 @@ namespace ReceivingStation.Demodulator
                 _DemodDatfile.Close();
                 _DemodDatfile = null;
             }
+
+
         }
         #endregion
 
@@ -1352,6 +1354,7 @@ namespace ReceivingStation.Demodulator
             _waveReadThread.Start();
         }
 
+  
         static void wavToStream()
         {
             var WaveBufferSize = 4096;
