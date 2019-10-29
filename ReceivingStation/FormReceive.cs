@@ -77,10 +77,6 @@ namespace ReceivingStation
 
         private void FormReceive_Load(object sender, EventArgs e)
         {
-            lblDemOn.Text = "";
-            lblDongOn.Text = "";
-            lblSignDetect.Text = "СИНХР";
-
             numUpD_FindedBitsInPSP.Value = Properties.Settings.Default.PSP_FindedBits;
             numUpD_FindedBitsInInterliving.Value = Settings.Default.Interliving_FindedBits;
             numUpD_PLLBw.Value = Properties.Settings.Default.PLL_Bandwidth;
@@ -361,8 +357,6 @@ namespace ReceivingStation
                 ShowSignalSyncErr();
                 ShowInterSyncErr();
 
-                lblSignDetect.SetPropertyThreadSafe(() => Visible, true);
-
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
                 {
@@ -408,8 +402,6 @@ namespace ReceivingStation
                     _receiver.Dongle_Configuration(Frequency, SampleRate, gain);// инициализируем свисток, в нем отсчеты записываются в поток                    StartDecoding();
                     _receiver.StartDecoding();
                     _receiver.RecordStart(isSelfTest);
-                    lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор включен");
-                    lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник включен");
                 }
                 if (_inputType == InputType.WavFile) // если хотим считать с файла
                 {
@@ -421,8 +413,6 @@ namespace ReceivingStation
                         {
                             throw new ApplicationException("Не выбран файл");
                         }
-                        lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Чтение .wav файла");
-                        lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Демодулятор включен");
                         _receiver.wav_samples(_waveFile, 2048);
                     }
                     catch (ApplicationException ex)
@@ -498,9 +488,6 @@ namespace ReceivingStation
 
             ShowSignalSyncErr();
             ShowInterSyncErr();
-
-            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.ErrorColor);
-
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
             CountWorkingTime();
@@ -624,22 +611,11 @@ namespace ReceivingStation
             //}
             if (flags[0] && flags[1] && rbInterlivingReceiveOn.Checked)
             {
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);     
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.OkColor);
-
                 ShowInterSyncOk();
             }
             else if (flags[0] && flags[1] && !rbInterlivingReceiveOn.Checked)
             {
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.OkColor);
-
                 ShowInterSyncErr();       
-            }
-            else if (!flags[0] && flags[1])
-            {
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.ErrorColor);
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, !lblSignDetect.Visible);
             }
 
             if (_isSignalPhaseSync)

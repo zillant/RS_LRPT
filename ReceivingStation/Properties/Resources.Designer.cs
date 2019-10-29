@@ -93,16 +93,6 @@ namespace ReceivingStation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ErrorStatus {
-            get {
-                object obj = ResourceManager.GetObject("ErrorStatus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
@@ -116,6 +106,26 @@ namespace ReceivingStation.Properties {
         internal static System.Drawing.Bitmap info_icon {
             get {
                 object obj = ResourceManager.GetObject("info_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inter_sync_bad {
+            get {
+                object obj = ResourceManager.GetObject("inter_sync_bad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inter_sync_ok {
+            get {
+                object obj = ResourceManager.GetObject("inter_sync_ok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -167,16 +177,6 @@ namespace ReceivingStation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap OkStatus {
-            get {
-                object obj = ResourceManager.GetObject("OkStatus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 2503.
         /// </summary>
         internal static string PortNumber {
@@ -220,6 +220,26 @@ namespace ReceivingStation.Properties {
         internal static string SessionsDirName {
             get {
                 return ResourceManager.GetString("SessionsDirName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap signal_sync_bad {
+            get {
+                object obj = ResourceManager.GetObject("signal_sync_bad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap signal_sync_ok {
+            get {
+                object obj = ResourceManager.GetObject("signal_sync_ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

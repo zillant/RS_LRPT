@@ -273,10 +273,16 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ErrorStatus.png" />
+    <None Include="Resources\inter_sync_bad.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OkStatus.png" />
+    <None Include="Resources\inter_sync_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\signal_sync_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\signal_sync_ok.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
