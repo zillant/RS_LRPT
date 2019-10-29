@@ -136,8 +136,6 @@
             this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
-<<<<<<< HEAD
-=======
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -154,7 +152,6 @@
             this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
             this.display1 = new ReceivingStation.Demodulator.Display();
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbQpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbOqpsk = new MaterialSkin.Controls.MaterialRadioButton();
@@ -173,23 +170,10 @@
             this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.lblDemOn = new MaterialSkin.Controls.MaterialLabel();
             this.lblDongOn = new MaterialSkin.Controls.MaterialLabel();
-<<<<<<< HEAD
-            this.lblSignDetect = new MaterialSkin.Controls.MaterialLabel();
-            this.lblIntDetect = new MaterialSkin.Controls.MaterialLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
-            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
-=======
             this.pbInterSyncOk = new System.Windows.Forms.PictureBox();
             this.pbSignalSyncOk = new System.Windows.Forms.PictureBox();
             this.pbInterSyncErr = new System.Windows.Forms.PictureBox();
             this.pbSignalSyncErr = new System.Windows.Forms.PictureBox();
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.statusStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -230,15 +214,11 @@
             this.doubleBufferedPanel1.SuspendLayout();
             this.panel8.SuspendLayout();
             this.pSourcePanel.SuspendLayout();
-<<<<<<< HEAD
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-=======
             this.doubleBufferedPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncErr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncErr)).BeginInit();
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -657,11 +637,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-<<<<<<< HEAD
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 353F));
-=======
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 369F));
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoData, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoTitle, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -721,11 +697,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
-<<<<<<< HEAD
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
-=======
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -783,11 +755,7 @@
             this.DemodPanel.ColumnCount = 3;
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
-<<<<<<< HEAD
-            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 435F));
-=======
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 451F));
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
             this.DemodPanel.Controls.Add(this.panel1, 0, 0);
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
@@ -810,11 +778,7 @@
             this.scottPlotUC1.Location = new System.Drawing.Point(213, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
-<<<<<<< HEAD
-            this.scottPlotUC1.Size = new System.Drawing.Size(908, 467);
-=======
             this.scottPlotUC1.Size = new System.Drawing.Size(895, 467);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -1244,11 +1208,7 @@
             this.groupBox3.Controls.Add(this.rbEYE);
             this.groupBox3.Controls.Add(this.cBx_Input);
             this.groupBox3.Controls.Add(this.rbConstel);
-<<<<<<< HEAD
-            this.groupBox3.Location = new System.Drawing.Point(1179, 474);
-=======
             this.groupBox3.Location = new System.Drawing.Point(1171, 474);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(329, 59);
             this.groupBox3.TabIndex = 37;
@@ -1394,19 +1354,11 @@
             // tlpReceivingParameters
             // 
             this.tlpReceivingParameters.ColumnCount = 5;
-<<<<<<< HEAD
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.16667F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.00926F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.82407F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
-            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
-=======
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.87952F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.80269F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.37668F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
@@ -1429,11 +1381,7 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-<<<<<<< HEAD
-            this.panel7.Location = new System.Drawing.Point(124, 3);
-=======
             this.panel7.Location = new System.Drawing.Point(137, 3);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(118, 102);
             this.panel7.TabIndex = 45;
@@ -1492,11 +1440,7 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-<<<<<<< HEAD
-            this.panel3.Location = new System.Drawing.Point(241, 3);
-=======
             this.panel3.Location = new System.Drawing.Point(261, 3);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(184, 102);
             this.panel3.TabIndex = 43;
@@ -1558,11 +1502,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-<<<<<<< HEAD
-            this.panel4.Size = new System.Drawing.Size(115, 102);
-=======
             this.panel4.Size = new System.Drawing.Size(128, 102);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -1618,11 +1558,7 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-<<<<<<< HEAD
-            this.panel2.Location = new System.Drawing.Point(420, 3);
-=======
             this.panel2.Location = new System.Drawing.Point(451, 3);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(116, 102);
             this.panel2.TabIndex = 42;
@@ -1673,8 +1609,6 @@
             this.lblInterliving.TabIndex = 38;
             this.lblInterliving.Text = "Интерливинг";
             // 
-<<<<<<< HEAD
-=======
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Window;
@@ -1795,22 +1729,15 @@
             this.display1.TabIndex = 37;
             this.display1.Zoom = 1;
             // 
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             // pModulation
             // 
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
-<<<<<<< HEAD
-            this.pModulation.Location = new System.Drawing.Point(543, 3);
-            this.pModulation.Name = "pModulation";
-            this.pModulation.Size = new System.Drawing.Size(151, 102);
-=======
             this.pModulation.Location = new System.Drawing.Point(573, 3);
             this.pModulation.Name = "pModulation";
             this.pModulation.Size = new System.Drawing.Size(121, 102);
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
@@ -2197,16 +2124,12 @@
             this.panel8.ResumeLayout(false);
             this.pSourcePanel.ResumeLayout(false);
             this.pSourcePanel.PerformLayout();
-<<<<<<< HEAD
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-=======
             this.doubleBufferedPanel2.ResumeLayout(false);
             this.doubleBufferedPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncErr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncErr)).EndInit();
->>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.ResumeLayout(false);
             this.PerformLayout();
 
