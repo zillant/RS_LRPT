@@ -93,6 +93,16 @@ namespace ReceivingStation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ErrorStatus {
+            get {
+                object obj = ResourceManager.GetObject("ErrorStatus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
@@ -152,6 +162,16 @@ namespace ReceivingStation.Properties {
         internal static System.Drawing.Bitmap mode_icon {
             get {
                 object obj = ResourceManager.GetObject("mode_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OkStatus {
+            get {
+                object obj = ResourceManager.GetObject("OkStatus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

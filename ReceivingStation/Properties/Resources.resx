@@ -172,4 +172,10 @@
   <data name="PortNumber" xml:space="preserve">
     <value>2503</value>
   </data>
+  <data name="ErrorStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ErrorStatus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OkStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OkStatus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

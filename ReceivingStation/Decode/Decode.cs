@@ -19,7 +19,7 @@ namespace ReceivingStation.Decode
         public delegate void UpdateSelfTestDataDelegate(uint tkCount, int errorsTkCount); 
         public UpdateSelfTestDataDelegate ThreadSafeUpdateSelfTestData; // Для режима самопроверки. Передаем кол-во принятых кадров и кол-во ошибок.
 
-        public bool IsSignalPhaseSync { get; set; } = true;
+        public bool IsSignalPhaseSync { get; set; } = false;
 
         public bool stopDecoding;
 
@@ -328,7 +328,6 @@ namespace ReceivingStation.Decode
             do
             {
                 bytesCount = _fs.Read(in_buf, 0, Constants.DL_IN_BUF);
-                Console.WriteLine(IsSignalPhaseSync.ToString());
 
                 if (bytesCount < 2048)
                 {
