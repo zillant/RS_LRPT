@@ -10,27 +10,24 @@ using System.Globalization;
 using MaterialSkin.Controls;
 using ReceivingStation.MessageBoxes;
 using ReceivingStation.Properties;
-using SDRSharp.Radio.PortAudio;
-using SDRSharp.Radio;
-using SDRSharp.RTLSDR;
 using ReceivingStation.Decode;
 
 namespace ReceivingStation
 {
 
     public unsafe partial class FormReceive : MaterialForm
-    {       
+    {
         public static TimeSpan MainFcpWorkingTime;
         public static TimeSpan ReserveFcpWorkingTime;
         public static TimeSpan MainPrdWorkingTime;
         public static TimeSpan ReservePrdWorkingTime;
         public static TimeSpan FullWorkingTime; // Общее время работы системы. (Не используем в релизе)        
-        
+
         private const int TimeForSaveWorkingTime = 1800; // Время для таймера (сек), через которое нужно сохранять наработку в файл. 
         private int _counterForSaveWorkingTime; // Счетчик для таймера, через которое нужно сохранять время наработки в файл.
 
         private string _fileName;
-       
+
         private long _imageCounter; // Счетчик сохранненых изображений.
 
         private Panel[] _allChannelsPanels = new Panel[6]; // Панели на которых находятся FLP для всех каналов.
@@ -55,8 +52,10 @@ namespace ReceivingStation
 
         private string _waveFile;
 
+        private bool _isSignalPhaseSync = false;
+
         // private Demodulator.FFT_Form FFT_Form;
-        
+
         /// <summary>
         /// Типы источника отсчетов сигнала
         /// </summary>
@@ -80,9 +79,7 @@ namespace ReceivingStation
         {
             lblDemOn.Text = "";
             lblDongOn.Text = "";
-            lblIntDetect.Text = "ИНТ";
             lblSignDetect.Text = "СИНХР";
-           
 
             numUpD_FindedBitsInPSP.Value = Properties.Settings.Default.PSP_FindedBits;
             numUpD_FindedBitsInInterliving.Value = Settings.Default.Interliving_FindedBits;
@@ -97,7 +94,7 @@ namespace ReceivingStation
             materialTabControl1.SelectedTab = tabPage7;
 
             _counterForSaveWorkingTime = TimeForSaveWorkingTime;
-           
+
             LogFiles.ReadWorkingTimeValues(out MainFcpWorkingTime, out ReserveFcpWorkingTime, out MainPrdWorkingTime, out ReservePrdWorkingTime);
 
             _channelsPanels[0] = pImage1;
@@ -137,7 +134,7 @@ namespace ReceivingStation
             };
             Server.Server.RemoteModeFlag = false;
 
-            _serverThread = new Thread(_server.StartServer) {IsBackground = true};
+            _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();
 
             ConfigSecretTab();
@@ -182,14 +179,14 @@ namespace ReceivingStation
                     pSourcePanel.Visible = true;
                     materialTabControl1.TabPages.Add(tabPage10);
                 }
-                e.SuppressKeyPress = true;              
+                e.SuppressKeyPress = true;
             }
             if (e.Alt && e.KeyCode == Keys.J)
             {
                 if (this.Size.Width > GuiUpdater.MinFormWidth && this.Size.Height > GuiUpdater.MinFormHeight)
                 {
                     this.Size = new Size(currentWidth - GuiUpdater.FormWidthValue, currentHeight - GuiUpdater.FormHeightValue);
-                }                    
+                }
                 e.SuppressKeyPress = true;
             }
             else if (e.Alt && e.KeyCode == Keys.K)
@@ -205,7 +202,7 @@ namespace ReceivingStation
         private void btnStartRecieve_Click(object sender, EventArgs e)
         {
             StartStopReceiving();
-            
+
         }
 
         private void slMode_DoubleClick(object sender, EventArgs e)
@@ -304,7 +301,6 @@ namespace ReceivingStation
             Invoke(new Action(() => { SetRadioButtons(_interliving, rbInterlivingReceiveOn, rbInterlivingReceiveOff); }));
         }
 
-
         private void SetRadioButtons(byte param, RadioButton rb1, RadioButton rb2)
         {
             if (param == 0x1)
@@ -328,9 +324,9 @@ namespace ReceivingStation
             {
                 if (!Server.Server.RemoteModeFlag)
                 {
-                    SetReceiveParameters();                   
+                    SetReceiveParameters();
                 }
-             
+
                 _server.ReceivingStartedFlag = true;
                 btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Остановить");
                 tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, false);
@@ -339,7 +335,7 @@ namespace ReceivingStation
                 string prds = "";
                 string inters = "";
                 string freqs = "";
-                
+
                 if (_fcp == 0x1) fcps = "O";
                 else if (_fcp == 0x2) fcps = "P";
 
@@ -362,7 +358,11 @@ namespace ReceivingStation
                 var sessionName = $"{timeString}_{fcps}_{prds}_{freqs}_{inters}";
                 _fileName = $"{ApplicationDirectory.GetCurrentSessionDirectory($"{sessionName}")}\\{sessionName}.dat";
 
-                //
+
+                ShowSignalSyncErr();
+                ShowInterSyncErr();
+
+                lblSignDetect.SetPropertyThreadSafe(() => Visible, true);
 
                 // Очистка всего перед новым запуском.
                 for (int i = 0; i < 6; i++)
@@ -381,10 +381,10 @@ namespace ReceivingStation
                 }
 
                 _startWorkingTime = DateTime.Now;
-                _imageCounter = 0;              
+                _imageCounter = 0;
 
                 LogFiles.WriteUserActions($"Установлены параметры: ФПЦ - {_fcp}, ПРД - {_prd}, Частота - {_freq}, Интерливинг - {_interliving}");
-                LogFiles.WriteUserActions("Запись потока начата");                
+                LogFiles.WriteUserActions("Запись потока начата");
 
                 if (rbOqpsk.Checked) _modulation = 0x2;
                 if (rbQpsk.Checked) _modulation = 0x1;
@@ -393,17 +393,19 @@ namespace ReceivingStation
 
                 var isSelfTest = false;
                 var SampleRate = UInt32.Parse(comBx_SampleRate.Text);
+
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
-                _receiver = new Demodulator.Demodulating(_fileName, _freq, _interliving, _modulation, _decode,comBxModulation.SelectedItem.ToString() ,chBx_sWriter.Checked, cBx_datWriter.Checked,cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
+                _receiver = new Demodulator.Demodulating(_fileName, _freq, _interliving, _modulation, _decode, comBxModulation.SelectedItem.ToString(), chBx_sWriter.Checked, cBx_datWriter.Checked, cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
+
                 SetupGraphLabels((int)SampleRate);
-               
+
                 if (_inputType == InputType.RTLSDR)
                 {
                     var freq = Decimal.Parse(comBx_carrier.Text);
                     var Frequency = (uint)(freq * 1000000);
-                    
+
                     var gain = (int)GainNM.Value;
-                    
+
                     _receiver.Dongle_Configuration(Frequency, SampleRate, gain);// инициализируем свисток, в нем отсчеты записываются в поток                    StartDecoding();
                     _receiver.StartDecoding();
                     _receiver.RecordStart(isSelfTest);
@@ -412,7 +414,7 @@ namespace ReceivingStation
                 }
                 if (_inputType == InputType.WavFile) // если хотим считать с файла
                 {
-                    
+
                     try
                     {
                         SelectWaveFile();
@@ -438,7 +440,7 @@ namespace ReceivingStation
             }
             else
             {
-                 StopReceiving();
+                StopReceiving();
             }
 
         }
@@ -463,7 +465,7 @@ namespace ReceivingStation
             _receiver.GainChanged((int)GainNM.Value);
         }
 
-       
+
 
         private void SelectWaveFile()
         {
@@ -480,7 +482,7 @@ namespace ReceivingStation
             _receiver.StopDecoding();
 
             _decode.UpdateDataGui();
-            
+
             try
             {
                 bwImageSaver.RunWorkerAsync();
@@ -489,13 +491,16 @@ namespace ReceivingStation
             {
                 Console.WriteLine(ex);
             }
-            
+
 
             btnStartRecieve.SetPropertyThreadSafe(() => btnStartRecieve.Text, "Начать");
             //lblDemOn.SetPropertyThreadSafe(() => lblDemOn.Text, "Демодулятор выключен");
-           // lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
-            lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Red);
-            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Red);
+            // lblDongOn.SetPropertyThreadSafe(() => lblDongOn.Text, "Приемник выключен");
+
+            ShowSignalSyncErr();
+            ShowInterSyncErr();
+
+            lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.ErrorColor);
 
             tlpReceivingParameters.SetPropertyThreadSafe(() => tlpReceivingParameters.Enabled, true);
 
@@ -533,7 +538,7 @@ namespace ReceivingStation
         private void ChangeMode(byte modeNumber)
         {
             if (modeNumber == 0)
-            {              
+            {
                 // Дистанционное управление
                 tlp1.SetPropertyThreadSafe(() => tlp1.Enabled, false);
                 Invoke(new Action(() => { slMode.Text = Resources.RemoteControlString; }));
@@ -577,13 +582,11 @@ namespace ReceivingStation
         }
 
 
-
-
         public bool[] GetSyncsStates()
         {
             bool[] syncsStatesValues = new bool[2];
-            syncsStatesValues[0] = flags[0];
-            syncsStatesValues[1] = _interliving == 0x1 ? true : false;
+            syncsStatesValues[0] = _isSignalPhaseSync;
+            syncsStatesValues[1] = flags[0];
 
             return syncsStatesValues;
         }
@@ -622,28 +625,40 @@ namespace ReceivingStation
             //}
             if (flags[0] && flags[1] && rbInterlivingReceiveOn.Checked)
             {
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
-                lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Green);
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Green);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);     
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.OkColor);
+
+                ShowInterSyncOk();
             }
             else if (flags[0] && flags[1] && !rbInterlivingReceiveOn.Checked)
             {
                 lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, true);
-                lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.BackColor, Color.Red);
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Green);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.OkColor);
+
+                ShowInterSyncErr();       
             }
             else if (!flags[0] && flags[1])
             {
-                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, Color.Red);
+                lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.BackColor, GuiUpdater.ErrorColor);
                 lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Visible, !lblSignDetect.Visible);
             }
+
+            if (_isSignalPhaseSync)
+            {
+                ShowSignalSyncOk();
+            }
+            else
+            {
+                ShowSignalSyncErr();
+            }
+
         }
 
         #endregion
 
         #region  Demodulator
 
-        
+
         private void ConfigSecretTab()
         {
             scottPlotUC1.fig.labelTitle = "File FFT Data";
@@ -652,12 +667,12 @@ namespace ReceivingStation
             scottPlotUC1.Redraw();
 
             comBxModulation.SelectedItem = "Meteor-M2.2";
-            
+
             lblFinded.Visible = true;
 
-            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137,100";
-            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137,900";
-                comBx_SampleRate.SelectedItem = "1024000";
+            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137.100";
+            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137.900";
+            comBx_SampleRate.SelectedItem = "1024000";
         }
 
         public void SetupGraphLabels(int SampleRate)
@@ -681,7 +696,12 @@ namespace ReceivingStation
                 _receiver.UpdateFilterParameters(cBx_iqFilter.Checked, (int)NumUpDown_Bandwidth.Value, cBx_matchedFilter.Checked, (int)numUpD_PLLBw.Value);
                 flags = _receiver.UpdateDataGui();
             }
-            
+
+            if (_decode != null)
+            {
+                _isSignalPhaseSync = _decode.IsSignalPhaseSync;
+            }
+
             if (flags[1]) lblLocked.Visible = true;
             else lblLocked.Visible = false;
 
@@ -693,7 +713,7 @@ namespace ReceivingStation
         {
             if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
             {
-               // _RecorderPath = folderBrowserDialog1.SelectedPath;
+                // _RecorderPath = folderBrowserDialog1.SelectedPath;
             }
         }
 
@@ -711,8 +731,8 @@ namespace ReceivingStation
 
         private void comBx_carrier_SelectedValueChanged(object sender, EventArgs e)
         {
-           double freq;
-           var parsed = double.TryParse((string)comBx_carrier.SelectedItem, out freq);
+            double freq;
+            var parsed = double.TryParse((string)comBx_carrier.SelectedItem, out freq);
             if (137.5 > freq)
             {
                 rbFreq1.Checked = true;
@@ -723,5 +743,33 @@ namespace ReceivingStation
                 rbFreq2.Checked = true;
             }
         }
+
+        #region Status pictures control visible
+
+        private void ShowSignalSyncErr()
+        {
+            pbSignalSyncErr.SetPropertyThreadSafe(() => Visible, true);
+            pbSignalSyncOk.SetPropertyThreadSafe(() => Visible, false);
+        }
+
+        private void ShowSignalSyncOk()
+        {
+            pbSignalSyncErr.SetPropertyThreadSafe(() => Visible, false);
+            pbSignalSyncOk.SetPropertyThreadSafe(() => Visible, true);
+        }
+
+        private void ShowInterSyncErr()
+        {
+            pbInterSyncErr.SetPropertyThreadSafe(() => Visible, true);
+            pbInterSyncOk.SetPropertyThreadSafe(() => Visible, false);
+        }
+
+        private void ShowInterSyncOk()
+        {
+            pbInterSyncErr.SetPropertyThreadSafe(() => Visible, false);
+            pbInterSyncOk.SetPropertyThreadSafe(() => Visible, true);
+        }
+
+        #endregion
     }
 }

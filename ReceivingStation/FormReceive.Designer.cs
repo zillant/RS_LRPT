@@ -136,6 +136,25 @@
             this.rbInterlivingReceiveOff = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbInterlivingReceiveOn = new MaterialSkin.Controls.MaterialRadioButton();
             this.lblInterliving = new MaterialSkin.Controls.MaterialLabel();
+<<<<<<< HEAD
+=======
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.DemodTimer = new System.Windows.Forms.Timer(this.components);
+            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.rtbMkoData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbMkoTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceTitle = new ReceivingStation.Other.DisabledRichTextBox();
+            this.rtbServiceData = new ReceivingStation.Other.DisabledRichTextBox();
+            this.display1 = new ReceivingStation.Demodulator.Display();
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.pModulation = new ReceivingStation.Other.DoubleBufferedPanel();
             this.rbQpsk = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbOqpsk = new MaterialSkin.Controls.MaterialRadioButton();
@@ -143,14 +162,18 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.doubleBufferedPanel1 = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.pSourcePanel = new ReceivingStation.Other.DoubleBufferedPanel();
+            this.lblSignDetect = new MaterialSkin.Controls.MaterialLabel();
             this.rbWav = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbFUNcube = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
-            this.rtbDateTimeTitle = new ReceivingStation.Other.DisabledRichTextBox();
             this.rtbDateTime = new ReceivingStation.Other.DisabledRichTextBox();
+            this.doubleBufferedPanel2 = new ReceivingStation.Other.DoubleBufferedPanel();
             this.lblDemOn = new MaterialSkin.Controls.MaterialLabel();
             this.lblDongOn = new MaterialSkin.Controls.MaterialLabel();
+<<<<<<< HEAD
             this.lblSignDetect = new MaterialSkin.Controls.MaterialLabel();
             this.lblIntDetect = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -161,6 +184,12 @@
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.DemodTimer = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
+=======
+            this.pbInterSyncOk = new System.Windows.Forms.PictureBox();
+            this.pbSignalSyncOk = new System.Windows.Forms.PictureBox();
+            this.pbInterSyncErr = new System.Windows.Forms.PictureBox();
+            this.pbSignalSyncErr = new System.Windows.Forms.PictureBox();
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.statusStrip1.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -199,8 +228,17 @@
             this.panel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.doubleBufferedPanel1.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.pSourcePanel.SuspendLayout();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+=======
+            this.doubleBufferedPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncOk)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncOk)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncErr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncErr)).BeginInit();
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -619,7 +657,11 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
+<<<<<<< HEAD
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 353F));
+=======
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 369F));
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoData, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.rtbMkoTitle, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -679,7 +721,11 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
+<<<<<<< HEAD
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
+=======
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -737,7 +783,11 @@
             this.DemodPanel.ColumnCount = 3;
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.05232F));
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.94768F));
+<<<<<<< HEAD
             this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 435F));
+=======
+            this.DemodPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 451F));
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.DemodPanel.Controls.Add(this.scottPlotUC1, 0, 0);
             this.DemodPanel.Controls.Add(this.panel1, 0, 0);
             this.DemodPanel.Controls.Add(this.groupBox4, 1, 1);
@@ -757,10 +807,14 @@
             // scottPlotUC1
             // 
             this.scottPlotUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scottPlotUC1.Location = new System.Drawing.Point(216, 2);
+            this.scottPlotUC1.Location = new System.Drawing.Point(213, 2);
             this.scottPlotUC1.Margin = new System.Windows.Forms.Padding(2);
             this.scottPlotUC1.Name = "scottPlotUC1";
+<<<<<<< HEAD
             this.scottPlotUC1.Size = new System.Drawing.Size(908, 467);
+=======
+            this.scottPlotUC1.Size = new System.Drawing.Size(895, 467);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.scottPlotUC1.TabIndex = 2;
             // 
             // panel1
@@ -782,7 +836,7 @@
             this.panel1.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(208, 465);
+            this.panel1.Size = new System.Drawing.Size(205, 465);
             this.panel1.TabIndex = 0;
             // 
             // label7
@@ -1018,7 +1072,7 @@
             this.groupBox4.Controls.Add(this.cBx_iqFilter);
             this.groupBox4.Controls.Add(this.numUpD_PLLBw);
             this.groupBox4.Controls.Add(this.NumUpDown_Bandwidth);
-            this.groupBox4.Location = new System.Drawing.Point(415, 474);
+            this.groupBox4.Location = new System.Drawing.Point(405, 474);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(510, 59);
             this.groupBox4.TabIndex = 36;
@@ -1098,8 +1152,8 @@
             // 
             this.comBx_carrier.FormattingEnabled = true;
             this.comBx_carrier.Items.AddRange(new object[] {
-            "137,100",
-            "137,900"});
+            "137.100",
+            "137.900"});
             this.comBx_carrier.Location = new System.Drawing.Point(6, 32);
             this.comBx_carrier.Name = "comBx_carrier";
             this.comBx_carrier.Size = new System.Drawing.Size(70, 21);
@@ -1190,7 +1244,11 @@
             this.groupBox3.Controls.Add(this.rbEYE);
             this.groupBox3.Controls.Add(this.cBx_Input);
             this.groupBox3.Controls.Add(this.rbConstel);
+<<<<<<< HEAD
             this.groupBox3.Location = new System.Drawing.Point(1179, 474);
+=======
+            this.groupBox3.Location = new System.Drawing.Point(1171, 474);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(329, 59);
             this.groupBox3.TabIndex = 37;
@@ -1336,11 +1394,19 @@
             // tlpReceivingParameters
             // 
             this.tlpReceivingParameters.ColumnCount = 5;
+<<<<<<< HEAD
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.16667F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.00926F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.82407F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+=======
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.87952F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.80269F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.37668F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
+            this.tlpReceivingParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.tlpReceivingParameters.Controls.Add(this.panel7, 0, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel3, 1, 0);
             this.tlpReceivingParameters.Controls.Add(this.panel4, 0, 0);
@@ -1363,9 +1429,13 @@
             this.panel7.Controls.Add(this.rbPRDMain);
             this.panel7.Controls.Add(this.lblPRD);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+<<<<<<< HEAD
             this.panel7.Location = new System.Drawing.Point(124, 3);
+=======
+            this.panel7.Location = new System.Drawing.Point(137, 3);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(111, 102);
+            this.panel7.Size = new System.Drawing.Size(118, 102);
             this.panel7.TabIndex = 45;
             // 
             // rbPRDReserve
@@ -1422,9 +1492,13 @@
             this.panel3.Controls.Add(this.rbFreq1);
             this.panel3.Controls.Add(this.lblFreq);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+<<<<<<< HEAD
             this.panel3.Location = new System.Drawing.Point(241, 3);
+=======
+            this.panel3.Location = new System.Drawing.Point(261, 3);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(173, 102);
+            this.panel3.Size = new System.Drawing.Size(184, 102);
             this.panel3.TabIndex = 43;
             // 
             // rbFreq2
@@ -1484,7 +1558,11 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
+<<<<<<< HEAD
             this.panel4.Size = new System.Drawing.Size(115, 102);
+=======
+            this.panel4.Size = new System.Drawing.Size(128, 102);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel4.TabIndex = 44;
             // 
             // rbFCPReserve
@@ -1540,9 +1618,13 @@
             this.panel2.Controls.Add(this.rbInterlivingReceiveOn);
             this.panel2.Controls.Add(this.lblInterliving);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+<<<<<<< HEAD
             this.panel2.Location = new System.Drawing.Point(420, 3);
+=======
+            this.panel2.Location = new System.Drawing.Point(451, 3);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(117, 102);
+            this.panel2.Size = new System.Drawing.Size(116, 102);
             this.panel2.TabIndex = 42;
             // 
             // rbInterlivingReceiveOff
@@ -1591,15 +1673,144 @@
             this.lblInterliving.TabIndex = 38;
             this.lblInterliving.Text = "Интерливинг";
             // 
+<<<<<<< HEAD
+=======
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Window;
+            this.panel6.Controls.Add(this.tableLayoutPanel2);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(865, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(702, 108);
+            this.panel6.TabIndex = 44;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.45324F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.54676F));
+            this.tableLayoutPanel2.Controls.Add(this.doubleBufferedPanel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(702, 108);
+            this.tableLayoutPanel2.TabIndex = 46;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(591, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
+            // opnDlg
+            // 
+            this.opnDlg.Filter = "WAV files|*.wav";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 50;
+            // 
+            // timer3
+            // 
+            this.timer3.Enabled = true;
+            this.timer3.Interval = 50;
+            // 
+            // DemodTimer
+            // 
+            this.DemodTimer.Enabled = true;
+            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
+            // 
+            // rtbMkoData
+            // 
+            this.rtbMkoData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbMkoData.Location = new System.Drawing.Point(941, 3);
+            this.rtbMkoData.Name = "rtbMkoData";
+            this.rtbMkoData.Size = new System.Drawing.Size(242, 478);
+            this.rtbMkoData.TabIndex = 0;
+            this.rtbMkoData.Text = "";
+            // 
+            // rtbMkoTitle
+            // 
+            this.rtbMkoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbMkoTitle.Location = new System.Drawing.Point(416, 3);
+            this.rtbMkoTitle.Name = "rtbMkoTitle";
+            this.rtbMkoTitle.Size = new System.Drawing.Size(519, 478);
+            this.rtbMkoTitle.TabIndex = 1;
+            this.rtbMkoTitle.Text = "";
+            // 
+            // rtbServiceTitle
+            // 
+            this.rtbServiceTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbServiceTitle.Location = new System.Drawing.Point(417, 3);
+            this.rtbServiceTitle.Name = "rtbServiceTitle";
+            this.rtbServiceTitle.Size = new System.Drawing.Size(442, 484);
+            this.rtbServiceTitle.TabIndex = 0;
+            this.rtbServiceTitle.Text = "";
+            // 
+            // rtbServiceData
+            // 
+            this.rtbServiceData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbServiceData.Location = new System.Drawing.Point(865, 3);
+            this.rtbServiceData.Name = "rtbServiceData";
+            this.rtbServiceData.Size = new System.Drawing.Size(501, 484);
+            this.rtbServiceData.TabIndex = 1;
+            this.rtbServiceData.Text = "";
+            // 
+            // display1
+            // 
+            this.display1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.display1.Constellation = false;
+            this.display1.Eye = false;
+            this.display1.Gain = 1;
+            this.display1.Input = false;
+            this.display1.Location = new System.Drawing.Point(1113, 3);
+            this.display1.Name = "display1";
+            this.display1.Output = false;
+            this.display1.Pause = false;
+            this.display1.SamplesPerSymbol = 0;
+            this.display1.Size = new System.Drawing.Size(446, 426);
+            this.display1.TabIndex = 37;
+            this.display1.Zoom = 1;
+            // 
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             // pModulation
             // 
             this.pModulation.Controls.Add(this.rbQpsk);
             this.pModulation.Controls.Add(this.rbOqpsk);
             this.pModulation.Controls.Add(this.materialLabel7);
             this.pModulation.Dock = System.Windows.Forms.DockStyle.Fill;
+<<<<<<< HEAD
             this.pModulation.Location = new System.Drawing.Point(543, 3);
             this.pModulation.Name = "pModulation";
             this.pModulation.Size = new System.Drawing.Size(151, 102);
+=======
+            this.pModulation.Location = new System.Drawing.Point(573, 3);
+            this.pModulation.Name = "pModulation";
+            this.pModulation.Size = new System.Drawing.Size(121, 102);
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.pModulation.TabIndex = 46;
             this.pModulation.Visible = false;
             // 
@@ -1676,29 +1887,61 @@
             // 
             // doubleBufferedPanel1
             // 
-            this.doubleBufferedPanel1.Controls.Add(this.pSourcePanel);
-            this.doubleBufferedPanel1.Controls.Add(this.rtbDateTimeTitle);
-            this.doubleBufferedPanel1.Controls.Add(this.rtbDateTime);
-            this.doubleBufferedPanel1.Controls.Add(this.lblDemOn);
-            this.doubleBufferedPanel1.Controls.Add(this.lblDongOn);
-            this.doubleBufferedPanel1.Controls.Add(this.lblSignDetect);
-            this.doubleBufferedPanel1.Controls.Add(this.lblIntDetect);
+            this.doubleBufferedPanel1.Controls.Add(this.panel8);
             this.doubleBufferedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doubleBufferedPanel1.Location = new System.Drawing.Point(3, 3);
             this.doubleBufferedPanel1.Name = "doubleBufferedPanel1";
             this.doubleBufferedPanel1.Size = new System.Drawing.Size(579, 102);
             this.doubleBufferedPanel1.TabIndex = 46;
             // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.rtbDateTimeTitle);
+            this.panel8.Controls.Add(this.pSourcePanel);
+            this.panel8.Controls.Add(this.rtbDateTime);
+            this.panel8.Controls.Add(this.doubleBufferedPanel2);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(579, 102);
+            this.panel8.TabIndex = 53;
+            // 
+            // rtbDateTimeTitle
+            // 
+            this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rtbDateTimeTitle.Location = new System.Drawing.Point(379, 0);
+            this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
+            this.rtbDateTimeTitle.Size = new System.Drawing.Size(100, 102);
+            this.rtbDateTimeTitle.TabIndex = 50;
+            this.rtbDateTimeTitle.Text = "";
+            // 
             // pSourcePanel
             // 
+            this.pSourcePanel.Controls.Add(this.lblSignDetect);
             this.pSourcePanel.Controls.Add(this.rbWav);
             this.pSourcePanel.Controls.Add(this.rbFUNcube);
             this.pSourcePanel.Controls.Add(this.materialLabel8);
-            this.pSourcePanel.Location = new System.Drawing.Point(219, 1);
+            this.pSourcePanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pSourcePanel.Location = new System.Drawing.Point(200, 0);
             this.pSourcePanel.Name = "pSourcePanel";
-            this.pSourcePanel.Size = new System.Drawing.Size(149, 100);
+            this.pSourcePanel.Size = new System.Drawing.Size(183, 102);
             this.pSourcePanel.TabIndex = 51;
             this.pSourcePanel.Visible = false;
+            // 
+            // lblSignDetect
+            // 
+            this.lblSignDetect.AutoSize = true;
+            this.lblSignDetect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.lblSignDetect.Depth = 0;
+            this.lblSignDetect.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblSignDetect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblSignDetect.Location = new System.Drawing.Point(114, 73);
+            this.lblSignDetect.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblSignDetect.Name = "lblSignDetect";
+            this.lblSignDetect.Size = new System.Drawing.Size(59, 19);
+            this.lblSignDetect.TabIndex = 48;
+            this.lblSignDetect.Text = "СИНХР";
+            this.lblSignDetect.Visible = false;
             // 
             // rbWav
             // 
@@ -1746,15 +1989,6 @@
             this.materialLabel8.TabIndex = 54;
             this.materialLabel8.Text = "Источник сигнала";
             // 
-            // rtbDateTimeTitle
-            // 
-            this.rtbDateTimeTitle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbDateTimeTitle.Location = new System.Drawing.Point(379, 0);
-            this.rtbDateTimeTitle.Name = "rtbDateTimeTitle";
-            this.rtbDateTimeTitle.Size = new System.Drawing.Size(100, 102);
-            this.rtbDateTimeTitle.TabIndex = 50;
-            this.rtbDateTimeTitle.Text = "";
-            // 
             // rtbDateTime
             // 
             this.rtbDateTime.Dock = System.Windows.Forms.DockStyle.Right;
@@ -1764,13 +1998,27 @@
             this.rtbDateTime.TabIndex = 49;
             this.rtbDateTime.Text = "";
             // 
+            // doubleBufferedPanel2
+            // 
+            this.doubleBufferedPanel2.Controls.Add(this.lblDemOn);
+            this.doubleBufferedPanel2.Controls.Add(this.lblDongOn);
+            this.doubleBufferedPanel2.Controls.Add(this.pbInterSyncOk);
+            this.doubleBufferedPanel2.Controls.Add(this.pbSignalSyncOk);
+            this.doubleBufferedPanel2.Controls.Add(this.pbInterSyncErr);
+            this.doubleBufferedPanel2.Controls.Add(this.pbSignalSyncErr);
+            this.doubleBufferedPanel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.doubleBufferedPanel2.Location = new System.Drawing.Point(0, 0);
+            this.doubleBufferedPanel2.Name = "doubleBufferedPanel2";
+            this.doubleBufferedPanel2.Size = new System.Drawing.Size(200, 102);
+            this.doubleBufferedPanel2.TabIndex = 57;
+            // 
             // lblDemOn
             // 
             this.lblDemOn.AutoSize = true;
             this.lblDemOn.Depth = 0;
             this.lblDemOn.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblDemOn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblDemOn.Location = new System.Drawing.Point(28, 6);
+            this.lblDemOn.Location = new System.Drawing.Point(34, 78);
             this.lblDemOn.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblDemOn.Name = "lblDemOn";
             this.lblDemOn.Size = new System.Drawing.Size(49, 19);
@@ -1784,7 +2032,7 @@
             this.lblDongOn.Depth = 0;
             this.lblDongOn.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblDongOn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblDongOn.Location = new System.Drawing.Point(28, 31);
+            this.lblDongOn.Location = new System.Drawing.Point(118, 78);
             this.lblDongOn.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblDongOn.Name = "lblDongOn";
             this.lblDongOn.Size = new System.Drawing.Size(49, 19);
@@ -1792,33 +2040,53 @@
             this.lblDongOn.Text = "label8";
             this.lblDongOn.Visible = false;
             // 
-            // lblSignDetect
+            // pbInterSyncOk
             // 
-            this.lblSignDetect.AutoSize = true;
-            this.lblSignDetect.BackColor = System.Drawing.Color.Red;
-            this.lblSignDetect.Depth = 0;
-            this.lblSignDetect.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblSignDetect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSignDetect.Location = new System.Drawing.Point(100, 82);
-            this.lblSignDetect.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblSignDetect.Name = "lblSignDetect";
-            this.lblSignDetect.Size = new System.Drawing.Size(59, 19);
-            this.lblSignDetect.TabIndex = 48;
-            this.lblSignDetect.Text = "СИНХР";
+            this.pbInterSyncOk.Image = global::ReceivingStation.Properties.Resources.OkStatus;
+            this.pbInterSyncOk.Location = new System.Drawing.Point(117, 25);
+            this.pbInterSyncOk.Name = "pbInterSyncOk";
+            this.pbInterSyncOk.Size = new System.Drawing.Size(50, 50);
+            this.pbInterSyncOk.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbInterSyncOk.TabIndex = 55;
+            this.pbInterSyncOk.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbInterSyncOk, "Синхронизация фазы интерливинга");
+            this.pbInterSyncOk.Visible = false;
             // 
-            // lblIntDetect
+            // pbSignalSyncOk
             // 
-            this.lblIntDetect.AutoSize = true;
-            this.lblIntDetect.BackColor = System.Drawing.Color.Red;
-            this.lblIntDetect.Depth = 0;
-            this.lblIntDetect.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblIntDetect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblIntDetect.Location = new System.Drawing.Point(28, 82);
-            this.lblIntDetect.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblIntDetect.Name = "lblIntDetect";
-            this.lblIntDetect.Size = new System.Drawing.Size(40, 19);
-            this.lblIntDetect.TabIndex = 47;
-            this.lblIntDetect.Text = "ИНТ";
+            this.pbSignalSyncOk.Image = global::ReceivingStation.Properties.Resources.OkStatus;
+            this.pbSignalSyncOk.Location = new System.Drawing.Point(33, 25);
+            this.pbSignalSyncOk.Name = "pbSignalSyncOk";
+            this.pbSignalSyncOk.Size = new System.Drawing.Size(50, 50);
+            this.pbSignalSyncOk.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSignalSyncOk.TabIndex = 54;
+            this.pbSignalSyncOk.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbSignalSyncOk, "Синхронизация фазы сигнала");
+            this.pbSignalSyncOk.Visible = false;
+            // 
+            // pbInterSyncErr
+            // 
+            this.pbInterSyncErr.Image = global::ReceivingStation.Properties.Resources.ErrorStatus;
+            this.pbInterSyncErr.Location = new System.Drawing.Point(117, 25);
+            this.pbInterSyncErr.Name = "pbInterSyncErr";
+            this.pbInterSyncErr.Size = new System.Drawing.Size(50, 50);
+            this.pbInterSyncErr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbInterSyncErr.TabIndex = 54;
+            this.pbInterSyncErr.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbInterSyncErr, "Синхронизация фазы интерливинга");
+            this.pbInterSyncErr.Visible = false;
+            // 
+            // pbSignalSyncErr
+            // 
+            this.pbSignalSyncErr.Image = global::ReceivingStation.Properties.Resources.ErrorStatus;
+            this.pbSignalSyncErr.Location = new System.Drawing.Point(33, 25);
+            this.pbSignalSyncErr.Name = "pbSignalSyncErr";
+            this.pbSignalSyncErr.Size = new System.Drawing.Size(50, 50);
+            this.pbSignalSyncErr.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSignalSyncErr.TabIndex = 53;
+            this.pbSignalSyncErr.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbSignalSyncErr, "Синхронизация фазы сигнала");
+            this.pbSignalSyncErr.Visible = false;
             // 
             // pictureBox1
             // 
@@ -1926,10 +2194,19 @@
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.doubleBufferedPanel1.ResumeLayout(false);
-            this.doubleBufferedPanel1.PerformLayout();
+            this.panel8.ResumeLayout(false);
             this.pSourcePanel.ResumeLayout(false);
             this.pSourcePanel.PerformLayout();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+=======
+            this.doubleBufferedPanel2.ResumeLayout(false);
+            this.doubleBufferedPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncOk)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncOk)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbInterSyncErr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSignalSyncErr)).EndInit();
+>>>>>>> 62bb681876bd849e8142058eb94536c68da33a0a
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1986,7 +2263,6 @@
         public MaterialSkin.Controls.MaterialLabel lblDemOn;
         public MaterialSkin.Controls.MaterialLabel lblDongOn;
         public MaterialSkin.Controls.MaterialLabel lblSignDetect;
-        public MaterialSkin.Controls.MaterialLabel lblIntDetect;
         private Other.DisabledRichTextBox rtbDateTimeTitle;
         private Other.DisabledRichTextBox rtbDateTime;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -2067,6 +2343,13 @@
         private Other.DisabledRichTextBox rtbServiceTitle;
         private Other.DisabledRichTextBox rtbServiceData;
         private System.Windows.Forms.Splitter splitter2;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Panel panel8;
+        private Other.DoubleBufferedPanel doubleBufferedPanel2;
+        private System.Windows.Forms.PictureBox pbInterSyncOk;
+        private System.Windows.Forms.PictureBox pbSignalSyncOk;
+        private System.Windows.Forms.PictureBox pbInterSyncErr;
+        private System.Windows.Forms.PictureBox pbSignalSyncErr;
     }
 }
 
