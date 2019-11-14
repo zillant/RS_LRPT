@@ -1,5 +1,6 @@
 import socket
 import threading as th
+import array
 
 sock = socket.socket()
 sock.connect(('127.0.0.1', 2503))
@@ -7,7 +8,7 @@ sock.connect(('127.0.0.1', 2503))
 print("""
 1 - Remote control (0x33 0xFF 0x34)
 2 - Local control (0x33 0x01 0x03)
-3 - Set Parameters (0x33 0x01 0x01 0x01 0x01 0x55)
+3 - Set Parameters (0x33 0x01 0x02 0x02 0x01 0x55)
 4 - Start stream record (0x33 0xFC 0x03)
 5 - Stop stream record (0x33 0xFD 0x03)
 6 - Check is main program busy (0x33 0x02 0x01 0x02 0x02 0x55) (0x33 0xFC 0x03)
@@ -47,7 +48,7 @@ while True:
         transfer_rcv_data(b"\x33\x01\x03")
     elif transfer == 3:
         # Параметры приема битового потока
-        transfer_rcv_data(b"\x33\x01\x02\x01\x02\x55")
+        transfer_rcv_data(b"\x33\x01\x02\x02\x01\x55")
     elif transfer == 4:
         # Начать запись
         transfer_rcv_data(b"\x33\xFC\x03")
@@ -89,6 +90,15 @@ while True:
         transfer_rcv_data(b"\x33\x03\x0F")
     elif transfer == 20:
         transfer_rcv_data(b"\x33\xFC\x09")
+
+    elif transfer == 29:
+        exit = 0
+        while True:
+            inputCommand = input("Input command: ")
+            if inputCommand == "exit":
+                break
+            command = array.array("B", [int(x, 16) for x in inputCommand.split()]).tostring()
+            transfer_rcv_data(command)
 
     # ---------- Выход ----------
     elif transfer == 30:
