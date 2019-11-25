@@ -1558,7 +1558,6 @@ namespace ReceivingStation.Demodulator
                 case 8: // поворот на 270
                     for (int i = 0; i < array.Length / 2; i++)
                     {
-                        sbyte temp;
                         array[2 * i + 1] = (sbyte)-array[2 * i + 1];
                     }
                     break;

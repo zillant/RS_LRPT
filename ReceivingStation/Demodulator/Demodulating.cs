@@ -16,91 +16,85 @@ namespace ReceivingStation.Demodulator
     unsafe class Demodulating
     {
        
-        static uint _SampleRate;
+        private uint _SampleRate;
       
+        private int _SymbolRate;
 
-        static int _SymbolRate;
+        private Thread _workerThread;
+        private Thread _waveReadThread;
+        private Thread _outputThread;
 
-        static Thread _workerThread;
-        static Thread _waveReadThread;
-        static Thread _outputThread;
-
-        static bool _processIsStarted;
-        static bool _outputIsStarted;
+        private bool _processIsStarted;
+        private bool _outputIsStarted;
 
 
-        static IQFirFilter _iqFilter;
+        private IQFirFilter _iqFilter;
 
-        static RtlSdrIO IO = new RtlSdrIO();
-        static WaveFile _wavFile;
+        private RtlSdrIO IO = new RtlSdrIO();
+        private WaveFile _wavFile;
 
-        static IQFirFilter _LowPassFirFilter;
-        static FirFilter _syncFirFilter;
-        static IirFilter _syncFilter;
+        private FirFilter _syncFirFilter;
+        private IirFilter _syncFilter;
         private IQFirFilter _matchedFilter;
-        static float[] _coeffs;
 
-        static UnsafeBuffer _syncFilterBuffer;
-        static UnsafeBuffer _buffer;
-        static UnsafeBuffer _resamplerInBuffer;
+        private UnsafeBuffer _syncFilterBuffer;
+        private UnsafeBuffer _buffer;
+        private UnsafeBuffer _resamplerInBuffer;
 
-        static Complex* _resampleInBufferPtr;
-        static Complex* _bufferPtr;
+        private Complex* _resampleInBufferPtr;
+        private Complex* _bufferPtr;
 
-        static ComplexFifoStream _FifoBuffer;
-        static ComplexFifoStream _iqStream;
+        private ComplexFifoStream _FifoBuffer;
+        private ComplexFifoStream _iqStream;
 
-        static UnsafeBuffer _syncBuffer;
-        static float* _syncBufferPtr;
-        static Complex _prevBuffer;
-        static UnsafeBuffer _recordBuffer;
-        static unsafe Complex* _recordBufferPtr;
-        static UnsafeBuffer _recordBufferInt;
-        static unsafe Complex* _recordBufferIntPtr;
-        static UnsafeBuffer _PacketsBuffer;
-        static unsafe Complex* _PacketsBufferPtr;
-        static UnsafeBuffer ElementBuffer;
-        static unsafe Complex* ElementBufferPtr;
+        private UnsafeBuffer _syncBuffer;
+        private float* _syncBufferPtr;
+        private UnsafeBuffer _recordBuffer;
+        private unsafe Complex* _recordBufferPtr;
+        private UnsafeBuffer _recordBufferInt;
+        private unsafe Complex* _recordBufferIntPtr;
+        private UnsafeBuffer _PacketsBuffer;
+        private unsafe Complex* _PacketsBufferPtr;
+        private UnsafeBuffer ElementBuffer;
+        private unsafe Complex* ElementBufferPtr;
 
-        static Demodulator.FileWriter _rawWriter;
+        private FileWriter _rawWriter;
 
 
-        static byte[] _outputBuffer;
-        static byte[] _outputBuffer_wInt;
-        static float _writeLength;
+        private byte[] _outputBuffer;
+        private byte[] _outputBuffer_wInt;
 
-        static bool _needPLLConfigure;
+        private bool _needPLLConfigure;
 
-        static float _carrierPhase;
-        static float _carrierFrequencyRadian;
-        static float _minCarrierFrequencyRadian;
-        static float _maxCarrierFrequencyRadian;
-        static float _carrierPhaseStep;
-        static float _norm;
-        static float _carrierFrequencyStep;
-        static bool _carrierPhaseLocked;
-        public static bool _LockView;
-        static float _carrierPhaseErrorAvg;
-        static float SearchPhaseBandwidth;
-        static float _oneMinusPhaseErrCoeff;
-        static float _phaseErrorCoeff;
-        static int _watchDogCounter;
-        static float _carrierShift;
+        private float _carrierPhase;
+        private float _carrierFrequencyRadian;
+        private float _minCarrierFrequencyRadian;
+        private float _maxCarrierFrequencyRadian;
+        private float _carrierPhaseStep;
+        private float _norm;
+        private float _carrierFrequencyStep;
+        private bool _carrierPhaseLocked;
+        public bool _LockView { get; set; }
+        private float _carrierPhaseErrorAvg;
+        private float SearchPhaseBandwidth;
+        private float _oneMinusPhaseErrCoeff;
+        private float _phaseErrorCoeff;
+        private int _watchDogCounter;
+        private float _carrierShift;
 
-        static SamplesAvailableEventArgs _inputbuffer = new SamplesAvailableEventArgs();
+        private SamplesAvailableEventArgs _inputbuffer = new SamplesAvailableEventArgs();
 
-        static float _agcGain;
-        static int _inputFifoBufferLength;
-        static float _lastSync;
-        static float _averageGain;
-        static float _agcCoeff;
-        static float _oneMinusAgcCoeff;
+        private float _agcGain;
+        private float _lastSync;
+        private float _averageGain;
+        private float _agcCoeff;
+        private float _oneMinusAgcCoeff;
 
-        static bool _prevIsUp;
-        static bool IsPlaying;
+        private bool _prevIsUp;
+        private bool IsPlaying;
 
 
-        static int _filterLength;
+        private int _filterLength;
         const int MaxBufferLength = 1024 * 10;
 
         const float Pi = (float)Math.PI;
@@ -110,53 +104,48 @@ namespace ReceivingStation.Demodulator
         const float LockThreshold = 0.196f;
         const float LockThresholdOut = 0.2f;
 
-        private static int _droppedBuffers;
+        private  int _droppedBuffers;
 
-        static Complex _lastData;
 
         private const float ByteToMb = 1f / 1024f / 1024f;
         private const int BufferSizeToRecord = 16384; // без интерливинга
         //private const int BufferSizeToRecord = 4096;
         private const int BufferSizeToRecord_withInt = 128000; // c интерливинга, длина одной посылки 40 * 2
 
-        static string filename = (string)"";
+        private string filename = (string)"";
 
-        static StreamCorrection StreamCorrection;
-        static Decode.Decode _decode;
-        static BeforeViterbiSync BVS;
+        private StreamCorrection StreamCorrection;
+        private Decode.Decode _decode;
+        private BeforeViterbiSync BVS;
 
-        static FormReceive _formrcv;
-        static byte _FrequencyMode;
-        static bool _Interliving;
-        static byte _Modulation;
-        static byte[] _correctedarray;
-        static byte[] arrayToDecode;
-        static byte[] _correctedarray_Int;
-        static byte[] arrayToDecode_Int;
-        static byte[] PacketsArray;
+        private byte _FrequencyMode;
+        private bool _Interliving;
+        private byte _Modulation;
+        private byte[] _correctedarray;
+        private byte[] _correctedarray_Int;
+        private byte[] arrayToDecode_Int;
+        private byte[] PacketsArray;
 
-        public static bool PSPFinded;
-        static int mode = 0;
+        public bool PSPFinded;
+        private int mode = 0;
 
-        static bool FirstRead;
-        private int bytedata;
+        private bool FirstRead;
 
 
-        static bool _NRZ;
-        static bool _qpskModulation;
-        static bool _oqpskModulation;
-        static bool _isSelfTest;
+        private bool _NRZ;
+        private bool _qpskModulation;
+        private bool _oqpskModulation;
+        private bool _isSelfTest;
 
-        static Complex* _fftPtr;
-        static UnsafeBuffer _fftBuffer;
-        static float* _fftSpectrumPtr;
-        static float[] _fftSpectrumArray;
-        static UnsafeBuffer _fftSpectrum;
-        static int _fftBins = 16384;
-        static float[] _fftSpectrumPlot;
-        static Complex[] samplesForFFT;
+        private Complex* _fftPtr;
+        private UnsafeBuffer _fftBuffer;
+        private float* _fftSpectrumPtr;
+        private float[] _fftSpectrumArray;
+        private UnsafeBuffer _fftSpectrum;
+        private int _fftBins = 16384;
+        private Complex[] samplesForFFT;
 
-        static Complex[] samplesForConstellation;
+        private Complex[] samplesForConstellation;
 
         private UnsafeBuffer _displayOutputBuffer;
         private Complex* _displayOutputBufferPtr;
@@ -167,10 +156,9 @@ namespace ReceivingStation.Demodulator
         private bool _needDisplayBufferUpdate;
         private const int DisplayBufferLength = 8192;
 
-        static FFT_Form FFT_plot;
 
-        static bool iqFilter;
-        static bool matchedFilter;
+        private bool iqFilter;
+        private bool matchedFilter;
 
         private bool _dispayBufferReady;
 
@@ -179,16 +167,16 @@ namespace ReceivingStation.Demodulator
         private float _lastSignal;
         private float _syncCenter;
 
-        private static bool _sWriter;
-        private static bool _datWriter;
+        private  bool _sWriter;
+        private  bool _datWriter;
 
         private string _PathName;
 
-        private static bool _HardPSP;
+        private  bool _HardPSP;
 
-        static FileWriter _DemodDatfile;
-        private static int _FindedBitsInPSP;
-        private static int _InterlivingFindedBits;
+        private FileWriter _DemodDatfile;
+        private  int _FindedBitsInPSP;
+        private  int _InterlivingFindedBits;
 
         /// <summary>
         /// Обработчик ВЧ сигнала, используется SDR приемник
@@ -330,7 +318,7 @@ namespace ReceivingStation.Demodulator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="inputbuffer"></param>
-        public static unsafe void Samples_Available(object sender, SamplesAvailableEventArgs inputbuffer)
+        public  unsafe void Samples_Available(object sender, SamplesAvailableEventArgs inputbuffer)
         {
             if (_iqStream == null)
             {
@@ -376,7 +364,7 @@ namespace ReceivingStation.Demodulator
         /// <param name="BuftoSave">Массив отсчетов</param>
         /// <param name="buflength">Размер массива</param>
         /// <param name="BufName">Данные ДО/ПОСЛЕ согласованного фильтра</param>
-        static void SaveData(Complex* BuftoSave, int buflength, bool BufName)
+        private void SaveData(Complex* BuftoSave, int buflength, bool BufName)
         {
             
             var dateString = DateTime.Now.ToString("yyyy_MM_dd");
@@ -526,7 +514,7 @@ namespace ReceivingStation.Demodulator
         /// <summary>
         /// Сброс параметров петли ФАПЧ
         /// </summary>
-        public static void PLLReset()
+        public  void PLLReset()
         {
             _carrierPhase = 0;
             _carrierFrequencyRadian = 0;
@@ -546,7 +534,6 @@ namespace ReceivingStation.Demodulator
             var length = 0;
             var samplerateIn = samplerate;
             var interpolation = 1;
-            var modulus = 0f;
             var phaseError = 0.0f;
             var syncVal = 0.0f;
             var indexout = 0;
@@ -942,7 +929,6 @@ namespace ReceivingStation.Demodulator
             arrayToDecode_Int = new byte[2048];
 
             var Element = new byte[2];
-            var count = 0;
 
             
             PacketsArray = new byte[32768];
@@ -965,7 +951,7 @@ namespace ReceivingStation.Demodulator
         /// Запуск декодера и корректировки потока с демодулятора
         /// </summary>
 
-        static void RecordingThread()
+        private void RecordingThread()
         {
 
             var Element = new byte[2];
@@ -1210,7 +1196,7 @@ namespace ReceivingStation.Demodulator
         }
 
 
-        static void ConvertComplexToByte(byte[] dest, Complex* source, int sourceLength)
+        private void ConvertComplexToByte(byte[] dest, Complex* source, int sourceLength)
         {
             var index = 0;
             for (var i = 0; i < sourceLength; i++)
@@ -1223,7 +1209,7 @@ namespace ReceivingStation.Demodulator
         }
 
 
-        static byte FloatToByte(float sample)
+        private byte FloatToByte(float sample)
         {
             sample *= 127;
             if (sample > 127) sample = 127;
@@ -1231,12 +1217,12 @@ namespace ReceivingStation.Demodulator
             return (byte)sample;
         }
 
-        private static byte SymbToByte(float sample)
+        private  byte SymbToByte(float sample)
         {
             return (byte)sample;
         }
 
-        private static byte[] Delete(byte[] array, int indexToDelete)// удаляет элементы из массива
+        private  byte[] Delete(byte[] array, int indexToDelete)// удаляет элементы из массива
         {
             if (array.Length == 0) return array;
             if (array.Length <= indexToDelete) return array;
@@ -1252,7 +1238,7 @@ namespace ReceivingStation.Demodulator
             return output;
         }
 
-        private static byte[] AddElement(byte[] array, byte element)//добавляет элемент в конец массива
+        private  byte[] AddElement(byte[] array, byte element)//добавляет элемент в конец массива
         {
             var output = new byte[array.Length + 1];
             Array.Copy(array, output, array.Length);
@@ -1260,7 +1246,7 @@ namespace ReceivingStation.Demodulator
             return output;
         }
 
-        static void fromAmplitudesToBits(byte[] indata, byte[] outarray)
+        private void fromAmplitudesToBits(byte[] indata, byte[] outarray)
         {
             System.IO.BinaryWriter datfile = new BinaryWriter(File.Open(@"AfterSync_HEX.dat", FileMode.OpenOrCreate));
             sbyte[] data = new sbyte[indata.Length];
@@ -1298,7 +1284,7 @@ namespace ReceivingStation.Demodulator
         #endregion
         #endregion
 
-        static void Decimation(Complex* SamplesPtr, Complex* SamplesOutPtr, int buflength, int DecimationCoeff)
+        private void Decimation(Complex* SamplesPtr, Complex* SamplesOutPtr, int buflength, int DecimationCoeff)
         {
             var outlength = (int)(buflength / DecimationCoeff);
 
@@ -1313,12 +1299,11 @@ namespace ReceivingStation.Demodulator
             
         }
 
-        static void FrequencyOffset(Complex* SamplesPtr, Complex* SamplesOutPtr, int buflength, int Offset, uint SampleRate)
+        private void FrequencyOffset(Complex* SamplesPtr, Complex* SamplesOutPtr, int buflength, int Offset, uint SampleRate)
         {
             double T = 1 / SampleRate;
             var Pi = Math.PI;
             var arg = 2 * Pi * Offset;
-            double time;
             double i = 0;
             double wavePer = T * buflength / SampleRate;
             for (int n = 1; n < buflength; n++)
@@ -1345,7 +1330,7 @@ namespace ReceivingStation.Demodulator
             RecordStart(false);
         }
 
-        static void StartWAVReading()
+        private void StartWAVReading()
         {
             IsPlaying = true;
             _waveReadThread = new Thread(new ThreadStart(wavToStream));
@@ -1353,7 +1338,7 @@ namespace ReceivingStation.Demodulator
             _waveReadThread.Start();
         }
 
-        static void wavToStream()
+        private void wavToStream()
         {
             var WaveBufferSize = 4096;
             var waveInBuffer = new Complex[WaveBufferSize];
