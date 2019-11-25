@@ -387,6 +387,7 @@ namespace ReceivingStation
                 var SampleRate = UInt32.Parse(comBx_SampleRate.Text);
 
                 _decode = new Decode.Decode(_fileName) { ThreadSafeUpdateGui = UpdateGuiDecodeData };
+                //инициализируем приемник
                 _receiver = new Demodulator.Demodulating(_fileName, _freq, _interliving, _modulation, _decode, comBxModulation.SelectedItem.ToString(), chBx_sWriter.Checked, cBx_datWriter.Checked, cBx_HardPSP.Checked, sessionName, (int)numUpD_FindedBitsInPSP.Value, (int)numUpD_FindedBitsInInterliving.Value);
 
                 SetupGraphLabels((int)SampleRate);
@@ -395,7 +396,6 @@ namespace ReceivingStation
                 {
                     var freq = Decimal.Parse(comBx_carrier.Text);
                     var Frequency = (uint)(freq * 1000000);
-
                     var gain = (int)GainNM.Value;
 
                     _receiver.Dongle_Configuration(Frequency, SampleRate, gain);// инициализируем свисток, в нем отсчеты записываются в поток                    StartDecoding();
@@ -404,7 +404,6 @@ namespace ReceivingStation
                 }
                 if (_inputType == InputType.WavFile) // если хотим считать с файла
                 {
-
                     try
                     {
                         SelectWaveFile();

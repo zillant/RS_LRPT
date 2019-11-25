@@ -409,7 +409,7 @@ namespace ReceivingStation.Demodulator
             var dateString = DateTime.Now.ToString("yyyy_MM_dd");
             var timeString = DateTime.Now.ToString("HH-mm-ss");
 
-            if (_Interliving) filename = _PathName + $"{timeString}_LRPT INT_.s";
+            if (_Interliving) filename = _PathName + $"{timeString}_LRPT_INT_.s";
             if (!_Interliving) filename = _PathName + $"{timeString}_LRPT_.s";
 
             if (_sWriter)
@@ -730,6 +730,7 @@ namespace ReceivingStation.Demodulator
                 indexout = 0;
                 for (int i = 0; i < length; i++)
                 {
+                   
                     #region AGC
                     data = _bufferPtr[i];
 
@@ -739,6 +740,7 @@ namespace ReceivingStation.Demodulator
                     data *= _agcGain;
 
                     #endregion
+
                     if (_needDisplayBufferUpdate && i < DisplayBufferLength) _displayInputBufferPtr[i] = data;
 
                     var flag = imag > 0 && _lastSignal < 0 || imag < 0 && _lastSignal > 0;
@@ -828,6 +830,7 @@ namespace ReceivingStation.Demodulator
                 if (SampleRate == 1024000) fftPointSpacingHz = fftPointSpacingHz / 56;
                 if (SampleRate == 1400000) fftPointSpacingHz = fftPointSpacingHz / 64;
                 if (SampleRate == 1920000) fftPointSpacingHz = fftPointSpacingHz / 80;
+                if (SampleRate == 2048000) fftPointSpacingHz = fftPointSpacingHz / 112;
                 if (SampleRate == 8000000) fftPointSpacingHz = fftPointSpacingHz / 480;
             }
 
