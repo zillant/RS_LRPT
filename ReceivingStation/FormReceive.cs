@@ -644,8 +644,8 @@ namespace ReceivingStation
 
             lblFinded.Visible = true;
 
-            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137.100";
-            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137.900";
+            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137,100";
+            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137,900";
             comBx_SampleRate.SelectedItem = "1024000";
         }
 

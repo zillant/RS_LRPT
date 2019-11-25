@@ -313,7 +313,7 @@ namespace ReceivingStation.Demodulator
                 IO.Device.Start();
                 IO.Device.SamplesAvailable += Samples_Available;
                 IO.Device.Frequency = Frequency;
-                IO.Device.UseRtlAGC = true;
+                IO.Device.UseRtlAGC = false;
                 IO.Device.UseTunerAGC = false;
                 IO.Device.Gain = IO.Device.SupportedGains[Gain];//есть массив этих усилений, по сути здесь выбирается элемент этого массива
                 IO.Device.Samplerate = SampleRate;
@@ -345,6 +345,7 @@ namespace ReceivingStation.Demodulator
             else
             {
                 _droppedBuffers++;
+                Thread.Sleep(5);
             }
 
             //Тут мы только копируем данные в наш входной буфер и все.
