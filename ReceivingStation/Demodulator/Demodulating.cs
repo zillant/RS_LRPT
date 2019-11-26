@@ -299,12 +299,12 @@ namespace ReceivingStation.Demodulator
             {
                 IO.Open();
                 IO.Device.Start();
-                IO.Device.SamplesAvailable += Samples_Available;
                 IO.Device.Frequency = Frequency;
                 IO.Device.UseRtlAGC = false;
                 IO.Device.UseTunerAGC = false;
                 IO.Device.Gain = IO.Device.SupportedGains[Gain];//есть массив этих усилений, по сути здесь выбирается элемент этого массива
                 IO.Device.Samplerate = SampleRate;
+                IO.Device.SamplesAvailable += Samples_Available;
             }
             catch (Exception ex)
             {
@@ -333,7 +333,7 @@ namespace ReceivingStation.Demodulator
             else
             {
                 _droppedBuffers++;
-                Thread.Sleep(5);
+                //Thread.Sleep(5);
             }
 
             //Тут мы только копируем данные в наш входной буфер и все.
@@ -432,6 +432,7 @@ namespace ReceivingStation.Demodulator
                 try
                 {
                     IO.Device.Stop();
+                    IO.Device.Dispose();
                     IO.Close();
                 }
                 catch (Exception ex)
@@ -448,8 +449,8 @@ namespace ReceivingStation.Demodulator
             if (!IsPlaying && _iqStream != null)
             {
                 _iqStream.Flush();
-                _iqStream.Close();
                 _iqStream.Dispose();
+                _iqStream.Close();
             }
             
 
@@ -902,7 +903,7 @@ namespace ReceivingStation.Demodulator
 
         }
 
-        #region Output
+        #region Output/Decode
 
         /// <summary>
         /// Запуск записи и устранения фазовой неоднозначности сигнала
