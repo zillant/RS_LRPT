@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ReceivingStation</RootNamespace>
     <AssemblyName>kpaprs</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -26,6 +26,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,11 +61,13 @@
     <Reference Include="ScottPlot">
       <HintPath>..\Source\lib\ScottPlot.dll</HintPath>
     </Reference>
-    <Reference Include="SDRSharp.Radio">
-      <HintPath>..\Source\lib\SDRSharp.Radio.dll</HintPath>
+    <Reference Include="SDRSharp.Radio, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SDRSharp.Radio.dll</HintPath>
     </Reference>
-    <Reference Include="SDRSharp.RTLSDR">
-      <HintPath>..\Source\lib\SDRSharp.RTLSDR.dll</HintPath>
+    <Reference Include="SDRSharp.RTLSDR, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SDRSharp.RTLSDR.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -273,10 +276,16 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ErrorStatus.png" />
+    <None Include="Resources\inter_sync_bad.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OkStatus.png" />
+    <None Include="Resources\inter_sync_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\signal_sync_bad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\signal_sync_ok.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

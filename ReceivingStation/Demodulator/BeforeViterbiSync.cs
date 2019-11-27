@@ -202,12 +202,12 @@ namespace ReceivingStation.Demodulator
                 Array.Copy(FirstPacket, arrayToCorrect, _FullLength);
                 Array.Copy(SecondPacket, 0, arrayToCorrect, 16384, _FullLength);
 
-                if (outmode == 1 || outmode == 7)
+                if (outmode == 3 || outmode == 5)
                 {
                     arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
                     arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
                 }
-                    for (int i = 0; i < inputarray.Length; i++)
+                for (int i = 0; i < inputarray.Length; i++)
                 {
                     inputarray[i] = (byte)arrayToCorrect[i];// переводим отрывок из byte в знаковый sbyte
                 }
@@ -1558,7 +1558,6 @@ namespace ReceivingStation.Demodulator
                 case 8: // поворот на 270
                     for (int i = 0; i < array.Length / 2; i++)
                     {
-                        sbyte temp;
                         array[2 * i + 1] = (sbyte)-array[2 * i + 1];
                     }
                     break;
