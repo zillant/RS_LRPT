@@ -308,7 +308,7 @@ namespace ReceivingStation.Demodulator
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.Message);
             }
 
 
