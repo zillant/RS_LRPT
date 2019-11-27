@@ -419,6 +419,8 @@ namespace ReceivingStation
                         StopReceiving();
                     }
                 }
+                _receiver.UpdateFilterParameters(cBx_iqFilter.Checked, (int)NumUpDown_Bandwidth.Value, cBx_matchedFilter.Checked, (int)numUpD_PLLBw.Value);
+
                 cBx_HardPSP.CheckedChanged += CBx_HardPSP_CheckedChanged;
                 GainNM.ValueChanged += GainNM_ValueChanged;
                 numUpD_FindedBitsInPSP.ValueChanged += NumUpD_FindedBitsInPSP_ValueChanged;

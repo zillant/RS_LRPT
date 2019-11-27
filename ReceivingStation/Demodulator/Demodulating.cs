@@ -308,7 +308,7 @@ namespace ReceivingStation.Demodulator
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.Message);
             }
 
 
@@ -424,6 +424,7 @@ namespace ReceivingStation.Demodulator
         /// </summary>
         public void StopDecoding()
         {
+            PLLReset();
             _processIsStarted = false;
             _outputIsStarted = false;
             
@@ -451,8 +452,7 @@ namespace ReceivingStation.Demodulator
                 _iqStream.Flush();
                 _iqStream.Dispose();
                 _iqStream.Close();
-            }
-            
+            }           
 
 
             if (_outputThread != null)
@@ -1119,7 +1119,7 @@ namespace ReceivingStation.Demodulator
                             else
                             {
                                 count++;
-                                if (count > 240)
+                                if (count > 512)  // если не нашелся маркер, сбрасываемся и перезахватываемся
                                 {
                                     PLLReset();
                                     SearchPhaseBandwidth +=  25;
