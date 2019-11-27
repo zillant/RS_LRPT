@@ -66,6 +66,8 @@ namespace ReceivingStation
         private InputType _inputType;
 
         private bool[] flags = new bool[2]; // Массив состояний демодулятора flag[0] = синхронизация фазы синхропосылки; flag[1] = захват петли ФАПЧ
+        private bool _isMarkerFinded;
+        private bool _isPLLLocked;
 
         public FormReceive()
         {
@@ -258,7 +260,7 @@ namespace ReceivingStation
             if (_server.ReceivingStartedFlag && _receiver != null)
             {
                 flags = _receiver.UpdateDataGui();
-                UpdateGuiDemodulationData(flags);
+                UpdateGuiDemodulationData(_isMarkerFinded, _isPLLLocked);
             }
         }
 
@@ -572,8 +574,8 @@ namespace ReceivingStation
         public bool[] GetSyncsStates()
         {
             bool[] syncsStatesValues = new bool[2];
-            syncsStatesValues[0] = _isSignalPhaseSync;
-            syncsStatesValues[1] = flags[0];
+            syncsStatesValues[0] = _isSignalPhaseSync; // относится к интерливингу
+            syncsStatesValues[1] = _isMarkerFinded;
 
             return syncsStatesValues;
         }
@@ -602,7 +604,7 @@ namespace ReceivingStation
         /// Обрабатывает возвращаемые значение из формы, тупой костыль в идеале переделать
         /// </summary>
         /// <param name="flags">flag[0] синхромаркер найден, flag[1] ФАПЧ захвачена</param>
-        private void UpdateGuiDemodulationData(bool[] flags)
+        private void UpdateGuiDemodulationData(bool isMarkerFinded, bool isPLLLocked)
         {
             //if (flags[1]) lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.Text, "Захвачено");
             //else
@@ -610,21 +612,51 @@ namespace ReceivingStation
             //    lblIntDetect.SetPropertyThreadSafe(() => lblIntDetect.Text, "Захват...");
             //    lblSignDetect.SetPropertyThreadSafe(() => lblSignDetect.Text, "");
             //}
-            if (flags[0] && flags[1] && rbInterlivingReceiveOn.Checked)
+
+            if (isPLLLocked)
             {
-                ShowInterSyncOk();
-            }
-            else if (flags[0] && flags[1] && !rbInterlivingReceiveOn.Checked)
-            {
-                ShowInterSyncErr();       
+                if (rbInterlivingReceiveOn.Checked)
+                {
+                    if (isMarkerFinded) // найден 8битный маркер при интерливинге
+                    {
+                        ShowInterSyncOk();
+                    }
+                    else
+                    {
+                        ShowInterSyncErr();
+                    }
+
+                    if (_isSignalPhaseSync)
+                    {
+                        ShowSignalSyncOk();
+                    }
+                    else
+                    {
+                        ShowSignalSyncErr();
+                    }
+                }
+                else if (!rbInterlivingReceiveOn.Checked)
+                {
+                    if (isMarkerFinded)
+                    {
+                        ShowInterSyncErr();
+                        ShowSignalSyncOk();
+                    }
+
+                    if (_isSignalPhaseSync)
+                    {
+                        ShowSignalSyncOk();
+                    }
+                    else
+                    {
+                        ShowSignalSyncErr();
+                    }
+                }
             }
 
-            if (_isSignalPhaseSync)
-            {
-                ShowSignalSyncOk();
-            }
             else
             {
+                ShowInterSyncErr();
                 ShowSignalSyncErr();
             }
 
@@ -671,17 +703,19 @@ namespace ReceivingStation
                 // TO DO Обновление ГУИ на этот вроде бы все
                 _receiver.UpdateFilterParameters(cBx_iqFilter.Checked, (int)NumUpDown_Bandwidth.Value, cBx_matchedFilter.Checked, (int)numUpD_PLLBw.Value);
                 flags = _receiver.UpdateDataGui();
+                _isMarkerFinded = _receiver.PSPFinded;
+                _isPLLLocked = _receiver._carrierPhaseLocked;
             }
 
             if (_decode != null)
             {
-                _isSignalPhaseSync = _decode.IsSignalPhaseSync;
+                _isSignalPhaseSync = _decode.IsSignalPhaseSync; // интерливинг разобран
             }
 
-            if (flags[1]) lblLocked.Visible = true;
+            if (_isPLLLocked) lblLocked.Visible = true;
             else lblLocked.Visible = false;
 
-            if (flags[0]) lblFinded.Visible = true;
+            if (_isMarkerFinded) lblFinded.Visible = true;
             else lblFinded.Visible = false;
         }
 

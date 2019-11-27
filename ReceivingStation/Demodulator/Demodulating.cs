@@ -73,7 +73,7 @@ namespace ReceivingStation.Demodulator
         private float _carrierPhaseStep;
         private float _norm;
         private float _carrierFrequencyStep;
-        private bool _carrierPhaseLocked;
+        public bool _carrierPhaseLocked { get; internal set; }
         public bool _LockView { get; set; }
         private float _carrierPhaseErrorAvg;
         private float SearchPhaseBandwidth;
@@ -126,7 +126,7 @@ namespace ReceivingStation.Demodulator
         private byte[] arrayToDecode_Int;
         private byte[] PacketsArray;
 
-        public bool PSPFinded;
+        public bool PSPFinded { get; internal set; }
         private int mode = 0;
 
         private bool FirstRead;
