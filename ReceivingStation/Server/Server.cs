@@ -361,7 +361,7 @@ namespace ReceivingStation.Server
             Random random = new Random();
 
             // Если запрос статуса синхронизации.
-            if (command[1] == 0x03)
+            if (command.Length > 1 && command[1] == 0x03)
             {
                 bool[] syncsStatesValues = ThreadSafeGetSyncsStates();
 
