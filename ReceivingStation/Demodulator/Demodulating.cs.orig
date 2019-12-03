@@ -453,12 +453,12 @@ namespace ReceivingStation.Demodulator
                 _iqStream.Dispose();
                 _iqStream.Close();
 <<<<<<< HEAD
-            }           
-=======
                 _iqStream.Dispose();
             }
             
->>>>>>> dev2
+=======
+            }           
+>>>>>>> master
 
             if (_outputThread != null)
             {

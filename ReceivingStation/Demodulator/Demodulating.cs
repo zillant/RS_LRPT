@@ -126,7 +126,7 @@ namespace ReceivingStation.Demodulator
         private byte[] arrayToDecode_Int;
         private byte[] PacketsArray;
 
-        public static bool PSPFinded;
+        publicbool PSPFinded;
         static int mode = 0;
 
         private bool FirstRead;
