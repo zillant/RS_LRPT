@@ -13,7 +13,7 @@ using ReceivingStation.Other;
 
 namespace ReceivingStation.Demodulator
 {
-    unsafe class Demodulating
+    unsafe class Demodulating ////fvgdfgdfgdfgdfgdfg
     {
        
         private uint _SampleRate;
