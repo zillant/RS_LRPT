@@ -832,7 +832,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.04041F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.95959F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 334F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 335F));
             this.tableLayoutPanel2.Controls.Add(this.rtbMkoData, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.rtbMkoTitle, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -847,7 +847,7 @@
             // 
             this.rtbMkoData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbMkoData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbMkoData.Location = new System.Drawing.Point(982, 3);
+            this.rtbMkoData.Location = new System.Drawing.Point(981, 3);
             this.rtbMkoData.Name = "rtbMkoData";
             this.rtbMkoData.Size = new System.Drawing.Size(242, 484);
             this.rtbMkoData.TabIndex = 106;
@@ -859,7 +859,7 @@
             this.rtbMkoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.rtbMkoTitle.Location = new System.Drawing.Point(434, 3);
             this.rtbMkoTitle.Name = "rtbMkoTitle";
-            this.rtbMkoTitle.Size = new System.Drawing.Size(542, 484);
+            this.rtbMkoTitle.Size = new System.Drawing.Size(541, 484);
             this.rtbMkoTitle.TabIndex = 105;
             this.rtbMkoTitle.Text = "";
             // 
@@ -890,7 +890,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.08559F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.91441F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 507F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceTitle, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtbServiceData, 2, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -907,7 +907,7 @@
             this.rtbServiceTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.rtbServiceTitle.Location = new System.Drawing.Point(434, 3);
             this.rtbServiceTitle.Name = "rtbServiceTitle";
-            this.rtbServiceTitle.Size = new System.Drawing.Size(460, 484);
+            this.rtbServiceTitle.Size = new System.Drawing.Size(459, 484);
             this.rtbServiceTitle.TabIndex = 107;
             this.rtbServiceTitle.Text = "";
             // 
@@ -915,7 +915,7 @@
             // 
             this.rtbServiceData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbServiceData.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtbServiceData.Location = new System.Drawing.Point(900, 3);
+            this.rtbServiceData.Location = new System.Drawing.Point(899, 3);
             this.rtbServiceData.Name = "rtbServiceData";
             this.rtbServiceData.Size = new System.Drawing.Size(501, 484);
             this.rtbServiceData.TabIndex = 108;
