@@ -1,0 +1,9 @@
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\bin\Debug\WorkingTimer.exe.config
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\bin\Debug\WorkingTimer.exe
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\bin\Debug\WorkingTimer.pdb
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\obj\Debug\WorkingTimer.csprojAssemblyReference.cache
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\obj\Debug\WorkingTimer.Form1.resources
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\obj\Debug\WorkingTimer.Properties.Resources.resources
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\obj\Debug\WorkingTimer.csproj.GenerateResource.cache
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\obj\Debug\WorkingTimer.exe
+C:\Users\Ильшат\Documents\KPA\RS\WorkingTimer\obj\Debug\WorkingTimer.pdb

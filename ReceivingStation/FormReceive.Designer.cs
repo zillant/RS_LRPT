@@ -1873,6 +1873,40 @@
             this.slMode.MouseLeave += new System.EventHandler(this.slMode_MouseLeave);
             this.slMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.slMode_MouseMove);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pictureBox1.Image = global::ReceivingStation.Properties.Resources.rss_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(591, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(108, 102);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
+            // 
+            // opnDlg
+            // 
+            this.opnDlg.Filter = "WAV files|*.wav";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 50;
+            // 
+            // timer3
+            // 
+            this.timer3.Enabled = true;
+            this.timer3.Interval = 50;
+            // 
+            // DemodTimer
+            // 
+            this.DemodTimer.Enabled = true;
+            this.DemodTimer.Tick += new System.EventHandler(this.DemodTimer_Tick);
+            // 
             // FormReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
