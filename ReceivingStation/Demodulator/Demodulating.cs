@@ -73,7 +73,7 @@ namespace ReceivingStation.Demodulator
         private float _carrierPhaseStep;
         private float _norm;
         private float _carrierFrequencyStep;
-        private bool _carrierPhaseLocked;
+        public bool _carrierPhaseLocked;
         public bool _LockView { get; set; }
         private float _carrierPhaseErrorAvg;
         private float SearchPhaseBandwidth;
