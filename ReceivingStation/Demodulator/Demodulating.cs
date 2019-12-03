@@ -66,21 +66,21 @@ namespace ReceivingStation.Demodulator
 
         private bool _needPLLConfigure;
 
-        private float _carrierPhase;
-        private float _carrierFrequencyRadian;
-        private float _minCarrierFrequencyRadian;
-        private float _maxCarrierFrequencyRadian;
-        private float _carrierPhaseStep;
-        private float _norm;
-        private float _carrierFrequencyStep;
-        private bool _carrierPhaseLocked;
-        public bool _LockView { get; set; }
-        private float _carrierPhaseErrorAvg;
-        private float SearchPhaseBandwidth;
-        private float _oneMinusPhaseErrCoeff;
-        private float _phaseErrorCoeff;
-        private int _watchDogCounter;
-        private float _carrierShift;
+        static float _carrierPhase;
+        static float _carrierFrequencyRadian;
+        static float _minCarrierFrequencyRadian;
+        static float _maxCarrierFrequencyRadian;
+        static float _carrierPhaseStep;
+        static float _norm;
+        static float _carrierFrequencyStep;
+        static bool _carrierPhaseLocked;
+        public static bool _LockView;
+        static float _carrierPhaseErrorAvg;
+        static float SearchPhaseBandwidth;
+        static float _oneMinusPhaseErrCoeff;
+        static float _phaseErrorCoeff;
+        static int _watchDogCounter;
+        static float _carrierShift;
 
         private SamplesAvailableEventArgs _inputbuffer = new SamplesAvailableEventArgs();
 
@@ -127,7 +127,7 @@ namespace ReceivingStation.Demodulator
         private byte[] PacketsArray;
 
         public bool PSPFinded;
-        private int mode = 0;
+        static int mode = 0;
 
         private bool FirstRead;
 
@@ -452,8 +452,8 @@ namespace ReceivingStation.Demodulator
                 _iqStream.Flush();
                 _iqStream.Dispose();
                 _iqStream.Close();
-            }           
-
+            }
+            
 
             if (_outputThread != null)
             {
