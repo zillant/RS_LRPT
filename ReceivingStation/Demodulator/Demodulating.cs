@@ -454,7 +454,6 @@ namespace ReceivingStation.Demodulator
                 _iqStream.Close();
             }           
 
-
             if (_outputThread != null)
             {
                 _outputThread.Abort();
