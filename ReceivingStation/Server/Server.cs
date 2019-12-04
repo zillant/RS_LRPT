@@ -72,7 +72,7 @@ namespace ReceivingStation.Server
                 while (StopThread == false)
                 {
                     // Перевод в местный режим управления.                 
-                    if (!_isItSelfTest)
+                    if (!_isItSelfTest) 
                         ThreadSafeChangeMode(1);
                     else
                     {
@@ -155,21 +155,15 @@ namespace ReceivingStation.Server
                     case 3:
                         // Перевод в дистанционный/местный режим управления.
                         if (command[1] == 0x1 || command[1] == 0xFF)
-                        {
                             commandStatus = GetChangeModeStatus(command[1]);
-                        }
 
                         // Запустить/Остановить запись потока.
-                        if (command[1] == 0xFC || command[1] == 0xFD)
-                        {
+                        if (command[1] == 0xFC || command[1] == 0xFD) 
                             commandStatus = GetStartStopReceivingStatus(command[1]);
-                        }
 
                         // Получить статус синхронизации.
-                        if (command[1] == 0x03)
-                        {
+                        if (command[1] == 0x03) 
                             commandStatus = GetSyncStatus();
-                        }
 
                         break;
                     case 6:
@@ -198,16 +192,11 @@ namespace ReceivingStation.Server
                 if (RemoteModeFlag)
                 {
                     RemoteModeFlag = false;
-                    if (!_isItSelfTest)
-                    {
+                    if (!_isItSelfTest) 
                         ThreadSafeChangeMode(1);
-                    }
-
                 }
-                else
-                {
+                else 
                     return LocalModeMessage;
-                }
             }
 
             else if (commandValue == 0xFF)
@@ -216,13 +205,11 @@ namespace ReceivingStation.Server
                 if (!RemoteModeFlag)
                 {
                     RemoteModeFlag = true;
-                    if (!_isItSelfTest)
+                    if (!_isItSelfTest) 
                         ThreadSafeChangeMode(0);
                 }
-                else
-                {
+                else 
                     return RemoteModeMessage;
-                }
             }
 
             return OkMessage;
@@ -242,10 +229,8 @@ namespace ReceivingStation.Server
                 // Проверяем содержимое команды после заголовка и до резервного байта.
                 for (int i = 1; i < 5; i++)
                 {
-                    if (command[i] == 0x1 || command[i] == 0x2)
-                    {
+                    if (command[i] == 0x1 || command[i] == 0x2) 
                         continue;
-                    }
 
                     return InvalidCommandMessage;
                 }
@@ -255,15 +240,13 @@ namespace ReceivingStation.Server
                 if (!_isItSelfTest)
                     ThreadSafeSetReceiveParameters(command[1], command[2], command[3], command[4]);              
             }
-            else if (!RemoteModeFlag)
-            {
-                return LocalModeMessage;
-            }
-            else if (ReceivingStartedFlag)
-            {
-                return ReceivingStartedMessage;
-            }
 
+            else if (!RemoteModeFlag) 
+                return LocalModeMessage;
+
+            else if (ReceivingStartedFlag)
+                return ReceivingStartedMessage;
+            
             return OkMessage;
         }
 
@@ -281,23 +264,20 @@ namespace ReceivingStation.Server
                 // Начать запись потока.
                 if (RemoteModeFlag && _setParametersFlag && !ReceivingStartedFlag)
                 {
-                    if (!_isItSelfTest)
+                    if (!_isItSelfTest) 
                         ThreadSafeStartStopReceiving();
-                    else
+                    else 
                         ReceivingStartedFlag = true;
                 }
                 else if (!RemoteModeFlag)
-                {
-                    return LocalModeMessage;
-                }
-                else if (!_setParametersFlag)
-                {
+                    return LocalModeMessage; 
+                
+                else if (!_setParametersFlag) 
                     return ParametersNotSetMessage;
-                }
-                else if (ReceivingStartedFlag)
-                {
+
+                else if (ReceivingStartedFlag) 
                     return ReceivingStartedMessage;
-                }
+                
             }
 
             else if (commandValue == 0xFD)
@@ -306,18 +286,19 @@ namespace ReceivingStation.Server
                 if (RemoteModeFlag && ReceivingStartedFlag)
                 {
                     if (!_isItSelfTest)
+                    {
                         ThreadSafeStartStopReceiving();
-                    else
-                        ReceivingStartedFlag = false;
+                        _setParametersFlag = false;
+                    }                        
+                    else 
+                        ReceivingStartedFlag = false;                        
                 }
-                else if (!RemoteModeFlag)
-                {
+
+                else if (!RemoteModeFlag) 
                     return LocalModeMessage;
-                }
-                else
-                {
+
+                else 
                     return ReceivingNotStartedMessage;
-                }
             }
 
             return OkMessage;
@@ -331,15 +312,12 @@ namespace ReceivingStation.Server
         /// </returns>
         private byte GetSyncStatus()
         {
-            if (!RemoteModeFlag)
-            {
+            if (!RemoteModeFlag) 
                 return LocalModeMessage;
-            }
-            else if (!ReceivingStartedFlag)
-            {
-                return ReceivingNotStartedMessage;
-            }
 
+            else if (!ReceivingStartedFlag) 
+                return ReceivingNotStartedMessage;
+            
             return OkMessage;
         }
 
