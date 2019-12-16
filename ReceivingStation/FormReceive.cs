@@ -341,9 +341,9 @@ namespace ReceivingStation
 
                 if (_freq == 0x1)
                 {
-                    freqs = "137.1";
+                    freqs = "137,1";
                 }
-                else if (_freq == 0x2) freqs = "137.9";
+                else if (_freq == 0x2) freqs = "137,9";
 
                 if (_interliving == 0x1) inters = "с_инт";
                 else if (_interliving == 0x2) inters = "без_инт";
@@ -678,8 +678,8 @@ namespace ReceivingStation
 
             lblFinded.Visible = true;
 
-            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137.100";
-            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137.900";
+            if (rbFreq1.Checked) comBx_carrier.SelectedItem = "137,100";
+            else if (rbFreq2.Checked) comBx_carrier.SelectedItem = "137,900";
             comBx_SampleRate.SelectedItem = "1024000";
         }
 
