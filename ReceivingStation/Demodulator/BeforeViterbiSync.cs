@@ -202,8 +202,8 @@ namespace ReceivingStation.Demodulator
                 Array.Copy(FirstPacket, arrayToCorrect, _FullLength);
                 Array.Copy(SecondPacket, 0, arrayToCorrect, 16384, _FullLength);
 
-                //if (outmode == 3 || outmode == 5)
-                    if (outmode == 1 || outmode == 7)
+                if (outmode == 3 || outmode == 5) // для sdr приемника
+                    //if (outmode == 1 || outmode == 7) //для wav файла
                     {
                     arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
                     arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
