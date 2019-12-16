@@ -26,5 +26,8 @@
     <Setting Name="Interliving_FindedBits" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">24</Value>
     </Setting>
+    <Setting Name="PortNumber" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2503</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
