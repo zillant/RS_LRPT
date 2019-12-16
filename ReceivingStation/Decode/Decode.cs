@@ -176,7 +176,6 @@ namespace ReceivingStation.Decode
         /// <remarks>
         /// При нахождении более 15 ошибок прерывает цикл.
         /// </remarks>
-        /// <param name="beginInd">Начальный индекс байта массива ТК.</param>
         /// <returns>Найдена ли ошибка в байте ТК.</returns>
         private bool CheckData()
         {

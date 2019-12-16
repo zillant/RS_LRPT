@@ -169,9 +169,6 @@
   <data name="ipAddressLocal" xml:space="preserve">
     <value>127.0.0.1</value>
   </data>
-  <data name="PortNumber" xml:space="preserve">
-    <value>2503</value>
-  </data>
   <data name="inter_sync_bad" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\inter_sync_bad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
