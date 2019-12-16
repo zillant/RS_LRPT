@@ -980,7 +980,7 @@ namespace ReceivingStation.Demodulator
                     {
                         _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
-                        PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP);
+                        PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP, _wavFile != null);
                         FirstRead = true;
                         Console.WriteLine("First Read");
                     }
@@ -993,7 +993,7 @@ namespace ReceivingStation.Demodulator
                         _outputBuffer = Delete(_outputBuffer, 0);
                         _outputBuffer = AddElement(_outputBuffer, Element[0]);
                         _outputBuffer = AddElement(_outputBuffer, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
-                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP);
+                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP, _wavFile != null);
                         else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);
                         if (BVS != null) mode = BVS.outmode;
                         
@@ -1026,7 +1026,7 @@ namespace ReceivingStation.Demodulator
                         if (_FifoBuffer != null) _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         if (_outputBuffer != null) ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
 
-                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer,  _FindedBitsInPSP);
+                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer,  _FindedBitsInPSP, _wavFile != null);
                         else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);
 
                         if (BVS != null) mode = BVS.outmode;
