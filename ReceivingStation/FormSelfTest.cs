@@ -106,7 +106,39 @@ namespace ReceivingStation
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
-            if (_receiver != null)   flags = _receiver.UpdateDataGui();
+            
+            if (_receiver != null)
+            {
+                flags = _receiver.UpdateDataGui();
+                if (flags[1]) locked = true;
+                if (locked && !flags[1]) lockedlost = true;
+                
+                if (lockedlost)
+                {
+                    if (_errorsTkCount > 0)
+                    {
+                        WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else
+                    {
+                        WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
+                    }
+
+                    WriteActions("  Самопроверка завершена", Color.White);
+                    LogFiles.WriteUserActions("Самопроверка завершена");
+
+                    if (_receiver != null)
+                    {
+                        _receiver.StopDecoding();
+                        _receiver = null;
+                    }
+                    lockedlost = false;
+                    locked = false;
+
+                    _receiver.StopDecoding();
+                    _receiver = null;
+                }
+            }
         }
 
         private void btnSelfTesting_Click(object sender, EventArgs e)
@@ -136,46 +168,8 @@ namespace ReceivingStation
             _receiver.RecordStart(isSelfTest);
 
             pSelfTestSettings.Enabled = true;
-
-            _updateLock = new Thread(UpdateLock);
-            _updateLock.Start();
         }
        
-        private void UpdateLock()
-        {
-            while (true)
-            {
-                flags = _receiver.UpdateDataGui();
-                if (flags[1]) locked = true;
-                if (locked && !flags[1]) lockedlost = true;
-
-                if (lockedlost)
-                {
-                    if (_errorsTkCount > 0)
-                    {
-                        WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
-                    }
-                    else
-                    {
-                        WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
-                    }
-
-                    WriteActions("  Самопроверка завершена", Color.White);
-                    LogFiles.WriteUserActions("Самопроверка завершена");
-
-                    if (_receiver != null)
-                    {
-                        _receiver.StopDecoding();
-                        _receiver = null;
-                    }
-                    lockedlost = false;
-                    locked = false;
-                    
-                    return;
-                }
-            }
-        }
-
         private async void btnSelfTestingServer_Click(object sender, EventArgs e)
         {
             rtbSelfTest.Clear();
