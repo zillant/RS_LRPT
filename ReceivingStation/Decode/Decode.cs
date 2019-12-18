@@ -569,7 +569,6 @@ namespace ReceivingStation.Decode
                     else
                         bit = b;
                     //------------------------
-                    Console.WriteLine(Ind_mar_tk_bit);
                     if (Ind_mar_tk_bit < 32) //зона маркера тк
                     {
                         if (bit == Convert.ToBoolean(Constants.zag_tk_bit[Ind_mar_tk_bit]))
