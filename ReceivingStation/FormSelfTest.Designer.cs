@@ -62,6 +62,7 @@
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.opnDlg = new System.Windows.Forms.OpenFileDialog();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.doubleBufferedPanel2.SuspendLayout();
@@ -517,6 +518,10 @@
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
             // 
+            // opnDlg
+            // 
+            this.opnDlg.FileName = "opnDlg";
+            // 
             // FormSelfTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -592,5 +597,6 @@
         private MaterialSkin.Controls.MaterialRadioButton rbQpsk;
         private MaterialSkin.Controls.MaterialRadioButton rbOqpsk;
         private MaterialSkin.Controls.MaterialLabel materialLabel7;
+        private System.Windows.Forms.OpenFileDialog opnDlg;
     }
 }

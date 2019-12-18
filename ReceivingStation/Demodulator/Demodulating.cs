@@ -916,6 +916,13 @@ namespace ReceivingStation.Demodulator
             FirstRead = false;
             PSPFinded = false;
 
+            if (isSelfTest)
+            {
+                SearchPhaseBandwidth = 250;
+                _FindedBitsInPSP = 72;
+                _NRZ = true;
+            }
+
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;
@@ -1021,7 +1028,7 @@ namespace ReceivingStation.Demodulator
                         if (_DemodDatfile != null) _DemodDatfile.Write(_correctedarray, _correctedarray.Length);
 
                         if (!_isSelfTest) _decode.StartDecode(_correctedarray, _NRZ, _Interliving);
-                        else _decode.SFStartDecode(_correctedarray, false, _Interliving);
+                        else _decode.SFStartDecode(_correctedarray, _NRZ, _Interliving);
                        
                         if (_FifoBuffer != null) _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         if (_outputBuffer != null) ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
@@ -1138,8 +1145,8 @@ namespace ReceivingStation.Demodulator
                             //Console.WriteLine("finded");
                             StreamCorrection.fromAmplitudesToBits(_outputBuffer_wInt, _correctedarray_Int);
                             if (_DemodDatfile != null) _DemodDatfile.Write(_correctedarray_Int, _correctedarray_Int.Length);
-                            if (!_isSelfTest) _decode.StartDecode(_correctedarray_Int, true, _Interliving); // режим штатной работы
-                            else _decode.SFStartDecode(_correctedarray_Int, true, _Interliving);// режим самопроверки
+                            if (!_isSelfTest) _decode.StartDecode(_correctedarray_Int, _NRZ, _Interliving); // режим штатной работы
+                            else _decode.SFStartDecode(_correctedarray_Int, _NRZ, _Interliving);// режим самопроверки
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
                             if (_sWriter) _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
@@ -1326,15 +1333,17 @@ namespace ReceivingStation.Demodulator
             }
         }
 
-        public void wav_samples(string filename, int bufferSizeInMs)
+        public void wav_samples(string filename, int bufferSizeInMs, bool isSelfTest)
         {
             _wavFile = new WaveFile(filename);
             _SampleRate = (uint)_wavFile.SampleRate;
             _iqStream = new ComplexFifoStream(BlockMode.BlockingRead);
             StartWAVReading();
             StartDecoding();
-            RecordStart(false);
+            RecordStart(isSelfTest);
         }
+
+
 
         private void StartWAVReading()
         {

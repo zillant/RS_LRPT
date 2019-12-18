@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReceivingStation.MessageBoxes;
 using ReceivingStation.Server;
+using System.IO;
 
 namespace ReceivingStation
 {
@@ -28,7 +29,18 @@ namespace ReceivingStation
         bool[] flags = new bool[2];
         bool lockedlost = false;
         bool locked = false;
-       
+
+        private enum InputType
+        {
+            RTLSDR,
+            WavFile
+        }
+        private InputType _inputType;
+        private string _waveFile;
+        private int count;
+        private int PLLCount;
+        private int PSPCount;
+
         private Thread _updateLock;
 
         public FormSelfTest()
@@ -53,6 +65,8 @@ namespace ReceivingStation
 
             _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();
+
+            _inputType = InputType.WavFile;
 
         }
 
@@ -106,18 +120,35 @@ namespace ReceivingStation
         private void timer1_Tick(object sender, EventArgs e)
         {
             slTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
-            
+
             if (_receiver != null)
             {
                 flags = _receiver.UpdateDataGui();
-                if (flags[1]) locked = true;
-                if (locked && !flags[1]) lockedlost = true;
-                
-                if (lockedlost)
+                bool pspFinded = _receiver.PSPFinded;
+                bool pllLocked = _receiver._carrierPhaseLocked;
+
+                if (pllLocked) locked = true;
+                if (!pllLocked) PLLCount++;
+                if (!pspFinded) PSPCount++;
+                if (pspFinded) count++;
+                if (locked && !pllLocked) lockedlost = true;
+
+                if (lockedlost || count == 10 || PLLCount == 30 || PSPCount == 30)
                 {
+                    count = 0;
+                    PLLCount = 0;
+                    PSPCount = 0;
                     if (_errorsTkCount > 0)
                     {
                         WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else if (PLLCount == 30)
+                    {
+                        WriteActions("  Отсутствует высокочастотный сигнал\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else if (PSPCount == 30)
+                    {
+                        WriteActions("  Отсутствует синхромаркер\n\n", GuiUpdater.ErrorColor);
                     }
                     else
                     {
@@ -133,10 +164,7 @@ namespace ReceivingStation
                         _receiver = null;
                     }
                     lockedlost = false;
-                    locked = false;
-
-                    _receiver.StopDecoding();
-                    _receiver = null;
+                    locked = false;                 
                 }
             }
         }
@@ -163,13 +191,43 @@ namespace ReceivingStation
             var isSelfTest = true;
             Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
             if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
-            _receiver.Dongle_Configuration(137100000,1024000,5); // инициализируем свисток, в нем отсчеты записываются в поток
-            _receiver.StartDecoding();
-            _receiver.RecordStart(isSelfTest);
+            if (_inputType == InputType.RTLSDR)
+            {
+                uint freq;
+                freq = _freq == 0x1 ? freq = 137100000 : freq = 137900000;
+                _receiver.Dongle_Configuration(freq, 1024000, 15); // инициализируем свисток, в нем отсчеты записываются в поток
+                _receiver.StartDecoding();
+                _receiver.RecordStart(isSelfTest);
+            }
+            if (_inputType == InputType.WavFile)
+            {
+                try
+                {
+                    SelectWaveFile();
+                    if (!File.Exists(_waveFile))
+                    {
+                        throw new ApplicationException("Не выбран файл");
+                    }
+                    _receiver.wav_samples(_waveFile, 2048, true);
+                }
+                catch (ApplicationException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                   
+                }
+            }
 
             pSelfTestSettings.Enabled = true;
         }
-       
+
+        private void SelectWaveFile()
+        {
+            if (opnDlg.ShowDialog() == DialogResult.OK)
+            {
+                _waveFile = opnDlg.FileName;
+            }
+        }
+
         private async void btnSelfTestingServer_Click(object sender, EventArgs e)
         {
             rtbSelfTest.Clear();

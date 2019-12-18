@@ -414,7 +414,7 @@ namespace ReceivingStation
                         {
                             throw new ApplicationException("Не выбран файл");
                         }
-                        _receiver.wav_samples(_waveFile, 2048);
+                        _receiver.wav_samples(_waveFile, 2048, false);
                     }
                     catch (ApplicationException ex)
                     {
