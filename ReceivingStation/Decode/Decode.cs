@@ -166,10 +166,10 @@ namespace ReceivingStation.Decode
                 errs++;
             }
 
-            if (Kol_tk % 20 == 0)
-            {
+           // if (Kol_tk % 20 == 0)
+           // {
                 ThreadSafeUpdateSelfTestData(Kol_tk, errs);
-            }          
+           // }          
         }
 
         /// <summary>
