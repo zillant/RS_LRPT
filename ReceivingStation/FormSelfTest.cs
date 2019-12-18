@@ -18,6 +18,7 @@ namespace ReceivingStation
         private Server.Server _server;
         private Thread _serverThread;
         private ClientForSelfTest _client;
+        private Decode.Decode _decode;
 
         private Demodulator.Demodulating _receiver;
         private byte _freq;
@@ -150,6 +151,10 @@ namespace ReceivingStation
                     {
                         WriteActions("  Отсутствует синхромаркер\n\n", GuiUpdater.ErrorColor);
                     }
+                    else if (_decode.Kol_tk == 0)
+                    {
+                        WriteActions("  Транспортный кадр не найден\n\n", GuiUpdater.ErrorColor);
+                    }
                     else
                     {
                         WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
@@ -162,6 +167,7 @@ namespace ReceivingStation
                     {
                         _receiver.StopDecoding();
                         _receiver = null;
+                        _decode = null;
                     }
                     lockedlost = false;
                     locked = false;
@@ -193,7 +199,7 @@ namespace ReceivingStation
                 else _modulation = 0x2; // OQPSK mod off
 
                 var isSelfTest = true;
-                Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
+                _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
                 if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
                 if (_inputType == InputType.RTLSDR)
                 {
