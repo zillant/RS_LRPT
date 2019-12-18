@@ -23,6 +23,7 @@ namespace ReceivingStation
         private byte _freq;
         private byte _interliving;
         private byte _modulation;
+        private bool _selfTestStart = false;
 
         private int _errorsTkCount; // Для подсчета ТК с ошибками превышающими 15 на 1 байт ТК.
 
@@ -41,7 +42,6 @@ namespace ReceivingStation
         private int PLLCount;
         private int PSPCount;
 
-        private Thread _updateLock;
 
         public FormSelfTest()
         {
@@ -133,7 +133,7 @@ namespace ReceivingStation
                 if (pspFinded) count++;
                 if (locked && !pllLocked) lockedlost = true;
 
-                if (lockedlost || count == 10 || PLLCount == 30 || PSPCount == 30)
+                if (lockedlost || count == 10 || PLLCount == 30 || PSPCount == 30 || _selfTestStart is false)
                 {
                     count = 0;
                     PLLCount = 0;
@@ -164,60 +164,67 @@ namespace ReceivingStation
                         _receiver = null;
                     }
                     lockedlost = false;
-                    locked = false;                 
+                    locked = false;
+                    ControlUi(true);
                 }
             }
         }
 
         private void btnSelfTesting_Click(object sender, EventArgs e)
         {
-            rtbSelfTest.Clear();
-            pSelfTestSettings.Enabled = false;
-            Settings.Default.lastSelfTestDate = DateTime.Now.ToString();
-            Settings.Default.Save();
-            UpdateLastDates();
-
-            LogFiles.WriteUserActions("Начата самопроверка");
-            WriteActions("  Начата самопроверка\n\n", Color.White);
-
-            if (rbFreq1.Checked) _freq = 0x1;
-            else if (rbFreq2.Checked) _freq = 0x2;
-            if (rbInterlivingReceiveOn.Checked) _interliving = 0x1;
-            else if (rbInterlivingReceiveOff.Checked) _interliving = 0x2;
-
-            if (rbQpsk.Checked) _modulation = 0x1; // QPSK mod ON
-            else _modulation = 0x2; // OQPSK mod off
-
-            var isSelfTest = true;
-            Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
-            if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
-            if (_inputType == InputType.RTLSDR)
+            if (_selfTestStart is false)
             {
-                uint freq;
-                freq = _freq == 0x1 ? freq = 137100000 : freq = 137900000;
-                _receiver.Dongle_Configuration(freq, 1024000, 15); // инициализируем свисток, в нем отсчеты записываются в поток
-                _receiver.StartDecoding();
-                _receiver.RecordStart(isSelfTest);
-            }
-            if (_inputType == InputType.WavFile)
-            {
-                try
+                rtbSelfTest.Clear();
+                _selfTestStart = true;
+                ControlUi(false);
+                Settings.Default.lastSelfTestDate = DateTime.Now.ToString();
+                Settings.Default.Save();
+                UpdateLastDates();
+
+                LogFiles.WriteUserActions("Начата самопроверка");
+                WriteActions("  Начата самопроверка\n\n", Color.White);
+
+                if (rbFreq1.Checked) _freq = 0x1;
+                else if (rbFreq2.Checked) _freq = 0x2;
+                if (rbInterlivingReceiveOn.Checked) _interliving = 0x1;
+                else if (rbInterlivingReceiveOff.Checked) _interliving = 0x2;
+
+                if (rbQpsk.Checked) _modulation = 0x1; // QPSK mod ON
+                else _modulation = 0x2; // OQPSK mod off
+
+                var isSelfTest = true;
+                Decode.Decode _decode = new Decode.Decode() { ThreadSafeUpdateSelfTestData = UpdateSelfTestData };
+                if (_receiver == null)  _receiver = new Demodulator.Demodulating(_freq, _interliving, _modulation, _decode);
+                if (_inputType == InputType.RTLSDR)
                 {
-                    SelectWaveFile();
-                    if (!File.Exists(_waveFile))
+                    uint freq;
+                    freq = _freq == 0x1 ? freq = 137100000 : freq = 137900000;
+                    _receiver.Dongle_Configuration(freq, 1024000, 15); // инициализируем свисток, в нем отсчеты записываются в поток
+                    _receiver.StartDecoding();
+                    _receiver.RecordStart(isSelfTest);
+                }
+                if (_inputType == InputType.WavFile)
+                {
+                    try
                     {
-                        throw new ApplicationException("Не выбран файл");
+                        SelectWaveFile();
+                        if (!File.Exists(_waveFile))
+                        {
+                            throw new ApplicationException("Не выбран файл");
+                        }
+                        _receiver.wav_samples(_waveFile, 2048, true);
                     }
-                    _receiver.wav_samples(_waveFile, 2048, true);
-                }
-                catch (ApplicationException ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    catch (ApplicationException ex)
+                    {
+                        MessageBox.Show(ex.Message);
                    
+                    }
                 }
             }
-
-            pSelfTestSettings.Enabled = true;
+            else
+            {
+                _selfTestStart = false;
+            }
         }
 
         private void SelectWaveFile()
@@ -266,6 +273,17 @@ namespace ReceivingStation
             {
                Invoke(new Action(() => rtbSelfTest.Text = $"  Начата самопроверка\n\n  Кол-во кадров: {tkCount}\n  Кол-во кадров с ошибками: {_errorsTkCount}\n\n"));
             }
+        }
+
+        private void ControlUi(bool enableStatus)
+        {
+            panel1.Enabled = enableStatus;
+            panel2.Enabled = enableStatus;
+            panel3.Enabled = enableStatus;
+            pModulation.Enabled = enableStatus;
+            btnSelfTestingServer.Enabled = enableStatus;
+
+            btnSelfTesting.Text = enableStatus is false? "Остановить" : "Начать самопроверку";
         }
     }
 }
