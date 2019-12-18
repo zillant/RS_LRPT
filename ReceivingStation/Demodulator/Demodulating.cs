@@ -919,7 +919,7 @@ namespace ReceivingStation.Demodulator
             if (isSelfTest)
             {
                 SearchPhaseBandwidth = 250;
-                _FindedBitsInPSP = 72;
+                _FindedBitsInPSP = 80;
                 _NRZ = true;
             }
 
