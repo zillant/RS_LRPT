@@ -128,17 +128,24 @@ namespace ReceivingStation
                 bool pspFinded = _receiver.PSPFinded;
                 bool pllLocked = _receiver._carrierPhaseLocked;
 
-                if (pllLocked) locked = true;
+                if (pllLocked)
+                {
+                    locked = true;
+                    PLLCount--;
+                }
                 if (!pllLocked) PLLCount++;
-                if (!pspFinded) PSPCount++;
-                if (pspFinded) count++;
+                if (!pspFinded && pllLocked) PSPCount++;
+                if (pspFinded)
+                {
+                    count++;
+                    PSPCount--;
+                }
+
                 if (locked && !pllLocked) lockedlost = true;
 
-                if (lockedlost || count == 10 || PLLCount == 30 || PSPCount == 30 || _selfTestStart is false)
+                if ((count == 10 || PLLCount == 30 || PSPCount == 30 || _selfTestStart is false) && _interliving == 0x2) // без интерливинга
                 {
-                    count = 0;
-                    PLLCount = 0;
-                    PSPCount = 0;
+                    
                     if (_errorsTkCount > 0)
                     {
                         WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
@@ -172,6 +179,52 @@ namespace ReceivingStation
                     lockedlost = false;
                     locked = false;
                     ControlUi(true);
+                    count = 0;
+                    PLLCount = 0;
+                    PSPCount = 0;
+                }
+
+
+                if ((count == 100 || PLLCount == 30 || PSPCount == 100 || _selfTestStart is false || _decode.Kol_tk > 100) && _interliving == 0x1) // с интерливингом
+                {
+                    
+                    if (_errorsTkCount > 0)
+                    {
+                        WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else if (PLLCount == 30)
+                    {
+                        WriteActions("  Отсутствует высокочастотный сигнал\n\n", GuiUpdater.ErrorColor);
+                    }
+                    
+                    else if (PSPCount == 30)
+                    {
+                        WriteActions("  Отсутствует синхромаркер\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else if (_decode.Kol_tk == 0)
+                    {
+                        WriteActions("  Транспортный кадр не найден\n\n", GuiUpdater.ErrorColor);
+                    }
+                    else
+                    {
+                        WriteActions("  Самопроверка прошла без ошибок\n\n", GuiUpdater.OkColor);
+                    }
+
+                    WriteActions("  Самопроверка завершена", Color.White);
+                    LogFiles.WriteUserActions("Самопроверка завершена");
+
+                    if (_receiver != null)
+                    {
+                        _receiver.StopDecoding();
+                        _receiver = null;
+                        _decode = null;
+                    }
+                    lockedlost = false;
+                    locked = false;
+                    ControlUi(true);
+                    count = 0;
+                    PLLCount = 0;
+                    PSPCount = 0;
                 }
             }
         }

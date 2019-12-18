@@ -239,8 +239,14 @@ namespace ReceivingStation.Demodulator
                 _qpskModulation = false;
             }
         }
-
-        public Demodulating(byte freqmode, byte interliving, byte modulation, Decode.Decode decode) // конструктор для самопроверки
+        /// <summary>
+        /// Конструктор для самопроверки
+        /// </summary>
+        /// <param name="freqmode"></param>
+        /// <param name="interliving"></param>
+        /// <param name="modulation"></param>
+        /// <param name="decode"></param>
+        public Demodulating(byte freqmode, byte interliving, byte modulation, Decode.Decode decode) 
         {
             _FrequencyMode = freqmode;
             _Modulation = modulation;
@@ -256,6 +262,12 @@ namespace ReceivingStation.Demodulator
                 _Interliving = false;
                 _SymbolRate = 72000;
             }
+
+            SearchPhaseBandwidth = 250;
+            _FindedBitsInPSP = 75;
+            _NRZ = true;
+            _InterlivingFindedBits = 26;
+            
 
             StreamCorrection = new StreamCorrection(interliving);
             BVS = new BeforeViterbiSync();
@@ -916,13 +928,7 @@ namespace ReceivingStation.Demodulator
             FirstRead = false;
             PSPFinded = false;
 
-            if (isSelfTest)
-            {
-                SearchPhaseBandwidth = 250;
-                _FindedBitsInPSP = 80;
-                _NRZ = true;
-            }
-
+            
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;

@@ -122,7 +122,7 @@ namespace ReceivingStation.Decode
         /// </summary>   
         public void SFStartDecode(byte[] data, bool nrz, bool _isInterliving)
         {
-            if (_isInterliving) Constants.DL_IN_BUF = 32768;
+            if (_isInterliving) Constants.DL_IN_BUF = 32000;
             else Constants.DL_IN_BUF = 4096;
 
             in_buf = new byte[Constants.DL_IN_BUF];
@@ -569,7 +569,7 @@ namespace ReceivingStation.Decode
                     else
                         bit = b;
                     //------------------------
-                    Console.WriteLine(Ind_mar_tk_bit);
+                    //Console.WriteLine(Ind_mar_tk_bit);
                     if (Ind_mar_tk_bit < 32) //зона маркера тк
                     {
                         if (bit == Convert.ToBoolean(Constants.zag_tk_bit[Ind_mar_tk_bit]))
