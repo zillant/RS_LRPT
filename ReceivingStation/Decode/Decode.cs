@@ -166,10 +166,10 @@ namespace ReceivingStation.Decode
                 errs++;
             }
 
-            if (Kol_tk % 20 == 0)
-            {
+           // if (Kol_tk % 20 == 0)
+           // {
                 ThreadSafeUpdateSelfTestData(Kol_tk, errs);
-            }          
+           // }          
         }
 
         /// <summary>
@@ -569,7 +569,10 @@ namespace ReceivingStation.Decode
                     else
                         bit = b;
                     //------------------------
+<<<<<<< HEAD
                     //Console.WriteLine(Ind_mar_tk_bit);
+=======
+>>>>>>> 0280d4a80efddd1ec43630df7b0b9d0f11f656cc
                     if (Ind_mar_tk_bit < 32) //зона маркера тк
                     {
                         if (bit == Convert.ToBoolean(Constants.zag_tk_bit[Ind_mar_tk_bit]))

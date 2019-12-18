@@ -127,6 +127,7 @@ namespace ReceivingStation
                 flags = _receiver.UpdateDataGui();
                 bool pspFinded = _receiver.PSPFinded;
                 bool pllLocked = _receiver._carrierPhaseLocked;
+                uint kol_tk = _decode.Kol_tk;
 
                 if (pllLocked)
                 {
@@ -201,7 +202,7 @@ namespace ReceivingStation
                     {
                         WriteActions("  Отсутствует синхромаркер\n\n", GuiUpdater.ErrorColor);
                     }
-                    else if (_decode.Kol_tk == 0)
+                    else if (kol_tk == 0)
                     {
                         WriteActions("  Транспортный кадр не найден\n\n", GuiUpdater.ErrorColor);
                     }

@@ -928,7 +928,17 @@ namespace ReceivingStation.Demodulator
             FirstRead = false;
             PSPFinded = false;
 
+<<<<<<< HEAD
             
+=======
+            if (isSelfTest)
+            {
+                SearchPhaseBandwidth = 250;
+                _FindedBitsInPSP = 72;
+                _NRZ = true;
+            }
+
+>>>>>>> 0280d4a80efddd1ec43630df7b0b9d0f11f656cc
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;
