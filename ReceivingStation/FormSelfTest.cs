@@ -135,9 +135,7 @@ namespace ReceivingStation
 
                 if (lockedlost || count == 10 || PLLCount == 30 || PSPCount == 30)
                 {
-                    count = 0;
-                    PLLCount = 0;
-                    PSPCount = 0;
+                   
                     if (_errorsTkCount > 0)
                     {
                         WriteActions("  Самопроверка прошла с ошибками\n\n", GuiUpdater.ErrorColor);
@@ -164,7 +162,11 @@ namespace ReceivingStation
                         _receiver = null;
                     }
                     lockedlost = false;
-                    locked = false;                 
+                    locked = false;
+                    count = 0;
+                    PLLCount = 0;
+                    PSPCount = 0;
+
                 }
             }
         }
