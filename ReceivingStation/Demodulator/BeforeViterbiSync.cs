@@ -214,8 +214,8 @@ namespace ReceivingStation.Demodulator
                 {
                     if (outmode == 1 || outmode == 7) // для wav
                     {
-                        arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
-                        arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
+                        //arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
+                        //arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
                     }
                 }
                 for (int i = 0; i < inputarray.Length; i++)
@@ -1534,6 +1534,7 @@ namespace ReceivingStation.Demodulator
             if (PSPFinded || HardPSP)
             {
                 PacketCorrect_int(arrayToCorrect, mode);
+                
                 for (int i = 0; i < inputarray.Length; i++)
                 {
                     inputarray[i] = (byte)arrayToCorrect[i];// переводим отрывок из byte в знаковый sbyte

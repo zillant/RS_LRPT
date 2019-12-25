@@ -266,7 +266,7 @@ namespace ReceivingStation.Demodulator
             SearchPhaseBandwidth = 250;
             _FindedBitsInPSP = 85;
             _NRZ = true;
-            _InterlivingFindedBits = 28;
+            _InterlivingFindedBits = 30;
             
 
             StreamCorrection = new StreamCorrection(interliving);
@@ -929,13 +929,7 @@ namespace ReceivingStation.Demodulator
             PSPFinded = false;
 
 
-            if (isSelfTest)
-            {
-                SearchPhaseBandwidth = 250;
-                _FindedBitsInPSP = 72;
-                _NRZ = true;
-            }
-
+           
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;
@@ -1141,7 +1135,7 @@ namespace ReceivingStation.Demodulator
                             else
                             {
                                 count++;
-                                if (count > 512)  // если не нашелся маркер, сбрасываемся и перезахватываемся
+                                if (count > 256)  // если не нашелся маркер, сбрасываемся и перезахватываемся
                                 {
                                     PLLReset();
                                     SearchPhaseBandwidth +=  25;
