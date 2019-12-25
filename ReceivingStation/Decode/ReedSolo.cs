@@ -5,7 +5,7 @@ namespace ReceivingStation.Decode
     class ReedSolo
     {
         private byte[] C_GF = new byte[256]; // преобразование произвольного байта в элемент поля Галуа
-        private byte[] Rdx = new byte[1020]; // псевдошумовая последовательность для рандомизации
+        public byte[] Rdx = new byte[1020]; // псевдошумовая последовательность для рандомизации
         private byte[] u1 = new byte[255]; //результат кодировани(исх вектора + пров. символы)       
 
         private static byte[] GF_elem = {

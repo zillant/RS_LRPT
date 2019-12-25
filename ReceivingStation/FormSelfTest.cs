@@ -186,7 +186,7 @@ namespace ReceivingStation
                 }
 
 
-                if ((count == 100 || PLLCount == 30 || PSPCount == 100 || _selfTestStart is false || _decode.Kol_tk > 100) && _interliving == 0x1) // с интерливингом
+                if ((count == 100 || PLLCount == 30 || PSPCount == 100 || _selfTestStart is false) && _interliving == 0x1) // с интерливингом
                 {
                     
                     if (_errorsTkCount > 0)

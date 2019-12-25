@@ -111,6 +111,8 @@ namespace ReceivingStation.Decode
         public Decode()
         {
             _isItSelfTest = true;
+            _reedSolo = new ReedSolo();
+            _isReedSolo = false;
 
             _viterbi = new Viterbi();
 
@@ -183,6 +185,8 @@ namespace ReceivingStation.Decode
         {
             int errors = 0;
 
+
+            _reedSolo.Decode_RS(tk_in, _isReedSolo);
             for (int i = 0, j = 0; i < tk_in.Length; i++, j++)
             {
                 if (j == 255)
@@ -199,6 +203,7 @@ namespace ReceivingStation.Decode
                         if ((res & 1) == 1)
                         {
                             errors++;
+                            break;
                         }
 
                         res = res >> 1;
@@ -569,10 +574,9 @@ namespace ReceivingStation.Decode
                     else
                         bit = b;
                     //------------------------
-<<<<<<< HEAD
+
                     //Console.WriteLine(Ind_mar_tk_bit);
-=======
->>>>>>> 0280d4a80efddd1ec43630df7b0b9d0f11f656cc
+
                     if (Ind_mar_tk_bit < 32) //зона маркера тк
                     {
                         if (bit == Convert.ToBoolean(Constants.zag_tk_bit[Ind_mar_tk_bit]))

@@ -264,9 +264,9 @@ namespace ReceivingStation.Demodulator
             }
 
             SearchPhaseBandwidth = 250;
-            _FindedBitsInPSP = 75;
+            _FindedBitsInPSP = 85;
             _NRZ = true;
-            _InterlivingFindedBits = 26;
+            _InterlivingFindedBits = 28;
             
 
             StreamCorrection = new StreamCorrection(interliving);
@@ -928,9 +928,7 @@ namespace ReceivingStation.Demodulator
             FirstRead = false;
             PSPFinded = false;
 
-<<<<<<< HEAD
-            
-=======
+
             if (isSelfTest)
             {
                 SearchPhaseBandwidth = 250;
@@ -938,7 +936,6 @@ namespace ReceivingStation.Demodulator
                 _NRZ = true;
             }
 
->>>>>>> 0280d4a80efddd1ec43630df7b0b9d0f11f656cc
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;
