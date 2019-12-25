@@ -212,7 +212,7 @@ namespace ReceivingStation.Demodulator
                 }
                 if (isWavFile)
                 {
-                    if (outmode == 1 || outmode == 7) // для wav
+                    if (outmode == 3 || outmode == 5) // для wav
                     {
                         arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
                         arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
