@@ -263,10 +263,10 @@ namespace ReceivingStation.Demodulator
                 _SymbolRate = 72000;
             }
 
-            SearchPhaseBandwidth = 250;
+            SearchPhaseBandwidth = 275;
             _FindedBitsInPSP = 85;
             _NRZ = true;
-            _InterlivingFindedBits = 30;
+            _InterlivingFindedBits = 26;
             
 
             StreamCorrection = new StreamCorrection(interliving);
@@ -977,6 +977,7 @@ namespace ReceivingStation.Demodulator
             var Element = new byte[2];
             var count = 0;
             var count2 = 0;
+            bool offset = false;
 
             #region Without Interliving
             if (!_Interliving)
@@ -1001,37 +1002,52 @@ namespace ReceivingStation.Demodulator
 
                     if (FirstRead && !PSPFinded && _outputBuffer != null && !_sWriter) 
                     {
-                        _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
-                        ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
-                        _outputBuffer = Delete(_outputBuffer, 0);
-                        _outputBuffer = Delete(_outputBuffer, 0);
-                        _outputBuffer = AddElement(_outputBuffer, Element[0]);
-                        _outputBuffer = AddElement(_outputBuffer, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
-                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP, _wavFile != null);
-                        else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);
-                        if (BVS != null) mode = BVS.outmode;
-                        
+
                         if (!PSPFinded)
                         {
-                            count++;
-                            if (count > 16384 * 6)
+                            _outputBuffer = Delete(_outputBuffer, 0); //удаляем первый элемент в массиве
+
+                            _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
+                            ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
+
+                            _outputBuffer = AddElement(_outputBuffer, Element[0], _outputBuffer.Length - 1); // добавляем в конец один бит из потока, получая тем самым смещение
+                           
+                            if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP, _wavFile != null);
+                            else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);// если не нашли, то смещаемся на еще один
+
+                            if (PSPFinded) offset = true; // тесли маркер не нашелся, то есть смещение на один бит, а так из потока читается по 1 символу, состоящему из двух бит, то придется постоянно смещать на один бит
+
+                            if (!PSPFinded)
                             {
-                                // PLLReset();
-                                FirstRead = false;
+                                _outputBuffer = Delete(_outputBuffer, 0);
+                                _outputBuffer = AddElement(_outputBuffer, Element[1], _outputBuffer.Length - 1); // тут перезаписываем массив, 
+
+                                if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer, _FindedBitsInPSP, _wavFile != null);
+                                else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);
+                                if (PSPFinded) offset = false;
+                            }
+
+                            if (PSPFinded)
+                            {
+                                Console.WriteLine($"Finded; Offset{offset}");;
                                 count = 0;
                             }
-                        }
-                        else
-                        {
-
-                            Console.WriteLine("Finded");
-                            count = 0;
+                            else
+                            {
+                                count++;
+                                if (count > 16384 * 6)
+                                {
+                                    // PLLReset();
+                                    FirstRead = false;
+                                    count = 0;
+                                }
+                            }
                         }
                     }
 
                     if (FirstRead && PSPFinded && _outputBuffer != null && !_sWriter) 
                     {
-                        StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray);
+                        StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray); // подготавливаем данные для декодера
                         if (_DemodDatfile != null) _DemodDatfile.Write(_correctedarray, _correctedarray.Length);
 
                         if (!_isSelfTest) _decode.StartDecode(_correctedarray, _NRZ, _Interliving);
@@ -1039,17 +1055,24 @@ namespace ReceivingStation.Demodulator
                        
                         if (_FifoBuffer != null) _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
                         if (_outputBuffer != null) ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
-
+                        
+                        if (offset)
+                        {
+                            _outputBuffer = Delete(_outputBuffer, _outputBuffer.Length - 1);
+                            _outputBuffer = AddElement(_outputBuffer, Element[1], 0);
+                        }
+                                                
                         if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer,  _FindedBitsInPSP, _wavFile != null);
                         else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);
-
+                                                
                         if (BVS != null) mode = BVS.outmode;
 
                         if (!PSPFinded)
                         {
+#if DEBUG
                             Console.WriteLine("LOST");
+#endif
                             count2++;
-                           
                         }
                         else
                         {
@@ -1110,21 +1133,27 @@ namespace ReceivingStation.Demodulator
                             FirstRead = true;
                         }
 
-                        if (FirstRead && !PSPFinded && _outputBuffer != null && !_sWriter)
+                        if (FirstRead && !PSPFinded && _outputBuffer_wInt != null && !_sWriter)
                         {
+
+                            _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0); //удаляем первый элемент в массиве
+
                             _FifoBuffer.Read(ElementBufferPtr, 1); //тут считывается одно комплексное значение
                             ConvertComplexToByte(Element, ElementBufferPtr, Element.Length / 2);
-                            _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
-                            _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
-                            _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[0]);
-                            _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[1]); // тут перезаписываем массив, пока не наткнемся на синхромаркер
-                            count++;
 
-                            if (BVS != null)
+                            _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[0], _outputBuffer_wInt.Length - 1); // добавляем в конец один бит из потока, получая тем самым смещение
+                            
+                            if (BVS != null) PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, _InterlivingFindedBits, false);
+
+                            if (PSPFinded) offset = true; // тесли маркер не нашелся, то есть смещение на один бит, а так из потока читается по 1 символу, состоящему из двух бит, то придется постоянно смещать на один бит
+
+                            if (!PSPFinded)
                             {
-                                PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, _InterlivingFindedBits, false);
-                                mode = BVS.outmode;
+                                _outputBuffer_wInt = Delete(_outputBuffer_wInt, 0);
+                                _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[1], _outputBuffer_wInt.Length - 1); // тут перезаписываем массив, 
 
+                                if (BVS != null) PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, _InterlivingFindedBits, false);
+                                if (PSPFinded) offset = false;
                             }
 
                             if (PSPFinded)
@@ -1138,7 +1167,7 @@ namespace ReceivingStation.Demodulator
                                 if (count > 256)  // если не нашелся маркер, сбрасываемся и перезахватываемся
                                 {
                                     PLLReset();
-                                    SearchPhaseBandwidth +=  25;
+                                    SearchPhaseBandwidth +=  15;
                                     FirstRead = false;
                                     count = 0;
                                 }
@@ -1156,14 +1185,20 @@ namespace ReceivingStation.Demodulator
                             else _decode.SFStartDecode(_correctedarray_Int, _NRZ, _Interliving);// режим самопроверки
                             _FifoBuffer.Read(_recordBufferIntPtr, BufferSizeToRecord_withInt);
                             ConvertComplexToByte(_outputBuffer_wInt, _recordBufferIntPtr, BufferSizeToRecord_withInt);
-                            if (_sWriter) _rawWriter.Write(_outputBuffer_wInt, _outputBuffer_wInt.Length);
+                           
+                            if (offset)
+                            {
+                                _outputBuffer_wInt = Delete(_outputBuffer_wInt, _outputBuffer_wInt.Length - 1);
+                                _outputBuffer_wInt = AddElement(_outputBuffer_wInt, Element[1], 0);
+                            }
+
                             if (BVS != null)
                             {
                                 PSPFinded = BVS.PSPSearch_wInt(_outputBuffer_wInt, _InterlivingFindedBits, _HardPSP);
                                 mode = BVS.mode;
                             }
                             if (!PSPFinded) Console.WriteLine("LOST");
-                            else Console.WriteLine("Finded");
+                            else Console.WriteLine($"Finded, offset {offset}");
 
                             if (!PSPFinded)
                             {
@@ -1258,17 +1293,30 @@ namespace ReceivingStation.Demodulator
             return output;
         }
 
-        private  byte[] AddElement(byte[] array, byte element)//добавляет элемент в конец массива
+
+        private  byte[] AddElement(byte[] array, byte element, int index)//добавляет элемент в конец массива
         {
+            if (array.Length == 0) return array;
+            if (array.Length <= index) return array;
+
             var output = new byte[array.Length + 1];
-            Array.Copy(array, output, array.Length);
-            output[output.Length - 1] = element;
+            int counter = 0;
+            for (int i = 0; i < output.Length; i++)
+            {
+                if (i == index)
+                {
+                    output[i] = element;
+                    continue;
+                }
+                output[i] = array[counter];
+                counter++;
+            }
             return output;
         }
 
         private void fromAmplitudesToBits(byte[] indata, byte[] outarray)
         {
-            System.IO.BinaryWriter datfile = new BinaryWriter(File.Open(@"AfterSync_HEX.dat", FileMode.OpenOrCreate));
+            BinaryWriter datfile = new BinaryWriter(File.Open(@"AfterSync_HEX.dat", FileMode.OpenOrCreate));
             sbyte[] data = new sbyte[indata.Length];
 
             for (int i = 0; i < data.Length; i++)
