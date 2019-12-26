@@ -79,7 +79,7 @@ namespace ReceivingStation.Demodulator
         public BeforeViterbiSync()
         {
             
-            for (int i = 0; i < PSPLength; i++) pspNRZ2[i] = (sbyte)-pspNRZ1[i];
+            for (int i = 0; i < pspNRZ1.Length; i++) pspNRZ2[i] = (sbyte)-pspNRZ1[i];
 
             Array.Copy(pspNRZ1, pspNRZ1i, pspNRZ1.Length); // копируем исходный маркер, а затем формируем варианты ошибочного маркера
             Array.Copy(pspNRZ1, pspNRZ1ii, pspNRZ1.Length);
@@ -87,7 +87,7 @@ namespace ReceivingStation.Demodulator
             Array.Copy(pspNRZ2, pspNRZ2i, pspNRZ2.Length);
             Array.Copy(pspNRZ2, pspNRZ2ii, pspNRZ2.Length);
 
-            for (int i = 0; i < PSPLength / 2; i++)
+            for (int i = 0; i < PSPLength / 2 - 1; i++)
             {
                 pspNRZ1i[2 * i] = (sbyte)-pspNRZ1[2 * i];
                 pspNRZ2i[2 * i] = (sbyte)-pspNRZ2[2 * i];
@@ -107,10 +107,6 @@ namespace ReceivingStation.Demodulator
             bool PSPFinded2 = false;
 
             sbyte[] arrayToCorrect = new sbyte[inputarray.Length];
-            sbyte[] pspNRZ1i = new sbyte[PSPLength];
-            sbyte[] pspNRZ2i = new sbyte[PSPLength];
-            sbyte[] array = new sbyte[PSPLength];
-            sbyte[] array2 = new sbyte[PSPLength];
             sbyte[] FirstPacket = new sbyte[_FullLength];
             sbyte[] SecondPacket = new sbyte[_FullLength];
 
@@ -136,7 +132,7 @@ namespace ReceivingStation.Demodulator
 
             for (int i = 0; i < PSPLength; i++)
             {
-                PSP2[i] = (sbyte)inputarray[i + _FullLength - 1];// переводим отрывок из byte в знаковый sbyte, берем заголовок второго пакета
+                PSP2[i] = (sbyte)inputarray[i + _FullLength];// переводим отрывок из byte в знаковый sbyte, берем заголовок второго пакета
             }
 
             for (int i = 0; i < inputarray.Length; i++)
@@ -146,7 +142,7 @@ namespace ReceivingStation.Demodulator
            
             _dif = PSPCompare_with1stNRZMode(PSP);
 
-            for (int i = 1; i < 9; i++)
+            for (int i = 1; i < _dif.Length; i++)
             {
                 if (_dif[i] > maxdif)
                 {
@@ -167,7 +163,7 @@ namespace ReceivingStation.Demodulator
 
             _dif = PSPCompare_with1stNRZMode(PSP2);
 
-            for (int i = 1; i < 9; i++)
+            for (int i = 1; i < _dif.Length; i++)
             {
                 if (_dif[i] > maxdif)
                 {
@@ -186,7 +182,7 @@ namespace ReceivingStation.Demodulator
 
             #endregion
 
-            if (PSPFinded1 || PSPFinded2)
+            if (PSPFinded1 && PSPFinded2)
             {
                 PSPFinded = true;
             }
@@ -196,8 +192,8 @@ namespace ReceivingStation.Demodulator
                 //Console.WriteLine(NRZmode1.ToString() + NRZmode2.ToString());
                 Array.Copy(arrayToCorrect, 0, FirstPacket, 0, _FullLength);
                 Array.Copy(arrayToCorrect, _FullLength, SecondPacket, 0, _FullLength); // делим большой массив на два пакета
-                PacketCorrect_OQPSK(FirstPacket, outmode);
-                PacketCorrect_OQPSK(SecondPacket, outmode);
+                PacketCorrect_OQPSK(FirstPacket, NRZmode1);
+                PacketCorrect_OQPSK(SecondPacket, NRZmode2);
                                
                 Array.Copy(FirstPacket, arrayToCorrect, _FullLength);
                 Array.Copy(SecondPacket, 0, arrayToCorrect, 16384, _FullLength);
@@ -206,13 +202,13 @@ namespace ReceivingStation.Demodulator
                 {
                     if (outmode == 3 || outmode == 5) // для sdr приемника
                     {
-                        arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
-                        arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
+                        //arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
+                        //arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
                     }
                 }
                 if (isWavFile)
                 {
-                    if (outmode == 1 || outmode == 7) // для wav
+                    if (outmode == 3 || outmode == 5) // для wav
                     {
                         //arrayToCorrect = Delete(arrayToCorrect, arrayToCorrect.Length - 1); // костыль, почему-то декодеру важно чтобы маркер начинался с четного бита, очень долго из-за этого 1 и 7 варианты не работали
                         //arrayToCorrect = AddElement(arrayToCorrect, 0);// с чем это связано - плохо понимаю
@@ -1276,60 +1272,14 @@ namespace ReceivingStation.Demodulator
                     }
                     break;
 
-                case 7:
-                    for (int i = 0; i < array.Length; i++) array[i] = (sbyte)array[i];
-                    break;
+                //case 7:
+                //    for (int i = 0; i < array.Length; i++) array[i] = (sbyte)array[i];
+                //    break;
 
-                case 1:
-                    for (int i = 0; i < array.Length; i++) array[i] = array[i];
-                    break;
-
-
-
-                    //case 3: // поворот на 90
-                    //    for (int i = 0; i < array.Length / 2 - 1; i++)
-                    //    {
-                    //        array[2 * i + 1] = (sbyte)-array[2 * i + 1];
-                    //    }
-                    //    break;
-                    //case 4: // поворот на 90
-                    //    for (int i = 0; i < array.Length / 2 - 1; i++)
-                    //    {
-                    //        array[2 * i + 1] = (sbyte)-array[2 * i + 1];
-                    //    }
-                    //    break;
-
-                    //case 7: // поворот на 180
-                    //    for (int i = 0; i < array.Length ; i++)
-                    //    {
-                    //        array[i] = (sbyte)-array[i];
-                    //    }
-                    //    break;
-
-                    //case 8: // поворот на 180
-                    //    for (int i = 0; i < array.Length; i++)
-                    //    {
-                    //        array[i] = (sbyte)-array[i];
-                    //    }
-                    //    break;
-
-                    //case 5:
-                    //    for (int i = 0; i < array.Length / 2; i++)
-                    //    {
-                    //        array[2 * i] = (sbyte)-array[2 * i];
-                    //    }
-                    //    break;
-
-                    //case 6:
-                    //    for (int i = 0; i < array.Length / 2 - 1; i++)
-                    //    {
-                    //        array[2 * i] = (sbyte)-array[2 * i];
-                    //    }
-                    //    break;
-
-                    //default:
-                    //    for (int i = 0; i < array.Length; i++) array[i] = array[i];
-                    //    break;
+                //case 1:
+                //    for (int i = 0; i < array.Length; i++) array[i] = array[i];
+                //    break;
+                                                                     
 
             }
 
@@ -1713,43 +1663,7 @@ namespace ReceivingStation.Demodulator
             return sum;
         }
 
-        private int[] PSPCompare_with2ndNRZMode(sbyte[] PSP)
-        {
-            int[] dif = new int[9];
-            for (int i = 0; i < PSPLength; i++)
-            {
-                var bit = Math.Sign(PSP[i]);
 
-                #region Magic with PSP
-                if (bit == 0) bit = -1;
-                // if NRZ
-
-                if (pspNRZ2[i] == bit) sum[1]++;
-                else sum[2]++;
-
-                if (pspNRZ2i[i] == bit) sum[3]++;
-                else sum[4]++;
-
-                if (pspNRZ2ii[i] == bit) sum[5]++;
-                else sum[6]++;
-
-                if (pspNRZ1[i] == bit) sum[7]++;
-                else sum[8]++;
-                #endregion
-            }
-
-
-            dif[1] = (sum[1] - sum[2]);
-            dif[2] = (sum[2] - sum[1]);
-            dif[3] = (sum[3] - sum[4]);
-            dif[4] = (sum[4] - sum[3]);
-            dif[5] = (sum[5] - sum[6]);
-            dif[6] = (sum[6] - sum[5]);
-            dif[7] = (sum[7] - sum[8]);
-            dif[8] = (sum[8] - sum[7]);
-
-            return dif;
-        }
         private sbyte[] AddElement(sbyte[] array, sbyte element)//добавляет элемент в начало
         {
             var output = new sbyte[array.Length + 1];
