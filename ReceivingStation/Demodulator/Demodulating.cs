@@ -60,7 +60,6 @@ namespace ReceivingStation.Demodulator
 
         private FileWriter _rawWriter;
 
-
         private byte[] _outputBuffer;
         private byte[] _outputBuffer_wInt;
 
@@ -82,20 +81,15 @@ namespace ReceivingStation.Demodulator
         private int _watchDogCounter;
         private float _carrierShift;
 
-        private SamplesAvailableEventArgs _inputbuffer = new SamplesAvailableEventArgs();
-
         private float _agcGain;
         private float _lastSync;
         private float _averageGain;
         private float _agcCoeff;
         private float _oneMinusAgcCoeff;
 
-        private bool _prevIsUp;
         private bool IsPlaying;
 
-
         private int _filterLength;
-        const int MaxBufferLength = 1024 * 10;
 
         const float Pi = (float)Math.PI;
         const float TwoPi = (float)(2.0 * Math.PI);
@@ -123,18 +117,13 @@ namespace ReceivingStation.Demodulator
         private byte _Modulation;
         private byte[] _correctedarray;
         private byte[] _correctedarray_Int;
-        private byte[] arrayToDecode_Int;
-        private byte[] PacketsArray;
 
         public bool PSPFinded;
         private int mode = 0;
 
         private bool FirstRead;
 
-
         private bool _NRZ;
-        private bool _qpskModulation;
-        private bool _oqpskModulation;
         private bool _isSelfTest;
 
         private Complex* _fftPtr;
@@ -145,8 +134,6 @@ namespace ReceivingStation.Demodulator
         private int _fftBins = 16384;
         private Complex[] samplesForFFT;
 
-        private Complex[] samplesForConstellation;
-
         private UnsafeBuffer _displayOutputBuffer;
         private Complex* _displayOutputBufferPtr;
 
@@ -156,14 +143,13 @@ namespace ReceivingStation.Demodulator
         private bool _needDisplayBufferUpdate;
         private const int DisplayBufferLength = 8192;
 
-
         private bool iqFilter;
         private bool matchedFilter;
 
         private bool _dispayBufferReady;
 
-        double[] dfftPower;
-        int fftPointSpacingHz;
+        private double[] dfftPower;
+        private int fftPointSpacingHz;
         private float _lastSignal;
         private float _syncCenter;
 
@@ -177,6 +163,14 @@ namespace ReceivingStation.Demodulator
         private FileWriter _DemodDatfile;
         private  int _FindedBitsInPSP;
         private  int _InterlivingFindedBits;
+
+        private enum ModulationType
+        {
+            QPSK,
+            OQPSK
+        }
+
+        private ModulationType Modulation;
 
         /// <summary>
         /// Обработчик ВЧ сигнала, используется SDR приемник
@@ -205,7 +199,7 @@ namespace ReceivingStation.Demodulator
             _HardPSP = HardPSP;
             _FindedBitsInPSP = FindedBitsInPSP;
             _InterlivingFindedBits = FindedBitsInInterliving;
-            PLLReset();
+            
             if (interliving == 0x1)
             {
                 _Interliving = true;
@@ -219,8 +213,8 @@ namespace ReceivingStation.Demodulator
 
             if (SatelliteModel.Equals("Meteor-M2.2")) _NRZ = true;
             else if (SatelliteModel.Equals("Meteor-M2")) _NRZ = false;
-                     
 
+            PLLReset();
             var recordingfilename = filename;
 
             _PathName = ApplicationDirectory.GetCurrentSessionDirectory(sessionName);
@@ -228,16 +222,8 @@ namespace ReceivingStation.Demodulator
             StreamCorrection = new StreamCorrection(interliving, recordingfilename);
             BVS = new BeforeViterbiSync();
 
-            if (_Modulation == 0x1)
-            {
-                _qpskModulation = true;
-                _oqpskModulation = false;
-            }
-            else if (_Modulation == 0x2)
-            {
-                _oqpskModulation = true;
-                _qpskModulation = false;
-            }
+            if (_Modulation == 0x1) Modulation = ModulationType.QPSK;
+            else if (_Modulation == 0x2) Modulation = ModulationType.OQPSK;
         }
         /// <summary>
         /// Конструктор для самопроверки
@@ -272,16 +258,9 @@ namespace ReceivingStation.Demodulator
             StreamCorrection = new StreamCorrection(interliving);
             BVS = new BeforeViterbiSync();
 
-            if (_Modulation == 0x1)
-            {
-                _qpskModulation = true;
-                _oqpskModulation = false;
-            }
-            else if (_Modulation == 0x2)
-            {
-                _oqpskModulation = true;
-                _qpskModulation = false;
-            }
+            if (_Modulation == 0x1) Modulation = ModulationType.QPSK;
+            else if (_Modulation == 0x2) Modulation = ModulationType.OQPSK;
+      
         }
 
         public int SampleRate
@@ -430,6 +409,8 @@ namespace ReceivingStation.Demodulator
                 _rawWriter.Open();
             }
         }
+
+
         #region Stop Demodulating and Decoding
         /// <summary>
         /// Остановка всех потоков обработки
@@ -466,7 +447,6 @@ namespace ReceivingStation.Demodulator
                 _iqStream.Close();
             }
             
-
             if (_outputThread != null)
             {
                 _outputThread.Abort();
@@ -626,9 +606,7 @@ namespace ReceivingStation.Demodulator
                     _fftSpectrumArray = new float[length];
                     samplesForFFT = new Complex[length];
 
-                    samplesForConstellation = new Complex[length];
                     _needDisplayBufferUpdate = true;
-
 
                     _displayInputBuffer = UnsafeBuffer.Create(length, sizeof(Complex));
                     _displayInputBufferPtr = (Complex*)_displayInputBuffer;
@@ -767,7 +745,7 @@ namespace ReceivingStation.Demodulator
                     //copy sync
                     if (needNewDisplayBuffer && i < DisplayBufferLength) _displayOutputBufferPtr[i] = 0;
 
-                    if (_qpskModulation && _carrierPhaseLocked)
+                    if (Modulation == ModulationType.QPSK && _carrierPhaseLocked)
                     {
                         if (_syncCenter == -1)
                         {
@@ -780,7 +758,7 @@ namespace ReceivingStation.Demodulator
                             }
                         }
                     }
-                    else if (_oqpskModulation)
+                    else if (Modulation == ModulationType.OQPSK)
                     {
                         if (_syncCenter == 1)
                         {
@@ -842,11 +820,11 @@ namespace ReceivingStation.Demodulator
                 var graphPointCount = _fftSpectrumArray.Length;
                 fftPointSpacingHz = SampleRate / graphPointCount;
 
-                if (SampleRate == 1024000) fftPointSpacingHz = fftPointSpacingHz / 56;
-                if (SampleRate == 1400000) fftPointSpacingHz = fftPointSpacingHz / 64;
-                if (SampleRate == 1920000) fftPointSpacingHz = fftPointSpacingHz / 80;
-                if (SampleRate == 2048000) fftPointSpacingHz = fftPointSpacingHz / 112;
-                if (SampleRate == 8000000) fftPointSpacingHz = fftPointSpacingHz / 480;
+                if (SampleRate == 1024000) fftPointSpacingHz /= 56;
+                if (SampleRate == 1400000) fftPointSpacingHz /= 64;
+                if (SampleRate == 1920000) fftPointSpacingHz /= 80;
+                if (SampleRate == 2048000) fftPointSpacingHz /= 112;
+                if (SampleRate == 8000000) fftPointSpacingHz /= 480;
             }
 
             if (_dispayBufferReady)
@@ -928,8 +906,6 @@ namespace ReceivingStation.Demodulator
             FirstRead = false;
             PSPFinded = false;
 
-
-           
             _recordBuffer = UnsafeBuffer.Create(BufferSizeToRecord, sizeof(Complex));
             _recordBufferPtr = (Complex*)_recordBuffer;
             _isSelfTest = isSelfTest;
@@ -946,12 +922,9 @@ namespace ReceivingStation.Demodulator
             //arrayToDecode = new byte[32768];
 
             _correctedarray_Int = new byte[_outputBuffer_wInt.Length / 8];
-            arrayToDecode_Int = new byte[2048];
 
             var Element = new byte[2];
-
-            
-            PacketsArray = new byte[32768];
+                                    
             var timeString = DateTime.Now.ToString("HH-mm-ss");
             if (_datWriter)
             {
@@ -1050,19 +1023,19 @@ namespace ReceivingStation.Demodulator
                         StreamCorrection.fromAmplitudesToBits(_outputBuffer, _correctedarray); // подготавливаем данные для декодера
                         if (_DemodDatfile != null) _DemodDatfile.Write(_correctedarray, _correctedarray.Length);
 
-                        if (!_isSelfTest) _decode.StartDecode(_correctedarray, _NRZ, _Interliving);
+                        if (!_isSelfTest) _decode.StartDecode(_correctedarray, _NRZ, _Interliving); // отправляем данные на декодер
                         else _decode.SFStartDecode(_correctedarray, _NRZ, _Interliving);
                        
-                        if (_FifoBuffer != null) _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord);
+                        if (_FifoBuffer != null) _FifoBuffer.Read(_recordBufferPtr, BufferSizeToRecord); // снова читаем данные из потока
                         if (_outputBuffer != null) ConvertComplexToByte(_outputBuffer, _recordBufferPtr, BufferSizeToRecord);
                         
                         if (offset)
                         {
-                            _outputBuffer = Delete(_outputBuffer, _outputBuffer.Length - 1);
+                            _outputBuffer = Delete(_outputBuffer, _outputBuffer.Length - 1); // делаем смещение на один бит, если надо
                             _outputBuffer = AddElement(_outputBuffer, Element[1], 0);
                         }
                                                 
-                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer,  _FindedBitsInPSP, _wavFile != null);
+                        if (BVS != null && _NRZ) PSPFinded = BVS.PSPSearch(_outputBuffer,  _FindedBitsInPSP, _wavFile != null); // проверяем на наличие синхромаркера
                         else if (BVS != null && !_NRZ) PSPFinded = BVS.PSPSearch_withoutNRZ(_outputBuffer, mode);
                                                 
                         if (BVS != null) mode = BVS.outmode;
@@ -1080,7 +1053,7 @@ namespace ReceivingStation.Demodulator
                             PSPFinded = true;
                         }
 
-                        if (_HardPSP)
+                        if (_HardPSP) // штука для отладки, нет поиска синхромаркера
                         {
                             if (count2 < 20)
                             {
@@ -1094,7 +1067,7 @@ namespace ReceivingStation.Demodulator
 
                     if  (!_carrierPhaseLocked)
                     {
-                        _FifoBuffer.Flush();
+                        _FifoBuffer.Flush(); // если потеряли захват сигнала, то очищаем поток
                     }
 
                     if (_sWriter)
@@ -1109,7 +1082,7 @@ namespace ReceivingStation.Demodulator
             #endregion
 
             #region With Interliving
-            if (_Interliving)
+            if (_Interliving) // алгоритм поиска маркеров по сути ничем не отличается, только размерами и порядком посылок
             {
                 _recordBufferInt = UnsafeBuffer.Create(BufferSizeToRecord_withInt, sizeof(Complex));
                 _recordBufferIntPtr = (Complex*)_recordBufferInt;
