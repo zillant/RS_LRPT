@@ -67,7 +67,7 @@ namespace ReceivingStation
             _serverThread = new Thread(_server.StartServer) { IsBackground = true };
             _serverThread.Start();
 
-            _inputType = InputType.WavFile;
+            _inputType = InputType.RTLSDR;
 
         }
 
